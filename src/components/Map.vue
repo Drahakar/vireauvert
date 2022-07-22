@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 #map {
-    width: 1000px;
-    height: 800px;
+    width: 100%;
+    height: 100%;
 }
 </style>
