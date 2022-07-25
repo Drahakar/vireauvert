@@ -16,7 +16,7 @@ export default {
 
         let map = new L.Map("map", {
             center: [45.5001, -73.5679],
-            zoom: 15
+            zoom: 11
         });
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
