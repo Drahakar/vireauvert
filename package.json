@@ -13,7 +13,8 @@
     "@types/leaflet": "^1.7.11",
     "axios": "^0.27.2",
     "leaflet": "^1.8.0",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "express": "^4.15.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.45",
