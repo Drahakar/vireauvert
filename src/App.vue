@@ -8,12 +8,17 @@ export default {
     Map,
     Legend,
     Timeline
-  }
+  },
+  data() {
+    return {
+      selectedRegion: "", 
+    };
+  },
 };
 </script>
 
 <template>
-  <Legend></Legend>
-  <Map></Map>
+  <Legend :region="selectedRegion"></Legend>
+  <Map @update:region-selected="(region) => selectedRegion = region"></Map>
   <Timeline></Timeline>
 </template>

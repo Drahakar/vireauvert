@@ -9,6 +9,8 @@ import axios from 'axios';
 import { kml } from "@tmcw/togeojson";
 
 export default {
+    props: ['region-selected'],
+    emits: ['update:region-selected'],
     async mounted() {
         const elect = await axios.get('/carte2017simple.kml', { responseType: 'text' });
         const doc = new DOMParser().parseFromString(elect.data, 'text/xml');
@@ -26,6 +28,9 @@ export default {
             onEachFeature: (feature, layer) => {
                 const name: string = feature.properties.name.trim();
                 layer.bindTooltip(name);
+                layer.addEventListener('click', () => {
+                    this.$emit('update:region-selected', name);
+                });
             }
         }).addTo(map);
     }

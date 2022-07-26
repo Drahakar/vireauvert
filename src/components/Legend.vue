@@ -1,13 +1,16 @@
 <template>
     <div id="legend">
-        Région sélectionné: Lorem Ipsum
-        Effet Observé: Dolor sit amet
+        <div>Région sélectionné: {{this.region}}</div>
+        <div>Effet Observé: Dolor sit amet</div>
 
     </div>
 </template>
 
 <script lang="ts">
 export default {
+    props: {
+        region: String
+    },
     async mounted() {
     }
 }
