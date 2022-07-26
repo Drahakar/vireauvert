@@ -1,11 +1,3 @@
-<template>
-    <div id="legend">
-        <div>Région sélectionné: {{this.region}}</div>
-        <div>Effet Observé: Dolor sit amet</div>
-
-    </div>
-</template>
-
 <script lang="ts">
 export default {
     props: {
@@ -23,3 +15,11 @@ export default {
     height: 90%;
 }
 </style>
+
+<template>
+    <div id="legend">
+        <div>Région sélectionné: {{region}}</div>
+        <div>Effet Observé: Dolor sit amet</div>
+
+    </div>
+</template>

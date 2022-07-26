@@ -7,8 +7,9 @@ import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import axios from 'axios';
 import { kml } from "@tmcw/togeojson";
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent ({
     props: ['region-selected'],
     emits: ['update:region-selected'],
     async mounted() {
@@ -34,7 +35,8 @@ export default {
             }
         }).addTo(map);
     }
-}
+})
+
 </script>
 
 <style scoped>

@@ -2,8 +2,9 @@
 import Map from "./components/Map.vue";
 import Legend from "./components/Legend.vue";
 import Timeline from "./components/Timeline.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
     Map,
     Legend,
@@ -14,11 +15,17 @@ export default {
       selectedRegion: "", 
     };
   },
-};
+  methods: {
+    updateSelectedRegion(region: string) {
+      this.selectedRegion = region;
+    }
+  }
+});
+
 </script>
 
 <template>
   <Legend :region="selectedRegion"></Legend>
-  <Map @update:region-selected="(region) => selectedRegion = region"></Map>
+  <Map @update:region-selected="updateSelectedRegion"></Map>
   <Timeline></Timeline>
 </template>
