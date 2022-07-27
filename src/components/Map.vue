@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import axios from 'axios';
 import { kml } from "@tmcw/togeojson";
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent ({
     props: ['region-selected'],
