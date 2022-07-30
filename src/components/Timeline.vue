@@ -44,6 +44,7 @@ export default defineComponent({
     align-items: center;
     z-index: 29;
     padding: 0px 30px;
+    margin-top:25px;
 }
 
 .slidercontainer input {
