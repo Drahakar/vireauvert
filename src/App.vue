@@ -9,23 +9,13 @@ export default defineComponent({
     Map,
     Legend,
     Timeline
-  },
-  data() {
-    return {
-      selectedRegion: "", 
-    };
-  },
-  methods: {
-    updateSelectedRegion(region: string) {
-      this.selectedRegion = region;
-    }
   }
 });
 
 </script>
 
 <template>
-  <Legend :region="selectedRegion"></Legend>
-  <Map @update:region-selected="updateSelectedRegion"></Map>
+  <Legend></Legend>
+  <Map></Map>
   <Timeline></Timeline>
 </template>

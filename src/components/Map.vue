@@ -8,12 +8,15 @@ import L from "leaflet";
 import axios from 'axios';
 import { kml } from "@tmcw/togeojson";
 import { defineComponent } from 'vue';
+import { useStore } from "@/stores/store";
 
 export default defineComponent ({
     props: ['region-selected'],
     emits: ['update:region-selected'],
     async mounted() {
-        const elect = await axios.get('/carte2017simple.kml', { responseType: 'text' });
+        const store = useStore();
+
+        const elect = await axios.get('data/carte2017simple.kml', { responseType: 'text' });
         const doc = new DOMParser().parseFromString(elect.data, 'text/xml');
         const geojson = kml(doc);
 
@@ -30,7 +33,7 @@ export default defineComponent ({
                 const name: string = feature.properties.name.trim();
                 layer.bindTooltip(name);
                 layer.addEventListener('click', () => {
-                    this.$emit('update:region-selected', name);
+                    store.region = name;
                 });
             }
         }).addTo(map);

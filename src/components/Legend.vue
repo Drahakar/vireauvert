@@ -1,46 +1,36 @@
 
 <template>
     <div id="legend">
-        <div>Région sélectionné: {{region}}</div>
+        <div>Région sélectionnée: {{ store.region }}</div>
+        <div>Année de recherche: {{ store.year }}</div>
         <div>Catastrophes naturelles</div>
-        <div><span v-html="regionnalCatastrophes"></span></div>
-
+        <div><span v-html="store.catastrophesForCurrentRegion"></span></div>
     </div>
 </template>
 
 <script lang="ts">
 
-import axios from 'axios';
+import { useStore } from '@/stores/store';
+import { mapStores } from 'pinia';
 import { defineComponent } from 'vue'
 
-interface ICatastrophes {
-    [x: string]: Array<string>;
-}
-
 export default defineComponent({
-    props: {
-        region: String,
-    },
-    data() {
-        return {
-            catastrophes: {} as ICatastrophes,
-        }
+    setup() {
+        const store = useStore();
+        return { store };
     },
     computed: {
-        regionnalCatastrophes() {
-            return this.region && this.catastrophes[this.region] ? this.catastrophes[this.region] : new Array<String>();
-        }
+        ...mapStores(useStore)
     },
     async mounted() {
-        const catastrophesResponse = await axios.get<ICatastrophes>('data/catastrophes-naturelles.json', { responseType: 'json' });
-        this.catastrophes = catastrophesResponse.data;
+       await this.store.updateCatastrophes();
     }
 })
 </script>
 
 <style scoped>
 #legend {
-    float:left;
+    float: left;
     width: 25%;
     height: 90%;
 }
