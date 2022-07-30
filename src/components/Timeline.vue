@@ -1,9 +1,10 @@
 <template>
     <div id="timeline">
-        <div class="slidercontainer">
+        <div id="slidertitle">Année de recherche</div>
+        <div id="slidercontainer">
             <vue-slider 
                 v-model="store.year"
-                :tooltip="'active'"
+                :tooltip="'always'"
                 :min="min"
                 :max="max"
                 :marks="marks"
@@ -47,22 +48,24 @@ export default defineComponent({
 #timeline {
     width: 100%;
     height: 10%;
-}
-
-.slidercontainer {
-    width: 100%;
-    height: 100%;
-    justify-content: center;
+    display: flex;
     align-items: center;
-    z-index: 29;
-    padding: 0px 30px;
-    margin-top: 37px;
+    justify-content: center;
+    padding: 30px;
 }
 
-.slidercontainer input {
+#slidertitle {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#slidercontainer {
+    flex-grow: 1;
+    margin-left: 30px;
+}
+
+#slidercontainer input {
     -webkit-appearance: none;
-    width: 100%;
-    height: 100%;
     background: #ffffff;
     outline: none;
     opacity: 1

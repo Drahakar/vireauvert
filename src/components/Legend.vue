@@ -1,10 +1,14 @@
 
 <template>
     <div id="legend">
-        <div>Région sélectionnée: {{ store.region }}</div>
+        <h1>{{ store.region }}</h1>
         <div>Année de recherche: {{ store.year }}</div>
-        <div>Catastrophes naturelles</div>
-        <div><span v-html="store.catastrophesForCurrentRegion"></span></div>
+        <h2>Catastrophes naturelles</h2>
+        <ul>
+            <li v-for="cata in store.catastrophesForCurrentRegion">
+                {{ cata }}
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -23,7 +27,7 @@ export default defineComponent({
         ...mapStores(useStore)
     },
     async mounted() {
-       await this.store.updateCatastrophes();
+        await this.store.updateCatastrophes();
     }
 })
 </script>
