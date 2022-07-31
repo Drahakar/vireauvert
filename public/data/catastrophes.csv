@@ -1,0 +1,973 @@
+code_alea,alea,code_municipalite,municipalite,precision_localisation,info_compl_localisation,severite,date_signalement,date_debut,date_debut_imprecise,commentaire_date_debut,date_fin,coord_x,coord_y
+"101",Mouvement de terrain,"52062",Saint-Cuthbert,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2020-04-14,2020-04-14,Non,,2021-11-22,-73.204362,46.142482
+"101",Mouvement de terrain,"52062",Saint-Cuthbert,Très précise,Présence de fissures aux côtés d’un bâtiment agricole situé en sommet de talus,Menace faible ou non-existante à la vie ou la propriété,2021-10-06,2021-09-27,Non,,2021-11-22,-73.21537,46.15788
+"8",Inondation,"52062",Saint-Cuthbert,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.220159,46.150972
+"138",Orage violent,"63055",Saint-Calixte,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-24,2022-05-21,Non,,,-73.841484,45.946918
+"101",Mouvement de terrain,"63055",Saint-Calixte,Très précise,Suffosion,Menace faible ou non-existante à la vie ou la propriété,2020-05-04,,Oui,La durée de l'inondation est inconnue et le propriétaire ne peut être certain de la date exacte.,2021-01-26,-73.844644,45.935023
+"101",Mouvement de terrain,"63055",Saint-Calixte,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2020-05-04,2020-04-14,Non,,2021-03-23,-73.813296,45.907359
+"8",Inondation,"63055",Saint-Calixte,Imprécise,,Menace importante à la vie ou à la propriété,2020-04-14,2020-04-13,Non,,2021-01-26,-73.841484,45.946918
+"101",Mouvement de terrain,"35050",Sainte-Thècle,Très précise,"Le glissement a eu lieu en bordure du ruisseau sur la terre agricole située en face du 2441, chemin Saint-Michel Nord",Menace faible ou non-existante à la vie ou la propriété,2020-12-28,2020-12-26,Oui,On ne connait pas le moment exact du glissement,2021-11-02,-72.501837,46.834051
+"25",Panne d'électricité,"45072",Magog,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-72.142437,45.279003
+"138",Orage violent,"77050",Morin-Heights,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.248425,45.901955
+"9",Érosion,"39020",Saint-Rémi-de-Tingwick,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-09-21,2020-01-01,Oui,Au cours du mois d'août 2020,2021-01-19,-71.888405,45.806061
+"8",Inondation,"39020",Saint-Rémi-de-Tingwick,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-08-18,-71.820219,45.864454
+"25",Panne d'électricité,"83045",Blue Sea,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-76.05628,46.181401
+"101",Mouvement de terrain,"39085",Saint-Albert,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-05,,Oui,,2021-05-27,-72.082746,46.004233
+"101",Mouvement de terrain,"71020",Saint-Polycarpe,Très précise,,Gravité inconnue,2020-09-17,,Oui,Surveillance depuis le printemps,2021-04-19,-74.28334,45.283346
+"101",Mouvement de terrain,"71020",Saint-Polycarpe,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-07,,Oui,printemps 2017,2022-03-08,-74.372218,45.329056
+"248",Alimentation publique en eau potable,"99120",Puvirnituq,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-16,2022-02-15,Oui,"L'ARK a été mise au courant le 15 février, la situation était connue du village avant",2022-02-23,-77.265751,60.042186
+"248",Alimentation publique en eau potable,"99120",Puvirnituq,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-28,2022-02-28,Non,,2022-03-09,-77.270241,60.034817
+"99",Tremblement de terre,"99120",Puvirnituq,Imprécise,,Gravité inconnue,2021-06-10,2021-06-10,Non,,2021-06-10,-77.270241,60.034817
+"8",Inondation,"21035",Château-Richer,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.017593,46.970055
+"101",Mouvement de terrain,"41065",Westbury,Très précise,,Menace possible à la vie ou à la propriété,2022-06-09,2022-06-09,Oui,"Signalement le 2022-06-09, mais le mouvement de terrain serait survenu durant la tempête automnale du 31 octobre 2019.",,-71.674,45.500809
+"88",Incendie industriel,"41065",Westbury,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-20,,,,2021-03-15,-71.633622,45.491012
+"8",Inondation,"95040",Portneuf-sur-Mer,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-01-04,,Oui,Après la pluie du 25 décembre,2021-06-22,-69.420676,48.724429
+"8",Inondation,"91020",Chambord,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-22,2022-05-22,Non,,2022-07-13,-72.05954,48.427567
+"9",Érosion,"17070",Saint-Jean-Port-Joli,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.319834,47.160525
+"9",Érosion,"17070",Saint-Jean-Port-Joli,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.319579,47.160516
+"9",Érosion,"17070",Saint-Jean-Port-Joli,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.318738,47.160618
+"9",Érosion,"17070",Saint-Jean-Port-Joli,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-06,2020-04-10,Non,,2022-01-17,-70.314372,47.166683
+"171",Vent violent,"22030",Lac-Delage,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-01-07,-71.402478,46.968627
+"25",Panne d'électricité,"09025",Saint-Gabriel-de-Rimouski,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-04-26,-68.175767,48.424603
+"25",Panne d'électricité,"80065",Mayo,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,,-75.346275,45.663002
+"101",Mouvement de terrain,"27060",Tring-Jonction,Très précise, lot 4 375 057.,Menace faible ou non-existante à la vie ou la propriété,2021-04-30,,,,2021-09-29,-70.967077,46.282472
+"39",Feu de forêt,"54017",Saint-Damase,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-16,2021-05-16,Non,,2021-05-17,-73.00642,45.525545
+"154",Fermeture de pont,"79115",Sainte-Anne-du-Lac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-14,2022-04-14,Non,,2022-06-21,-75.32315,46.880613
+"8",Inondation,"79115",Sainte-Anne-du-Lac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-30,2021-03-29,Non,,2021-10-26,-75.32315,46.880613
+"156",Accident de voiture,"67035",Saint-Constant,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-17,2022-01-17,Non,,2022-01-18,-73.571724,45.371098
+"101",Mouvement de terrain,"67035",Saint-Constant,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-18,2021-03-18,Non,,2021-10-15,-73.569733,45.371933
+"8",Inondation,"67035",Saint-Constant,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-17,Non,,2022-04-12,-73.571724,45.371098
+"248",Alimentation publique en eau potable,"38028",Manseau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-24,2021-02-24,Non,,2021-05-11,-72.00262,46.369373
+"10",Matières dangereuses,"38028",Manseau,Imprécise,,Menace possible à la vie ou à la propriété,2021-01-15,2021-01-14,Non,,2021-03-11,-72.00262,46.369373
+"8",Inondation,"42005",Stoke,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-18,2022-02-18,Non,,2022-03-15,-71.807457,45.535578
+"156",Accident de voiture,"60028",L'Assomption,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-19,2022-01-19,Non,,2022-01-31,-73.42725,45.848084
+"156",Accident de voiture,"60028",L'Assomption,Très précise,,Menace possible à la vie ou à la propriété,2021-02-05,2021-02-05,Non,,2021-03-23,-73.408095,45.805114
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-10-16,,Oui,,2021-01-29,-73.437942,45.828497
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,,Menace possible à la vie ou à la propriété,2021-09-20,,Oui,,2022-03-21,-73.423275,45.836484
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2021-03-24,,Oui,,2021-10-26,-73.446459,45.839521
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2021-12-09,,Oui,A été signalé le 6 décembre à la municipalité. Serait survenu entre le 4 et le 6 décembre 2021.,2022-03-17,-73.422013,45.81651
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,,Gravité inconnue,2022-04-08,,Oui,,2022-05-17,-73.432017,45.897261
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-27,2022-04-21,Non,,2022-05-17,-73.411776,45.844426
+"101",Mouvement de terrain,"60028",L'Assomption,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2022-04-22,2022-04-21,Non,,2022-05-17,-73.411776,45.844426
+"138",Orage violent,"62075",Saint-Damien,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-26,2022-05-21,Non,,2022-06-08,-73.477842,46.333427
+"10",Matières dangereuses,"62075",Saint-Damien,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-12,Non,,2021-12-13,-73.469652,46.319533
+"8",Inondation,"62075",Saint-Damien,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-26,-73.477842,46.333427
+"58",Écrasement d'avion,"79097",Ferme-Neuve,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-24,,,,2021-09-27,-75.452528,46.698181
+"9",Érosion,"79097",Ferme-Neuve,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-21,2022-06-21,Non,,,-75.485801,46.836957
+"9",Érosion,"79097",Ferme-Neuve,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-21,2022-06-21,Non,,,-75.487422,46.836611
+"138",Orage violent,"76052",Grenville-sur-la-Rouge,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.750566,45.64975
+"156",Accident de voiture,"71040",Coteau-du-Lac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Non,,2022-03-02,-74.212862,45.268965
+"138",Orage violent,"52090",Saint-Didace,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-73.275266,46.33061
+"101",Mouvement de terrain,"61005",Saint-Paul,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-19,2020-06-19,Non,,2021-11-11,-73.417546,45.936576
+"101",Mouvement de terrain,"61005",Saint-Paul,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-01,2021-04-01,Non,,2021-10-26,-73.388308,45.942177
+"101",Mouvement de terrain,"61005",Saint-Paul,Très précise,Glissement de terrain et évolution des signes d'amorce de glissement,Menace faible ou non-existante à la vie ou la propriété,2021-11-09,,Oui,La municipalité croit que c'est au courant de l'automne 2021.,2022-04-20,-73.391454,45.937524
+"101",Mouvement de terrain,"61005",Saint-Paul,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2022-04-13,,Oui,Mars-avril 2022,,-73.423929,45.931363
+"101",Mouvement de terrain,"61005",Saint-Paul,Très précise,"562, chemin Brassard",Menace faible ou non-existante à la vie ou la propriété,2022-04-22,,Oui,La municipalité a constaté le glissement le 14 avril 2022.,2022-04-27,-73.40922,45.93819
+"101",Mouvement de terrain,"61005",Saint-Paul,Très précise,Glissement de terrain (50 mètres de long),Menace faible ou non-existante à la vie ou la propriété,2022-06-03,2022-05-10,Non,,,-73.422714,45.965285
+"8",Inondation,"61005",Saint-Paul,Précise,,Menace possible à la vie ou à la propriété,2021-03-28,2021-03-27,Non,,2021-10-26,-73.421292,45.988723
+"39",Feu de forêt,"50005",Sainte-Eulalie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-16,2020-06-16,Non,,2020-10-29,-72.174288,46.159451
+"248",Alimentation publique en eau potable,"39062",Victoriaville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-10,2022-01-10,Non,,2022-01-13,-71.965934,46.060842
+"101",Mouvement de terrain,"39062",Victoriaville,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-25,,Oui,,2021-05-11,-71.956131,46.051644
+"101",Mouvement de terrain,"39062",Victoriaville,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-19,,Oui,,2022-07-20,-71.979356,46.070389
+"8",Inondation,"39062",Victoriaville,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-08-18,-72.016658,46.059807
+"101",Mouvement de terrain,"54110",Saint-Jude,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-12,,,,2021-03-15,-72.984734,45.778904
+"101",Mouvement de terrain,"54110",Saint-Jude,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-28,,Oui,Entre 2014 et 2021,2021-10-15,-72.961606,45.80799
+"101",Mouvement de terrain,"54110",Saint-Jude,Très précise,,Menace possible à la vie ou à la propriété,2021-04-26,2021-04-25,Non,,2021-10-15,-72.996197,45.772785
+"101",Mouvement de terrain,"83015",Kazabazua,Très précise,Chemin municipal à proximité du 246 ch. Mulligan Ferry,Menace faible ou non-existante à la vie ou la propriété,2020-11-20,2020-08-06,Non,,2020-11-30,-76.015102,46.023685
+"138",Orage violent,"77012",Sainte-Marguerite-du-Lac-Masson,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.065953,46.02657
+"8",Inondation,"77012",Sainte-Marguerite-du-Lac-Masson,Précise,,Menace possible à la vie ou à la propriété,2021-02-03,2020-01-01,Non,,2021-04-07,-74.113358,46.091656
+"0",Autre,"77012",Sainte-Marguerite-du-Lac-Masson,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.065953,46.02657
+"8",Inondation,"28070",Saint-Camille-de-Lellis,Précise,,Menace possible à la vie ou à la propriété,2021-03-26,2021-03-26,Non,,2021-04-19,-70.175972,46.514432
+"110",Risque d'explosion,"56105",Sainte-Brigide-d'Iberville,Très précise,Endroit de l'accident,Menace faible ou non-existante à la vie ou la propriété,2022-02-20,2022-02-20,Non,,2022-02-21,-73.09571,45.344808
+"90",Feu urbain,"46065",Bolton-Ouest,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-25,2020-06-22,Non,,2020-09-09,-72.439987,45.230754
+"8",Inondation,"52055",Saint-Barthélemy,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.118526,46.191003
+"101",Mouvement de terrain,"33095",Saint-Antoine-de-Tilly,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-28,2021-09-28,Non,,2021-10-20,-71.563868,46.665794
+"154",Fermeture de pont,"91015",Saint-François-de-Sales,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-28,2022-05-28,Non,,2022-07-13,-72.222507,48.342283
+"138",Orage violent,"63035",Saint-Roch-de-l'Achigan,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-21,Non,,2022-06-08,-73.593725,45.856511
+"101",Mouvement de terrain,"63035",Saint-Roch-de-l'Achigan,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2020-03-30,,Oui,,2021-01-26,-73.604781,45.855495
+"101",Mouvement de terrain,"63035",Saint-Roch-de-l'Achigan,Très précise,Mouvements de sol,Menace faible ou non-existante à la vie ou la propriété,2020-07-07,,Oui,,2021-03-23,-73.590002,45.85019
+"101",Mouvement de terrain,"63035",Saint-Roch-de-l'Achigan,Très précise,,Menace extraordinaire à la vie ou à la propriété,2021-05-03,,Oui,"Fin avril, début mai 2021",2022-01-10,-73.558842,45.835382
+"101",Mouvement de terrain,"63035",Saint-Roch-de-l'Achigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-13,,Oui,,2022-03-17,-73.534322,45.871918
+"101",Mouvement de terrain,"63035",Saint-Roch-de-l'Achigan,Très précise,,Menace possible à la vie ou à la propriété,2022-04-17,2022-04-17,Non,,,-73.534143,45.871889
+"88",Incendie industriel,"07085",Sayabec,Très précise,,Menace possible à la vie ou à la propriété,2021-06-08,2021-06-07,Non,,2021-10-28,-67.654283,48.557023
+"174",Panne de télécommunication,"43027",Sherbrooke,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-12,2021-08-11,Non,,2021-10-15,-71.925141,45.377714
+"101",Mouvement de terrain,"43027",Sherbrooke,Très précise,,Gravité inconnue,2020-07-07,2020-07-04,Non,,2020-11-27,-71.862855,45.408843
+"101",Mouvement de terrain,"43027",Sherbrooke,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-19,2021-04-11,Non,,2021-10-15,-71.89832,45.386508
+"101",Mouvement de terrain,"43027",Sherbrooke,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-28,2022-06-28,Non,,,-71.852197,45.418189
+"101",Mouvement de terrain,"43027",Sherbrooke,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-16,2021-04-01,Oui,La propriétaire au 699 chemin Duplessis a emménagé à sa nouvelle résidence durant le mois d'avril et a remarqué à ce moment qu'il semblait y avoir un mouvement de terrain,,-71.852164,45.418164
+"88",Incendie industriel,"43027",Sherbrooke,Précise,,Menace importante à la vie ou à la propriété,2022-03-23,2022-03-23,Non,,2022-03-24,-72.032979,45.347266
+"101",Mouvement de terrain,"98055",Rivière-au-Tonnerre,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-30,,Oui,,2021-10-13,-64.792158,50.27547
+"174",Panne de télécommunication,"99025",Chibougamau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-13,2021-05-13,Non,,2021-06-15,-74.369385,49.913555
+"8",Inondation,"99025",Chibougamau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-05-30,-74.369385,49.913555
+"248",Alimentation publique en eau potable,"93060",Lamarche,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-18,2022-02-18,Non,,2022-02-28,-71.427178,48.795049
+"8",Inondation,"92055",Girardville,Précise,,Menace possible à la vie ou à la propriété,2022-05-17,2022-05-17,Non,,2022-05-30,-72.551605,49.006583
+"8",Inondation,"05050",Saint-Elzéar,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-65.395562,48.154587
+"138",Orage violent,"61013",Crabtree,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-73.474763,45.966241
+"8",Inondation,"61013",Crabtree,Précise,,Menace possible à la vie ou à la propriété,2021-03-16,2021-03-25,Non,,2021-10-26,-73.475344,45.976367
+"138",Orage violent,"62030",Sainte-Marcelline-de-Kildare,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-73.600131,46.117835
+"10",Matières dangereuses,"62030",Sainte-Marcelline-de-Kildare,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-07,2021-12-07,Non,,2021-12-10,-73.630713,46.143682
+"171",Vent violent,"83010",Low,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-14,2021-07-13,Non,,2021-08-09,-76.022647,45.869876
+"9",Érosion,"85090",Notre-Dame-du-Nord,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-28,,Oui,La municipalité a remarqué l'érosion sur son terrain et nous en a informé par la suite.,2022-02-23,-79.482618,47.588613
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-20,,Oui,"Plusieurs petits décrochements, certains récents d'autres anciens",2021-11-23,-71.201268,48.417265
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace importante à la vie ou à la propriété,2021-07-21,2021-07-21,Non,,2021-10-07,-71.113446,48.43405
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace possible à la vie ou à la propriété,2021-04-13,2021-04-06,Non,,2021-04-20,-71.065953,48.438975
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Paroi rocheuse instable,Menace possible à la vie ou à la propriété,2022-05-16,,Oui,À confirmer,,-70.885114,48.345383
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Fissures dans le talus,Menace possible à la vie ou à la propriété,2022-06-02,,Oui,Détecté dans le cadre du pgm de surveillances des talus de la Ville,,-71.0498,48.443334
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,1er décrochement (érosion),Menace faible ou non-existante à la vie ou la propriété,2022-05-17,,Oui,Érosion,,-71.164774,48.453946
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Fissures dans le talus,Menace possible à la vie ou à la propriété,2022-06-01,,Oui,Détection dans le cadre du pgm de surveillance des talus,,-71.056618,48.442582
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Parois rocheuse instable,Menace possible à la vie ou à la propriété,2022-05-20,,Oui,Constat de blocs instable en mai 2022,,-71.258236,48.459038
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Désordre dans le talus,Menace possible à la vie ou à la propriété,2022-05-17,2022-05-17,Non,,,-70.894385,48.330026
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Effondrement d'un mur de soutènement,Menace faible ou non-existante à la vie ou la propriété,2022-05-04,,Oui,Au printemps 2022,2022-05-31,-70.854678,48.310701
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,Paroi rocheuse instable,Menace possible à la vie ou à la propriété,2022-05-16,,Oui,En mai 2022,,-70.885114,48.345383
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-25,2022-06-24,Non,,,-71.029697,48.427532
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-25,2022-06-24,Non,,,-71.046258,48.409302
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace possible à la vie ou à la propriété,2022-04-18,2022-04-11,Oui,Fissures apparues dans la semaine du 11 avril environ,,-70.892692,48.328752
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace importante à la vie ou à la propriété,2022-06-14,,,,,-70.892263,48.415224
+"101",Mouvement de terrain,"94068",Saguenay,Très précise,,Menace possible à la vie ou à la propriété,2022-07-29,2022-06-13,Non,,,-71.144264,48.333953
+"90",Feu urbain,"94068",Saguenay,Très précise,Coopérative d'habitation,Menace possible à la vie ou à la propriété,2022-06-24,2022-06-24,Non,,,-71.251873,48.414732
+"10",Matières dangereuses,"94068",Saguenay,Très précise,Présence d'un réservoir de propane de 4 500 lbs,Menace possible à la vie ou à la propriété,2021-03-18,2021-03-18,Non,,2021-03-18,-70.940291,48.3128
+"8",Inondation,"94068",Saguenay,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-09,2021-03-09,Non,,2021-05-17,-70.777669,48.342119
+"8",Inondation,"94068",Saguenay,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-27,,,,2022-07-13,-71.156775,48.417547
+"101",Mouvement de terrain,"16023",L'Isle-aux-Coudres,Très précise,Décrochement de pente à 250 p N-W,Menace faible ou non-existante à la vie ou la propriété,2021-01-25,2020-12-26,Non,,2021-03-26,-70.405533,47.410873
+"25",Panne d'électricité,"80130",Lac-des-Plages,Imprécise,,Gravité inconnue,2022-05-22,2022-05-21,Non,,,-74.889412,45.99889
+"138",Orage violent,"42098",Richmond,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-18,2021-10-16,Non,,2022-02-23,-72.147132,45.6624
+"8",Inondation,"29073",Saint-Georges,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-24,2022-02-24,Non,,2022-06-03,-70.708985,46.13789
+"138",Orage violent,"75028",Sainte-Sophie,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-73.894423,45.819974
+"101",Mouvement de terrain,"75028",Sainte-Sophie,Très précise,Érosion fluviale,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-14,Non,,2021-03-25,-73.957541,45.815022
+"101",Mouvement de terrain,"75028",Sainte-Sophie,Très précise,Érosion en sommet de talus,Menace faible ou non-existante à la vie ou la propriété,2022-04-27,,Oui,depuis 5 ans,2022-07-27,-73.875371,45.82695
+"88",Incendie industriel,"75028",Sainte-Sophie,Très précise,feu de débris dans la cour extérieure de l’entreprise AIM recyclage,Menace possible à la vie ou à la propriété,2022-05-10,2022-05-09,Non,,2022-05-10,-73.891669,45.816599
+"9",Érosion,"75028",Sainte-Sophie,Très précise,érosion,Menace faible ou non-existante à la vie ou la propriété,2021-04-15,2020-12-25,Non,,2021-12-07,-73.98046,45.829965
+"9",Érosion,"75028",Sainte-Sophie,Très précise,érosion fluviale,Menace faible ou non-existante à la vie ou la propriété,2021-04-15,2021-04-01,Oui,"au cours de chaque printemps, l'érosion s'accentue",2021-12-07,-73.961065,45.825707
+"9",Érosion,"75028",Sainte-Sophie,Très précise,érosion fluviale,Menace faible ou non-existante à la vie ou la propriété,2021-12-02,,Oui,n'est pas relié à un évènement météorologique,2022-03-17,-73.907272,45.817552
+"9",Érosion,"75028",Sainte-Sophie,Très précise,Érosion fluviale,Menace faible ou non-existante à la vie ou la propriété,2021-11-18,,Oui,non relié à un événement météorologique,2022-04-26,-73.962175,45.818288
+"0",Autre,"75028",Sainte-Sophie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-06,,Oui,à l'automne 2021,2022-07-27,-73.877153,45.827791
+"39",Feu de forêt,"14060",Saint-Philippe-de-Néri,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-19,2020-06-19,Non,,2020-10-29,-69.885463,47.463083
+"138",Orage violent,"78020",Sainte-Lucie-des-Laurentides,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-74.181334,46.125465
+"25",Panne d'électricité,"78020",Sainte-Lucie-des-Laurentides,Imprécise,,Menace possible à la vie ou à la propriété,2021-11-18,,,,2021-12-06,-74.181334,46.125465
+"25",Panne d'électricité,"80015",Notre-Dame-de-Bonsecours,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,2022-05-21,Non,,,-74.857058,45.754909
+"9",Érosion,"80015",Notre-Dame-de-Bonsecours,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,2021-03-26,Non,,2021-12-15,-74.915655,45.679677
+"8",Inondation,"18020",Sainte-Lucie-de-Beauregard,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-70.023945,46.737306
+"139",Tornade,"85105",Rémigny,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-25,2021-05-25,Non,,2021-06-03,-79.078786,47.881407
+"158",Fermeture de route,"93012",Métabetchouan - Lac-à-la-Croix,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-28,0202-05-27,Non,,2022-07-13,-71.870681,48.427249
+"8",Inondation,"93012",Métabetchouan - Lac-à-la-Croix,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-22,2022-05-22,Non,,2022-07-13,-71.870681,48.427249
+"8",Inondation,"93070",Saint-Henri-de-Taillon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-20,Non,,2022-07-13,-71.823478,48.664226
+"101",Mouvement de terrain,"63040",Saint-Roch-Ouest,Très précise,Fissures de 13 et 21 mètres,Menace possible à la vie ou à la propriété,2020-09-03,,Oui,Une fissure découverte en 2019 et l'autre au printemps 2020.,2021-01-26,-73.662559,45.853684
+"39",Feu de forêt,"95902",Lac-au-Brochet,Imprécise,,Menace possible à la vie ou à la propriété,2020-06-19,2020-06-19,Non,,2020-11-17,-69.572527,49.16251
+"39",Feu de forêt,"35906",Rivière-de-la-Savane,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-22,,,,2020-10-29,-73.498536,46.968092
+"8",Inondation,"72005",Saint-Eustache,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-26,-73.897047,45.572203
+"10",Matières dangereuses,"56050",Saint-Sébastien,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-18,2022-05-18,Non,,2022-05-20,-73.148172,45.126552
+"101",Mouvement de terrain,"53032",Saint-Ours,Très précise,,Menace possible à la vie ou à la propriété,2022-01-06,2022-01-06,Non,,,-73.146723,45.867528
+"174",Panne de télécommunication,"98025",Natashquan,Imprécise,,Menace possible à la vie ou à la propriété,2021-07-20,2021-07-20,Non,,2021-07-22,-61.818604,50.186288
+"138",Orage violent,"78065",Huberdeau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.633476,45.977488
+"9",Érosion,"78065",Huberdeau,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,,Oui,,2022-06-03,-74.628382,45.977961
+"9",Érosion,"78065",Huberdeau,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-18,,Oui,Érosion depuis plusieurs mois ou plus,2022-04-29,-74.623555,45.977731
+"138",Orage violent,"77011",Estérel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.027907,46.046412
+"25",Panne d'électricité,"10043",Rimouski,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-02,2021-02-02,Non,,2021-02-04,-68.575393,48.427122
+"10",Matières dangereuses,"10043",Rimouski,Très précise,Fuite de gaz propane,Menace possible à la vie ou à la propriété,2021-08-25,2021-08-25,Non,,2021-10-28,-68.700551,48.376582
+"8",Inondation,"10043",Rimouski,Précise,,Menace possible à la vie ou à la propriété,2021-03-26,,Oui,,2021-05-19,-68.711055,48.354187
+"8",Inondation,"68040",Saint-Jacques-le-Mineur,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-07,2022-03-07,Non,,2022-04-12,-73.421449,45.27334
+"101",Mouvement de terrain,"38065",Saint-Pierre-les-Becquets,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-30,2021-04-27,Oui,,2021-05-12,-72.200224,46.440245
+"90",Feu urbain,"10070",Saint-Fabien,Très précise,,Menace possible à la vie ou à la propriété,2020-09-24,2020-09-24,Non,,2020-10-20,-68.861618,48.290997
+"138",Orage violent,"62055",Notre-Dame-de-la-Merci,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-21,Non,,2022-06-08,-74.065485,46.228745
+"8",Inondation,"62055",Notre-Dame-de-la-Merci,Imprécise,,Menace possible à la vie ou à la propriété,2020-12-27,2020-12-27,Non,,2021-05-14,-74.065485,46.228745
+"8",Inondation,"62055",Notre-Dame-de-la-Merci,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.065485,46.228745
+"101",Mouvement de terrain,"08053",Matane,Très précise,Localisation du glissement,Menace faible ou non-existante à la vie ou la propriété,2021-04-27,,Oui,Dans la nuit du 26 au 27 avril,2021-05-19,-67.545898,48.776828
+"101",Mouvement de terrain,"08053",Matane,Très précise,,Gravité inconnue,2021-05-05,,Oui,Durant la semaine du 25 avril à la suite de la neige et pluie du 23 avril,2022-02-23,-67.420232,48.874432
+"8",Inondation,"08053",Matane,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-05-19,-67.528896,48.843498
+"92",Débordement de barrage,"83032",Gracefield,Très précise,Barrage X0002890,Menace faible ou non-existante à la vie ou la propriété,2022-05-11,,Oui,Signalement recu au MTQ aujourd'hui par un de ses patrouilleurs,2022-05-13,-75.848056,46.085833
+"25",Panne d'électricité,"83032",Gracefield,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-76.051431,46.094956
+"8",Inondation,"83032",Gracefield,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-01-27,2021-01-27,Non,,2021-03-26,-76.047526,46.064874
+"8",Inondation,"83032",Gracefield,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-19,2022-05-19,Non,,2022-07-20,-76.051431,46.094956
+"138",Orage violent,"78070",Amherst,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.766596,46.008291
+"138",Orage violent,"78070",Amherst,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-74.766596,46.008291
+"8",Inondation,"78070",Amherst,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.766596,46.008291
+"8",Inondation,"13025",Rivière-Bleue,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-30,2020-04-30,Non,,2020-10-29,-69.040888,47.436371
+"158",Fermeture de route,"80135",Duhamel,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-13,2022-04-13,Non,,,-75.084886,46.041011
+"25",Panne d'électricité,"80135",Duhamel,Imprécise,,Gravité inconnue,2022-05-22,2022-05-21,Non,,,-75.078968,46.02184
+"18",Accident ferroviaire,"71060",L'Île-Perrot,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-19,2022-01-19,Non,,2022-01-20,-73.963035,45.399919
+"101",Mouvement de terrain,"73025",Lorraine,Très précise,glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2020-01-22,2019-01-01,Oui,automne 2019,2021-03-25,-73.777251,45.669906
+"101",Mouvement de terrain,"73025",Lorraine,Très précise,déformation de la clôture arrière,Menace faible ou non-existante à la vie ou la propriété,2020-01-22,2019-01-01,Oui,automne 2019,2021-03-25,-73.795602,45.66572
+"101",Mouvement de terrain,"73025",Lorraine,Très précise,mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2020-11-16,2020-10-27,Oui,,2021-03-25,-73.77638,45.668634
+"101",Mouvement de terrain,"73025",Lorraine,Très précise,2 glissements de terrain dans le boisé en cour latérale,Menace faible ou non-existante à la vie ou la propriété,2021-04-13,2017-04-01,Oui,La Ville en a pris connaissance en 2017,2021-12-07,-73.781825,45.666463
+"101",Mouvement de terrain,"73025",Lorraine,Très précise,"cavité, érosion sous un arbre en portion supérieure du talus",Menace faible ou non-existante à la vie ou la propriété,2021-04-12,2021-01-01,Oui,,2021-04-13,-73.798132,45.667306
+"101",Mouvement de terrain,"73025",Lorraine,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2021-09-30,,Oui,Phénomène qui se serait accentué au cours de la dernière année,,-73.780237,45.671464
+"138",Orage violent,"76065",Harrington,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.561044,45.834274
+"138",Orage violent,"62080",Saint-Zénon,Imprécise,,Gravité inconnue,2022-05-23,2022-05-21,Non,,2022-06-08,-73.815824,46.559495
+"8",Inondation,"62080",Saint-Zénon,Précise,,Menace possible à la vie ou à la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.723511,46.444694
+"8",Inondation,"12072",Rivière-du-Loup,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-04,,,,2020-10-29,-69.534948,47.836023
+"8",Inondation,"05045",Bonaventure,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-65.447428,48.086775
+"8",Inondation,"05045",Bonaventure,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-02,2021-04-02,Non,,2021-05-07,-65.4519,48.056405
+"158",Fermeture de route,"79910",Lac-Bazinet,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,2022-05-18,Non,,,-74.784631,47.519713
+"154",Fermeture de pont,"79910",Lac-Bazinet,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-18,2022-05-17,Non,,2022-05-27,-74.784631,47.519713
+"8",Inondation,"94220",Ferland-et-Boilleau,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-28,2022-05-28,Non,,2022-07-13,-70.846566,48.182224
+"138",Orage violent,"22045",Sainte-Brigitte-de-Laval,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2021-11-30,-71.197652,46.977415
+"101",Mouvement de terrain,"22045",Sainte-Brigitte-de-Laval,Très précise,"Glissement de terrain, avenue Sainte-Brigitte",Menace faible ou non-existante à la vie ou la propriété,2020-10-22,2020-10-21,Non,,2021-11-30,-71.184022,47.015176
+"101",Mouvement de terrain,"22045",Sainte-Brigitte-de-Laval,Très précise,Glissement de terrain dans la cour arrière,Gravité inconnue,2020-07-09,2020-07-09,Non,,2021-11-30,-71.200745,47.057521
+"25",Panne d'électricité,"22045",Sainte-Brigitte-de-Laval,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-01-07,-71.205474,46.98252
+"9",Érosion,"22045",Sainte-Brigitte-de-Laval,Très précise,Érosion aux 44 et 48 des Pins Sainte-Brigitte-de-Laval,Menace possible à la vie ou à la propriété,2022-05-17,2022-05-17,Non,,,-71.203407,46.962607
+"8",Inondation,"22045",Sainte-Brigitte-de-Laval,Imprécise,,Menace importante à la vie ou à la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.205474,46.98252
+"8",Inondation,"22045",Sainte-Brigitte-de-Laval,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-04-19,-71.202962,46.961951
+"156",Accident de voiture,"71025",Saint-Zotique,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Non,,2022-03-02,-74.245934,45.243217
+"122",Accident maritime,"71025",Saint-Zotique,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-29,2022-06-29,Non,,2022-07-04,-74.273628,45.220989
+"9",Érosion,"05015",Saint-Godefroi,Très précise,Signalement en érosion,Menace faible ou non-existante à la vie ou la propriété,2021-06-07,2021-04-01,Oui,Les changements ont été constatés après la fonte des neiges,2021-08-06,-65.124566,48.071308
+"0",Autre,"98014",Gros-Mécatina,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-23,Non,,,-58.965325,50.828977
+"39",Feu de forêt,"97904",Lac-Walker,Imprécise,,Menace possible à la vie ou à la propriété,2020-05-20,2020-05-20,Non,,2020-11-17,-66.981965,50.71938
+"248",Alimentation publique en eau potable,"66023",Montréal,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-27,2022-06-27,Non,,2022-06-29,-73.599915,45.556314
+"166",Vague de chaleur,"66023",Montréal,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-05,2021-06-06,Non,,2021-06-09,-73.599915,45.556314
+"111",Effondrement de structure,"66023",Montréal,Imprécise,,Menace possible à la vie ou à la propriété,2021-05-20,2021-05-20,Non,,2021-06-09,-73.599915,45.556314
+"110",Risque d'explosion,"66023",Montréal,Très précise,Fuite de méthane provenant d'une poche souterraine,Menace possible à la vie ou à la propriété,2021-10-20,2021-10-20,Non,,2022-01-20,-73.513891,45.603637
+"11",Santé,"66023",Montréal,Imprécise,,Menace possible à la vie ou à la propriété,2022-01-26,,Oui,,,-73.599915,45.556314
+"8",Inondation,"66023",Montréal,Précise,,Menace possible à la vie ou à la propriété,2022-02-25,,,,2022-06-15,-73.567688,45.663584
+"8",Inondation,"66023",Montréal,Imprécise,,Menace possible à la vie ou à la propriété,2021-04-15,2021-04-15,Non,,2021-10-26,-73.599915,45.556314
+"8",Inondation,"66023",Montréal,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-14,2022-04-14,Oui,Depuis quelques jours,,-73.599915,45.556314
+"0",Autre,"66023",Montréal,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-01,2022-05-01,Non,,2022-05-02,-73.575819,45.573342
+"25",Panne d'électricité,"80103",Chénéville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-26,2022-05-21,Non,,,-75.057688,45.883493
+"138",Orage violent,"77043",Saint-Sauveur,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.161133,45.890292
+"25",Panne d'électricité,"80110",Namur,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,,-74.924016,45.890544
+"101",Mouvement de terrain,"95005",Tadoussac,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-29,,Oui,,2020-11-27,-71.372859,46.887337
+"39",Feu de forêt,"95005",Tadoussac,Imprécise,,Menace possible à la vie ou à la propriété,2021-08-07,2021-08-07,Non,,2021-12-06,-69.714124,48.146776
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace possible à la vie ou à la propriété,2020-08-05,2020-08-05,Non,,2021-03-18,-72.271083,48.535411
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-30,2020-07-30,Non,,2020-11-02,-72.23206,48.525067
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-07,2020-08-05,Non,,2021-03-18,-72.251801,48.509926
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-09,2021-07-09,Non,,2021-08-16,-72.191754,48.466502
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-28,2022-05-28,Non,,,-72.197432,48.474773
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-29,,Oui,,,-72.176684,48.453765
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-28,2022-05-27,Non,,,-72.179752,48.455384
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-09,2022-05-27,Non,,,-72.176803,48.453811
+"101",Mouvement de terrain,"91025",Roberval,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-13,2022-05-27,Non,,,-72.176467,48.452822
+"8",Inondation,"91025",Roberval,Imprécise,,Menace possible à la vie ou à la propriété,2020-08-05,2020-08-05,Non,,2021-03-18,-72.22992,48.514132
+"8",Inondation,"91025",Roberval,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-28,2022-05-28,Non,,2022-07-13,-72.22992,48.514132
+"8",Inondation,"07100",Saint-Noël,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,,Oui,,2021-05-19,-67.833174,48.580623
+"138",Orage violent,"75040",Prévost,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.068773,45.853256
+"8",Inondation,"83050",Bouchette,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-28,2022-05-28,Non,,2022-07-20,-75.950899,46.20482
+"8",Inondation,"83050",Bouchette,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-23,2022-07-23,Non,,,-75.950899,46.20482
+"9",Érosion,"18070",Saint-Antoine-de-l'Isle-aux-Grues,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-16,,Oui,Lors des grandes marées d'automne et du printemps,2022-06-06,-70.512595,47.105958
+"39",Feu de forêt,"96902",Rivière-aux-Outardes,Précise,,Menace possible à la vie ou à la propriété,2021-06-08,,,,2021-12-06,-68.8236,49.6564
+"101",Mouvement de terrain,"06045",Matapédia,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-05,2022-04-23,Non,,2022-06-15,-66.947882,47.9566
+"8",Inondation,"06045",Matapédia,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-12,2022-04-12,Non,,2022-06-15,-66.970854,47.917685
+"8",Inondation,"06045",Matapédia,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-05-07,-66.934291,47.961593
+"156",Accident de voiture,"41055",Ascot Corner,Très précise,,Menace possible à la vie ou à la propriété,2022-05-03,2022-05-03,Non,,2022-05-05,-71.738258,45.455163
+"138",Orage violent,"78047",Mont-Blanc,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-21,Non,,2022-06-08,-74.467288,46.122009
+"138",Orage violent,"78055",Montcalm,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-74.550507,45.94582
+"138",Orage violent,"62047",Chertsey,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-73.886652,46.07309
+"8",Inondation,"62047",Chertsey,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-73.886652,46.07309
+"101",Mouvement de terrain,"95032",Longue-Rive,Très précise,,Menace importante à la vie ou à la propriété,2021-04-13,,Oui,le propriétaire à remarqué les déformations ce printemps mais les déformations ne sont pas récentes.,2021-06-22,-69.280624,48.515574
+"8",Inondation,"69050",Elgin,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-15,2021-03-13,Oui,L'évènement est arrivé au courant de la fin de semaine.,2021-10-15,-74.27105,45.021442
+"8",Inondation,"84035",L'Île-du-Grand-Calumet,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-29,2022-04-29,Non,,,-76.703707,45.82658
+"8",Inondation,"94245",Saint-David-de-Falardeau,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-16,2022-05-16,Non,,2022-07-13,-71.001086,48.571771
+"9",Érosion,"59020",Varennes,Très précise,,Menace importante à la vie ou à la propriété,2021-07-27,2021-07-09,Oui,La situation perdure depuis plusieurs années,2021-10-15,-73.471522,45.694242
+"25",Panne d'électricité,"80045",Plaisance,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,,-75.117177,45.6062
+"101",Mouvement de terrain,"96020",Baie-Comeau,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,,Oui,1er ou 2 décembre 2020,2021-03-26,-68.154926,49.286167
+"39",Feu de forêt,"96020",Baie-Comeau,Imprécise,,Menace possible à la vie ou à la propriété,2020-06-19,2020-06-19,Non,,2020-11-17,-68.275959,49.197737
+"138",Orage violent,"63048",Saint-Lin - Laurentides,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-73.757148,45.841008
+"101",Mouvement de terrain,"63048",Saint-Lin - Laurentides,Très précise,Cavités,Menace faible ou non-existante à la vie ou la propriété,2021-01-01,2016-01-01,Oui,Les premières cavités ont été rapportées par la propriétaire en juillet 2015.,2021-04-20,-73.743588,45.844481
+"8",Inondation,"63048",Saint-Lin - Laurentides,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.743399,45.844453
+"8",Inondation,"56083",Saint-Jean-sur-Richelieu,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-12,2021-03-12,Non,,2021-10-15,-73.282325,45.324358
+"138",Orage violent,"46075",Lac-Brome,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-12,,,,,-72.521544,45.241541
+"25",Panne d'électricité,"46075",Lac-Brome,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-12,Non,,2022-02-23,-72.521544,45.241541
+"138",Orage violent,"77030",Piedmont,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-22,Non,,2022-06-08,-74.134698,45.897576
+"8",Inondation,"35045",Saint-Roch-de-Mékinac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-20,,,,2022-05-24,-72.770074,46.810623
+"248",Alimentation publique en eau potable,"25213",Lévis,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-16,2020-06-16,Non,,2021-01-06,-71.288917,46.681309
+"156",Accident de voiture,"25213",Lévis,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-19,2022-01-19,Non,,2022-01-19,-71.245726,46.738906
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-17,2020-07-17,Non,,2021-02-09,-71.1888,46.802483
+"101",Mouvement de terrain,"25213",Lévis,Très précise,Dans le talus derrière la résidence.,Menace faible ou non-existante à la vie ou la propriété,2020-11-10,2020-09-30,Non,,2021-02-18,-71.173507,46.825037
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-10-07,2020-10-03,Non,,2021-02-09,-71.126536,46.828731
+"101",Mouvement de terrain,"25213",Lévis,Très précise,Lot  2 219 154,Menace faible ou non-existante à la vie ou la propriété,2020-11-04,2020-11-03,Non,,2021-03-31,-71.196801,46.767327
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-31,,Oui,Reviens à chaque printemps,2021-06-17,-71.126045,46.72167
+"101",Mouvement de terrain,"25213",Lévis,Très précise,Blocs instables,Menace faible ou non-existante à la vie ou la propriété,2021-07-08,,Oui,"Éboulis de blocs rocheux depuis plusieurs années. Depuis ce printemps 2021, des blocs semblent instables dans le talus.",2021-09-28,-71.362961,46.713412
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace possible à la vie ou à la propriété,2021-07-24,2021-07-24,Non,,2021-09-28,-71.191426,46.793506
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-20,,Oui,Semaine du 11 octobre,2022-01-19,-71.20038,46.781642
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace possible à la vie ou à la propriété,2021-11-02,2021-11-01,Non,,2021-12-14,-71.189288,46.801391
+"101",Mouvement de terrain,"25213",Lévis,Très précise,,Menace possible à la vie ou à la propriété,2022-05-29,2022-05-29,Non,,2022-07-06,-71.193334,46.79012
+"101",Mouvement de terrain,"25213",Lévis,Très précise,glissement de terrain dans le sentier,Menace faible ou non-existante à la vie ou la propriété,2022-07-03,2022-07-02,Oui,Date probablement du 1er ou 2 juillet,,-71.18789,46.74335
+"101",Mouvement de terrain,"25213",Lévis,Très précise,Face au 6210 rue Saint-Laurent Lévis,Menace faible ou non-existante à la vie ou la propriété,2022-07-24,2022-07-24,Non,,,-71.185314,46.814729
+"8",Inondation,"25213",Lévis,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-25,2021-03-25,Non,,2021-04-19,-71.281768,46.711176
+"174",Panne de télécommunication,"98040",Havre-Saint-Pierre,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-20,2020-08-20,Non,,2020-11-17,-63.595746,50.247612
+"8",Inondation,"39170",Saint-Louis-de-Blandford,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-26,Non,,2021-08-18,-72.012422,46.256747
+"138",Orage violent,"76030",Mille-Isles,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.220016,45.816017
+"8",Inondation,"05070",New Richmond,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-01,2020-12-01,Non,,2021-04-19,-65.810938,48.182396
+"248",Alimentation publique en eau potable,"60005",Charlemagne,Imprécise,,Menace possible à la vie ou à la propriété,2022-06-27,2022-06-27,Non,,2022-06-29,-73.489972,45.725359
+"248",Alimentation publique en eau potable,"78032",Sainte-Agathe-des-Monts,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-23,Non,,2022-06-08,-74.288727,46.027567
+"8",Inondation,"78032",Sainte-Agathe-des-Monts,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.234673,46.030102
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.693181,46.945499
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.722414,46.937186
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,,Menace possible à la vie ou à la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.713813,46.934468
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.715309,46.934105
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.69368,46.945507
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.762342,46.910491
+"9",Érosion,"18065",Berthier-sur-Mer,Très précise,Derrière le garage,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.761477,46.910709
+"171",Vent violent,"36033",Shawinigan,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-21,,,,2021-07-26,-72.74579,46.569769
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-07,2020-08-04,Non,,2020-12-09,-72.74241,46.528807
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-07,,Oui,,2021-05-12,-72.687172,46.61015
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-09,2020-09-01,Oui,,2020-12-09,-72.777429,46.544892
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-27,2021-04-10,Oui,,2021-05-11,-72.759647,46.52315
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-16,,Oui,,2021-08-18,-72.742417,46.571365
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Gravité inconnue,2021-01-04,2020-12-31,Non,,2021-03-12,-72.750692,46.561765
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-24,,,,2021-12-29,-72.755617,46.526988
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-25,,Oui,,2021-06-18,-72.787219,46.589723
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-12,,Oui,En cours depuis la dernière année,2021-07-26,-72.753329,46.52684
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace possible à la vie ou à la propriété,2021-07-15,,,,2021-07-26,-72.752815,46.526648
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-26,2021-07-25,Non,,2021-08-18,-72.755131,46.5592
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,,Oui,,2021-08-18,-72.75818,46.482669
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-24,2021-10-24,Non,,2021-12-29,-72.754155,46.526912
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Gravité inconnue,2021-10-24,,Oui,,2021-12-29,-72.753675,46.526876
+"101",Mouvement de terrain,"36033",Shawinigan,Très précise,,Menace possible à la vie ou à la propriété,2022-04-18,2022-04-18,Non,,2022-06-21,-72.69964,46.590199
+"8",Inondation,"36033",Shawinigan,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,,,,,-72.74579,46.569769
+"8",Inondation,"12045",Notre-Dame-des-Sept-Douleurs,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-04,,,,2020-10-29,-69.455711,48.009361
+"138",Orage violent,"62007",Saint-Félix-de-Valois,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-73.437963,46.163767
+"8",Inondation,"62007",Saint-Félix-de-Valois,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-05-14,-73.45,46.140277
+"8",Inondation,"62007",Saint-Félix-de-Valois,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-26,-73.437963,46.163767
+"138",Orage violent,"75045",Saint-Hippolyte,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.024788,45.931499
+"156",Accident de voiture,"58033",Boucherville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-17,2022-01-17,Non,,2022-01-18,-73.453629,45.604183
+"25",Panne d'électricité,"84055",Otter Lake,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-76.43251,45.847637
+"39",Feu de forêt,"14070",Saint-Pacôme,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-20,2020-06-20,Non,,2020-10-29,-69.94394,47.411478
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.556906,46.989594
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.556118,46.989684
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.556446,46.989684
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.555066,46.989775
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.554606,46.989775
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.555789,46.989729
+"9",Érosion,"18050",Montmagny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-21,2020-04-10,Non,,2022-01-17,-70.555395,46.989775
+"174",Panne de télécommunication,"98030",Aguanish,Imprécise,,Menace possible à la vie ou à la propriété,2021-07-20,2021-07-20,Non,,2021-07-22,-62.112006,50.227736
+"101",Mouvement de terrain,"82020",Cantley,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-17,,Oui,printemps-été 2020,2020-12-07,-75.794525,45.54653
+"101",Mouvement de terrain,"82020",Cantley,Très précise,Affaissement de sol,Menace faible ou non-existante à la vie ou la propriété,2020-07-17,,Oui,,2020-12-07,-75.760762,45.55431
+"25",Panne d'électricité,"82020",Cantley,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,2022-05-21,Non,,2022-06-09,-75.782692,45.549999
+"9",Érosion,"19117",Saint-Vallier,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-23,2020-04-10,Non,,2022-01-17,-70.84245,46.884236
+"9",Érosion,"19117",Saint-Vallier,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-23,2020-04-10,Non,,2022-01-17,-70.840912,46.884256
+"138",Orage violent,"76055",Grenville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,2022-05-21,Non,,2022-06-08,-74.600475,45.632358
+"111",Effondrement de structure,"76055",Grenville,Très précise,coordonnées : Latitude 219376.278  Longitude : -5053928.305,Menace faible ou non-existante à la vie ou la propriété,2021-04-13,2021-04-10,Non,,2021-04-27,-74.606606,45.627012
+"39",Feu de forêt,"14055",Saint-Denis-De La Bouteillerie,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-19,2020-06-19,Non,,2020-10-29,-69.938147,47.502551
+"39",Feu de forêt,"14055",Saint-Denis-De La Bouteillerie,Précise,,Gravité inconnue,2021-06-07,2021-06-07,Non,,2021-10-28,-69.937661,47.524049
+"8",Inondation,"14055",Saint-Denis-De La Bouteillerie,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-14,2020-04-10,Non,,2020-10-29,-69.938147,47.502551
+"138",Orage violent,"77060",Wentworth-Nord,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-22,2022-05-22,Non,,2022-06-08,-74.457153,45.849243
+"8",Inondation,"77060",Wentworth-Nord,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-23,2022-06-23,Non,,2022-06-28,-74.337008,45.866828
+"101",Mouvement de terrain,"72010",Deux-Montagnes,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-06-21,,Oui,Le tout a débuté depuis 2018 environ,2021-12-07,-73.904935,45.550809
+"8",Inondation,"72010",Deux-Montagnes,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-26,-73.907393,45.544734
+"158",Fermeture de route,"22020",Shannon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.528924,46.895032
+"154",Fermeture de pont,"22020",Shannon,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-01-18,2021-01-18,Non,,2021-02-03,-71.52515,46.893255
+"101",Mouvement de terrain,"22020",Shannon,Très précise,,Menace possible à la vie ou à la propriété,2021-06-28,2021-06-28,Non,,2021-11-30,-71.524291,46.892736
+"8",Inondation,"22020",Shannon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-27,Non,,,-71.528924,46.895032
+"101",Mouvement de terrain,"59035",Contrecoeur,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-09,2021-03-29,Oui,La propriétaire indique que le mouvement de terrain aurait eu lieu au courant de la semaine dernière.,2021-10-15,-73.21559,45.883289
+"8",Inondation,"57010",Carignan,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-03,Non,,2022-04-12,-73.36952,45.432109
+"101",Mouvement de terrain,"85030",Duhamel-Ouest,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-04,2020-11-16,Oui," Des citoyens avaient déclaré le glissement en novembre 2020 à la municipalité, sans conséquence.  Cette année, il semblerait que l'événement ait évolué.",2022-02-14,-79.451904,47.316025
+"8",Inondation,"19025",Saint-Malachie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-18,2022-02-18,Non,,2022-06-03,-70.731638,46.499974
+"138",Orage violent,"78075",Brébeuf,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-74.669301,46.072304
+"8",Inondation,"69017",Saint-Chrysostome,Imprécise,,Menace possible à la vie ou à la propriété,2022-03-18,2022-03-18,Non,,2022-04-12,-73.757619,45.101266
+"8",Inondation,"92040",Normandin,Précise,,Menace possible à la vie ou à la propriété,2022-05-18,2022-05-18,Non,,2022-05-30,-72.654683,48.807297
+"92",Débordement de barrage,"78130",La Minerve,Précise,,Menace possible à la vie ou à la propriété,2022-06-23,2022-06-23,Non,,2022-06-30,-74.929084,46.243715
+"174",Panne de télécommunication,"90012",La Tuque,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-13,2021-09-13,Non,,2021-10-18,-72.788285,47.437909
+"174",Panne de télécommunication,"90012",La Tuque,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-05,2021-02-04,Non,,2021-03-12,-72.788285,47.437909
+"138",Orage violent,"90012",La Tuque,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-11,,,,2020-12-09,-72.788285,47.437909
+"25",Panne d'électricité,"90012",La Tuque,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-18,2020-07-18,Non,,2020-11-26,-72.788285,47.437909
+"9",Érosion,"90012",La Tuque,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-30,2022-06-27,Non,,,-72.738142,47.590312
+"8",Inondation,"90012",La Tuque,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,,,,,-72.788285,47.437909
+"8",Inondation,"03020",Grande-Vallée,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-13,2022-05-13,Non,,2022-06-15,-65.139518,49.212994
+"8",Inondation,"03020",Grande-Vallée,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-03,2021-09-03,Non,,2021-10-18,-65.130268,49.224839
+"101",Mouvement de terrain,"15035",Clermont,Très précise,,Menace possible à la vie ou à la propriété,2022-07-04,,Oui,Dans la semaine du 27 juin,2022-07-13,-70.250188,47.706162
+"8",Inondation,"15035",Clermont,Précise,,Gravité inconnue,2020-12-26,2020-12-26,Non,,2021-03-26,-70.2524,47.710955
+"138",Orage violent,"78120",Labelle,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-05,2022-07-01,Non,,,-74.731007,46.277129
+"39",Feu de forêt,"78120",Labelle,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-10,2022-05-10,Non,,2022-05-18,-74.731007,46.277129
+"10",Matières dangereuses,"78120",Labelle,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-24,Non,,2022-05-27,-74.731007,46.277129
+"8",Inondation,"78120",Labelle,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.731007,46.277129
+"8",Inondation,"78120",Labelle,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-23,2022-06-22,Non,,2022-07-25,-74.731007,46.277129
+"101",Mouvement de terrain,"51040",Sainte-Ursule,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-14,2022-06-13,Non,,,-72.994293,46.278057
+"174",Panne de télécommunication,"99095",Kuujjuaq,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-03,2022-06-03,Non,,2022-06-09,-68.402435,58.108986
+"39",Feu de forêt,"99095",Kuujjuaq,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-16,2022-06-15,Non,,2022-06-20,-68.197156,57.858565
+"8",Inondation,"51090",Saint-Étienne-des-Grès,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-19,2022-05-19,Non,,,-72.772145,46.469749
+"88",Incendie industriel,"27028",Beauceville,Très précise,Feu à l'entreprise,Menace possible à la vie ou à la propriété,2021-09-20,2021-09-20,Non,,2021-09-28,-70.78315,46.213678
+"9",Érosion,"27028",Beauceville,Très précise,Érosion,Menace faible ou non-existante à la vie ou la propriété,2020-07-22,,Oui,,2020-12-11,-70.782988,46.270495
+"39",Feu de forêt,"14065",Rivière-Ouelle,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-19,2020-06-19,Non,,2020-10-29,-69.934217,47.459562
+"8",Inondation,"14065",Rivière-Ouelle,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-14,,,,2020-10-29,-70.01374,47.4331
+"138",Orage violent,"61045",Notre-Dame-de-Lourdes,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-73.419239,46.096756
+"101",Mouvement de terrain,"61045",Notre-Dame-de-Lourdes,Très précise,Glissement de terrain,Menace possible à la vie ou à la propriété,2020-04-14,2020-04-14,Non,,2021-11-11,-73.512776,46.084689
+"101",Mouvement de terrain,"61045",Notre-Dame-de-Lourdes,Très précise,Glissement de terrain,Menace possible à la vie ou à la propriété,2020-04-14,2020-04-14,Non,,2021-11-11,-73.490474,46.103904
+"101",Mouvement de terrain,"61045",Notre-Dame-de-Lourdes,Très précise,Glissement de terrain dans le talus,Menace faible ou non-existante à la vie ou la propriété,2022-06-07,2022-06-05,Non,,,-73.501478,46.085371
+"8",Inondation,"61045",Notre-Dame-de-Lourdes,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-73.419239,46.096756
+"8",Inondation,"61045",Notre-Dame-de-Lourdes,Précise,,Menace possible à la vie ou à la propriété,2021-03-27,2021-03-26,Non,,2021-10-26,-73.479877,46.114038
+"138",Orage violent,"62025",Saint-Alphonse-Rodriguez,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-73.692415,46.183412
+"25",Panne d'électricité,"56035",Saint-Paul-de-l'Île-aux-Noix,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-12,2021-12-11,Non,,2022-02-23,-73.267572,45.1367
+"101",Mouvement de terrain,"83070",Déléage,Très précise,,Menace importante à la vie ou à la propriété,2021-04-29,,,,2022-02-23,-75.958951,46.408212
+"9",Érosion,"83070",Déléage,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-19,,Oui,,2022-03-09,-75.955788,46.35605
+"9",Érosion,"83070",Déléage,Très précise,,Menace possible à la vie ou à la propriété,2022-04-20,,Oui,,2022-07-21,-75.955788,46.35605
+"9",Érosion,"83070",Déléage,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-20,,Oui,,2022-07-21,-75.954336,46.357625
+"8",Inondation,"83070",Déléage,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-25,Non,,2022-07-20,-75.917915,46.381001
+"8",Inondation,"04902",Mont-Albert,Précise,,Menace possible à la vie ou à la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-66.494883,49.068526
+"8",Inondation,"04902",Mont-Albert,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,2022-05-17,Non,,2022-06-15,-66.492105,49.06515
+"248",Alimentation publique en eau potable,"93055",Labrecque,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-17,2021-12-15,Non,,2021-12-29,-71.524551,48.668596
+"158",Fermeture de route,"94930",Mont-Valin,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-27,2022-05-27,Non,,2022-07-13,-70.652058,50.529647
+"39",Feu de forêt,"94930",Mont-Valin,Précise,,Menace possible à la vie ou à la propriété,2021-06-07,2021-06-07,Non,,2021-08-16,-70.460112,48.913524
+"39",Feu de forêt,"94930",Mont-Valin,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-10,2021-06-08,Non,,2021-08-16,-70.652058,50.529647
+"112",Risque de gaz toxiques,"88055",Amos,Très précise,,Menace possible à la vie ou à la propriété,2020-09-22,2020-09-22,Non,,2020-09-24,-78.12629,48.574402
+"110",Risque d'explosion,"70022",Beauharnois,Très précise,,Menace possible à la vie ou à la propriété,2022-05-06,2022-05-06,Non,,2022-05-06,-73.87865,45.314225
+"248",Alimentation publique en eau potable,"52080",Saint-Gabriel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-07,2021-04-07,Non,,2021-04-27,-73.385246,46.293758
+"138",Orage violent,"52080",Saint-Gabriel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-73.385246,46.293758
+"174",Panne de télécommunication,"79105",Lac-Saint-Paul,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-10-29,2020-10-29,Non,,2020-12-11,-75.309476,46.73195
+"138",Orage violent,"77035",Sainte-Anne-des-Lacs,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.137373,45.853234
+"101",Mouvement de terrain,"77035",Sainte-Anne-des-Lacs,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-18,2021-04-17,Oui,,2021-08-19,-74.103224,45.887388
+"101",Mouvement de terrain,"77035",Sainte-Anne-des-Lacs,Très précise,,Menace importante à la vie ou à la propriété,2021-04-17,2021-04-17,Non,,2021-08-19,-74.103442,45.886823
+"101",Mouvement de terrain,"16013",Baie-Saint-Paul,Très précise,940-942 Mgr-de-Laval,Menace faible ou non-existante à la vie ou la propriété,2021-06-09,,Oui,,2021-10-28,-70.519556,47.439717
+"101",Mouvement de terrain,"16013",Baie-Saint-Paul,Très précise,"950 Mgr-de-Laval, Baie-Saint-Paul",Menace faible ou non-existante à la vie ou la propriété,2021-07-12,,Oui,,2021-10-28,-70.518682,47.440257
+"101",Mouvement de terrain,"16013",Baie-Saint-Paul,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-22,,Oui,Affaissement d'une première section du mur de soutènement en septembre 2015. Affaissement de 3 autres parties du mur de soutènement entre 2016 et 2021.,2021-06-29,-70.508948,47.446353
+"101",Mouvement de terrain,"16013",Baie-Saint-Paul,Très précise,mur de soutènement qui menace de s’affaisser,Gravité inconnue,2021-06-22,,Oui,Problématique existante depuis plusieurs années,2021-11-24,-70.506137,47.442326
+"101",Mouvement de terrain,"16013",Baie-Saint-Paul,Très précise,"948 Mgr-de-Laval, Baie-Saint-Paul",Menace faible ou non-existante à la vie ou la propriété,2021-07-12,,Oui,,2021-10-28,-70.518894,47.440068
+"101",Mouvement de terrain,"16013",Baie-Saint-Paul,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-06-29,,Oui,,2021-10-28,-70.519185,47.439924
+"8",Inondation,"16013",Baie-Saint-Paul,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-01-07,-70.508813,47.439529
+"138",Orage violent,"78015",Lantier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.251266,46.148415
+"8",Inondation,"78015",Lantier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.251266,46.148415
+"138",Orage violent,"62015",Saint-Jean-de-Matha,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-73.529799,46.225812
+"8",Inondation,"21010",Saint-Ferréol-les-Neiges,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-26,2020-12-25,Non,,2021-03-26,-70.890164,47.086132
+"8",Inondation,"71070",Pincourt,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-15,-73.993766,45.361322
+"112",Risque de gaz toxiques,"60013",Repentigny,Très précise,Émanations toxiques dans une école primaire,Menace faible ou non-existante à la vie ou la propriété,2021-03-16,2021-03-16,Non,,2021-03-23,-73.428617,45.774438
+"101",Mouvement de terrain,"60013",Repentigny,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-29,2021-04-21,Non,,2022-03-21,-73.481431,45.731306
+"10",Matières dangereuses,"60013",Repentigny,Très précise,,Menace possible à la vie ou à la propriété,2021-09-10,,,,2021-09-15,-73.416534,45.792592
+"25",Panne d'électricité,"09077",Mont-Joli,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-04-26,-68.192937,48.591149
+"25",Panne d'électricité,"80095",Lac-Simon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-21,Non,,,-75.088106,45.917977
+"0",Autre,"80095",Lac-Simon,Imprécise,,Gravité inconnue,2021-06-15,,,,2021-08-09,-75.088106,45.917977
+"8",Inondation,"22025",Saint-Gabriel-de-Valcartier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-26,2020-12-26,Non,,2021-03-26,-71.498599,46.985949
+"158",Fermeture de route,"98050",Rivière-Saint-Jean,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-03-13,,,,2020-11-17,-64.327103,50.295672
+"25",Panne d'électricité,"98050",Rivière-Saint-Jean,Imprécise,,Menace possible à la vie ou à la propriété,2020-06-03,2020-06-03,Non,,2020-09-22,-64.327103,50.295672
+"9",Érosion,"98050",Rivière-Saint-Jean,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-02,,,,2021-10-13,-64.337795,50.2896
+"101",Mouvement de terrain,"92022",Dolbeau-Mistassini,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-20,,Oui,Printemps 2021,2021-10-12,-72.202894,48.896169
+"101",Mouvement de terrain,"50035",Saint-Célestin,Très précise,Glissement,Menace faible ou non-existante à la vie ou la propriété,2021-04-06,,Oui,Printemps 2021,2021-08-18,-72.391327,46.245631
+"101",Mouvement de terrain,"50035",Saint-Célestin,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-21,,Oui,Printemps ou début de l'été 2022,,-72.362958,46.254744
+"101",Mouvement de terrain,"94235",Saint-Fulgence,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-16,2022-06-16,Non,,,-70.924117,48.45729
+"101",Mouvement de terrain,"94235",Saint-Fulgence,Très précise,Signalement instabilité du sol,Menace faible ou non-existante à la vie ou la propriété,2022-06-17,2022-06-13,Non,,,-70.904743,48.450508
+"101",Mouvement de terrain,"94235",Saint-Fulgence,Très précise,,Menace possible à la vie ou à la propriété,2022-06-14,2022-06-14,Non,,,-70.887724,48.44657
+"101",Mouvement de terrain,"94235",Saint-Fulgence,Très précise,,Menace possible à la vie ou à la propriété,2022-06-13,2022-06-13,Non,,,-70.901678,48.448798
+"101",Mouvement de terrain,"94235",Saint-Fulgence,Très précise,,Menace possible à la vie ou à la propriété,2022-06-14,2022-06-13,Non,,,-70.905249,48.450498
+"101",Mouvement de terrain,"18060",Saint-François-de-la-Rivière-du-Sud,Très précise,Entreprise Garant,Menace possible à la vie ou à la propriété,2020-12-02,2019-10-31,Non,,2021-02-09,-70.706266,46.887827
+"101",Mouvement de terrain,"96030",Pointe-aux-Outardes,Très précise,,Menace possible à la vie ou à la propriété,2020-04-14,2020-04-08,Oui,Glissement constaté par la propriétaire le 8 avril 2020,2020-09-22,-68.325608,49.089322
+"10",Matières dangereuses,"17078",L'Islet,Très précise,,Gravité inconnue,2021-10-20,2021-10-20,Non,,2021-10-20,-70.357947,47.1045
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-26,2020-04-10,Non,,2022-01-17,-70.391182,47.110336
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-11,2020-04-10,Non,,2022-01-17,-70.409754,47.09669
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-11,2020-04-10,Non,,2022-01-17,-70.336192,47.150503
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-11,2020-04-10,Non,,2022-01-17,-70.335801,47.150783
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.329611,47.15499
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.329043,47.155505
+"9",Érosion,"17078",L'Islet,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.328726,47.155698
+"8",Inondation,"61050",Sainte-Mélanie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-26,-73.441415,46.126386
+"0",Autre,"61050",Sainte-Mélanie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-10,,Oui,"Selon Patricia Plante (MELCC, secteur hydrique), le déversement se serait produit à l'automne 2020.",2022-02-23,-73.493908,46.136343
+"0",Autre,"46080",Cowansville,Précise,,Menace possible à la vie ou à la propriété,2020-11-24,2020-11-24,Non,,2021-04-19,-72.772443,45.207064
+"0",Autre,"46080",Cowansville,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-21,2021-06-21,Non,,2022-02-23,-72.738808,45.203909
+"8",Inondation,"41117",Dudswell,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-12,2021-03-12,Non,,2021-10-15,-71.588334,45.629369
+"9",Érosion,"02028",Chandler,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-05,2021-02-03,Non,,2021-05-04,-64.689619,48.331714
+"9",Érosion,"02028",Chandler,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-05,2021-02-02,Non,,2021-05-04,-64.689788,48.331569
+"9",Érosion,"02028",Chandler,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-05,2021-02-02,Non,,2021-05-04,-64.689957,48.331436
+"8",Inondation,"02028",Chandler,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-64.705052,48.344276
+"8",Inondation,"02028",Chandler,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-31,2021-03-31,Non,,2021-05-07,-64.736119,48.27191
+"158",Fermeture de route,"83095",Grand-Remous,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-20,2021-05-14,Non,,2021-06-03,-75.903359,46.615824
+"8",Inondation,"83095",Grand-Remous,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-27,2022-05-27,Non,,2022-07-20,-75.903359,46.615824
+"138",Orage violent,"75005",Saint-Colomban,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-74.1363,45.738686
+"39",Feu de forêt,"14085",La Pocatière,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-19,2020-06-19,Non,,2020-10-29,-70.029224,47.36295
+"8",Inondation,"14085",La Pocatière,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-14,2022-04-14,Non,,2022-05-30,-70.029224,47.36295
+"138",Orage violent,"76020",Lachute,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-17,-74.343121,45.650337
+"112",Risque de gaz toxiques,"76020",Lachute,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-16,,,,2022-05-17,-74.343121,45.650337
+"101",Mouvement de terrain,"76020",Lachute,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-04-26,2021-04-25,Non,,2022-01-12,-74.306786,45.668653
+"101",Mouvement de terrain,"76020",Lachute,Très précise,Mouvement de sol,Menace possible à la vie ou à la propriété,2022-06-23,2022-06-22,Non,,,-74.250781,45.663536
+"0",Autre,"76020",Lachute,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,2021-03-29,Non,,2021-03-30,-74.343121,45.650337
+"248",Alimentation publique en eau potable,"99140",Ivujivik,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-23,2020-05-25,Non,,2021-01-06,-77.91365,62.416225
+"248",Alimentation publique en eau potable,"99140",Ivujivik,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-28,2022-02-25,Oui,Date du signalement,2022-03-09,-77.91365,62.416225
+"8",Inondation,"37235",Notre-Dame-du-Mont-Carmel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,,,,2022-06-03,-72.686976,46.476986
+"101",Mouvement de terrain,"67010",Saint-Philippe,Très précise,,Menace possible à la vie ou à la propriété,2022-04-20,2022-04-20,Non,,,-73.471939,45.306287
+"138",Orage violent,"73010",Sainte-Thérèse,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-26,2022-05-21,Non,,2022-06-08,-73.844902,45.640846
+"8",Inondation,"73010",Sainte-Thérèse,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-04-27,-73.851031,45.640876
+"8",Inondation,"73010",Sainte-Thérèse,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,,,,2021-10-26,-73.844902,45.640846
+"8",Inondation,"41098",Weedon,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-25,Non,,2021-10-15,-71.43821,45.686041
+"8",Inondation,"41098",Weedon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-13,,,,,-71.459594,45.702035
+"8",Inondation,"51015",Louiseville,Imprécise,,Menace possible à la vie ou à la propriété,2020-12-25,2020-12-25,Non,,2021-11-02,-72.941573,46.255809
+"8",Inondation,"51015",Louiseville,Imprécise,,Menace possible à la vie ou à la propriété,2021-03-26,2021-03-26,Non,,2021-08-18,-72.941573,46.255809
+"101",Mouvement de terrain,"50057",Sainte-Monique,Très précise,,Gravité inconnue,2021-03-31,2021-03-29,Non,,2021-08-18,-72.55454,46.158226
+"9",Érosion,"50057",Sainte-Monique,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-21,,Oui,,,-72.500744,46.147776
+"101",Mouvement de terrain,"94240",Saint-Honoré,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2022-05-05,2022-04-30,Non,,2022-05-31,-71.025953,48.502047
+"101",Mouvement de terrain,"94240",Saint-Honoré,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-19,2022-06-28,Non,,,-71.092751,48.515863
+"58",Écrasement d'avion,"83040",Cayamant,Très précise,A proximité,Menace possible à la vie ou à la propriété,2021-07-02,2021-07-02,Non,,2021-08-26,-76.277315,46.136718
+"25",Panne d'électricité,"83040",Cayamant,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-76.267861,46.13889
+"8",Inondation,"22035",Stoneham-et-Tewkesbury,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.379833,47.011234
+"112",Risque de gaz toxiques,"46078",Bromont,Très précise,"Les immeubles du 145, 147 et 149 évacués",Menace faible ou non-existante à la vie ou la propriété,2021-11-25,2021-11-25,Non,,2022-03-11,-72.651824,45.303436
+"101",Mouvement de terrain,"63030",Saint-Esprit,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-14,2021-08-15,Oui,Premières fissures remarquées au mois d'août 2021,2022-05-10,-73.596143,45.898023
+"8",Inondation,"63030",Saint-Esprit,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-14,2020-04-13,Non,,2021-01-26,-73.638164,45.89906
+"101",Mouvement de terrain,"50042",Saint-Léonard-d'Aston,Très précise,,Menace importante à la vie ou à la propriété,2022-04-08,2022-04-07,Non,,,-72.358308,46.093639
+"10",Matières dangereuses,"09035",Sainte-Angèle-de-Mérici,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-09-01,2020-09-01,Non,,2020-09-02,-68.000532,48.527229
+"25",Panne d'électricité,"68020",Sainte-Clotilde,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-14,2021-12-11,Non,,2022-02-23,-73.679576,45.160699
+"248",Alimentation publique en eau potable,"15005",Saint-Irénée,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-26,2020-12-26,Non,,2021-02-23,-70.207304,47.570983
+"156",Accident de voiture,"71005",Rivière-Beaudette,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Non,,2022-03-02,-74.328506,45.227459
+"171",Vent violent,"11050",Saint-Mathieu-de-Rioux,Imprécise,,Gravité inconnue,2020-06-11,2020-06-11,Non,,2020-10-29,-68.981537,48.186632
+"138",Orage violent,"76043",Brownsburg-Chatham,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-21,Non,,2022-06-08,-74.408706,45.676731
+"101",Mouvement de terrain,"95025",Les Escoumins,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-27,2020-12-27,Non,,2021-06-22,-69.406417,48.347526
+"8",Inondation,"95025",Les Escoumins,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-26,2020-12-26,Non,,2021-06-22,-69.404768,48.33158
+"9",Érosion,"95050",Colombier,Très précise,perte infrastructure eau potable,Menace faible ou non-existante à la vie ou la propriété,2021-05-10,,Oui,causé par les grandes marées en novembre 2020,2021-06-22,-68.882593,48.826353
+"248",Alimentation publique en eau potable,"12043",L'Isle-Verte,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-04,2021-10-04,Non,,2021-10-28,-69.333134,48.015692
+"8",Inondation,"12043",L'Isle-Verte,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-14,2020-04-14,Non,,2020-10-29,-69.333134,48.015692
+"10",Matières dangereuses,"67020",Candiac,Imprécise,,Menace importante à la vie ou à la propriété,2021-04-08,2021-04-08,Non,,2021-04-19,-73.517403,45.392826
+"25",Panne d'électricité,"97040",Schefferville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-10-31,2020-10-31,Non,,2020-11-27,-66.831702,54.809537
+"101",Mouvement de terrain,"34065",Saint-Marc-des-Carrières,Très précise,,Menace possible à la vie ou à la propriété,2021-04-23,,Oui,Dans la semaine suivant le redoux hivernal de Noël,2021-11-30,-72.011539,46.761773
+"139",Tornade,"41012",Saint-Isidore-de-Clifton,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-28,2020-07-27,Non,,2020-09-09,-71.40329,45.309969
+"174",Panne de télécommunication,"01023",Les Îles-de-la-Madeleine,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-15,2021-12-15,Non,,2022-05-11,-61.862093,47.37937
+"138",Orage violent,"01023",Les Îles-de-la-Madeleine,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-03,2021-09-02,Non,,2021-10-18,-61.862093,47.37937
+"8",Inondation,"54115",Saint-Bernard-de-Michaudville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-21,2022-03-20,Non,,2022-04-12,-73.061199,45.829438
+"39",Feu de forêt,"85005",Témiscaming,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-09,2022-05-09,Non,,2022-05-18,-79.079913,46.724698
+"101",Mouvement de terrain,"93035",Saint-Gédéon,Très précise,Fissure,Menace possible à la vie ou à la propriété,2022-07-06,,Oui,La fissure serait présent depuis plus d'un an,,-71.777882,48.5126
+"8",Inondation,"29013",Saint-Gédéon-de-Beauce,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-23,2022-02-23,Non,,2022-06-03,-70.641854,45.849439
+"101",Mouvement de terrain,"21025",Beaupré,Très précise,,Gravité inconnue,2022-04-13,,Oui,autour du 11 avril dernier,,-70.892502,47.048428
+"8",Inondation,"21025",Beaupré,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-01-08,2020-12-25,Non,,2021-03-26,-70.909113,47.042923
+"101",Mouvement de terrain,"19105",Beaumont,Très précise,Derrière la résidence,Menace faible ou non-existante à la vie ou la propriété,2022-04-25,2022-04-25,Non,,2022-06-06,-70.985529,46.833863
+"101",Mouvement de terrain,"48015",Roxton,Très précise,,Menace possible à la vie ou à la propriété,2020-06-08,2020-06-05,Oui,"Remarqué par un citoyen durant la fin de semaine, peut s'être produit avant car la visibilité en bordure de route était faible en raison de la végétation.",2021-03-15,-72.543163,45.590104
+"174",Panne de télécommunication,"99115",Quaqtaq,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-23,2022-02-23,Non,,2022-02-24,-69.632369,61.046539
+"101",Mouvement de terrain,"49130",Saint-Pie-de-Guire,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-20,,Oui,,2021-11-01,-72.77242,45.98569
+"248",Alimentation publique en eau potable,"76008",Saint-André-d'Argenteuil,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-19,2022-02-19,Non,,2022-04-07,-74.340375,45.582427
+"8",Inondation,"76008",Saint-André-d'Argenteuil,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,2021-03-29,Non,,2021-10-26,-74.343601,45.555597
+"248",Alimentation publique en eau potable,"51075",Saint-Élie-de-Caxton,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-04,2020-11-03,Non,,2020-12-25,-72.963939,46.494874
+"8",Inondation,"51008",Maskinongé,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-30,2021-03-30,Non,,2021-08-18,-73.013967,46.225303
+"8",Inondation,"93005",Desbiens,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-31,,Oui,,2022-07-13,-71.947967,48.415782
+"101",Mouvement de terrain,"91042",Saint-Félicien,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-15,,Oui,Propriétaire absent tout l'hiver.  Glissement survenu ce printemps mais la date précise est inconnue.,2021-06-15,-72.46896,48.683586
+"8",Inondation,"91042",Saint-Félicien,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-18,2022-05-18,Non,,2022-07-13,-72.455019,48.650622
+"138",Orage violent,"78010",Val-David,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,,,,2022-06-08,-74.207787,46.029472
+"101",Mouvement de terrain,"37240",Saint-Narcisse,Très précise,,Menace possible à la vie ou à la propriété,2021-03-30,2021-03-29,Non,,2021-08-18,-72.497274,46.523099
+"138",Orage violent,"78005",Val-Morin,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.18927,46.007633
+"130",Pluie verglaçante,"78005",Val-Morin,Imprécise,,Menace possible à la vie ou à la propriété,2021-11-18,,,,2021-12-06,-74.18927,46.007633
+"25",Panne d'électricité,"08035",Saint-René-de-Matane,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-04-26,-67.389662,48.713436
+"8",Inondation,"34025",Donnacona,Précise,,Menace possible à la vie ou à la propriété,2021-03-27,2021-03-27,Non,,2021-04-19,-71.689399,46.696359
+"139",Tornade,"77065",Saint-Adolphe-d'Howard,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-23,2022-07-23,Non,,,-74.327192,45.966298
+"138",Orage violent,"77065",Saint-Adolphe-d'Howard,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.327192,45.966298
+"101",Mouvement de terrain,"34097",Saint-Alban,Très précise,,Menace possible à la vie ou à la propriété,2022-04-14,2022-04-13,Non,,,-72.091701,46.726349
+"8",Inondation,"34097",Saint-Alban,Imprécise,,Menace possible à la vie ou à la propriété,2020-12-26,2020-12-25,Non,,2021-03-26,-72.080268,46.717355
+"158",Fermeture de route,"89008",Val-d'Or,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-28,2021-04-28,Non,,2021-04-30,-77.813548,48.081427
+"158",Fermeture de route,"89008",Val-d'Or,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-22,2022-02-22,Non,,2022-03-07,-77.813548,48.081427
+"101",Mouvement de terrain,"89008",Val-d'Or,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-08,2021-07-08,Non,,2021-07-21,-77.885411,48.05372
+"25",Panne d'électricité,"89008",Val-d'Or,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-03,2020-11-03,Non,,2020-11-19,-77.813548,48.081427
+"8",Inondation,"79065",Chute-Saint-Philippe,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-28,2022-05-28,Non,,2022-06-03,-75.238642,46.65656
+"8",Inondation,"39025",Tingwick,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-22,2022-03-21,Non,,2022-03-25,-71.942893,45.881827
+"154",Fermeture de pont,"79088",Mont-Laurier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-14,2022-04-14,Non,,2022-06-21,-75.50628,46.553061
+"101",Mouvement de terrain,"79088",Mont-Laurier,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-06,,Oui,Érosion des dernières années,2020-12-11,-75.509123,46.551618
+"8",Inondation,"22005",Sainte-Catherine-de-la-Jacques-Cartier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.617882,46.846527
+"8",Inondation,"22005",Sainte-Catherine-de-la-Jacques-Cartier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,,-71.617882,46.846527
+"101",Mouvement de terrain,"73030",Bois-des-Filion,Très précise,Mouvement de sol (ravinement),Menace faible ou non-existante à la vie ou la propriété,2021-10-28,,Oui,depuis les 3 dernières années environ,2022-01-27,-73.771885,45.674993
+"25",Panne d'électricité,"09020",Sainte-Jeanne-d'Arc,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-04-26,-67.960478,48.494914
+"248",Alimentation publique en eau potable,"97007",Sept-Îles,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-24,2020-07-24,Non,,2020-09-22,-66.371158,50.220961
+"158",Fermeture de route,"97007",Sept-Îles,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-02,2021-03-02,Non,,2021-03-10,-66.371158,50.220961
+"101",Mouvement de terrain,"97007",Sept-Îles,Très précise,,Menace possible à la vie ou à la propriété,2020-11-16,2020-10-17,Non,,2022-01-25,-66.531932,50.22598
+"101",Mouvement de terrain,"97007",Sept-Îles,Très précise,Mouvement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-04-20,2021-01-01,Non,,2022-01-25,-66.53205,50.225684
+"8",Inondation,"97007",Sept-Îles,Précise,,Menace possible à la vie ou à la propriété,2020-12-27,2020-12-26,Non,,2021-06-22,-66.127944,50.313106
+"101",Mouvement de terrain,"26015",Vallée-Jonction,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-15,2022-06-04,Oui,Fin de semaine du 4 juin,,-70.920683,46.374061
+"101",Mouvement de terrain,"07047",Amqui,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-11,,Oui,Dans la nuit du 10 au 11 novembre 2020,2021-02-11,-67.424122,48.462504
+"101",Mouvement de terrain,"07047",Amqui,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-12,,Oui,Signalement en date du 12 avril 2021,2021-04-16,-67.428845,48.462428
+"8",Inondation,"07047",Amqui,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-30,2020-04-30,Non,,2020-10-29,-67.434026,48.461252
+"138",Orage violent,"77022",Sainte-Adèle,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,,,,2022-06-08,-74.133059,45.940146
+"92",Débordement de barrage,"77022",Sainte-Adèle,Très précise,Débordement de barrage,Gravité inconnue,2020-12-25,2020-12-25,Non,,2021-04-27,-74.159539,45.921622
+"8",Inondation,"77022",Sainte-Adèle,Imprécise,,Gravité inconnue,2020-12-25,2020-12-25,Non,,2021-04-27,-74.133059,45.940146
+"8",Inondation,"33025",Saint-Patrice-de-Beaurivage,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-21,2022-02-20,Non,,2022-06-03,-71.199179,46.417103
+"88",Incendie industriel,"66007",Montréal-Est,Très précise,Feu Kocas Recyclage,Menace faible ou non-existante à la vie ou la propriété,2022-06-26,2022-06-26,Non,,2022-06-29,-73.515916,45.627958
+"101",Mouvement de terrain,"83005",Denholm,Très précise,Mouvement de sol/érosion,Menace faible ou non-existante à la vie ou la propriété,2021-11-05,2021-07-13,Non,,2022-03-09,-75.808931,45.853718
+"25",Panne d'électricité,"83005",Denholm,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-07-20,-75.747391,45.813049
+"158",Fermeture de route,"60020",Saint-Sulpice,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-19,2022-01-19,Non,,2022-01-31,-73.366944,45.820168
+"101",Mouvement de terrain,"55023",Saint-Césaire,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-22,,Oui,Constaté par un ingénieur de Shellex été 2021,2022-04-12,-72.992792,45.386832
+"101",Mouvement de terrain,"04010",Saint-Maxime-du-Mont-Louis,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-22,2021-08-11,Non,,2021-08-19,-65.661366,49.24534
+"101",Mouvement de terrain,"04010",Saint-Maxime-du-Mont-Louis,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-19,2021-08-02,Non,,2021-09-20,-65.739995,49.234444
+"8",Inondation,"04010",Saint-Maxime-du-Mont-Louis,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-04,2021-09-04,Non,,2021-10-18,-65.598795,49.222095
+"138",Orage violent,"79060",Lac-Saguay,Précise,,Menace possible à la vie ou à la propriété,2022-06-22,2022-06-21,Non,,,-75.128181,46.500201
+"101",Mouvement de terrain,"79060",Lac-Saguay,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-21,2022-06-22,Non,,2022-07-25,-75.115155,46.483527
+"88",Incendie industriel,"31084",Thetford Mines,Très précise,Site de l'incendie - Compagnie Pneu Benoit Roy,Menace possible à la vie ou à la propriété,2021-03-17,2021-03-17,Non,,2021-03-23,-71.297747,46.113084
+"158",Fermeture de route,"82015",Val-des-Monts,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,2021-03-28,Non,,2021-12-15,-75.562339,45.595687
+"25",Panne d'électricité,"82015",Val-des-Monts,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-75.623351,45.59431
+"25",Panne d'électricité,"82015",Val-des-Monts,Imprécise,,Gravité inconnue,2022-05-22,2022-05-21,Non,,2022-07-21,-75.623351,45.59431
+"9",Érosion,"52050",La Visitation-de-l'Île-Dupas,Très précise,Lot 4 506 289 (Yvon Dupuis),Menace faible ou non-existante à la vie ou la propriété,2021-08-13,2021-08-13,Oui,La municipalité a été informée il y a un an de cette situation.,2022-02-16,-73.040444,46.148902
+"9",Érosion,"52050",La Visitation-de-l'Île-Dupas,Très précise,Lot 4 506 287 (Mariette Gervais),Menace faible ou non-existante à la vie ou la propriété,2021-08-13,2021-08-13,Oui,"Depuis environ 20 ans, les berges s'érodent; environ 10 pieds auraient été perdus.",2022-02-16,-73.03949,46.148404
+"9",Érosion,"52050",La Visitation-de-l'Île-Dupas,Très précise,Lot 4 507 309 (Stéphane Adam et Lyne Lacoursière),Menace faible ou non-existante à la vie ou la propriété,2021-08-13,2021-08-13,Non,,2022-02-16,-73.040833,46.149255
+"174",Panne de télécommunication,"81017",Gatineau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-09,-75.755136,45.453727
+"166",Vague de chaleur,"81017",Gatineau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-08,2020-07-07,Non,,2020-12-07,-75.755136,45.453727
+"166",Vague de chaleur,"81017",Gatineau,Imprécise,,Menace possible à la vie ou à la propriété,2021-08-25,,,,2022-02-23,-75.755136,45.453727
+"166",Vague de chaleur,"81017",Gatineau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-20,2021-08-20,Non,,2022-02-23,-75.755136,45.453727
+"166",Vague de chaleur,"81017",Gatineau,Imprécise,,Menace possible à la vie ou à la propriété,2021-08-10,,,,2021-08-23,-75.755136,45.453727
+"138",Orage violent,"81017",Gatineau,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,2022-05-21,Non,,2022-06-09,-75.755136,45.453727
+"101",Mouvement de terrain,"81017",Gatineau,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-11-04,,Oui,,2022-03-09,-75.743442,45.49078
+"92",Débordement de barrage,"81017",Gatineau,Très précise,,Menace possible à la vie ou à la propriété,2021-03-26,,,,2021-12-15,-75.452527,45.543725
+"25",Panne d'électricité,"81017",Gatineau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-09,-75.755136,45.453727
+"8",Inondation,"81017",Gatineau,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-23,2022-05-23,Non,,2022-06-09,-75.755136,45.453727
+"39",Feu de forêt,"88035",Landrienne,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-18,2021-06-18,Non,,2021-07-05,-77.95506,48.547889
+"101",Mouvement de terrain,"52040",Sainte-Geneviève-de-Berthier,Très précise,,Menace possible à la vie ou à la propriété,2020-12-16,2020-12-13,Non,,2021-10-07,-73.239545,46.087103
+"101",Mouvement de terrain,"52040",Sainte-Geneviève-de-Berthier,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-13,,,,2021-10-07,-73.238595,46.093966
+"154",Fermeture de pont,"78095",Lac-Supérieur,Très précise,,Menace possible à la vie ou à la propriété,2022-05-03,2022-05-02,Non,,2022-06-03,-74.52027,46.132404
+"138",Orage violent,"78095",Lac-Supérieur,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-74.471085,46.206802
+"101",Mouvement de terrain,"78095",Lac-Supérieur,Très précise,Glissement de terrain provoqué par les pluies abondantes (50-80mm),Menace possible à la vie ou à la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.47709,46.186144
+"101",Mouvement de terrain,"78095",Lac-Supérieur,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.491983,46.173473
+"101",Mouvement de terrain,"78095",Lac-Supérieur,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.492532,46.173778
+"101",Mouvement de terrain,"78095",Lac-Supérieur,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.493622,46.174193
+"9",Érosion,"78095",Lac-Supérieur,Très précise,Érosion fluviale lors des pluies abondantes du 30 juin 2021,Menace importante à la vie ou à la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.489018,46.171468
+"9",Érosion,"78095",Lac-Supérieur,Très précise,Érosion fluviale,Menace possible à la vie ou à la propriété,2021-07-08,2021-06-30,Non,,2022-02-23,-74.470242,46.186441
+"8",Inondation,"78095",Lac-Supérieur,Précise,,Menace possible à la vie ou à la propriété,2021-03-26,,,,2021-10-26,-74.469766,46.186101
+"8",Inondation,"78095",Lac-Supérieur,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.48326,46.179912
+"138",Orage violent,"63060",Sainte-Julienne,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-23,Non,,2022-06-08,-73.699862,45.972351
+"101",Mouvement de terrain,"63060",Sainte-Julienne,Très précise,Mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2020-04-18,2020-04-14,Non,,2021-03-23,-73.71047,45.955913
+"9",Érosion,"63060",Sainte-Julienne,Très précise,,Menace importante à la vie ou à la propriété,2021-07-14,2020-12-25,Non,,2021-10-07,-73.721997,45.962662
+"8",Inondation,"63060",Sainte-Julienne,Précise,,Menace importante à la vie ou à la propriété,2020-04-15,2020-04-14,Non,,2021-03-23,-73.730692,45.980147
+"8",Inondation,"16005",Petite-Rivière-Saint-François,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-01-07,-70.567501,47.303759
+"138",Orage violent,"62065",Saint-Côme,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-73.760341,46.278646
+"8",Inondation,"62065",Saint-Côme,Imprécise,,Menace possible à la vie ou à la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.760341,46.278646
+"158",Fermeture de route,"51020",Yamachiche,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-25,2021-12-25,Non,,2021-12-29,-72.832553,46.28306
+"8",Inondation,"51020",Yamachiche,Précise,,Menace possible à la vie ou à la propriété,2020-12-25,2020-12-25,Non,,2021-11-02,-72.800319,46.275971
+"8",Inondation,"51020",Yamachiche,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,,,,2021-08-18,-72.832553,46.28306
+"158",Fermeture de route,"80060",Lochaber-Partie-Ouest,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-01,2021-03-27,Non,,2021-12-15,-75.303936,45.587355
+"25",Panne d'électricité,"80060",Lochaber-Partie-Ouest,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,,-75.303936,45.587355
+"101",Mouvement de terrain,"83065",Maniwaki,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-01,,Oui,,2020-12-10,-75.959592,46.378831
+"101",Mouvement de terrain,"83065",Maniwaki,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-21,,Oui,survenu lors de la crue 2020,2022-02-23,-75.985286,46.378018
+"99",Tremblement de terre,"83065",Maniwaki,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-27,2021-08-27,Non,,2022-02-23,-75.982507,46.39216
+"9",Érosion,"83065",Maniwaki,Très précise,Érosion en bordure de la rivière Désert - derrière la polyvalente Cité étudiante,Menace faible ou non-existante à la vie ou la propriété,2021-06-08,,Oui,,2021-07-26,-75.975,46.3818
+"8",Inondation,"83065",Maniwaki,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-07-20,-75.982507,46.39216
+"248",Alimentation publique en eau potable,"46058",Sutton,Imprécise,,Gravité inconnue,2020-07-07,2020-07-07,Non,,2020-12-25,-72.595416,45.103862
+"101",Mouvement de terrain,"46058",Sutton,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-02,2020-06-27,Oui,Fin de semaine,2020-12-25,-72.557284,45.104461
+"101",Mouvement de terrain,"46058",Sutton,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-29,2022-03-29,Non,,2022-04-12,-72.618361,45.105827
+"101",Mouvement de terrain,"46058",Sutton,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-20,2022-07-20,Non,,2022-07-29,-72.625699,45.105294
+"9",Érosion,"46058",Sutton,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-10,,Oui,Dossier ouvert depuis 2020,2022-03-11,-72.625417,45.091415
+"9",Érosion,"46058",Sutton,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-12,2022-04-12,Oui,"Signalement le 12 avril, l'érosion est survenue durant le printemps 2022",2022-06-28,-72.616742,45.104824
+"8",Inondation,"28060",Saint-Luc-de-Bellechasse,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-18,2022-02-18,Non,,2022-06-03,-70.482137,46.508285
+"112",Risque de gaz toxiques,"18045",Cap-Saint-Ignace,Précise,,Menace possible à la vie ou à la propriété,2021-09-08,2021-09-08,Non,,2021-09-10,-70.465074,47.033018
+"9",Érosion,"18045",Cap-Saint-Ignace,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.45001,47.065972
+"9",Érosion,"18045",Cap-Saint-Ignace,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-16,2020-04-10,Non,,2022-01-17,-70.450642,47.06555
+"9",Érosion,"18045",Cap-Saint-Ignace,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.449601,47.066278
+"9",Érosion,"18045",Cap-Saint-Ignace,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-16,2020-04-10,Non,,2022-01-17,-70.448995,47.066637
+"9",Érosion,"18045",Cap-Saint-Ignace,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,2020-04-10,Non,,2022-01-17,-70.448587,47.066907
+"9",Érosion,"18045",Cap-Saint-Ignace,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-16,2020-04-10,Non,,2022-01-17,-70.442722,47.072311
+"88",Incendie industriel,"46112",Farnham,Très précise,,Menace importante à la vie ou à la propriété,2021-05-21,2021-05-21,Non,,2021-10-15,-72.969062,45.280754
+"101",Mouvement de terrain,"71100",Hudson,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-11-16,,Oui,Visité par la municipalité en octobre,2022-02-23,-74.180541,45.451065
+"25",Panne d'électricité,"71100",Hudson,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-74.149105,45.458732
+"138",Orage violent,"62060",Saint-Donat,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.21221,46.31117
+"101",Mouvement de terrain,"39015",Notre-Dame-de-Ham,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-03,,Oui,,2021-08-18,-71.707343,45.92839
+"9",Érosion,"39015",Notre-Dame-de-Ham,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-29,2016-01-01,Oui,Phénomène évolutif en cours depuis 2016,2020-10-29,-71.728888,45.903534
+"156",Accident de voiture,"71033",Les Coteaux,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Non,,2022-03-02,-74.217657,45.268696
+"39",Feu de forêt,"12020",Saint-Modeste,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-13,2021-08-13,Non,,2021-08-17,-69.4453,47.8406
+"8",Inondation,"27050",Saint-Joseph-des-Érables,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-23,2022-02-23,Non,,2022-06-03,-70.901545,46.293244
+"138",Orage violent,"62020",Sainte-Béatrix,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-73.62214,46.195251
+"8",Inondation,"62020",Sainte-Béatrix,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-73.62214,46.195251
+"88",Incendie industriel,"93025",Hébertville-Station,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-16,2021-04-16,Non,,2021-04-19,-71.582496,48.432764
+"111",Effondrement de structure,"34078",Saint-Casimir,Très précise,Résidence principale avec un effondrement de la dalle,Menace faible ou non-existante à la vie ou la propriété,2020-11-09,2020-11-06,Non,,2021-11-30,-72.13963,46.655185
+"111",Effondrement de structure,"34078",Saint-Casimir,Très précise,Effondrement de structure dans la rivière Sainte-Anne,Menace possible à la vie ou à la propriété,2022-05-05,2022-05-04,Non,,,-72.139942,46.654694
+"8",Inondation,"34078",Saint-Casimir,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-72.14566,46.661172
+"8",Inondation,"32013",Saint-Ferdinand,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-18,Non,,2022-06-03,-71.573415,46.114347
+"39",Feu de forêt,"33085",Notre-Dame-du-Sacré-Coeur-d'Issoudun,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-11,2022-05-11,Non,,,-71.662838,46.558547
+"101",Mouvement de terrain,"19005",Saint-Philémon,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-10-09,,Oui,Évolution d'un glissement déjà existant. A plus bougé cet automne.,2021-02-09,-70.488483,46.621376
+"248",Alimentation publique en eau potable,"23027",Québec,Précise,,Menace possible à la vie ou à la propriété,2021-11-11,2021-11-11,Non,,2021-11-12,-71.224117,46.811899
+"101",Mouvement de terrain,"23027",Québec,Très précise,,Menace possible à la vie ou à la propriété,2022-03-16,2022-03-16,Non,,,-71.227044,46.794256
+"101",Mouvement de terrain,"23027",Québec,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.230225,46.792315
+"101",Mouvement de terrain,"23027",Québec,Très précise,Affaissement d'une partie du mur derrière la résidence,Menace possible à la vie ou à la propriété,2021-04-24,2021-04-23,Non,,2021-11-30,-71.22611,46.809853
+"101",Mouvement de terrain,"23027",Québec,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-02,,Oui,"Chute de débris fréquente, dernière en date à la mi-juillet",2021-10-07,-71.248741,46.772955
+"101",Mouvement de terrain,"23027",Québec,Très précise,"Chute de roche dans le cap situé en face du 491, Champlain",Menace faible ou non-existante à la vie ou la propriété,2022-04-11,2022-04-10,Non,,2022-05-11,-71.211063,46.802113
+"8",Inondation,"23027",Québec,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.295822,46.839609
+"8",Inondation,"23027",Québec,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-01-07,-71.295822,46.839609
+"8",Inondation,"23027",Québec,Précise,,Menace possible à la vie ou à la propriété,2021-06-30,2021-06-30,Non,,2021-11-30,-71.320555,46.938596
+"0",Autre,"23027",Québec,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-27,2022-06-27,Non,,,-71.211788,46.805446
+"171",Vent violent,"85052",Laverlochère-Angliers,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-20,2021-07-19,Non,,2021-07-21,-79.307151,47.427795
+"39",Feu de forêt,"14005",Mont-Carmel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-20,2020-06-20,Non,,2020-10-29,-69.857034,47.439408
+"101",Mouvement de terrain,"79015",Lac-du-Cerf,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-10-08,,Oui,Photos de la mairesse date du 7 octobre 2020,2020-12-30,-75.541177,46.2925
+"101",Mouvement de terrain,"79015",Lac-du-Cerf,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-26,,Oui,juillet 2021,2022-05-03,-75.480112,46.277548
+"8",Inondation,"92045",Saint-Thomas-Didyme,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-05-30,-72.660074,48.911097
+"8",Inondation,"69045",Hinchinbrooke,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-15,-74.172361,45.036773
+"8",Inondation,"06020",Nouvelle,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-66.387841,48.171211
+"8",Inondation,"06020",Nouvelle,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,2022-05-17,Non,,2022-06-15,-66.482091,48.206024
+"248",Alimentation publique en eau potable,"65005",Laval,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-18,,Oui,,2021-07-08,-73.724894,45.602803
+"248",Alimentation publique en eau potable,"65005",Laval,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-20,2022-01-20,Non,,2022-06-15,-73.677128,45.55822
+"166",Vague de chaleur,"65005",Laval,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-04,2021-06-06,Non,,2021-06-09,-73.724894,45.602803
+"90",Feu urbain,"65005",Laval,Très précise,Feu dans un amas de débris de construction,Menace faible ou non-existante à la vie ou la propriété,2020-12-28,2020-12-26,Non,,2022-01-20,-73.706141,45.594213
+"8",Inondation,"65005",Laval,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-08,2022-02-08,Non,,2022-06-15,-73.534586,45.684722
+"8",Inondation,"65005",Laval,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-31,2021-03-30,Non,,2021-10-26,-73.724894,45.602803
+"8",Inondation,"65005",Laval,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-14,2022-04-14,Oui,Hausse légère depuis quelques jours,,-73.724894,45.602803
+"138",Orage violent,"76035",Wentworth,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,2022-05-21,Non,,2022-06-08,-74.371868,45.793579
+"8",Inondation,"05065",Saint-Alphonse,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-01,2020-12-01,Non,,2021-04-19,-65.634277,48.178259
+"8",Inondation,"26030",Sainte-Marie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-04-19,-71.026253,46.443766
+"92",Débordement de barrage,"21040",L'Ange-Gardien,Très précise,Barrage privé,Menace possible à la vie ou à la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.132097,46.967407
+"8",Inondation,"44015",Saint-Herménégilde,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-13,2021-03-13,Non,,2021-10-15,-71.586262,45.025056
+"158",Fermeture de route,"44071",Compton,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-18,Non,,2022-03-22,-71.828762,45.241943
+"166",Vague de chaleur,"58227",Longueuil,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-07-08,2020-07-07,Non,,2020-09-09,-73.477426,45.533275
+"88",Incendie industriel,"58227",Longueuil,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-08,2022-06-08,Non,,2022-06-15,-73.427869,45.467984
+"18",Accident ferroviaire,"51085",Saint-Boniface,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-21,2020-06-21,Non,,2020-11-25,-72.827607,46.525573
+"8",Inondation,"51085",Saint-Boniface,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-20,2022-05-20,Non,,,-72.780248,46.527831
+"101",Mouvement de terrain,"61040",Saint-Ambroise-de-Kildare,Très précise,,Menace possible à la vie ou à la propriété,2020-12-25,,Oui,Suite au redoux du 25 décembre 2020,2021-05-14,-73.502327,46.078891
+"8",Inondation,"62070",Sainte-Émélie-de-l'Énergie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-05-14,-73.599733,46.316143
+"8",Inondation,"62070",Sainte-Émélie-de-l'Énergie,Précise,,Menace importante à la vie ou à la propriété,2021-03-27,2021-03-27,Non,,2021-10-26,-73.617177,46.321487
+"9",Érosion,"06005",Maria,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-06,2021-12-06,Non,,2021-12-09,-65.971952,48.181179
+"8",Inondation,"06005",Maria,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-01,2020-12-01,Non,,2021-04-19,-65.976526,48.185798
+"25",Panne d'électricité,"67050",Châteauguay,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-13,Non,,2022-02-23,-73.777293,45.375797
+"10",Matières dangereuses,"67050",Châteauguay,Très précise,Usine Terrapure,Menace importante à la vie ou à la propriété,2021-08-22,2021-08-22,Non,,2021-10-15,-73.693631,45.349599
+"8",Inondation,"67050",Châteauguay,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-18,,Oui,,2021-10-15,-73.777293,45.375797
+"8",Inondation,"67050",Châteauguay,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-15,,,,2022-04-12,-73.777293,45.375797
+"0",Autre,"67050",Châteauguay,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,2022-05-22,Non,,2022-05-25,-73.777293,45.375797
+"101",Mouvement de terrain,"34038",Saint-Basile,Très précise,Glissement de terrain à cet endroit,Menace faible ou non-existante à la vie ou la propriété,2022-07-04,,Oui,"Découvert la semaine dernière, probablement plus vieux",,-71.817366,46.754387
+"8",Inondation,"34038",Saint-Basile,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-26,2020-12-25,Non,,2021-03-26,-71.823649,46.752895
+"101",Mouvement de terrain,"22040",Lac-Beauport,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-04,2022-05-01,Non,,2022-05-19,-71.25059,46.958502
+"39",Feu de forêt,"22040",Lac-Beauport,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-11,2022-05-10,Non,,,-71.284785,46.956682
+"8",Inondation,"22040",Lac-Beauport,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.284785,46.956682
+"8",Inondation,"22040",Lac-Beauport,Précise,,Menace possible à la vie ou à la propriété,2021-06-30,2021-06-30,Non,,2021-11-30,-71.296807,46.949136
+"158",Fermeture de route,"82035",La Pêche,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-14,2021-05-14,Non,,2021-05-21,-76.17721,45.75081
+"156",Accident de voiture,"82035",La Pêche,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-07,2020-12-07,Non,,2021-01-12,-75.93668,45.654077
+"101",Mouvement de terrain,"82035",La Pêche,Très précise,,Gravité inconnue,2022-04-15,2022-04-15,Non,,2022-07-20,-76.001548,45.651845
+"25",Panne d'électricité,"82035",La Pêche,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-75.93054,45.638594
+"25",Panne d'électricité,"82035",La Pêche,Imprécise,,Gravité inconnue,2022-05-23,2022-05-21,Non,,2022-07-20,-75.93054,45.638594
+"9",Érosion,"82035",La Pêche,Très précise,,Menace possible à la vie ou à la propriété,2020-07-30,,Oui,Le cas aurait été signalé il y a plusieurs année auprès de la municipalité.,2022-02-23,-75.919675,45.631508
+"138",Orage violent,"74005",Mirabel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-73.931297,45.688309
+"101",Mouvement de terrain,"74005",Mirabel,Très précise,mouvement de sol,Menace faible ou non-existante à la vie ou la propriété,2020-10-20,2020-10-18,Non,,2021-03-25,-74.091713,45.572662
+"8",Inondation,"74005",Mirabel,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,2021-03-29,Non,,2021-10-26,-73.931297,45.688309
+"8",Inondation,"34048",Portneuf,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-26,2020-12-25,Non,,2021-03-26,-71.888532,46.689299
+"8",Inondation,"34048",Portneuf,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-04-19,-71.888532,46.689299
+"25",Panne d'électricité,"80027",Saint-André-Avellin,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-27,2022-05-21,Non,,,-75.053394,45.725351
+"138",Orage violent,"78102",Mont-Tremblant,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,2022-05-21,Non,,2022-06-08,-74.587896,46.127154
+"8",Inondation,"78102",Mont-Tremblant,Précise,,Menace possible à la vie ou à la propriété,2020-12-27,2020-12-26,Non,,2021-04-27,-74.60669,46.136303
+"8",Inondation,"78102",Mont-Tremblant,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.587896,46.127154
+"8",Inondation,"78102",Mont-Tremblant,Imprécise,,Menace possible à la vie ou à la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-74.587896,46.127154
+"8",Inondation,"78102",Mont-Tremblant,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-15,2022-04-15,Non,,2022-06-03,-74.587896,46.127154
+"25",Panne d'électricité,"84005",Bristol,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-76.404924,45.515055
+"158",Fermeture de route,"84070",Waltham,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-20,2022-01-20,Non,,2022-03-09,-76.864037,46.033898
+"8",Inondation,"84070",Waltham,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-29,2022-04-29,Non,,2022-05-06,-76.913618,45.908797
+"138",Orage violent,"73015",Blainville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-29,2022-05-21,Non,,2022-06-08,-73.815571,45.65394
+"101",Mouvement de terrain,"73015",Blainville,Très précise,Tassement en cour arrière,Menace faible ou non-existante à la vie ou la propriété,2020-04-29,2019-01-01,Oui,automne 2019,2021-05-17,-73.820053,45.656999
+"101",Mouvement de terrain,"73015",Blainville,Très précise,tassement,Menace faible ou non-existante à la vie ou la propriété,2020-04-29,2019-01-01,Oui,automne 2019,2021-05-17,-73.804934,45.663492
+"101",Mouvement de terrain,"73015",Blainville,Très précise,Déformation du sol en cour arrière,Menace faible ou non-existante à la vie ou la propriété,2020-04-29,2019-01-01,Oui,automne 2019,2021-05-17,-73.804044,45.660318
+"101",Mouvement de terrain,"73015",Blainville,Très précise,Arbre déracinée dans talus arrière propriété,Menace faible ou non-existante à la vie ou la propriété,2020-05-11,2019-01-01,Oui,automne 2019,2021-05-17,-73.805928,45.662193
+"88",Incendie industriel,"73015",Blainville,Très précise,Feu chez Stablex,Menace possible à la vie ou à la propriété,2021-06-11,2021-06-11,Non,,2021-06-11,-73.859417,45.672575
+"101",Mouvement de terrain,"71105",Saint-Lazare,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-10-15,-74.096844,45.375923
+"101",Mouvement de terrain,"71105",Saint-Lazare,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-10-15,-74.084815,45.377982
+"25",Panne d'électricité,"71105",Saint-Lazare,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-12,2021-12-12,Non,,2022-02-23,-74.162563,45.411034
+"0",Autre,"80055",Lochaber,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-27,,Oui,,,-75.186173,45.61804
+"139",Tornade,"41037",Newport,Précise,,Menace possible à la vie ou à la propriété,2020-07-28,2020-07-27,Non,,2020-09-09,-71.393589,45.309742
+"174",Panne de télécommunication,"85055",Fugèreville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-13,2022-02-13,Non,,2022-02-21,-79.198085,47.394732
+"92",Débordement de barrage,"80078",Ripon,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-07,2021-06-06,Non,,2022-02-23,-75.188147,45.737607
+"25",Panne d'électricité,"80078",Ripon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,,-75.100926,45.781418
+"248",Alimentation publique en eau potable,"98035",Baie-Johan-Beetz,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-25,2022-01-24,Non,,2022-06-06,-62.802024,50.287593
+"0",Autre,"21030",Sainte-Anne-de-Beaupré,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-27,2022-06-27,Non,,,-70.927798,47.023292
+"248",Alimentation publique en eau potable,"84010",Shawville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-09-10,2020-09-10,Non,,2020-12-07,-76.491654,45.605261
+"101",Mouvement de terrain,"50072",Nicolet,Très précise,Mouvement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-11-03,2021-01-01,Oui,Étalé sur plusieurs années mais plus intense depuis l'été 2021,,-72.601749,46.222025
+"138",Orage violent,"52095",Mandeville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-73.352505,46.360225
+"101",Mouvement de terrain,"52095",Mandeville,Très précise,,Menace importante à la vie ou à la propriété,2020-05-04,2020-05-03,Non,,2021-11-11,-73.368891,46.391355
+"8",Inondation,"52095",Mandeville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.352505,46.360225
+"101",Mouvement de terrain,"72032",Oka,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-11-26,2021-09-15,Oui,Travaux remontent à la mi-septembre,,-74.106871,45.510516
+"25",Panne d'électricité,"80125",Saint-Émile-de-Suffolk,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,,-74.913643,45.930958
+"8",Inondation,"05077",Cascapédia - Saint-Jules,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-13,2022-05-13,Non,,2022-06-15,-65.901063,48.253933
+"8",Inondation,"05077",Cascapédia - Saint-Jules,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-01,2020-12-01,Non,,2021-04-19,-65.894967,48.266877
+"158",Fermeture de route,"95045",Forestville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-03-13,2020-03-13,Non,,2020-11-17,-69.077898,48.743206
+"110",Risque d'explosion,"59010",Sainte-Julie,Très précise,,Menace possible à la vie ou à la propriété,2021-01-24,2021-01-24,Non,,2021-01-25,-73.319678,45.563239
+"174",Panne de télécommunication,"62053",Entrelacs,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-74.003846,46.111588
+"138",Orage violent,"62053",Entrelacs,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-74.003846,46.111588
+"25",Panne d'électricité,"69030",Très-Saint-Sacrement,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-73.895485,45.125217
+"158",Fermeture de route,"91050",La Doré,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-05-30,-72.642036,48.707259
+"10",Matières dangereuses,"91050",La Doré,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-08,2022-06-08,Non,,,-72.590521,48.779119
+"8",Inondation,"91050",La Doré,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-05-30,-72.642036,48.707259
+"156",Accident de voiture,"64015",Mascouche,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-19,2022-01-19,Non,,2022-01-31,-73.601616,45.747128
+"139",Tornade,"64015",Mascouche,Précise,,Menace importante à la vie ou à la propriété,2021-06-21,2021-06-21,Non,,2021-06-25,-73.575992,45.757304
+"101",Mouvement de terrain,"64015",Mascouche,Très précise,Fissures et autres désordres,Menace faible ou non-existante à la vie ou la propriété,2021-08-20,,Oui,Au cours de l'été 2021,2022-03-21,-73.576462,45.734618
+"101",Mouvement de terrain,"64015",Mascouche,Très précise,,Menace possible à la vie ou à la propriété,2021-05-13,2021-04-29,Non,,2021-10-26,-73.642492,45.758698
+"101",Mouvement de terrain,"64015",Mascouche,Très précise,,Menace importante à la vie ou à la propriété,2021-04-09,2021-04-06,Non,,2021-10-26,-73.57141,45.743513
+"9",Érosion,"64015",Mascouche,Très précise,,Menace possible à la vie ou à la propriété,2021-05-06,,Oui,Phénomène d'érosion dû à une succession d'événements,2021-10-26,-73.566779,45.758007
+"0",Autre,"64015",Mascouche,Imprécise,,Menace possible à la vie ou à la propriété,2021-09-15,2021-09-14,Oui,Signalement reçu le 2021-09-15 mais on ne sait pas depuis combien de temps les fissures sont apparues.,2021-10-07,-73.601616,45.747128
+"101",Mouvement de terrain,"06013",Carleton-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-31,2020-05-31,Non,,2021-09-01,-66.081565,48.098837
+"9",Érosion,"06013",Carleton-sur-Mer,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-19,2021-07-29,Non,,2021-08-19,-66.234488,48.110893
+"101",Mouvement de terrain,"53040",Saint-Roch-de-Richelieu,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-10,,Oui,Juin,2020-11-27,-73.155391,45.891857
+"101",Mouvement de terrain,"53040",Saint-Roch-de-Richelieu,Très précise,,Menace possible à la vie ou à la propriété,2022-06-23,2022-06-23,Non,,,-73.154089,45.894716
+"248",Alimentation publique en eau potable,"64008",Terrebonne,Précise,,Menace possible à la vie ou à la propriété,2022-01-08,2022-01-08,Oui,La Ville est en veille depuis le 8 janvier 2022.,2022-03-18,-73.645138,45.694191
+"174",Panne de télécommunication,"64008",Terrebonne,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-73.655752,45.718951
+"142",Tempête hivernale,"64008",Terrebonne,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-19,2022-01-19,Non,,2022-01-31,-73.655752,45.718951
+"138",Orage violent,"64008",Terrebonne,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,2022-05-21,Non,,2022-06-08,-73.655752,45.718951
+"110",Risque d'explosion,"64008",Terrebonne,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-01,2021-08-29,Non,,2021-09-03,-73.535802,45.726391
+"8",Inondation,"64008",Terrebonne,Précise,,Menace possible à la vie ou à la propriété,2022-01-08,,Oui,La Ville est en veille depuis le 8 janvier 2022.,2022-03-18,-73.648344,45.695917
+"158",Fermeture de route,"79912",Lac-De La Bidière,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-20,2022-05-20,Non,,2022-06-21,-74.989564,47.386035
+"138",Orage violent,"62802",Manawan,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.390442,47.221821
+"101",Mouvement de terrain,"04037",Sainte-Anne-des-Monts,Très précise,,Menace possible à la vie ou à la propriété,2021-04-28,2021-04-28,Non,,2021-09-01,-66.437012,49.148649
+"8",Inondation,"04037",Sainte-Anne-des-Monts,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,2022-05-17,Non,,2022-06-15,-66.467927,49.131863
+"10",Matières dangereuses,"68055",Saint-Rémi,Imprécise,,Menace possible à la vie ou à la propriété,2021-04-22,2021-04-22,Non,,2021-04-22,-73.615134,45.267234
+"133",Ouragan,"42020",Saint-François-Xavier-de-Brompton,Imprécise,,Gravité inconnue,2020-08-05,2020-08-04,Non,,2020-09-09,-72.048496,45.536514
+"8",Inondation,"40043",Val-des-Sources,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-27,2021-03-27,Non,,2021-10-15,-71.921635,45.773866
+"8",Inondation,"57068",Saint-Denis-sur-Richelieu,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-19,2022-02-17,Non,,2022-03-15,-73.156656,45.782803
+"101",Mouvement de terrain,"03005",Gaspé,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-01,Non,,2021-01-11,-64.488027,48.82908
+"8",Inondation,"03005",Gaspé,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-04,2021-09-04,Non,,2021-10-18,-64.413469,48.989775
+"138",Orage violent,"78100",Val-des-Lacs,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.342827,46.182404
+"101",Mouvement de terrain,"78100",Val-des-Lacs,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-08-02,2021-06-30,Non,,2022-02-23,-74.35456,46.194249
+"8",Inondation,"78100",Val-des-Lacs,Précise,,Menace possible à la vie ou à la propriété,2021-01-14,,,,2021-04-13,-74.401426,46.191478
+"8",Inondation,"78100",Val-des-Lacs,Précise,,Menace possible à la vie ou à la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.383315,46.214639
+"101",Mouvement de terrain,"15065",Baie-Sainte-Catherine,Très précise,Érosion de falaise et bris de fosse septique,Gravité inconnue,2021-01-04,2020-12-25,Non,,2021-03-26,-69.74728,48.078915
+"158",Fermeture de route,"49058",Drummondville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-23,2022-04-23,Non,,2022-06-15,-72.505178,45.869975
+"101",Mouvement de terrain,"49058",Drummondville,Très précise,Glissement,Menace faible ou non-existante à la vie ou la propriété,2021-04-07,2021-04-06,Non,,2021-08-18,-72.276379,45.83405
+"101",Mouvement de terrain,"49058",Drummondville,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-08,,Oui,,,-72.27769,45.83425
+"248",Alimentation publique en eau potable,"97022",Port-Cartier,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-02,2022-02-01,Non,,2022-02-07,-66.84715,50.037631
+"248",Alimentation publique en eau potable,"97022",Port-Cartier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-27,2021-10-26,Non,,2021-12-06,-66.890342,50.023556
+"158",Fermeture de route,"97022",Port-Cartier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-03-13,,,,2020-11-17,-66.890342,50.023556
+"158",Fermeture de route,"97022",Port-Cartier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-02,2021-03-02,Non,,2021-03-10,-66.890342,50.023556
+"101",Mouvement de terrain,"97022",Port-Cartier,Très précise,Glissement de terrain,Gravité inconnue,2022-06-15,,Oui,La propriétaire a constaté le glissement le matin du 15 juin 2022,,-66.958585,49.980586
+"25",Panne d'électricité,"97022",Port-Cartier,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-21,2021-02-21,Non,,2021-03-10,-67.162838,49.785972
+"8",Inondation,"70040",Saint-Stanislas-de-Kostka,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-05,2022-03-19,Non,,2022-04-12,-74.169967,45.197294
+"101",Mouvement de terrain,"60037",L'Épiphanie,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2020-07-02,2019-06-01,Oui,Été 2019,2020-11-02,-73.552367,45.836856
+"101",Mouvement de terrain,"60037",L'Épiphanie,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-10-05,-73.477363,45.84986
+"101",Mouvement de terrain,"60037",L'Épiphanie,Très précise,,Menace possible à la vie ou à la propriété,2021-09-03,,Oui,Au cours des dernières semaines,2022-01-10,-73.480709,45.846813
+"101",Mouvement de terrain,"60037",L'Épiphanie,Très précise,Mouvement de sol,Menace possible à la vie ou à la propriété,2021-03-29,2021-03-27,Non,,2021-10-26,-73.471555,45.851137
+"101",Mouvement de terrain,"60037",L'Épiphanie,Très précise,Mouvement de sol,Menace possible à la vie ou à la propriété,2022-04-07,,Oui,Entre le 5 et le 7 avril 2022,2022-05-17,-73.476386,45.850083
+"0",Autre,"60037",L'Épiphanie,Imprécise,,Gravité inconnue,2021-02-04,2020-12-25,Oui,La découverte des fissures aurait eu lieu lors du redoux hivernal du 25 décembre 2020.,2021-03-09,-73.484155,45.848426
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace possible à la vie ou à la propriété,2020-05-20,2020-04-10,Non,,2022-01-17,-70.87116,46.893727
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-17,2020-04-10,Non,,2022-01-17,-70.895489,46.884514
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-20,2020-04-10,Non,,2022-01-17,-70.859283,46.889789
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-17,2020-04-10,Non,,2022-01-17,-70.895018,46.884714
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-22,2020-04-10,Non,,2022-01-17,-70.858958,46.89032
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-17,2020-04-10,Non,,2022-01-17,-70.860141,46.890524
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-21,2020-04-10,Non,,2022-01-17,-70.888637,46.887821
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace possible à la vie ou à la propriété,2020-04-17,2020-04-10,Non,,2022-01-17,-70.859603,46.888609
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-05-07,2020-04-10,Non,,2022-01-17,-70.89815,46.882481
+"9",Érosion,"19110",Saint-Michel-de-Bellechasse,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-28,2020-04-10,Non,,2022-01-17,-70.897903,46.882743
+"101",Mouvement de terrain,"82025",Chelsea,Très précise,Recommandation du MTQ d'évacuer la résidence,Menace extraordinaire à la vie ou à la propriété,2022-03-18,2022-03-18,Oui,Évolution de l'érosion et du talus,2022-05-16,-75.78149,45.492659
+"25",Panne d'électricité,"82025",Chelsea,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,2022-05-21,Non,,2022-07-20,-75.795683,45.503899
+"9",Érosion,"82025",Chelsea,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-21,,,,2022-02-23,-75.869794,45.58546
+"9",Érosion,"82025",Chelsea,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-18,,Oui,,2022-02-23,-75.781266,45.493092
+"174",Panne de télécommunication,"90027",Lac-Édouard,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-05,2021-02-04,Non,,2021-03-12,-72.27632,47.659723
+"25",Panne d'électricité,"80090",Montpellier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-22,Non,,,-75.165405,45.856317
+"248",Alimentation publique en eau potable,"99130",Kangiqsujuaq,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Oui,le 25 est la date du signalement,2022-03-09,-71.961166,61.597034
+"101",Mouvement de terrain,"32065",Lyster,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-07-10,,Oui,L'événement serait survenu en 2016,2021-10-18,-71.58397,46.373588
+"88",Incendie industriel,"32065",Lyster,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-01-15,2021-01-15,Non,,2021-03-11,-71.610742,46.37276
+"142",Tempête hivernale,"52017",Lanoraie,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Non,,2022-03-10,-73.218193,45.960804
+"101",Mouvement de terrain,"27008",Saint-Victor,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-14,,Oui,"Selon la Ville, il semble que les berges ont commencé à se détériorer depuis l’Ouragan Irène d’août 2011. Mais que cela s'est aggravé il y a deux ans.",2021-06-21,-70.923107,46.153971
+"9",Érosion,"27008",Saint-Victor,Très précise,Érosion côtière - Face au 6 rue Fortin Saint-Victor,Menace faible ou non-existante à la vie ou la propriété,2020-05-11,2019-11-01,Non,,2020-12-11,-70.950195,46.108403
+"9",Érosion,"27008",Saint-Victor,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-07,,Oui,,2022-02-23,-70.917375,46.175361
+"138",Orage violent,"76025",Gore,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-22,Non,,2022-06-08,-74.255317,45.765139
+"101",Mouvement de terrain,"76025",Gore,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-12,2022-04-12,Non,,,-74.257669,45.75175
+"8",Inondation,"35055",Trois-Rives,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,,,,2022-06-03,-72.699658,46.915156
+"139",Tornade,"46050",Dunham,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-18,2021-10-16,Non,,2022-02-23,-72.799853,45.13887
+"10",Matières dangereuses,"46050",Dunham,Imprécise,,Menace possible à la vie ou à la propriété,2021-09-07,2021-09-07,Non,,2021-10-15,-72.799853,45.13887
+"8",Inondation,"45030",Potton,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-18,2022-02-18,Non,,2022-03-15,-72.295234,45.092415
+"0",Autre,"45030",Potton,Précise,,Menace possible à la vie ou à la propriété,2021-05-10,2021-05-08,Oui,Entre le 5 et le 9 mai,2021-10-15,-72.286382,45.072519
+"8",Inondation,"21005",Saint-Tite-des-Caps,Imprécise,,Menace possible à la vie ou à la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-70.771212,47.141666
+"25",Panne d'électricité,"04025",Marsoui,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-02,,,,2021-03-05,-66.068269,49.213058
+"8",Inondation,"04025",Marsoui,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-04,2021-09-04,Non,,2021-10-18,-66.075842,49.196312
+"8",Inondation,"04025",Marsoui,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,2022-05-18,Non,,2022-06-15,-66.075547,49.19636
+"8",Inondation,"02005",Percé,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-64.341301,48.611927
+"8",Inondation,"02005",Percé,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-02,2021-04-02,Non,,2021-05-07,-64.333031,48.614502
+"248",Alimentation publique en eau potable,"82005",L'Ange-Gardien,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-23,2022-05-23,Non,,,-75.451499,45.62718
+"101",Mouvement de terrain,"96025",Pointe-Lebel,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-17,2020-12-13,Non,,2021-10-13,-68.184243,49.109773
+"101",Mouvement de terrain,"96025",Pointe-Lebel,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-07,,Oui,Suite aux pluies du 1er au 3 décembre 2020,2021-03-26,-68.32503,49.179939
+"158",Fermeture de route,"93042",Alma,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-27,2022-05-27,Non,,2022-07-13,-71.644943,48.553468
+"101",Mouvement de terrain,"93042",Alma,Très précise,Glissement de terrain derrière le 322 Alarie suite à un bris d'aqueduc,Menace faible ou non-existante à la vie ou la propriété,2020-10-27,2020-10-26,Non,,2021-08-30,-71.637781,48.54368
+"101",Mouvement de terrain,"93042",Alma,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-19,,Oui,Probable le printemps de 2020,2021-06-08,-71.617026,48.536175
+"101",Mouvement de terrain,"93042",Alma,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-31,,Oui,,,-71.737742,48.669921
+"101",Mouvement de terrain,"93042",Alma,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-28,,Oui,Aucune précision fournie par la municipalité,,-71.633378,48.543377
+"101",Mouvement de terrain,"93042",Alma,Très précise,Glissement de terrain à risque pour une résidence secondaire,Menace possible à la vie ou à la propriété,2022-05-29,2022-05-27,Non,,,-71.69712,48.661362
+"25",Panne d'électricité,"93042",Alma,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-21,2022-07-21,Non,,,-71.644943,48.553468
+"8",Inondation,"93042",Alma,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-21,2022-05-21,Non,,2022-07-13,-71.644943,48.553468
+"158",Fermeture de route,"83090",Aumond,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-26,2022-04-25,Oui,Fermeture d'une voie le 2022-04-14 et dégradation du ponceau hier (2022-04-25),2022-05-16,-75.892869,46.467743
+"158",Fermeture de route,"83090",Aumond,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-27,2022-04-27,Non,,2022-07-20,-75.898365,46.507039
+"8",Inondation,"83090",Aumond,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-24,Non,,2022-07-20,-75.892869,46.467743
+"101",Mouvement de terrain,"62912",Saint-Guillaume-Nord,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-11-09,,Oui,,2022-03-08,-73.86953,46.36048
+"101",Mouvement de terrain,"80020",Notre-Dame-de-la-Paix,Très précise,,Menace possible à la vie ou à la propriété,2021-01-11,2020-12-25,Non,,2022-02-23,-74.999936,45.759344
+"101",Mouvement de terrain,"80020",Notre-Dame-de-la-Paix,Très précise,"Coordonnées GPS : Latitude	(45.759432) ; Longitude	(-74.999898)",Menace faible ou non-existante à la vie ou la propriété,2021-03-25,2021-03-25,Non,,2021-12-15,-74.999855,45.760349
+"25",Panne d'électricité,"80020",Notre-Dame-de-la-Paix,Imprécise,,Gravité inconnue,2022-05-23,2022-05-21,Non,,,-74.965227,45.808204
+"0",Autre,"80020",Notre-Dame-de-la-Paix,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-19,2022-03-19,Non,,,-74.965227,45.808204
+"8",Inondation,"34128",Saint-Raymond,Imprécise,,Gravité inconnue,2020-08-05,2020-08-05,Non,,2021-01-07,-71.835094,46.867186
+"8",Inondation,"34128",Saint-Raymond,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.837563,46.891948
+"248",Alimentation publique en eau potable,"37067",Trois-Rivières,Imprécise,,Gravité inconnue,2021-05-20,2021-05-20,Non,,2021-08-18,-72.577187,46.350882
+"171",Vent violent,"37067",Trois-Rivières,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-10,,Oui,,2022-02-23,-72.577187,46.350882
+"114",Maladie infectieuse,"37067",Trois-Rivières,Imprécise,,Gravité inconnue,2020-12-04,2020-12-04,Non,,2022-02-23,-72.577187,46.350882
+"101",Mouvement de terrain,"37067",Trois-Rivières,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-09,2021-06-08,Non,,2021-08-18,-72.531572,46.36914
+"0",Autre,"37067",Trois-Rivières,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-08,2021-06-08,Non,,2021-08-18,-72.577187,46.350882
+"138",Orage violent,"78115",La Conception,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-06-08,-74.694316,46.151286
+"101",Mouvement de terrain,"78115",La Conception,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-24,,Oui,Constaté le 23 mars 2022,,-74.676845,46.122563
+"8",Inondation,"78115",La Conception,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-30,2021-06-30,Non,,2022-02-23,-74.694316,46.151286
+"8",Inondation,"78115",La Conception,Précise,,Menace importante à la vie ou à la propriété,2021-03-28,2021-03-27,Non,,2021-10-26,-74.69648,46.157367
+"8",Inondation,"78115",La Conception,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-23,2022-06-23,Non,,2022-06-27,-74.694316,46.151286
+"138",Orage violent,"62037",Rawdon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-73.724131,46.047444
+"101",Mouvement de terrain,"62037",Rawdon,Très précise,Glissement de terrain,Menace possible à la vie ou à la propriété,2021-01-06,2020-12-25,Non,,2022-01-24,-73.716951,46.043625
+"101",Mouvement de terrain,"62037",Rawdon,Très précise,Glissementde terrain en zone cartographiée par la MRC,Menace faible ou non-existante à la vie ou la propriété,2020-08-17,,Oui,,2021-11-11,-73.665328,46.040079
+"90",Feu urbain,"62037",Rawdon,Imprécise,,Menace possible à la vie ou à la propriété,2021-03-07,2021-03-07,Non,,2021-03-28,-73.724131,46.047444
+"25",Panne d'électricité,"84045",Thorne,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-11,Non,,2022-02-23,-76.3878,45.76199
+"101",Mouvement de terrain,"53072",Yamaska,Très précise,,Menace importante à la vie ou à la propriété,2022-03-22,2022-03-22,Non,,,-72.895283,45.976795
+"8",Inondation,"53072",Yamaska,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-18,Non,,2022-04-12,-72.903422,46.007038
+"101",Mouvement de terrain,"04015",Mont-Saint-Pierre,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-04,2021-09-04,Non,,2021-10-18,-65.809382,49.168585
+"138",Orage violent,"62085",Saint-Michel-des-Saints,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-22,,,,2022-06-08,-73.922641,46.675453
+"101",Mouvement de terrain,"94225",Saint-Félix-d'Otis,Très précise,,Menace possible à la vie ou à la propriété,2022-06-13,2022-06-13,Non,,,-70.639373,48.296137
+"8",Inondation,"94225",Saint-Félix-d'Otis,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-26,2022-04-26,Non,,2022-07-13,-70.633188,48.27656
+"0",Autre,"94225",Saint-Félix-d'Otis,Imprécise,,Menace possible à la vie ou à la propriété,2020-08-31,2020-08-31,Non,,2020-09-10,-70.633188,48.27656
+"101",Mouvement de terrain,"93020",Hébertville,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-16,2022-06-10,Non,,,-71.641343,48.361997
+"101",Mouvement de terrain,"93020",Hébertville,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-27,,Oui,,2022-06-27,-71.626115,48.358152
+"8",Inondation,"93020",Hébertville,Précise,,Menace possible à la vie ou à la propriété,2020-12-26,2020-12-26,Non,,2021-03-25,-71.701154,48.346448
+"8",Inondation,"93020",Hébertville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-13,,Oui,,,-71.680783,48.389357
+"8",Inondation,"52030",Sainte-Élisabeth,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-25,2021-03-25,Non,,2021-10-26,-73.374834,46.142651
+"8",Inondation,"02015",Grande-Rivière,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-64.51659,48.408886
+"25",Panne d'électricité,"04030",La Martre,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-02,2021-03-02,Non,,2021-03-05,-66.167009,49.204309
+"101",Mouvement de terrain,"79050",L'Ascension,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-09,,Oui,,,-74.828985,46.54923
+"10",Matières dangereuses,"39030",Chesterville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-06-06,2022-06-06,Non,,2022-06-21,-71.820898,45.963813
+"101",Mouvement de terrain,"04020",Rivière-à-Claude,Très précise,,Menace possible à la vie ou à la propriété,2021-04-29,2021-04-29,Non,,2021-09-01,-65.945663,49.226513
+"8",Inondation,"04020",Rivière-à-Claude,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-09-04,2021-09-04,Non,,2021-10-18,-65.887987,49.213473
+"101",Mouvement de terrain,"99085",Inukjuak,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-23,2021-06-22,Non,,2021-06-28,-78.058134,58.476973
+"101",Mouvement de terrain,"37215",Sainte-Geneviève-de-Batiscan,Très précise,,Gravité inconnue,2021-01-25,2021-01-25,Oui,"On ne connaît pas la date précise, mais l'absence de neige dans le taluse et dans l'escarpement suggère qu'il peut être survenu récemment",2021-05-10,-72.341953,46.568681
+"101",Mouvement de terrain,"37215",Sainte-Geneviève-de-Batiscan,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-14,2021-04-14,Oui,Printemps 2021,2021-08-18,-72.356918,46.548996
+"101",Mouvement de terrain,"37215",Sainte-Geneviève-de-Batiscan,Très précise,72 m de largeur,Menace faible ou non-existante à la vie ou la propriété,2021-06-01,2021-06-01,Non,,2021-08-18,-72.368536,46.508815
+"101",Mouvement de terrain,"54048",Saint-Hyacinthe,Très précise,,Gravité inconnue,2021-10-18,,,,2022-04-12,-72.933216,45.611223
+"10",Matières dangereuses,"54048",Saint-Hyacinthe,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-28,2022-02-19,Non,,2022-04-12,-73.015148,45.602634
+"101",Mouvement de terrain,"99075",Kuujjuarapik,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-22,Non,,2021-11-30,-77.621903,55.286503
+"101",Mouvement de terrain,"80140",Val-des-Bois,Très précise,,Menace possible à la vie ou à la propriété,2022-04-11,,Oui,,,-75.63294,45.85274
+"158",Fermeture de route,"79110",Mont-Saint-Michel,Imprécise,,Menace possible à la vie ou à la propriété,2022-04-26,2022-04-26,Non,,2022-04-27,-75.339196,46.778915
+"8",Inondation,"44080",Waterville,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-18,2022-02-18,Non,,2022-03-15,-71.853541,45.346793
+"101",Mouvement de terrain,"51065",Saint-Alexis-des-Monts,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-05-19,-73.170275,46.580851
+"39",Feu de forêt,"92902",Passes-Dangereuses,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-16,2020-06-16,Non,,2020-11-02,-70.870882,49.629849
+"39",Feu de forêt,"92902",Passes-Dangereuses,Imprécise,,Menace possible à la vie ou à la propriété,2021-06-08,2021-06-08,Non,,2021-08-16,-72.074907,48.961604
+"158",Fermeture de route,"09092",Sainte-Luce,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-02-03,2021-02-02,Non,,2021-02-04,-68.40245,48.541603
+"25",Panne d'électricité,"09092",Sainte-Luce,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-23,2021-04-23,Non,,2021-04-26,-68.40245,48.541603
+"8",Inondation,"92030",Albanel,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-17,2022-05-17,Non,,2022-05-30,-72.334696,48.968187
+"9",Érosion,"52007",Lavaltrie,Très précise,Érosion en bordure de la rivière Saint-Jean.,Menace faible ou non-existante à la vie ou la propriété,2022-06-29,,Oui,L'érosion se fait depuis 2014.,,-73.289471,45.869336
+"25",Panne d'électricité,"67015",La Prairie,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-13,2021-12-12,Non,,2022-02-23,-73.51333,45.393554
+"8",Inondation,"67015",La Prairie,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-18,Non,,2022-04-12,-73.458883,45.41998
+"101",Mouvement de terrain,"99877",Kuujjuarapik,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2022-06-20,,Oui,,,-76.67526,55.99403
+"101",Mouvement de terrain,"11045",Notre-Dame-des-Neiges,Très précise,,Menace possible à la vie ou à la propriété,2022-06-23,2022-06-15,Oui,,,-69.211867,48.098962
+"101",Mouvement de terrain,"61030",Notre-Dame-des-Prairies,Très précise,Mouvement de sol,Menace possible à la vie ou à la propriété,2021-04-27,2021-04-16,Non,,2022-03-21,-73.430126,46.047084
+"101",Mouvement de terrain,"61030",Notre-Dame-des-Prairies,Très précise,,Menace possible à la vie ou à la propriété,2022-07-18,,Oui,Vers la mi-avril (fonte des neiges),,-73.453528,46.0547
+"8",Inondation,"61030",Notre-Dame-des-Prairies,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-05-14,-73.431076,46.044174
+"158",Fermeture de route,"38040",Sainte-Sophie-de-Lévrard,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-29,2021-03-26,Non,,2021-08-18,-72.111141,46.426987
+"154",Fermeture de pont,"79030",Nominingue,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-12,2022-04-12,Non,,2022-06-21,-75.024782,46.39934
+"139",Tornade,"79030",Nominingue,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-04,2022-07-01,Non,,,-75.024782,46.39934
+"138",Orage violent,"79030",Nominingue,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-04,2022-06-22,Non,,2022-07-25,-75.024782,46.39934
+"8",Inondation,"79030",Nominingue,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-30,2021-03-29,Non,,2021-10-26,-75.024782,46.39934
+"8",Inondation,"38010",Bécancour,Imprécise,,Menace possible à la vie ou à la propriété,2021-03-25,2021-03-25,Non,,2021-08-18,-72.271084,46.399883
+"8",Inondation,"38010",Bécancour,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-19,2022-05-19,Non,,,-72.44195,46.372315
+"0",Autre,"38010",Bécancour,Précise,,Menace possible à la vie ou à la propriété,2022-02-02,2022-02-02,Non,,2022-06-15,-72.525462,46.328823
+"9",Érosion,"46035",Bedford,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-11-06,,,,2021-04-19,-72.987499,45.122068
+"101",Mouvement de terrain,"42078",Ulverton,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-05-31,2021-05-25,Oui,Cause anthropique: travaux réalisés avant le 7 mai 2021,2021-10-15,-72.204292,45.689775
+"101",Mouvement de terrain,"93030",Saint-Bruno,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-27,2020-08-05,Non,,2021-03-18,-71.637136,48.463828
+"101",Mouvement de terrain,"93030",Saint-Bruno,Très précise,Glissement de terrain,Menace possible à la vie ou à la propriété,2022-07-04,,Oui,Au début juillet,,-71.639564,48.465648
+"101",Mouvement de terrain,"94210",L'Anse-Saint-Jean,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-03-18,-70.207476,48.240698
+"101",Mouvement de terrain,"94210",L'Anse-Saint-Jean,Très précise,Mur de soutènement en bois pourri,Menace faible ou non-existante à la vie ou la propriété,2021-11-10,,Oui,Usure normal d'un mur de soutènement,2021-12-09,-70.201492,48.23503
+"101",Mouvement de terrain,"94210",L'Anse-Saint-Jean,Très précise,Glissement de terrain,Menace possible à la vie ou à la propriété,2022-04-27,2022-04-27,Non,,,-70.181216,48.242038
+"101",Mouvement de terrain,"94210",L'Anse-Saint-Jean,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-07,,Oui,début/ mi-juin 2022,,-70.292657,48.165605
+"8",Inondation,"94210",L'Anse-Saint-Jean,Précise,,Menace possible à la vie ou à la propriété,2021-03-25,2021-03-25,Non,,2021-05-17,-70.202989,48.234614
+"138",Orage violent,"73035",Sainte-Anne-des-Plaines,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-73.823557,45.746962
+"101",Mouvement de terrain,"73035",Sainte-Anne-des-Plaines,Très précise,mouvement de terrain mineur,Menace faible ou non-existante à la vie ou la propriété,2020-01-22,2019-01-01,Oui,"Selon la propriétaire, déformation du sol à l'arrière de la propriété depuis environ 1 an",2021-03-25,-73.810233,45.757588
+"25",Panne d'électricité,"57025",McMasterville,Imprécise,,Menace possible à la vie ou à la propriété,2022-01-28,2022-01-28,Non,,2022-04-12,-73.226387,45.547504
+"142",Tempête hivernale,"04047",Cap-Chat,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-13,2022-03-13,Non,,2022-03-13,-66.727825,49.082034
+"101",Mouvement de terrain,"04047",Cap-Chat,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-04,2022-06-24,Non,,2022-07-18,-66.68764,49.093404
+"101",Mouvement de terrain,"04047",Cap-Chat,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2022-07-04,2022-06-24,Non,,2022-07-18,-66.68767,49.093396
+"8",Inondation,"04047",Cap-Chat,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-66.662154,49.100208
+"8",Inondation,"04047",Cap-Chat,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-04-27,,,,2021-05-07,-66.668072,49.054091
+"101",Mouvement de terrain,"63065",Saint-Liguori,Très précise,Glissement de terrain,Menace faible ou non-existante à la vie ou la propriété,2021-12-09,,Oui,Décrochement au printemps suivi d'un décrochement à l'été,,-73.567712,46.005951
+"8",Inondation,"27043",Saint-Joseph-de-Beauce,Imprécise,,Menace possible à la vie ou à la propriété,2021-03-25,2021-03-25,Non,,2021-04-19,-70.875787,46.307308
+"156",Accident de voiture,"71050",Les Cèdres,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-25,2022-02-25,Non,,2022-03-02,-74.05946,45.308831
+"156",Accident de voiture,"57040",Beloeil,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-01-17,2022-01-17,Non,,2022-01-18,-73.217188,45.565486
+"8",Inondation,"57040",Beloeil,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-03-18,2022-03-18,Non,,2022-04-12,-73.217188,45.565486
+"88",Incendie industriel,"98020",L'Île-d'Anticosti,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-03,2021-12-03,Non,,2022-01-25,-64.349497,49.82251
+"39",Feu de forêt,"98020",L'Île-d'Anticosti,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-06-30,2020-06-30,Non,,2020-11-17,-64.351021,49.822206
+"138",Orage violent,"75017",Saint-Jérôme,Imprécise,,Menace possible à la vie ou à la propriété,2022-05-22,2022-05-22,Non,,2022-06-08,-74.009533,45.78289
+"8",Inondation,"05902",Rivière-Bonaventure,Précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-02,2020-12-02,Non,,2021-04-19,-65.927272,48.321892
+"25",Panne d'électricité,"80115",Boileau,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,,-74.773331,45.900963
+"174",Panne de télécommunication,"98015",Côte-Nord-du-Golfe-du-Saint-Laurent,Imprécise,,Menace possible à la vie ou à la propriété,2021-07-20,2021-07-20,Non,,2021-07-22,-59.620756,50.466512
+"25",Panne d'électricité,"98015",Côte-Nord-du-Golfe-du-Saint-Laurent,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-02-20,2022-02-20,Non,,2022-06-06,-59.620756,50.466512
+"8",Inondation,"98015",Côte-Nord-du-Golfe-du-Saint-Laurent,Précise,,Menace faible ou non-existante à la vie ou la propriété,2021-11-25,2021-11-25,Non,,2022-01-25,-60.636702,50.24293
+"0",Autre,"98015",Côte-Nord-du-Golfe-du-Saint-Laurent,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-10-22,2021-10-20,Non,,2022-01-25,-59.620756,50.466512
+"101",Mouvement de terrain,"23072",Saint-Augustin-de-Desmaures,Très précise,,Menace possible à la vie ou à la propriété,2021-11-11,2021-10-31,Non,,2022-03-09,-71.454952,46.733591
+"96",Onde de tempête,"23072",Saint-Augustin-de-Desmaures,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-19,2022-05-17,Non,,2022-05-19,-71.447474,46.748038
+"96",Onde de tempête,"23072",Saint-Augustin-de-Desmaures,Précise,,Menace possible à la vie ou à la propriété,2022-04-22,2022-04-21,Non,,2022-05-19,-71.476338,46.724733
+"138",Orage violent,"52085",Saint-Gabriel-de-Brandon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-25,2022-05-21,Non,,2022-06-08,-73.39107,46.292849
+"8",Inondation,"52085",Saint-Gabriel-de-Brandon,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-10-26,-73.39107,46.292849
+"8",Inondation,"79037",Rivière-Rouge,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-04-27,2022-04-27,Non,,2022-05-27,-74.870924,46.412393
+"8",Inondation,"13010",Saint-Jean-de-la-Lande,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-04-15,,,,2020-10-29,-68.675889,47.423455
+"101",Mouvement de terrain,"70052",Salaberry-de-Valleyfield,Très précise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-24,2020-12-24,Non,,,-74.027309,45.299986
+"39",Feu de forêt,"70052",Salaberry-de-Valleyfield,Précise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-06,2022-05-05,Non,,,-74.084863,45.230063
+"25",Panne d'électricité,"70052",Salaberry-de-Valleyfield,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-12-12,2021-12-12,Non,,2022-02-23,-74.117539,45.262739
+"171",Vent violent,"70005",Saint-Urbain-Premier,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-06-22,2021-06-21,Non,,2022-02-23,-73.736635,45.218444
+"171",Vent violent,"34105",Sainte-Christine-d'Auvergne,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-08-05,2020-08-05,Non,,2021-01-07,-71.966847,46.816182
+"8",Inondation,"34105",Sainte-Christine-d'Auvergne,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2020-12-25,2020-12-25,Non,,2021-03-26,-71.966847,46.816182
+"158",Fermeture de route,"82030",Pontiac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2021-03-26,2021-03-26,Non,,2021-12-15,-76.230037,45.521277
+"25",Panne d'électricité,"82030",Pontiac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-21,2022-05-21,Non,,2022-07-20,-76.230037,45.521277
+"138",Orage violent,"78042",Ivry-sur-le-Lac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.337181,46.075108
+"138",Orage violent,"78042",Ivry-sur-le-Lac,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-21,Non,,2022-06-08,-74.337181,46.075108
+"39",Feu de forêt,"85075",Moffet,Précise,,Menace possible à la vie ou à la propriété,2022-05-10,2022-05-10,Non,,2022-05-18,-78.8214,47.5136
+"10",Matières dangereuses,"37205",Sainte-Anne-de-la-Pérade,Très précise,"route 138, en face du 1019, boul de Lanaudière",Menace faible ou non-existante à la vie ou la propriété,2022-03-06,2022-03-06,Non,,2022-03-07,-72.160626,46.575301
+"8",Inondation,"35040",Grandes-Piles,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-18,,,,2022-05-24,-72.723877,46.690726
+"25",Panne d'électricité,"80037",Papineauville,Imprécise,,Menace faible ou non-existante à la vie ou la propriété,2022-05-24,2022-05-24,Non,,,-75.023715,45.621222

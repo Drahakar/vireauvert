@@ -3,12 +3,6 @@
     <div id="legend">
         <h1>{{ store.region }}</h1>
         <div>Année de recherche: {{ store.year }}</div>
-        <h2>Catastrophes naturelles</h2>
-        <ul>
-            <li v-for="cata in store.catastrophesForCurrentRegion">
-                <span v-html="cata"></span>
-            </li>
-        </ul>
     </div>
 </template>
 

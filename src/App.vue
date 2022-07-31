@@ -11,7 +11,7 @@ export default defineComponent({
     Map,
     Legend,
     Timeline
-  }
+  },
 });
 
 Sentry.init({
