@@ -18,6 +18,7 @@ Sentry.init({
   dsn: "https://28318a44bb0b42b38e6b0df57cbe1986@o1340974.ingest.sentry.io/6613977",
   integrations: [new BrowserTracing()],
   tracesSampleRate: 1.0,
+  environment: import.meta.env.MODE
 });
 </script>
 
