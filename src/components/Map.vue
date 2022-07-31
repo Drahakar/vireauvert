@@ -28,15 +28,29 @@ export default defineComponent ({
             maxZoom: 19,
             attribution: "&copy; OpenStreetMap"
         }).addTo(map);
-        L.geoJSON(geojson, {
+        let electoralLayer = L.geoJSON(geojson, {
             onEachFeature: (feature, layer) => {
                 const name: string = feature.properties.name.trim();
                 layer.bindTooltip(name);
                 layer.addEventListener('click', () => {
                     store.region = name;
+                    electoralLayer.resetStyle();
                 });
+            },
+            style: function(feature) {
+                if(feature?.properties.name.trim() == store.region) {
+                    return {
+                        fillColor: '#ff0000',
+                    }
+                } else {
+                    return {
+                        fillColor: '#0000ff',
+                    }
+                }
             }
-        }).addTo(map);
+        });
+        
+        electoralLayer.addTo(map);
     }
 })
 
