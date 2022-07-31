@@ -33,18 +33,32 @@ export default defineComponent ({
                 const name: string = feature.properties.name.trim();
                 layer.bindTooltip(name);
                 layer.addEventListener('click', () => {
-                    store.region = name;
-                    electoralLayer.resetStyle();
+                    let oldRegion = store.region;
+                    if (store.region !== name) {
+                        store.region = name;
+                    } else if (store.region === name) {
+                        store.region = "";
+                    } 
+
+                    if (oldRegion !== store.region) {
+                        this.$emit('update:region-selected', name);
+                        electoralLayer.resetStyle();
+                    }
+
+
                 });
             },
             style: function(feature) {
-                if(feature?.properties.name.trim() == store.region) {
+                if(store.region == "") {
+                    return {}
+                }
+                else if(feature?.properties.name.trim() == store.region) {
                     return {
-                        fillColor: '#ff0000',
+                        fillColor: '#0000ff',
                     }
                 } else {
                     return {
-                        fillColor: '#0000ff',
+                        fillColor: '#ffffff',
                     }
                 }
             }
