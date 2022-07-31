@@ -6,7 +6,7 @@
         <h2>Catastrophes naturelles</h2>
         <ul>
             <li v-for="cata in store.catastrophesForCurrentRegion">
-                {{ cata }}
+                <span v-html="cata"></span>
             </li>
         </ul>
     </div>
