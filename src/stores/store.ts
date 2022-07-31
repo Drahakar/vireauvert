@@ -6,7 +6,7 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
     state: () => {
         return {
-            region: '',
+            district: '',
             year: 2022,
             allCatastrophes: [] as Catastrophe[],
             electoralMap: {} as any

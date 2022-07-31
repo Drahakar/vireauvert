@@ -1,4 +1,4 @@
-<template>
+district<template>
     <div id="map"></div>
 </template>
 
@@ -9,8 +9,8 @@ import { defineComponent, watch } from 'vue';
 import { useStore } from "@/stores/store";
 
 export default defineComponent({
-    props: ['region-selected'],
-    emits: ['update:region-selected'],
+    props: ['district-selected'],
+    emits: ['update:district-selected'],
     setup() {
         const store = useStore();
 
@@ -19,18 +19,18 @@ export default defineComponent({
                 const name: string = feature.properties.name.trim();
                 layer.bindTooltip(name);
                 layer.addEventListener('click', () => {
-                    if (store.region !== name) {
-                        store.region = name;
+                    if (store.district !== name) {
+                        store.district = name;
                     } else {
-                        store.region = "";
+                        store.district = "";
                     }
                 });
             },
             style: function(feature) {
-                if(!store.region) {
+                if(!store.district) {
                     return {}
                 }
-                else if(feature?.properties.name.trim() == store.region) {
+                else if(feature?.properties.name.trim() == store.district) {
                     return {
                         fillColor: '#0000ff',
                     }
@@ -43,7 +43,7 @@ export default defineComponent({
         });
         const iconLayer = L.layerGroup();
 
-        watch(() => store.region, () => {
+        watch(() => store.district, () => {
             electoralLayer.resetStyle();
         });
 
