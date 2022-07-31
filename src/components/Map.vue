@@ -55,7 +55,6 @@ export default defineComponent({
         watch(() => store.catastrophesForCurrentYear, catastrophes => {
             iconLayer.clearLayers();
             for (const catastrophe of catastrophes) {
-                console.log(catastrophe.location.toString());
                 const marker = L.marker(catastrophe.location, {
                     title: catastrophe.description
                 });
