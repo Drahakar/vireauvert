@@ -125,5 +125,5 @@ catastrophes = []
 parse_file(path.join(data_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
 parse_file(path.join(data_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
-with open(path.join(data_directory, 'catastrophes.json'), 'w') as output_file:
+with open(path.join(data_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
     json.dump(catastrophes, output_file)

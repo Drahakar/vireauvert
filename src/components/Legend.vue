@@ -3,7 +3,7 @@
     <div id="legend">
         <select v-model="store.district">
             <option value="">Québec</option>
-            <option v-for="district of districts" v-bind:value="district">{{ district }}</option>
+            <option v-for="district of districts" v-bind:value="district[0]">{{ district[1] }}</option>
         </select>
         <div>Année de recherche: {{ store.year }}</div>
         <ul id="catastrophes">
@@ -22,9 +22,9 @@ import { districts } from '@/models/districts';
 export default defineComponent({
     setup() {
         const store = useStore();
-        const districtNames = Object.values(districts);
         return {
-            store, districts: districtNames
+            store,
+            districts: Object.entries(districts)
         };
     },
     computed: {
@@ -40,7 +40,8 @@ export default defineComponent({
 #legend {
     float: left;
     width: 25%;
-    height: calc(90% - 10px);;
+    height: calc(90% - 10px);
+    ;
     padding: 10px;
 }
 

@@ -4,7 +4,7 @@ district<template>
 
 <script lang="ts">
 import "leaflet/dist/leaflet.css"
-import L, { icon } from "leaflet";
+import L from "leaflet";
 import { defineComponent, watch } from 'vue';
 import { useStore } from "@/stores/store";
 
@@ -16,21 +16,22 @@ export default defineComponent({
 
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
+                const id: string = feature.properties.id;
                 const name: string = feature.properties.name.trim();
                 layer.bindTooltip(name);
                 layer.addEventListener('click', () => {
-                    if (store.district !== name) {
-                        store.district = name;
+                    if (store.district !== id) {
+                        store.district = id;
                     } else {
-                        store.district = "";
+                        store.district = '';
                     }
                 });
             },
             style: function(feature) {
-                if(!store.district) {
+                if(!store.district || !feature) {
                     return {}
                 }
-                else if(feature?.properties.name.trim() == store.district) {
+                else if(feature.properties.id === store.district) {
                     return {
                         fillColor: '#0000ff',
                     }

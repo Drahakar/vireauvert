@@ -1,5 +1,4 @@
 import { Catastrophe, CatastropheDocument, parseCatatrophe } from '@/models/catastrophes';
-import { kml } from '@tmcw/togeojson';
 import axios from 'axios';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { defineStore } from 'pinia';
@@ -19,7 +18,7 @@ export const useStore = defineStore('store', {
             return state.allCatastrophes.filter(x => x.date.getUTCFullYear() == state.year);
         },
         catastrophesForCurrentYearAndDistrict: state => {
-            const feature = state.electoralMap.features.find(x => x.properties?.name.trim() == state.district);
+            const feature = state.electoralMap.features.find(x => x.properties?.id == state.district);
             if (feature && feature.geometry?.type == "Polygon" && feature.geometry.coordinates.length > 0) {
                 const coordinates = feature.geometry.coordinates[0];
                 return state.allCatastrophes.filter(x => x.date.getUTCFullYear() == state.year && pointInPolygon([x.location.lng, x.location.lat], coordinates));
@@ -33,9 +32,8 @@ export const useStore = defineStore('store', {
             this.allCatastrophes = catastrophesResponse.data.map(parseCatatrophe);
         },
         async loadElectoralMap() {
-            const elect = await axios.get('data/carte2017simple.kml', { responseType: 'text' });
-            const doc = new DOMParser().parseFromString(elect.data, 'text/xml');
-            this.electoralMap = kml(doc);
+            const response = await axios.get('data/carte_electorale.json', { responseType: 'json' });
+            this.electoralMap = response.data;
         }
     }
 });
