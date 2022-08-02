@@ -32,9 +32,9 @@ export default defineComponent({
         };
     },
     data() {
-        const min = 1970;
-        const max = 2050;
-        const marks = [...Array(((max - min) / 10) + 1).keys()].map(x => min + (x * 10));
+        const min = 2000;
+        const max = 2035;
+        const marks = [...Array(((max - min) / 5) + 1).keys()].map(x => min + (x * 5));
         return {
             min,
             max,
