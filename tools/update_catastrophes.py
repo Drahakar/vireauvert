@@ -47,11 +47,13 @@ class CatastropheType(Enum):
 event_types = {
     "inondation": {"type": CatastropheType.Flood, "min_severity": Severity.Important},
     "tornade": {"type": CatastropheType.Tornado, "min_severity": Severity.Minor},
-    "orages violents": {"type": CatastropheType.ViolentStorm, "min_severity": Severity.Important},
+    "orage violent": {"type": CatastropheType.ViolentStorm, "min_severity": Severity.Important},
+    "ouragan": {"type": CatastropheType.ViolentStorm, "min_severity": Severity.Important},
     "pluie verglaçante": {"type": CatastropheType.FreezingRain, "min_severity": Severity.Extreme},
     "feu de forêts": {"type": CatastropheType.ForestFire, "min_severity": Severity.Important},
     "tempête hivernale": {"type": CatastropheType.WinterStorm, "min_severity": Severity.Extreme},
     "vent de tempête": {"type": CatastropheType.StormWinds, "min_severity": Severity.Important},
+    "vent violent": {"type": CatastropheType.StormWinds, "min_severity": Severity.Important},
 }
 
 severity_pattern = re.compile(r'menace (\w+)', re.I)
