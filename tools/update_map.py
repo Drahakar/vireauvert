@@ -13,7 +13,7 @@ result = kml2geojson.main.convert(path.join(data_directory, 'carte2017simple.kml
 with open(path.join(data_directory, 'liste_circonscriptions2017.csv'), 'r', encoding='utf-8') as input_file:
     reader = csv.reader(input_file, delimiter=';')
     next(reader, None)
-    districts = {x[1]: x[0] for x in reader}
+    districts = {x[1]: int(x[0]) for x in reader}
 
 for feature in result['features']:
     properties = feature['properties']

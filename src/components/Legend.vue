@@ -2,8 +2,8 @@
 <template>
     <div id="legend">
         <select v-model="store.district">
-            <option value="">Québec</option>
-            <option v-for="district of districts" v-bind:value="district[0]">{{ district[1] }}</option>
+            <option :value="0">Québec</option>
+            <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
         </select>
         <div>Année de recherche: {{ store.year }}</div>
         <ul id="catastrophes">
@@ -16,16 +16,12 @@
 
 import { useStore } from '@/stores/store';
 import { mapStores } from 'pinia';
-import { defineComponent } from 'vue'
-import { districts } from '@/models/districts';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     setup() {
         const store = useStore();
-        return {
-            store,
-            districts: Object.entries(districts)
-        };
+        return { store };
     },
     computed: {
         ...mapStores(useStore)
