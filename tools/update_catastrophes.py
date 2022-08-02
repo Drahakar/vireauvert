@@ -112,7 +112,7 @@ def parse_old_line(line):
     return None
 
 def parse_file(path, catastrophes, parser):
-    with open(path, 'r') as input_file:
+    with open(path, 'r', encoding='utf-8') as input_file:
         reader = csv.reader(input_file)
         next(reader, None)
         for line in reader:
