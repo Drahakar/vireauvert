@@ -82,7 +82,7 @@ function getSeverityDescription(severity: Severity) {
             return '';
     }
 }
-export function formatDescription(catastrope: Catastrophe, includeCity = false) {
+export function formatDescription(catastrope: Catastrophe) {
     const plural = catastrope.type === CatastropheType.StormWinds;
     const feminine = catastrope.type === CatastropheType.Flood || catastrope.type === CatastropheType.Tornado || catastrope.type === CatastropheType.FreezingRain;
 
@@ -94,9 +94,6 @@ export function formatDescription(catastrope: Catastrophe, includeCity = false) 
         }
         if (plural) {
             severity += 's';
-        }
-        if (includeCity) {
-            severity = `${severity} à ${catastrope.city}`;
         }
     }
     return severity;

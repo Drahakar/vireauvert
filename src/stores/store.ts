@@ -23,11 +23,16 @@ export const useStore = defineStore('store', {
                 const properties: DistrictProperties = x.properties;
                 return properties.id === state.district;
             }) : undefined;
+            
+            let catastrophes = state.allCatastrophes.filter(x => x.date.getUTCFullYear() == state.year);
+            
             if (feature && feature.geometry?.type == "Polygon" && feature.geometry.coordinates.length > 0) {
                 const coordinates = feature.geometry.coordinates[0];
-                return state.allCatastrophes.filter(x => x.date.getUTCFullYear() == state.year && pointInPolygon([x.location.lng, x.location.lat], coordinates));
+                catastrophes = catastrophes.filter(x => pointInPolygon([x.location.lng, x.location.lat], coordinates));
             }
-            return state.allCatastrophes.filter(x => x.date.getUTCFullYear() == state.year);
+
+            catastrophes.sort((a, b) => a.date.getTime() - b.date.getTime());
+            return catastrophes;
         },
         allDistricts: state => {
             return state.electoralMap.features.map(x => {

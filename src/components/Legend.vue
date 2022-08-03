@@ -8,8 +8,8 @@
         <div>Année de recherche: {{ store.year }}</div>
         <ul id="catastrophes">
             <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
-                <a href="#" @click="requestCatastropheFocus(catastrophe)">
-                    {{ formatDescription(catastrophe, true) }}
+                <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
+                    {{ dateFormat.format(catastrophe.date) }}: {{ formatDescription(catastrophe) }} à {{ catastrophe.city }}
                 </a>
             </li>
         </ul>
@@ -26,7 +26,11 @@ export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
     setup() {
         const store = useStore();
-        return { store, formatDescription };
+        const dateFormat = new Intl.DateTimeFormat('fr-CA', {
+            day: '2-digit',
+            month: 'long'
+        });
+        return { store, formatDescription, dateFormat };
     },
     async mounted() {
         await this.store.updateCatastrophes();

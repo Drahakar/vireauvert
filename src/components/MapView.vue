@@ -102,7 +102,11 @@ export default defineComponent({
 
     methods: {
         focusCatastrophe(catastrophe: Catastrophe) {
-            this.map?.setView(catastrophe.location, 12);
+            if (this.map) {
+                this.map.setView(catastrophe.location, this.map.getZoom(), {
+                    animate: true
+                });
+            }
         }
     }
 })
