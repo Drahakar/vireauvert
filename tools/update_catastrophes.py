@@ -121,6 +121,7 @@ def parse_file(path, catastrophes, parser):
             catastrophe = parser(line)
             if catastrophe:
                 catastrophes.append(catastrophe)
+                catastrophe['id'] = len(catastrophes)
 
 catastrophes = []
 
