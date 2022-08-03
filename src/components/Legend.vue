@@ -7,27 +7,32 @@
         </select>
         <div>Année de recherche: {{ store.year }}</div>
         <ul id="catastrophes">
-            <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">{{ catastrophe.description }}</li>
+            <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
+                <a href="#" @click="requestCatastropheFocus(catastrophe)">{{ catastrophe.description }}</a>
+            </li>
         </ul>
     </div>
 </template>
 
 <script lang="ts">
 
+import { Catastrophe } from '@/models/catastrophes';
 import { useStore } from '@/stores/store';
-import { mapStores } from 'pinia';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+    emits: ['onRequestCatastropheFocus'],
     setup() {
         const store = useStore();
         return { store };
     },
-    computed: {
-        ...mapStores(useStore)
-    },
     async mounted() {
         await this.store.updateCatastrophes();
+    },
+    methods: {
+        requestCatastropheFocus(catastrophe: Catastrophe) {
+            this.$emit('onRequestCatastropheFocus', catastrophe);
+        }
     }
 })
 </script>

@@ -1,21 +1,21 @@
-district<template>
-    <div id="map"></div>
+<template>
+    <div id="map" ref="mapElement"></div>
 </template>
 
 <script lang="ts">
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
-import { defineComponent, watch } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
-import { CatastropheType } from "@/models/catastrophes";
+import { Catastrophe, CatastropheType } from "@/models/catastrophes";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
     for (const value of Object.values(CatastropheType)) {
         const icon = L.icon({
             iconUrl: `/icons/${value.toLowerCase()}.png`,
-            iconSize: [32, 32]
+            iconSize: [48, 48]
         });
         icons.set(value, icon);
     }
@@ -25,6 +25,11 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 export default defineComponent({
     props: ['district-selected'],
     emits: ['update:district-selected'],
+    data() {
+        return {
+            map: null as L.Map | null
+        };
+    },
     setup() {
         const store = useStore();
         const icons = generateIcons();
@@ -70,21 +75,34 @@ export default defineComponent({
                 marker.addTo(iconLayer);
             }
         });
-        return { store, electoralLayer, iconLayer };
+
+        const mapElement = ref<HTMLDivElement | null>(null);
+        return { store, electoralLayer, iconLayer, mapElement };
     },
 
     async mounted() {
         await this.store.loadElectoralMap();
-        const map = new L.Map("map", {
-            center: [45.5001, -73.5679],
-            zoom: 11
-        });
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 19,
-            attribution: "&copy; OpenStreetMap"
-        }).addTo(map);
-        this.electoralLayer.addTo(map);
-        this.iconLayer.addTo(map);
+
+        if (this.mapElement) {
+            const map = new L.Map(this.mapElement, {
+                center: [45.5001, -73.5679],
+                zoom: 11
+            });
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+                attribution: "&copy; OpenStreetMap"
+            }).addTo(map);
+            this.electoralLayer.addTo(map);
+            this.iconLayer.addTo(map);
+
+            this.map = map;
+        }
+    },
+
+    methods: {
+        focusCatastrophe(catastrophe: Catastrophe) {
+            this.map?.setView(catastrophe.location, 12);
+        }
     }
 })
 

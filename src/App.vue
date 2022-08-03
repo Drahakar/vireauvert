@@ -1,17 +1,30 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
-import Map from "./components/Map.vue";
+import MapView from "./components/MapView.vue";
 import Legend from "./components/Legend.vue";
 import Timeline from "./components/Timeline.vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { Catastrophe } from "./models/catastrophes";
 
 export default defineComponent({
   components: {
-    Map,
+    MapView,
     Legend,
     Timeline
   },
+  setup() {
+    const map = ref<InstanceType<typeof MapView> | null>(null);
+    return {
+      map
+    };
+  },
+  methods: {
+    focusCatastrophe(catastrophe: Catastrophe) {
+      console.log(catastrophe);
+      this.map?.focusCatastrophe(catastrophe);
+    }
+  }
 });
 
 Sentry.init({
@@ -23,7 +36,7 @@ Sentry.init({
 </script>
 
 <template>
-  <Legend></Legend>
-  <Map></Map>
+  <Legend @on-request-catastrophe-focus="focusCatastrophe"></Legend>
+  <MapView ref="map"></MapView>
   <Timeline></Timeline>
 </template>
