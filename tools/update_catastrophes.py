@@ -50,7 +50,7 @@ event_types = {
     "orage violent": {"type": CatastropheType.ViolentStorm, "min_severity": Severity.Important},
     "ouragan": {"type": CatastropheType.ViolentStorm, "min_severity": Severity.Important},
     "pluie verglaçante": {"type": CatastropheType.FreezingRain, "min_severity": Severity.Extreme},
-    "feu de forêts": {"type": CatastropheType.ForestFire, "min_severity": Severity.Important},
+    "feu de forêt": {"type": CatastropheType.ForestFire, "min_severity": Severity.Important},
     "tempête hivernale": {"type": CatastropheType.WinterStorm, "min_severity": Severity.Extreme},
     "vent de tempête": {"type": CatastropheType.StormWinds, "min_severity": Severity.Important},
     "vent violent": {"type": CatastropheType.StormWinds, "min_severity": Severity.Important},
@@ -77,7 +77,7 @@ def parse_new_severity(description):
     return Severity.Unknown
 
 def parse_new_line(line):
-    _,alea,_,_,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
+    _,alea,_,municipalite,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
     event = event_types.get(alea.lower())
         
     if event:
@@ -86,7 +86,7 @@ def parse_new_line(line):
             date = datetime.strptime(date_debut if date_debut else date_signalement, '%Y-%m-%d')
             return {
                 "location": [float(coord_y), float(coord_x)],
-                "description": alea,
+                "city": municipalite,
                 "type": event['type'].value,
                 "date": date.isoformat(),
                 "severity": severity.value
@@ -94,7 +94,7 @@ def parse_new_line(line):
     return None
 
 def parse_old_line(line):
-    _,_,date_observation,code_municipalite,_,_,_,type,severite,_,_ = line
+    no,_,date_observation,code_municipalite,nom,_,_,type,severite,_,_ = line
 
     event = event_types.get(type.lower())
     if event:
@@ -106,7 +106,7 @@ def parse_old_line(line):
                 if location:
                     return {
                         "location": location,
-                        "description": type,
+                        "city": nom,
                         "type": event['type'].value,
                         "date": date.isoformat(),
                         "severity": severity.value

@@ -8,7 +8,9 @@
         <div>Année de recherche: {{ store.year }}</div>
         <ul id="catastrophes">
             <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
-                <a href="#" @click="requestCatastropheFocus(catastrophe)">{{ catastrophe.description }}</a>
+                <a href="#" @click="requestCatastropheFocus(catastrophe)">
+                    {{ formatDescription(catastrophe, true) }}
+                </a>
             </li>
         </ul>
     </div>
@@ -16,7 +18,7 @@
 
 <script lang="ts">
 
-import { Catastrophe } from '@/models/catastrophes';
+import { Catastrophe, formatDescription } from '@/models/catastrophes';
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 
@@ -24,7 +26,7 @@ export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
     setup() {
         const store = useStore();
-        return { store };
+        return { store, formatDescription };
     },
     async mounted() {
         await this.store.updateCatastrophes();

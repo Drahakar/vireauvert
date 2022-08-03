@@ -8,7 +8,7 @@ import L from "leaflet";
 import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
-import { Catastrophe, CatastropheType } from "@/models/catastrophes";
+import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -67,11 +67,12 @@ export default defineComponent({
         watch(() => store.catastrophesForCurrentYear, catastrophes => {
             iconLayer.clearLayers();
             for (const catastrophe of catastrophes) {
+                const title = formatDescription(catastrophe);
                 const marker = L.marker(catastrophe.location, {
-                    title: catastrophe.description,
+                    title: title,
                     icon: icons.get(catastrophe.type)
                 });
-                marker.bindTooltip(catastrophe.description);
+                marker.bindTooltip(title);
                 marker.addTo(iconLayer);
             }
         });
