@@ -87,9 +87,9 @@ def parse_new_line(line):
             return {
                 "location": [float(coord_y), float(coord_x)],
                 "city": municipalite,
-                "type": event['type'].value,
-                "date": date.isoformat(),
-                "severity": severity.value
+                "type": event['type'],
+                "date": date,
+                "severity": severity
             }
     return None
 
@@ -101,15 +101,15 @@ def parse_old_line(line):
         severity = parse_old_severity(severite.upper())
         if severity >= event['min_severity']:
             date = datetime.strptime(date_observation, '%Y/%m/%d %H:%M:%S')
-            if date.year > 2000:
+            if date.year >= 2000:
                 location = cities.get(code_municipalite)
                 if location:
                     return {
                         "location": location,
                         "city": nom,
-                        "type": event['type'].value,
-                        "date": date.isoformat(),
-                        "severity": severity.value
+                        "type": event['type'],
+                        "date": date,
+                        "severity": severity
                     }
     return None
 
@@ -121,12 +121,26 @@ def parse_file(path, catastrophes, parser):
             catastrophe = parser(line)
             if catastrophe:
                 catastrophes.append(catastrophe)
-                catastrophe['id'] = len(catastrophes)
 
 catastrophes = []
 
 parse_file(path.join(data_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
 parse_file(path.join(data_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
+catastrophes.sort(key=lambda x: x['date'])
+
+result = {}
+cat_id = 1
+for catastrophe in catastrophes:
+    result.setdefault(catastrophe['date'].year, []).append({
+        'id': cat_id,
+        'location': catastrophe['location'],
+        'city': catastrophe['city'],
+        'type': catastrophe['type'].value,
+        'date': catastrophe['date'].isoformat(),
+        'severity': catastrophe['severity'].value
+    })
+    cat_id += 1
+
 with open(path.join(data_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
-    json.dump(catastrophes, output_file)
+    json.dump(result, output_file)

@@ -11,7 +11,6 @@ export enum CatastropheType {
 }
 
 export interface Catastrophe {
-    id: number;
     location: LatLng;
     city: string;
     type: CatastropheType;
@@ -28,7 +27,6 @@ export enum Severity {
 }
 
 export interface CatastropheDocument {
-    id: number;
     location: LatLngTuple;
     city: string;
     type: string;
@@ -38,7 +36,6 @@ export interface CatastropheDocument {
 
 export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
     return {
-        id: doc.id,
         location: new LatLng(doc.location[0], doc.location[1]),
         city: doc.city,
         type: doc.type as CatastropheType,
