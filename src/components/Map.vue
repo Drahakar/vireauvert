@@ -8,12 +8,26 @@ import L from "leaflet";
 import { defineComponent, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
+import { CatastropheType } from "@/models/catastrophes";
+
+function generateIcons(): Map<CatastropheType, L.Icon> {
+    const icons = new Map<CatastropheType, L.Icon>();
+    for (const value of Object.values(CatastropheType)) {
+        const icon = L.icon({
+            iconUrl: `/icons/${value.toLowerCase()}.png`,
+            iconSize: [32, 32]
+        });
+        icons.set(value, icon);
+    }
+    return icons;
+}
 
 export default defineComponent({
     props: ['district-selected'],
     emits: ['update:district-selected'],
     setup() {
         const store = useStore();
+        const icons = generateIcons();
 
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
@@ -49,7 +63,8 @@ export default defineComponent({
             iconLayer.clearLayers();
             for (const catastrophe of catastrophes) {
                 const marker = L.marker(catastrophe.location, {
-                    title: catastrophe.description
+                    title: catastrophe.description,
+                    icon: icons.get(catastrophe.type)
                 });
                 marker.bindTooltip(catastrophe.description);
                 marker.addTo(iconLayer);
