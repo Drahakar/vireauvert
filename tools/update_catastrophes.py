@@ -6,12 +6,10 @@ import xml.etree.ElementTree as ET
 from os import path
 import json
 import csv
-
-current_directory = path.dirname(path.realpath(__file__))
-data_directory = path.realpath(path.join(current_directory, '..', 'public', 'data'))
+import utils
 
 def load_cities():
-    cities_xml = ET.parse(path.join(data_directory, 'municipalites.xml'))
+    cities_xml = ET.parse(path.join(utils.source_directory, 'municipalites.xml'))
 
     def convert_lat_lon(dms):
         deg, minutes, seconds, direction =  re.split('[°\'"]', dms)
@@ -124,8 +122,8 @@ def parse_file(path, catastrophes, parser):
 
 catastrophes = []
 
-parse_file(path.join(data_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
-parse_file(path.join(data_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
+parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
+parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
 catastrophes.sort(key=lambda x: x['date'])
 
@@ -142,5 +140,5 @@ for catastrophe in catastrophes:
     })
     cat_id += 1
 
-with open(path.join(data_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
+with open(path.join(utils.destination_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
     json.dump(result, output_file)
