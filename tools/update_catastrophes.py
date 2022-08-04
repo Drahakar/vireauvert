@@ -75,7 +75,7 @@ def parse_new_severity(description):
     return Severity.Unknown
 
 def parse_new_line(line):
-    _,alea,_,municipalite,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
+    code_alea,alea,code_municipalite,municipalite,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
     event = event_types.get(alea.lower())
         
     if event:
@@ -83,6 +83,7 @@ def parse_new_line(line):
         if severity >= event['min_severity']:
             date = datetime.strptime(date_debut if date_debut else date_signalement, '%Y-%m-%d')
             return {
+                "id": "{}{}{}".format(code_alea, code_municipalite, date.date().strftime('%Y%m%d')),
                 "location": [float(coord_y), float(coord_x)],
                 "city": municipalite,
                 "type": event['type'],
@@ -103,6 +104,7 @@ def parse_old_line(line):
                 location = cities.get(code_municipalite)
                 if location:
                     return {
+                        "id": no,
                         "location": location,
                         "city": nom,
                         "type": event['type'],
@@ -128,17 +130,15 @@ parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catas
 catastrophes.sort(key=lambda x: x['date'])
 
 result = {}
-cat_id = 1
 for catastrophe in catastrophes:
     result.setdefault(catastrophe['date'].year, []).append({
-        'id': cat_id,
+        'id': catastrophe['id'],
         'location': catastrophe['location'],
         'city': catastrophe['city'],
         'type': catastrophe['type'].value,
         'date': catastrophe['date'].isoformat(),
         'severity': catastrophe['severity'].value
     })
-    cat_id += 1
 
 with open(path.join(utils.destination_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
     json.dump(result, output_file)

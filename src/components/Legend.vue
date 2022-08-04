@@ -22,7 +22,9 @@
             <ul>
                 <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        {{ dateFormat.format(catastrophe.date) }}: {{ formatDescription(catastrophe) }} à {{ catastrophe.city }}
+                        [{{ catastrophe.id }}] 
+                        {{ dateFormat.format(catastrophe.date) }}: 
+                        {{ formatDescription(catastrophe) }} à {{ catastrophe.city }}
                     </a>
                 </li>
             </ul>
