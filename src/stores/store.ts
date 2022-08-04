@@ -2,7 +2,7 @@ import { Catastrophe, CatastropheDocument, parseCatatrophe } from '@/models/cata
 import { DistrictProperties } from '@/models/map';
 import { AdminRegion, StatSnapshot } from '@/models/regions';
 import axios from 'axios';
-import { FeatureCollection, Geometry } from 'geojson';
+import { FeatureCollection, Geometry, Position } from 'geojson';
 import { defineStore } from 'pinia';
 import pointInPolygon from 'point-in-polygon';
 
@@ -10,6 +10,20 @@ export type CatastropheDatabase = Map<string, Catastrophe[]>;
 
 interface CatastropeResponse {
     [year: string]: CatastropheDocument[]
+}
+
+function getPolygons(geometry: Geometry): Position[][] {
+    if(geometry.type === "Polygon") {
+        return geometry.coordinates;
+    }
+    if(geometry.type === "GeometryCollection") {
+        const result: Position[][] = [];
+        for (const g of geometry.geometries) {
+            result.push(...getPolygons(g));
+        }
+        return result;
+    }
+    return [];
 }
 
 export const useStore = defineStore('store', {
@@ -33,9 +47,15 @@ export const useStore = defineStore('store', {
             }) : undefined;
 
             let catastrophes = this.catastrophesForCurrentYear;
-            if (feature?.geometry?.type === "Polygon" && feature.geometry.coordinates.length > 0) {
-                const coordinates = feature.geometry.coordinates[0];
-                catastrophes = catastrophes.filter(x => pointInPolygon([x.location.lng, x.location.lat], coordinates));
+            if (feature?.geometry) {
+                const polygons = getPolygons(feature.geometry);
+                if (polygons.length == 0) {
+                    return [];
+                }
+                catastrophes = catastrophes.filter(x => {
+                    const point = [x.location.lng, x.location.lat];
+                    return polygons.some(poly => pointInPolygon(point, poly));
+                });
             }
             return catastrophes;
         },
