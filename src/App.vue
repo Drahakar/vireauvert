@@ -21,7 +21,6 @@ export default defineComponent({
   },
   methods: {
     focusCatastrophe(catastrophe: Catastrophe) {
-      console.log(catastrophe);
       this.map?.focusCatastrophe(catastrophe);
     }
   }

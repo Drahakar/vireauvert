@@ -6,13 +6,27 @@
             <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
         </select>
         <div>Année de recherche: {{ store.year }}</div>
-        <ul id="catastrophes">
-            <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
-                <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                    {{ dateFormat.format(catastrophe.date) }}: {{ formatDescription(catastrophe) }} à {{ catastrophe.city }}
-                </a>
-            </li>
-        </ul>
+        <div v-if="store.statisticsForCurrentYearAndDistrict">
+            Statistiques
+            <ul>
+                <li v-if="store.statisticsForCurrentYearAndDistrict.average_temperature !== null">
+                    Température moyenne: {{ store.statisticsForCurrentYearAndDistrict.average_temperature }} °C
+                </li>
+                <li v-if="store.statisticsForCurrentYearAndDistrict.average_precipitations !== null">
+                    Précipitations moyennes: {{ store.statisticsForCurrentYearAndDistrict.average_precipitations }} mm
+                </li>
+            </ul>
+        </div>
+        <div id="catastrophes">
+            Catastrophes
+            <ul>
+                <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
+                    <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
+                        {{ dateFormat.format(catastrophe.date) }}: {{ formatDescription(catastrophe) }} à {{ catastrophe.city }}
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -34,6 +48,7 @@ export default defineComponent({
     },
     async mounted() {
         await this.store.updateCatastrophes();
+        await this.store.loadRegions();
     },
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {

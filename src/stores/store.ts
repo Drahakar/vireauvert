@@ -1,5 +1,6 @@
 import { Catastrophe, CatastropheDocument, parseCatatrophe } from '@/models/catastrophes';
 import { DistrictProperties } from '@/models/map';
+import { AdminRegion, StatSnapshot } from '@/models/regions';
 import axios from 'axios';
 import { FeatureCollection, Geometry } from 'geojson';
 import { defineStore } from 'pinia';
@@ -16,6 +17,7 @@ export const useStore = defineStore('store', {
         return {
             district: 0,
             year: new Date().getFullYear(),
+            allRegions: [] as AdminRegion[],
             catastrophesPerYear: new Map<string, Catastrophe[]>() as CatastropheDatabase,
             electoralMap: { features: [] as unknown } as FeatureCollection<Geometry | null, any>
         };
@@ -39,6 +41,30 @@ export const useStore = defineStore('store', {
         },
         allDistricts(): DistrictProperties[] {
             return this.electoralMap.features.map(x => x.properties as DistrictProperties);
+        },
+        statisticsForCurrentYear(): Map<string, StatSnapshot> {
+            return this.allRegions.reduce((result, region) => {
+                const snapshot: StatSnapshot = {
+                    average_temperature: region.statistics.average_temperature[this.year - 2000],
+                    average_precipitations: region.statistics.average_precipitations[this.year - 2000]
+                };
+                for (const districtId in region.districts) {
+                    result.set(districtId.toString(), snapshot);
+                }
+                return result;
+            }, new Map<string, StatSnapshot>());
+        },
+        statisticsForCurrentYearAndDistrict(): StatSnapshot | null {
+            if (this.district) {
+                const region = this.allRegions.find(x => x.districts.includes(this.district));
+                if (region) {
+                    return {
+                        average_temperature: region.statistics.average_temperature[this.year - 2000],
+                        average_precipitations: region.statistics.average_precipitations[this.year - 2000]
+                    };
+                }
+            }
+            return null;
         }
     },
     actions: {
@@ -53,6 +79,23 @@ export const useStore = defineStore('store', {
         async loadElectoralMap() {
             const response = await axios.get('data/carte_electorale.json', { responseType: 'json' });
             this.electoralMap = response.data;
+        },
+        async loadRegions() {
+            const regionResponse = await axios.get<AdminRegion[]>('data/admin_regions.json', { responseType: 'json' });
+            const regions = regionResponse.data;
+
+            const [temp, prec] = await Promise.all([
+                axios.get<(number | null)[][]>('data/temperatures_moy_regions.json', { responseType: 'json' }),
+                axios.get<(number | null)[][]>('data/precipitations_moy_regions.json', { responseType: 'json' })
+            ]);
+            for (let i = 0; i < regions.length; ++i) {
+                regions[i].statistics = {
+                    average_temperature: temp.data[i],
+                    average_precipitations: prec.data[i]
+                }
+            }
+
+            this.allRegions = regions;
         }
     }
 });
