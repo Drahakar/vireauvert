@@ -14,7 +14,7 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
     for (const value of Object.values(CatastropheType)) {
         const icon = L.icon({
-            iconUrl: `/icons/${value.toLowerCase()}.png`,
+            iconUrl: `/icons/${value.toLowerCase()}_b.png`,
             iconSize: [48, 48]
         });
         icons.set(value, icon);
