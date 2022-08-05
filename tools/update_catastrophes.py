@@ -4,9 +4,15 @@ import re
 from datetime import datetime
 import xml.etree.ElementTree as ET
 from os import path
+import os
 import json
 import csv
+import zipfile
+from bs4 import BeautifulSoup
+import locale
 import utils
+
+locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
 def load_cities():
     cities_xml = ET.parse(path.join(utils.source_directory, 'municipalites.xml'))
@@ -122,23 +128,68 @@ def parse_file(path, catastrophes, parser):
             if catastrophe:
                 catastrophes.append(catastrophe)
 
+def parse_kmz(path, catastrophes):
+    namespaces = {'kml': 'http://www.opengis.net/kml/2.2'}
+    with zipfile.ZipFile(path, 'r') as zip:
+        for zip_entry in zip.filelist:
+            if os.path.splitext(zip_entry.filename)[1] == '.kml':
+                with zip.open(zip_entry) as doc:
+                    kml = ET.parse(doc)
+                    for placemark in kml.iterfind('.//kml:Placemark', namespaces):
+                        description = placemark.find('kml:description', namespaces)
+                        soup = BeautifulSoup(description.text, 'html.parser')
+                        tables = soup.find_all('table')
+                        properties = {}
+                        for row in tables[1].find_all('tr'):
+                            [key, value] = row.find_all('td')
+                            properties[key.text.strip()] = value.text.strip()
+
+                        severity = Severity.Unknown
+                        match locale.atof(properties['SUP_HA']):
+                            case ha if ha < 100:
+                                severity = Severity.Minor
+                            case ha if ha >= 100 and ha < 1000:
+                                severity = Severity.Moderate
+                            case ha if ha >= 1000 and ha < 10000:
+                                severity = Severity.Important
+                            case ha if ha >= 10000:
+                                severity = Severity.Extreme
+                        
+                        if severity >= Severity.Important:
+                            fire = {
+                                "id": properties['CLE'],
+                                "location": [locale.atof(properties['LATITUDE']), locale.atof(properties['LONGITUDE'])],
+                                "type": CatastropheType.ForestFire,
+                                "date": datetime.strptime(properties['DATE_DEBUT'], '%Y-%m-%d'),
+                                "severity": severity
+                            }
+                            catastrophes.append(fire)
+
 catastrophes = []
 
 parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
 parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
+fire_origin_directory = path.join(utils.source_directory, 'Feux_pt_ori')
+for file_path in os.listdir(fire_origin_directory):
+    if path.splitext(file_path)[1] == '.kmz':
+        parse_kmz(path.join(fire_origin_directory, file_path), catastrophes)
+
 catastrophes.sort(key=lambda x: x['date'])
 
 result = {}
 for catastrophe in catastrophes:
-    result.setdefault(catastrophe['date'].year, []).append({
+    obj = {
         'id': catastrophe['id'],
         'location': catastrophe['location'],
-        'city': catastrophe['city'],
         'type': catastrophe['type'].value,
         'date': catastrophe['date'].isoformat(),
         'severity': catastrophe['severity'].value
-    })
+    }
+    if 'city' in catastrophe:
+        obj['city'] = catastrophe['city']
+    
+    result.setdefault(catastrophe['date'].year, []).append(obj)
 
 with open(path.join(utils.destination_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
     json.dump(result, output_file)
