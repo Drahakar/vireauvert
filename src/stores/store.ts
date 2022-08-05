@@ -16,10 +16,10 @@ export const MIN_YEAR = 2000;
 export const MAX_YEAR = 2035;
 
 function getPolygons(geometry: Geometry): Position[][] {
-    if(geometry.type === "Polygon") {
+    if (geometry.type === "Polygon") {
         return geometry.coordinates;
     }
-    if(geometry.type === "GeometryCollection") {
+    if (geometry.type === "GeometryCollection") {
         const result: Position[][] = [];
         for (const g of geometry.geometries) {
             result.push(...getPolygons(g));
@@ -40,42 +40,26 @@ export const useStore = defineStore('store', {
         };
     },
     getters: {
-        catastrophesForCurrentYear(): Catastrophe[] {
-            return this.catastrophesPerYear.get(this.year.toString()) ?? [];
-        },
         catastrophesForCurrentYearAndDistrict(): Catastrophe[] {
             const feature = this.district ? this.electoralMap.features.find(x => {
                 const properties: DistrictProperties = x.properties;
                 return properties.id === this.district;
             }) : undefined;
 
-            let catastrophes = this.catastrophesForCurrentYear;
-            if (feature?.geometry) {
+            const catastrophes = this.catastrophesPerYear.get(this.year.toString());
+            if (feature?.geometry && catastrophes) {
                 const polygons = getPolygons(feature.geometry);
-                if (polygons.length == 0) {
-                    return [];
-                }
-                catastrophes = catastrophes.filter(x => {
-                    const point = [x.location.lng, x.location.lat];
-                    return polygons.some(poly => pointInPolygon(point, poly));
-                });
+                if (polygons.length > 0) {
+                    return catastrophes.filter(x => {
+                        const point = [x.location.lng, x.location.lat];
+                        return polygons.some(poly => pointInPolygon(point, poly));
+                    });                }
+                
             }
-            return catastrophes;
+            return catastrophes || [];
         },
         allDistricts(): DistrictProperties[] {
             return this.electoralMap.features.map(x => x.properties as DistrictProperties);
-        },
-        statisticsForCurrentYear(): Map<string, StatSnapshot> {
-            return this.allRegions.reduce((result, region) => {
-                const snapshot: StatSnapshot = {
-                    average_temperature: region.statistics.average_temperature[this.year - MIN_YEAR],
-                    average_precipitations: region.statistics.average_precipitations[this.year - MIN_YEAR]
-                };
-                for (const districtId in region.districts) {
-                    result.set(districtId.toString(), snapshot);
-                }
-                return result;
-            }, new Map<string, StatSnapshot>());
         },
         statisticsForCurrentYearAndDistrict(): StatSnapshot | null {
             if (this.district) {

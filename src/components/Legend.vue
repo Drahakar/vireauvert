@@ -22,9 +22,12 @@
             <ul>
                 <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        [{{ catastrophe.id }}] 
-                        {{ dateFormat.format(catastrophe.date) }}: 
-                        {{ formatDescription(catastrophe) }} à {{ catastrophe.city }}
+                        <span>[{{ catastrophe.id }}]</span> 
+                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>: 
+                        <span>{{ formatDescription(catastrophe) }}</span> 
+                        <span v-if="catastrophe.city">
+                            à {{ catastrophe.city }}
+                        </span>
                     </a>
                 </li>
             </ul>
