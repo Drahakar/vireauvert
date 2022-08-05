@@ -12,6 +12,9 @@ interface CatastropeResponse {
     [year: string]: CatastropheDocument[]
 }
 
+export const MIN_YEAR = 2000;
+export const MAX_YEAR = 2035;
+
 function getPolygons(geometry: Geometry): Position[][] {
     if(geometry.type === "Polygon") {
         return geometry.coordinates;
@@ -65,8 +68,8 @@ export const useStore = defineStore('store', {
         statisticsForCurrentYear(): Map<string, StatSnapshot> {
             return this.allRegions.reduce((result, region) => {
                 const snapshot: StatSnapshot = {
-                    average_temperature: region.statistics.average_temperature[this.year - 2000],
-                    average_precipitations: region.statistics.average_precipitations[this.year - 2000]
+                    average_temperature: region.statistics.average_temperature[this.year - MIN_YEAR],
+                    average_precipitations: region.statistics.average_precipitations[this.year - MIN_YEAR]
                 };
                 for (const districtId in region.districts) {
                     result.set(districtId.toString(), snapshot);
@@ -79,8 +82,8 @@ export const useStore = defineStore('store', {
                 const region = this.allRegions.find(x => x.districts.includes(this.district));
                 if (region) {
                     return {
-                        average_temperature: region.statistics.average_temperature[this.year - 2000],
-                        average_precipitations: region.statistics.average_precipitations[this.year - 2000]
+                        average_temperature: region.statistics.average_temperature[this.year - MIN_YEAR],
+                        average_precipitations: region.statistics.average_precipitations[this.year - MIN_YEAR]
                     };
                 }
             }

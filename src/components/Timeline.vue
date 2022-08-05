@@ -19,7 +19,7 @@
 import VueSlider from 'vue-slider-component'
 import { defineComponent } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { useStore } from '@/stores/store';
+import { MAX_YEAR, MIN_YEAR, useStore } from '@/stores/store';
 
 export default defineComponent({    
     components: {
@@ -32,12 +32,10 @@ export default defineComponent({
         };
     },
     data() {
-        const min = 2000;
-        const max = 2035;
-        const marks = [...Array(((max - min) / 5) + 1).keys()].map(x => min + (x * 5));
+        const marks = [...Array(((MAX_YEAR - MIN_YEAR) / 5) + 1).keys()].map(x => MIN_YEAR + (x * 5));
         return {
-            min,
-            max,
+            min: MIN_YEAR,
+            max: MAX_YEAR,
             marks
         }
     }

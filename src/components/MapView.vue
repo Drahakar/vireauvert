@@ -6,7 +6,7 @@
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { defineComponent, ref, watch } from 'vue';
-import { useStore } from "@/stores/store";
+import { MAX_YEAR, MIN_YEAR, useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
 
@@ -46,14 +46,12 @@ export default defineComponent({
                 if (store.district && feature) {
                     const properties: DistrictProperties = feature.properties;
                     return {
-                        fill: true,
                         fillColor: properties.id === store.district ? '#0000ff' : '#ffffff'
                     }
                 }
                 return {};
             }
         });
-        const iconLayer = L.layerGroup();
 
         watch(() => store.district, () => {
             electoralLayer.resetStyle();
@@ -64,16 +62,34 @@ export default defineComponent({
             electoralLayer.addData(elec);
         });
 
-        watch(() => store.catastrophesForCurrentYear, catastrophes => {
+        const iconLayer = L.layerGroup();
+
+        const yearLayers: L.LayerGroup[] = [];
+        watch(() => store.catastrophesPerYear, catastrophesPerYear => {
+            for (let year = MIN_YEAR; year <= MAX_YEAR; ++year) {
+                const catastrophes = catastrophesPerYear.get(year.toString());
+                const yearLayer = L.layerGroup();
+                if (catastrophes) {
+                    for (const catastrophe of catastrophes) {
+                        const title = formatDescription(catastrophe);
+                        const marker = L.marker(catastrophe.location, {
+                            title: title,
+                            icon: icons.get(catastrophe.type)
+                        });
+                        marker.bindTooltip(title);
+                        marker.addTo(yearLayer);
+                    }
+                }
+                yearLayers.push(yearLayer);
+            }
             iconLayer.clearLayers();
-            for (const catastrophe of catastrophes) {
-                const title = formatDescription(catastrophe);
-                const marker = L.marker(catastrophe.location, {
-                    title: title,
-                    icon: icons.get(catastrophe.type)
-                });
-                marker.bindTooltip(title);
-                marker.addTo(iconLayer);
+            iconLayer.addLayer(yearLayers[store.year - MIN_YEAR]);
+        });
+
+        watch(() => store.year, year => {
+            if (yearLayers.length > 0) {
+                iconLayer.clearLayers();
+                iconLayer.addLayer(yearLayers[year - MIN_YEAR]);
             }
         });
 
