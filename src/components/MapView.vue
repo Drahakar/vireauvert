@@ -64,32 +64,41 @@ export default defineComponent({
 
         const iconLayer = L.layerGroup();
 
-        const yearLayers: L.LayerGroup[] = [];
-        watch(() => store.catastrophesPerYear, catastrophesPerYear => {
+        const yearLayers = new Map<string, L.LayerGroup>();
+        watch(() => store.yearlyData, data => {
             for (let year = MIN_YEAR; year <= MAX_YEAR; ++year) {
-                const catastrophes = catastrophesPerYear.get(year.toString());
-                const yearLayer = L.layerGroup();
-                if (catastrophes) {
-                    for (const catastrophe of catastrophes) {
-                        const title = formatDescription(catastrophe);
-                        const marker = L.marker(catastrophe.location, {
-                            title: title,
-                            icon: icons.get(catastrophe.type)
-                        });
-                        marker.bindTooltip(title);
-                        marker.addTo(yearLayer);
-                    }
+                if (yearLayers.has(year.toString())) {
+                    continue;
                 }
-                yearLayers.push(yearLayer);
+                const yearData = data.get(year);
+                if (!yearData) {
+                    continue;
+                }
+
+                const yearLayer = L.layerGroup();
+                for (const catastrophe of yearData.catastrophes) {
+                    const title = formatDescription(catastrophe);
+                    const marker = L.marker(catastrophe.location, {
+                        title: title,
+                        icon: icons.get(catastrophe.type)
+                    });
+                    marker.bindTooltip(title);
+                    marker.addTo(yearLayer);
+                }
+                yearLayers.set(year.toString(), yearLayer);
             }
-            iconLayer.clearLayers();
-            iconLayer.addLayer(yearLayers[store.year - MIN_YEAR]);
+            const layer = yearLayers.get(store.year.toString());
+            if (layer) {
+                iconLayer.clearLayers();
+                iconLayer.addLayer(layer);
+            }
         });
 
         watch(() => store.year, year => {
-            if (yearLayers.length > 0) {
+            const layer = yearLayers.get(year.toString());
+            if (layer) {
                 iconLayer.clearLayers();
-                iconLayer.addLayer(yearLayers[year - MIN_YEAR]);
+                iconLayer.addLayer(layer);
             }
         });
 
@@ -98,6 +107,7 @@ export default defineComponent({
     },
 
     async mounted() {
+        await this.store.loadAdminRegionData();
         await this.store.loadElectoralMap();
 
         if (this.mapElement) {

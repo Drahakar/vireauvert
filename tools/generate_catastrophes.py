@@ -12,8 +12,6 @@ from bs4 import BeautifulSoup
 import locale
 import utils
 
-locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
-
 def load_cities():
     cities_xml = ET.parse(path.join(utils.source_directory, 'municipalites.xml'))
 
@@ -165,31 +163,31 @@ def parse_kmz(path, catastrophes):
                             }
                             catastrophes.append(fire)
 
-catastrophes = []
+def collect_all_catastrophes():
+    catastrophes = []
 
-parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
-parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
+    parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
+    parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
-fire_origin_directory = path.join(utils.source_directory, 'Feux_pt_ori')
-for file_path in os.listdir(fire_origin_directory):
-    if path.splitext(file_path)[1] == '.kmz':
-        parse_kmz(path.join(fire_origin_directory, file_path), catastrophes)
+    fire_origin_directory = path.join(utils.source_directory, 'Feux_pt_ori')
+    for file_path in os.listdir(fire_origin_directory):
+        if path.splitext(file_path)[1] == '.kmz':
+            parse_kmz(path.join(fire_origin_directory, file_path), catastrophes)
 
-catastrophes.sort(key=lambda x: x['date'])
+    catastrophes.sort(key=lambda x: x['date'])
 
-result = {}
-for catastrophe in catastrophes:
-    obj = {
-        'id': catastrophe['id'],
-        'location': catastrophe['location'],
-        'type': catastrophe['type'].value,
-        'date': catastrophe['date'].isoformat(),
-        'severity': catastrophe['severity'].value
-    }
-    if 'city' in catastrophe:
-        obj['city'] = catastrophe['city']
-    
-    result.setdefault(catastrophe['date'].year, []).append(obj)
+    result = {}
+    for catastrophe in catastrophes:
+        obj = {
+            'id': catastrophe['id'],
+            'location': catastrophe['location'],
+            'type': catastrophe['type'].value,
+            'date': catastrophe['date'].isoformat(),
+            'severity': catastrophe['severity'].value
+        }
+        if 'city' in catastrophe:
+            obj['city'] = catastrophe['city']
+        
+        result.setdefault(catastrophe['date'].year, []).append(obj)
 
-with open(path.join(utils.destination_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
-    json.dump(result, output_file)
+    return result

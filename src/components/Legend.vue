@@ -6,21 +6,21 @@
             <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
         </select>
         <div>Année de recherche: {{ store.year }}</div>
-        <div v-if="store.statisticsForCurrentYearAndDistrict">
+        <div v-if="store.selectedData.statistics">
             Statistiques
             <ul>
-                <li v-if="store.statisticsForCurrentYearAndDistrict.average_temperature !== null">
-                    Température moyenne: {{ store.statisticsForCurrentYearAndDistrict.average_temperature }} °C
+                <li v-if="store.selectedData.statistics.avg_temp !== null">
+                    Température moyenne: {{ store.selectedData.statistics.avg_temp }} °C
                 </li>
-                <li v-if="store.statisticsForCurrentYearAndDistrict.average_precipitations !== null">
-                    Précipitations moyennes: {{ store.statisticsForCurrentYearAndDistrict.average_precipitations }} mm
+                <li v-if="store.selectedData.statistics.avg_prec !== null">
+                    Précipitations moyennes: {{ store.selectedData.statistics.avg_prec }} mm
                 </li>
             </ul>
         </div>
         <div id="catastrophes">
             Catastrophes
             <ul>
-                <li v-for="catastrophe of store.catastrophesForCurrentYearAndDistrict">
+                <li v-for="catastrophe of store.selectedData.catastrophes">
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
                         <span>[{{ catastrophe.id }}]</span> 
                         <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>: 
@@ -52,8 +52,7 @@ export default defineComponent({
         return { store, formatDescription, dateFormat };
     },
     async mounted() {
-        await this.store.updateCatastrophes();
-        await this.store.loadRegions();
+        await this.store.loadYearlyData();
     },
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {

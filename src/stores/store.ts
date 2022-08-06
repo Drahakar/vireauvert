@@ -1,108 +1,80 @@
 import { Catastrophe, CatastropheDocument, parseCatatrophe } from '@/models/catastrophes';
 import { DistrictProperties } from '@/models/map';
 import { AdminRegion, StatSnapshot } from '@/models/regions';
+import { downloadDataForYear, EMPTY_SNAPSHOT, filterCatastrophesByRegion, RegionSnapshot, YearlySnapshot } from '@/models/yearly_data';
 import axios from 'axios';
 import { FeatureCollection, Geometry, Position } from 'geojson';
 import { defineStore } from 'pinia';
-import pointInPolygon from 'point-in-polygon';
-
-export type CatastropheDatabase = Map<string, Catastrophe[]>;
-
-interface CatastropeResponse {
-    [year: string]: CatastropheDocument[]
-}
+import { List, Map } from 'immutable';
 
 export const MIN_YEAR = 2000;
 export const MAX_YEAR = 2035;
-
-function getPolygons(geometry: Geometry): Position[][] {
-    if (geometry.type === "Polygon") {
-        return geometry.coordinates;
-    }
-    if (geometry.type === "GeometryCollection") {
-        const result: Position[][] = [];
-        for (const g of geometry.geometries) {
-            result.push(...getPolygons(g));
-        }
-        return result;
-    }
-    return [];
-}
+export const CURRENT_YEAR = new Date().getFullYear();
 
 export const useStore = defineStore('store', {
     state: () => {
         return {
             district: 0,
-            year: new Date().getFullYear(),
-            allRegions: [] as AdminRegion[],
-            catastrophesPerYear: new Map<string, Catastrophe[]>() as CatastropheDatabase,
-            electoralMap: { features: [] as unknown } as FeatureCollection<Geometry | null, any>
+            year: CURRENT_YEAR,
+            allRegions: List<AdminRegion>(),
+            yearlyData: Map<number, YearlySnapshot>(),
+            electoralMap: { features: [] as unknown } as FeatureCollection
         };
     },
     getters: {
-        catastrophesForCurrentYearAndDistrict(): Catastrophe[] {
-            const feature = this.district ? this.electoralMap.features.find(x => {
-                const properties: DistrictProperties = x.properties;
-                return properties.id === this.district;
-            }) : undefined;
-
-            const catastrophes = this.catastrophesPerYear.get(this.year.toString());
-            if (feature?.geometry && catastrophes) {
-                const polygons = getPolygons(feature.geometry);
-                if (polygons.length > 0) {
-                    return catastrophes.filter(x => {
-                        const point = [x.location.lng, x.location.lat];
-                        return polygons.some(poly => pointInPolygon(point, poly));
-                    });                }
-                
-            }
-            return catastrophes || [];
-        },
         allDistricts(): DistrictProperties[] {
             return this.electoralMap.features.map(x => x.properties as DistrictProperties);
         },
-        statisticsForCurrentYearAndDistrict(): StatSnapshot | null {
+        selectedData(): RegionSnapshot {
+            const data = this.yearlyData.get(this.year, EMPTY_SNAPSHOT);
             if (this.district) {
-                const region = this.allRegions.find(x => x.districts.includes(this.district));
-                if (region) {
+                const feature = this.electoralMap.features.find(x => {
+                    const properties = x.properties as DistrictProperties;
+                    return properties.id === this.district;
+                });
+                const region = this.allRegions.findIndex(x => x.districts.some(y => y === this.district));
+                if (feature && region !== -1) {
                     return {
-                        average_temperature: region.statistics.average_temperature[this.year - MIN_YEAR],
-                        average_precipitations: region.statistics.average_precipitations[this.year - MIN_YEAR]
-                    };
+                        catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
+                        statistics: data.statistics[region]
+                    }
+                } else {
+                    return {
+                        catastrophes: []
+                    }
                 }
             }
-            return null;
+            return {
+                catastrophes: data.catastrophes
+            };
         }
     },
     actions: {
-        async updateCatastrophes() {
-            const catastrophesResponse = await axios.get<CatastropeResponse>('data/catastrophes.json', { responseType: 'json' });
-            this.catastrophesPerYear = Object.keys(catastrophesResponse.data).reduce((map, year) => {
-                const catastrophes = catastrophesResponse.data[year].map(parseCatatrophe);
-                map.set(year, catastrophes);
-                return map;
-            }, new Map<string, Catastrophe[]>());
+        async loadYearlyData() {
+            const data = await downloadDataForYear(CURRENT_YEAR);
+            this.yearlyData = this.yearlyData.set(CURRENT_YEAR, data);
+
+            const queueGetData = async (year: number) => {
+                setTimeout(async () => {
+                    const data = await downloadDataForYear(year);
+                    this.yearlyData = this.yearlyData.set(year, data);
+                });
+            };
+
+            for (let year = CURRENT_YEAR - 1; year >= MIN_YEAR; --year) {
+                queueGetData(year);
+            }
+            for (let year = CURRENT_YEAR + 1; year <= MAX_YEAR; ++year) {
+                queueGetData(year);
+            }
+        },
+        async loadAdminRegionData() {
+            const response = await axios.get<AdminRegion[]>('data/admin_regions.json', { responseType: 'json' });
+            this.allRegions = List(response.data);
         },
         async loadElectoralMap() {
-            const response = await axios.get('data/carte_electorale.json', { responseType: 'json' });
+            const response = await axios.get<FeatureCollection>('data/carte_electorale.json', { responseType: 'json' });
             this.electoralMap = response.data;
-        },
-        async loadRegions() {
-            const regionResponse = await axios.get<AdminRegion[]>('data/admin_regions.json', { responseType: 'json' });
-            const regions = regionResponse.data;
-
-            const [temp, prec] = await Promise.all([
-                axios.get<(number | null)[][]>('data/temperatures_moy_regions.json', { responseType: 'json' }),
-                axios.get<(number | null)[][]>('data/precipitations_moy_regions.json', { responseType: 'json' })
-            ]);
-            for (let i = 0; i < regions.length; ++i) {
-                regions[i].statistics = {
-                    average_temperature: temp.data[i],
-                    average_precipitations: prec.data[i]
-                }
-            }
-
-            this.allRegions = regions;
         }
     }
 });
