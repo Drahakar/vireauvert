@@ -1,9 +1,5 @@
 export interface AdminRegion {
+    id: number;
     name: string;
     districts: number[];
-}
-
-export interface StatSnapshot {
-    avg_temp: number | null;
-    avg_prec: number | null;
 }

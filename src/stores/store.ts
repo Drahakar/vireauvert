@@ -1,9 +1,8 @@
-import { Catastrophe, CatastropheDocument, parseCatatrophe } from '@/models/catastrophes';
 import { DistrictProperties } from '@/models/map';
-import { AdminRegion, StatSnapshot } from '@/models/regions';
+import { AdminRegion } from '@/models/regions';
 import { downloadDataForYear, EMPTY_SNAPSHOT, filterCatastrophesByRegion, RegionSnapshot, YearlySnapshot } from '@/models/yearly_data';
 import axios from 'axios';
-import { FeatureCollection, Geometry, Position } from 'geojson';
+import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
 
@@ -32,16 +31,10 @@ export const useStore = defineStore('store', {
                     const properties = x.properties as DistrictProperties;
                     return properties.id === this.district;
                 });
-                const region = this.allRegions.findIndex(x => x.districts.some(y => y === this.district));
-                if (feature && region !== -1) {
-                    return {
-                        catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
-                        statistics: data.statistics[region]
-                    }
-                } else {
-                    return {
-                        catastrophes: []
-                    }
+                const region = this.allRegions.find(x => x.districts.some(y => y === this.district));
+                return {
+                    catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
+                    statistics: region ? data.statistics.get(region.id) : undefined
                 }
             }
             return {
