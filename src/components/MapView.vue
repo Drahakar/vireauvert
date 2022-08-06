@@ -6,7 +6,7 @@
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { defineComponent, ref, watch } from 'vue';
-import { MAX_YEAR, MIN_YEAR, useStore } from "@/stores/store";
+import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
 
@@ -22,6 +22,20 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
     return icons;
 }
 
+const unselectedStyle: L.PathOptions = {
+    fillColor: '#ffffff',
+    color: '#333333',
+    opacity: 0.5,
+    weight: 1
+};
+const selectedStyle: L.PathOptions = {
+    fillColor: '#0099ff',
+    color: '#333333',
+    opacity: 0.7,
+    fillOpacity: 0.3,
+    weight: 2
+};
+
 export default defineComponent({
     props: ['district-selected'],
     emits: ['update:district-selected'],
@@ -34,6 +48,7 @@ export default defineComponent({
         const store = useStore();
         const icons = generateIcons();
 
+        const districtLayers = new Map<string, L.GeoJSON>();
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
                 const properties: DistrictProperties = feature.properties;
@@ -41,20 +56,25 @@ export default defineComponent({
                 layer.addEventListener('click', () => {
                     store.district = store.district !== properties.id ? properties.id : 0;
                 });
-            },
-            style: function (feature) {
-                if (store.district && feature) {
-                    const properties: DistrictProperties = feature.properties;
-                    return {
-                        fillColor: properties.id === store.district ? '#0000ff' : '#ffffff'
-                    }
+                const geo = layer as L.GeoJSON;
+                if(properties.id === store.district) {
+                    geo.setStyle(selectedStyle);
+                } else {                    
+                    geo.setStyle(unselectedStyle);
                 }
-                return {};
+                districtLayers.set(properties.id.toString(), geo);
             }
         });
 
-        watch(() => store.district, () => {
-            electoralLayer.resetStyle();
+        watch(() => store.district, (newDistrict, oldDistrict) => {
+            const oldLayer = districtLayers.get(oldDistrict.toString());
+            if (oldLayer) {
+                oldLayer.setStyle(unselectedStyle);
+            }
+            const newLayer = districtLayers.get(newDistrict.toString());
+            if (newLayer) {
+                newLayer.setStyle(selectedStyle);
+            }
         });
 
         watch(() => store.electoralMap, elec => {
@@ -64,19 +84,29 @@ export default defineComponent({
 
         const iconLayer = L.layerGroup();
 
+        const selectYearLayer = (newYear: number, oldYear?: number) => {
+            if (oldYear) {
+                const oldLayer = yearLayers.get(oldYear.toString());
+                if (oldLayer) {
+                    iconLayer.removeLayer(oldLayer);
+                }
+            } else {
+                iconLayer.clearLayers();
+            }
+            const newLayer = yearLayers.get(newYear.toString());
+            if (newLayer) {
+                iconLayer.addLayer(newLayer);
+            }
+        };
+
         const yearLayers = new Map<string, L.LayerGroup>();
         watch(() => store.yearlyData, data => {
-            for (let year = MIN_YEAR; year <= MAX_YEAR; ++year) {
-                if (yearLayers.has(year.toString())) {
+            for (const [key, snapshot] of data) {
+                if (yearLayers.has(key.toString())) {
                     continue;
                 }
-                const yearData = data.get(year);
-                if (!yearData) {
-                    continue;
-                }
-
                 const yearLayer = L.layerGroup();
-                for (const catastrophe of yearData.catastrophes) {
+                for (const catastrophe of snapshot.catastrophes) {
                     const title = formatDescription(catastrophe);
                     const marker = L.marker(catastrophe.location, {
                         title: title,
@@ -85,22 +115,12 @@ export default defineComponent({
                     marker.bindTooltip(title);
                     marker.addTo(yearLayer);
                 }
-                yearLayers.set(year.toString(), yearLayer);
+                yearLayers.set(key.toString(), yearLayer);
             }
-            const layer = yearLayers.get(store.year.toString());
-            if (layer) {
-                iconLayer.clearLayers();
-                iconLayer.addLayer(layer);
-            }
+            selectYearLayer(store.year);
         });
 
-        watch(() => store.year, year => {
-            const layer = yearLayers.get(year.toString());
-            if (layer) {
-                iconLayer.clearLayers();
-                iconLayer.addLayer(layer);
-            }
-        });
+        watch(() => store.year, selectYearLayer);
 
         const mapElement = ref<HTMLDivElement | null>(null);
         return { store, electoralLayer, iconLayer, mapElement };
