@@ -1,12 +1,13 @@
+import { Map } from "immutable";
 
 export enum Party {
     CAQ = "CAQ",
+    CQ = "CQ",
+    PCQ = "PCQ",
     PLQ = "PLQ",
     PQ = "PQ",
-    QS = "QS",
-    PCQ = "PCQ",
     PV = "PV",
-    CQ = "CQ"
+    QS = "QS"
 }
 
 export interface Candidate {
@@ -18,4 +19,10 @@ export interface Candidate {
     address?: string;
     facebook?: string;
     twitter?: string;
+}
+
+export interface PartyDescription {
+    name: string;
+    logo: string;
+    color: string;
 }

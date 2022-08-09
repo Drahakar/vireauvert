@@ -37,7 +37,7 @@ export async function downloadDataForYear(year: number): Promise<YearlySnapshot>
         const data = response.data;
         return {
             catastrophes: List(data.catastrophes.map(parseCatatrophe)),
-            statistics: Map(Object.entries(data.statistics).map(([k, v]) => [parseInt(k), v]))
+            statistics: Map(Object.entries(data.statistics).map(([k, v]) => [parseInt(k), v])).filter(x => x.avg_prec !== null || x.avg_prec !== null)
         };
     } catch {
         return EMPTY_SNAPSHOT;

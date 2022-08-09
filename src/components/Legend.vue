@@ -18,9 +18,10 @@
         </div>
         <div v-if="!store.selectedData.candidates.isEmpty()">
             <h2>Candidats</h2>
-            <ul>
-                <li v-for="candidate of store.selectedData.candidates">
-                    ({{ candidate.party }}) {{ candidate.name }}
+            <ul id="candidates">
+                <li v-for="candidate of store.selectedData.candidates" class="candidate">
+                    <span class="party" :class="candidate.party.toLowerCase()">{{ candidate.party }}</span> 
+                    <span class="name">{{ candidate.name }}</span>
                 </li>
             </ul>
         </div>
@@ -80,5 +81,53 @@ export default defineComponent({
 #legend select {
     font-size: large;
     font-weight: bold;
+}
+
+#candidates {
+    padding: 0;
+}
+
+li.candidate {
+    display: flex;
+    margin: 4px;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+li.candidate .party {
+    font-size: small;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+    width: 40px;
+    text-transform: capitalize;
+}
+
+li.candidate .name {
+    margin-left: 0.5em;
+}
+
+li.candidate .party.caq {
+     background-color: dodgerblue;
+}
+li.candidate .party.cq {
+    background-color: #13876C;
+}
+li.candidate .party.pcq {
+    background-color: cornflowerblue;
+}
+li.candidate .party.plq {
+    background-color: lightcoral;
+}
+li.candidate .party.pq { 
+    background-color: #004C9D; 
+}
+li.candidate .party.pv {
+    background-color: #9ACD32;
+}
+li.candidate .party.qs {
+    background-color: #FF8040;
 }
 </style>
