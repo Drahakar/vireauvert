@@ -72,14 +72,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#legend {
-    float: left;
-    width: 25%;
-    height: calc(90% - 10px);
-    ;
-    padding: 10px;
-}
-
 #catastrophes {
     overflow-y: scroll;
     height: calc(100% - 10px);

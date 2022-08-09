@@ -35,7 +35,27 @@ Sentry.init({
 </script>
 
 <template>
-  <Legend @on-request-catastrophe-focus="focusCatastrophe"></Legend>
-  <MapView ref="map"></MapView>
-  <Timeline></Timeline>
+  <div id="main">
+    <Legend id="legend" @on-request-catastrophe-focus="focusCatastrophe"></Legend>
+    <MapView id="map-view" ref="map"></MapView>
+    <Timeline id="timeline"></Timeline>
+  </div>
 </template>
+
+<style scoped>
+#main {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  grid-template-rows: 1fr 96px;
+  grid-auto-flow: row;
+}
+
+#legend {
+  padding: 10px 0 10px 10px;
+}
+
+#timeline {
+  grid-column: 1 / span 2;
+}
+</style>

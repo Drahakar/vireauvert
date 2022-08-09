@@ -1,5 +1,7 @@
 <template>
-    <div id="map" ref="mapElement"></div>
+    <div id="wrapper">
+        <div id="map" ref="mapElement"></div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -57,9 +59,9 @@ export default defineComponent({
                     store.district = store.district !== properties.id ? properties.id : 0;
                 });
                 const geo = layer as L.GeoJSON;
-                if(properties.id === store.district) {
+                if (properties.id === store.district) {
                     geo.setStyle(selectedStyle);
-                } else {                    
+                } else {
                     geo.setStyle(unselectedStyle);
                 }
                 districtLayers.set(properties.id.toString(), geo);
@@ -137,7 +139,7 @@ export default defineComponent({
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 maxZoom: 19,
-                attribution: "&copy; OpenStreetMap"
+                attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }).addTo(map);
             this.electoralLayer.addTo(map);
             this.iconLayer.addTo(map);
@@ -161,7 +163,12 @@ export default defineComponent({
 
 <style scoped>
 #map {
-    width: 75%;
-    height: 90%;
+    height: 100%;
+}
+</style>
+<style>
+.leaflet-control-container {
+    width: 100%;
+    height: 100%;
 }
 </style>

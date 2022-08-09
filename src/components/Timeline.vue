@@ -44,8 +44,6 @@ export default defineComponent({
 
 <style scoped>
 #timeline {
-    width: 100%;
-    height: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
