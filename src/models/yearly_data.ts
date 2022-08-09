@@ -2,6 +2,7 @@ import axios from "axios";
 import { Feature, Geometry, Position } from "geojson";
 import { List, Map } from "immutable";
 import pointInPolygon from "point-in-polygon";
+import { Candidate } from "./candidates";
 import { Catastrophe, CatastropheDocument, parseCatatrophe } from "./catastrophes";
 
 export interface YearlySnapshot {
@@ -17,6 +18,7 @@ export interface StatSnapshot {
 export interface RegionSnapshot {
     catastrophes: List<Catastrophe>;
     statistics?: StatSnapshot;
+    candidates: List<Candidate>;
 }
 
 interface YearlySnapshotDocument {

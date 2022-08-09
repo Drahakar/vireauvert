@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
+import { Candidate } from '@/models/candidates';
 
 export const MIN_YEAR = 2000;
 export const MAX_YEAR = 2035;
@@ -17,7 +18,8 @@ export const useStore = defineStore('store', {
             year: CURRENT_YEAR,
             allRegions: List<AdminRegion>(),
             yearlyData: Map<number, YearlySnapshot>(),
-            electoralMap: { features: [] as unknown } as FeatureCollection
+            electoralMap: { features: [] as unknown } as FeatureCollection,
+            candidates: [] as Candidate[]
         };
     },
     getters: {
@@ -34,11 +36,13 @@ export const useStore = defineStore('store', {
                 const region = this.allRegions.find(x => x.districts.some(y => y === this.district));
                 return {
                     catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
-                    statistics: region ? data.statistics.get(region.id) : undefined
+                    statistics: region ? data.statistics.get(region.id) : undefined,
+                    candidates: List(this.candidates.filter(x => x.district == this.district))
                 }
             }
             return {
-                catastrophes: data.catastrophes
+                catastrophes: data.catastrophes,
+                candidates: List()
             };
         }
     },
@@ -68,6 +72,11 @@ export const useStore = defineStore('store', {
         async loadElectoralMap() {
             const response = await axios.get<FeatureCollection>('data/carte_electorale.json', { responseType: 'json' });
             this.electoralMap = response.data;
+        },
+        async loadCandidates() {
+            const response = await axios.get<Candidate[]>('data/candidates.json', { responseType: 'json' });
+            this.candidates = response.data;
+            console.log(this.candidates);
         }
     }
 });

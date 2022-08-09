@@ -5,9 +5,8 @@
             <option :value="0">Québec</option>
             <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
         </select>
-        <div>Année de recherche: {{ store.year }}</div>
         <div v-if="store.selectedData.statistics">
-            Statistiques
+            <h2>Statistiques</h2>
             <ul>
                 <li v-if="store.selectedData.statistics.avg_temp !== null">
                     Température moyenne: {{ store.selectedData.statistics.avg_temp }} °C
@@ -17,14 +16,23 @@
                 </li>
             </ul>
         </div>
-        <div id="catastrophes">
-            Catastrophes
+        <div v-if="!store.selectedData.candidates.isEmpty()">
+            <h2>Candidats</h2>
+            <ul>
+                <li v-for="candidate of store.selectedData.candidates">
+                    ({{ candidate.party }}) {{ candidate.name }}
+                </li>
+            </ul>
+        </div>
+        <div id="catastrophes" v-if="!store.selectedData.catastrophes.isEmpty()">
+            <h2>Catastrophes</h2>
             <ul>
                 <li v-for="catastrophe of store.selectedData.catastrophes">
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        <span>[{{ catastrophe.id }}]</span> 
-                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>: 
-                        <span>{{ formatDescription(catastrophe) }}</span> 
+                        <span>[{{ catastrophe.id }}]</span>
+                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
+                        }}</time>:
+                        <span>{{ formatDescription(catastrophe) }}</span>
                         <span v-if="catastrophe.city">
                             à {{ catastrophe.city }}
                         </span>
@@ -53,6 +61,7 @@ export default defineComponent({
     },
     async mounted() {
         await this.store.loadYearlyData();
+        await this.store.loadCandidates();
     },
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {
