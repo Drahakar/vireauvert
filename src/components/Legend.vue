@@ -75,7 +75,7 @@ export default defineComponent({
 <style scoped>
 #catastrophes {
     overflow-y: scroll;
-    height: calc(100% - 10px);
+    height: 500px; /* TODO: less dumb */
 }
 
 #legend select {
