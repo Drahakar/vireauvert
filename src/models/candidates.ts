@@ -1,5 +1,3 @@
-import { Map } from "immutable";
-
 export enum Party {
     CAQ = "CAQ",
     CQ = "CQ",
@@ -19,10 +17,4 @@ export interface Candidate {
     address?: string;
     facebook?: string;
     twitter?: string;
-}
-
-export interface PartyDescription {
-    name: string;
-    logo: string;
-    color: string;
 }
