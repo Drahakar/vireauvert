@@ -19,7 +19,7 @@ export const useStore = defineStore('store', {
             allRegions: List<AdminRegion>(),
             yearlyData: Map<number, YearlySnapshot>(),
             electoralMap: { features: [] as unknown } as FeatureCollection,
-            candidates: [] as Candidate[]
+            candidates: List<Candidate>()
         };
     },
     getters: {
@@ -37,6 +37,7 @@ export const useStore = defineStore('store', {
                 return {
                     catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
                     statistics: region ? data.statistics.get(region.id) : undefined,
+                    delta: region ? data.deltas?.get(region.id) : undefined,
                     candidates: List(this.candidates.filter(x => x.district == this.district))
                 }
             }
@@ -48,20 +49,22 @@ export const useStore = defineStore('store', {
     },
     actions: {
         async loadYearlyData() {
-            const data = await downloadDataForYear(CURRENT_YEAR);
-            this.yearlyData = this.yearlyData.set(CURRENT_YEAR, data);
+            const refYear = await downloadDataForYear(MIN_YEAR);
+            this.yearlyData = this.yearlyData.set(MIN_YEAR, refYear);
 
-            const queueGetData = async (year: number) => {
-                const data = await downloadDataForYear(year);
+            const addData = async (year: number) => {
+                const data = await downloadDataForYear(year, refYear);
                 this.yearlyData = this.yearlyData.set(year, data);
             };
 
+            await addData(CURRENT_YEAR);
+
             const promises = [];
-            for (let year = CURRENT_YEAR - 1; year >= MIN_YEAR; --year) {
-                promises.push(queueGetData(year));
+            for (let year = CURRENT_YEAR - 1; year > MIN_YEAR; --year) {
+                promises.push(addData(year));
             }
             for (let year = CURRENT_YEAR + 1; year <= MAX_YEAR; ++year) {
-                promises.push(queueGetData(year));
+                promises.push(addData(year));
             }
             await Promise.all(promises);
 
@@ -76,7 +79,7 @@ export const useStore = defineStore('store', {
         },
         async loadCandidates() {
             const response = await axios.get<Candidate[]>('data/candidates.json', { responseType: 'json' });
-            this.candidates = response.data;
+            this.candidates = List(response.data);
         }
     }
 });
