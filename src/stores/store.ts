@@ -52,18 +52,19 @@ export const useStore = defineStore('store', {
             this.yearlyData = this.yearlyData.set(CURRENT_YEAR, data);
 
             const queueGetData = async (year: number) => {
-                setTimeout(async () => {
-                    const data = await downloadDataForYear(year);
-                    this.yearlyData = this.yearlyData.set(year, data);
-                });
+                const data = await downloadDataForYear(year);
+                this.yearlyData = this.yearlyData.set(year, data);
             };
 
+            const promises = [];
             for (let year = CURRENT_YEAR - 1; year >= MIN_YEAR; --year) {
-                queueGetData(year);
+                promises.push(queueGetData(year));
             }
             for (let year = CURRENT_YEAR + 1; year <= MAX_YEAR; ++year) {
-                queueGetData(year);
+                promises.push(queueGetData(year));
             }
+            await Promise.all(promises);
+
         },
         async loadAdminRegionData() {
             const response = await axios.get<AdminRegion[]>('data/admin_regions.json', { responseType: 'json' });
@@ -76,7 +77,6 @@ export const useStore = defineStore('store', {
         async loadCandidates() {
             const response = await axios.get<Candidate[]>('data/candidates.json', { responseType: 'json' });
             this.candidates = response.data;
-            console.log(this.candidates);
         }
     }
 });
