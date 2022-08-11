@@ -20,8 +20,8 @@ export interface StatSnapshot {
 export interface RegionSnapshot {
     catastrophes: List<Catastrophe>;
     statistics?: StatSnapshot;
-    delta?: StatSnapshot;
     candidates: List<Candidate>;
+    delta?: StatSnapshot;
 }
 
 interface YearlySnapshotDocument {

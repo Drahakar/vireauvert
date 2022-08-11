@@ -1,6 +1,9 @@
 <template>
     <div id="wrapper">
         <div id="map" ref="mapElement"></div>
+        <div id="overlay">
+            <OverlayControl />
+        </div>
     </div>
 </template>
 
@@ -11,6 +14,8 @@ import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
+import { Feature, Geometry } from "geojson";
+import OverlayControl from "./OverlayControl.vue";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -37,10 +42,16 @@ const selectedStyle: L.PathOptions = {
     fillOpacity: 0.3,
     weight: 2
 };
+const meteoOverlayStyle: L.PathOptions = {
+    fillColor: '#ffffff',
+    fillOpacity: 0,
+    opacity: 0,
+    weight: 0
+}
 
 export default defineComponent({
-    props: ['district-selected'],
-    emits: ['update:district-selected'],
+    props: ["district-selected"],
+    emits: ["update:district-selected"],
     data() {
         return {
             map: null as L.Map | null
@@ -49,25 +60,33 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const icons = generateIcons();
-
         const districtLayers = new Map<string, L.GeoJSON>();
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
                 const properties: DistrictProperties = feature.properties;
                 layer.bindTooltip(properties.name);
-                layer.addEventListener('click', () => {
+                layer.addEventListener("click", () => {
                     store.district = store.district !== properties.id ? properties.id : 0;
                 });
                 const geo = layer as L.GeoJSON;
                 if (properties.id === store.district) {
                     geo.setStyle(selectedStyle);
-                } else {
+                }
+                else {
                     geo.setStyle(unselectedStyle);
                 }
                 districtLayers.set(properties.id.toString(), geo);
             }
         });
-
+        const statOverlayDistricts = new Map<string, L.GeoJSON>();
+        const meteoLayer = L.geoJSON(undefined, {
+            interactive: false,
+            style: meteoOverlayStyle,
+            onEachFeature: (feature, layer) => {
+                const properties: DistrictProperties = feature.properties;
+                statOverlayDistricts.set(properties.id.toString(), layer as L.GeoJSON);
+            }
+        });
         watch(() => store.district, (newDistrict, oldDistrict) => {
             const oldLayer = districtLayers.get(oldDistrict.toString());
             if (oldLayer) {
@@ -78,33 +97,59 @@ export default defineComponent({
                 newLayer.setStyle(selectedStyle);
             }
         });
-
         watch(() => store.electoralMap, elec => {
             electoralLayer.clearLayers();
             electoralLayer.addData(elec);
+            meteoLayer.clearLayers();
+            meteoLayer.addData(elec);
         });
-
         const iconLayer = L.layerGroup();
+        const updateStatOverlay = () => {
+            const now = store.yearlyData.get(store.year);
+            for (const geo of statOverlayDistricts.values()) {
+                if (store.currentStatOverlay && now?.deltas) {
+                    if (geo.feature) {
+                        const feature = geo.feature as Feature<Geometry, any>;
+                        const properties: DistrictProperties = feature.properties;
+                        const region = store.getRegion(properties.id);
+                        if (region) {
+                            const delta = now.deltas.get(region.id);
+                            if (delta) {
+                                const opacity = Math.min(1, Math.max(0, store.currentStatOverlay.translateToOpacity(delta)));
+                                geo.setStyle({
+                                    ...meteoOverlayStyle,
+                                    fillColor: "#ff0000",
+                                    fillOpacity: opacity
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    geo.setStyle(meteoOverlayStyle);
+                }
+            }
 
-        const selectYearLayer = (newYear: number, oldYear?: number) => {
+        };
+        const onYearChanged = (newYear: number, oldYear?: number) => {
             if (oldYear) {
                 const oldLayer = yearLayers.get(oldYear.toString());
                 if (oldLayer) {
                     iconLayer.removeLayer(oldLayer);
                 }
-            } else {
+            }
+            else {
                 iconLayer.clearLayers();
             }
             const newLayer = yearLayers.get(newYear.toString());
             if (newLayer) {
                 iconLayer.addLayer(newLayer);
             }
+            updateStatOverlay();
         };
-
         const yearLayers = new Map<string, L.LayerGroup>();
-        watch(() => store.yearlyData, data => {
-            for (const [key, snapshot] of data) {
-                if (yearLayers.has(key.toString())) {
+        watch(() => store.yearlyData, (data, oldData) => {
+            for (const [year, snapshot] of data.filterNot((_, k) => oldData.has(k))) {
+                if (yearLayers.has(year.toString())) {
                     continue;
                 }
                 const yearLayer = L.layerGroup();
@@ -117,21 +162,18 @@ export default defineComponent({
                     marker.bindTooltip(title);
                     marker.addTo(yearLayer);
                 }
-                yearLayers.set(key.toString(), yearLayer);
+                yearLayers.set(year.toString(), yearLayer);
             }
-            selectYearLayer(store.year);
+            onYearChanged(store.year);
         });
-
-        watch(() => store.year, selectYearLayer);
-
+        watch(() => store.year, onYearChanged);
+        watch(() => store.currentStatOverlay, updateStatOverlay);
         const mapElement = ref<HTMLDivElement | null>(null);
-        return { store, electoralLayer, iconLayer, mapElement };
+        return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement };
     },
-
     async mounted() {
         await this.store.loadAdminRegionData();
         await this.store.loadElectoralMap();
-
         if (this.mapElement) {
             const map = new L.Map(this.mapElement, {
                 center: [45.5001, -73.5679],
@@ -141,13 +183,12 @@ export default defineComponent({
                 maxZoom: 19,
                 attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }).addTo(map);
+            this.statOverlayLayer.addTo(map);
             this.electoralLayer.addTo(map);
             this.iconLayer.addTo(map);
-
             this.map = map;
         }
     },
-
     methods: {
         focusCatastrophe(catastrophe: Catastrophe) {
             if (this.map) {
@@ -156,7 +197,8 @@ export default defineComponent({
                 });
             }
         }
-    }
+    },
+    components: { OverlayControl }
 })
 
 </script>
@@ -164,6 +206,13 @@ export default defineComponent({
 <style scoped>
 #map {
     height: 100%;
+}
+
+#overlay {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 400;
 }
 </style>
 <style>

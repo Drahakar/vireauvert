@@ -16,6 +16,17 @@
                 </li>
             </ul>
         </div>
+        <div v-if="store.selectedData.delta">
+            <h2>Variation par rapport à 2000</h2>
+            <ul>
+                <li v-if="store.selectedData.delta.avg_temp !== null">
+                    Température moyenne: {{ store.selectedData.delta.avg_temp }} °C
+                </li>
+                <li v-if="store.selectedData.delta.avg_prec !== null">
+                    Précipitations moyennes: {{ store.selectedData.delta.avg_prec }} mm
+                </li>
+            </ul>
+        </div>
         <div v-if="!store.selectedData.candidates.isEmpty()">
             <h2>Candidats</h2>
             <ul id="candidates">

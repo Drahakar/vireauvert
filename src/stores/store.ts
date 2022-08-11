@@ -6,6 +6,7 @@ import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
 import { Candidate } from '@/models/candidates';
+import { StatOverlayControl } from '@/models/meteo_view';
 
 export const MIN_YEAR = 2000;
 export const MAX_YEAR = 2035;
@@ -19,7 +20,8 @@ export const useStore = defineStore('store', {
             allRegions: List<AdminRegion>(),
             yearlyData: Map<number, YearlySnapshot>(),
             electoralMap: { features: [] as unknown } as FeatureCollection,
-            candidates: List<Candidate>()
+            candidates: List<Candidate>(),
+            currentStatOverlay: null as (StatOverlayControl | null)
         };
     },
     getters: {
@@ -33,19 +35,20 @@ export const useStore = defineStore('store', {
                     const properties = x.properties as DistrictProperties;
                     return properties.id === this.district;
                 });
-                const region = this.allRegions.find(x => x.districts.some(y => y === this.district));
+                const region = this.getRegion(this.district);
                 return {
                     catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
                     statistics: region ? data.statistics.get(region.id) : undefined,
-                    delta: region ? data.deltas?.get(region.id) : undefined,
-                    candidates: List(this.candidates.filter(x => x.district == this.district))
+                    candidates: List(this.candidates.filter(x => x.district == this.district)),
+                    delta: region ? data.deltas?.get(region.id) : undefined
                 }
             }
             return {
                 catastrophes: data.catastrophes,
                 candidates: List()
             };
-        }
+        },
+        getRegion: state => (district_id: number) => state.allRegions.find(x => x.districts.some(y => y === district_id))
     },
     actions: {
         async loadYearlyData() {
