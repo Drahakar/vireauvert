@@ -107,19 +107,19 @@ export default defineComponent({
         const updateStatOverlay = () => {
             const now = store.yearlyData.get(store.year);
             for (const geo of statOverlayDistricts.values()) {
-                if (store.currentStatOverlay && now?.deltas) {
+                if (store.currentStatOverlay && now) {
                     if (geo.feature) {
                         const feature = geo.feature as Feature<Geometry, any>;
                         const properties: DistrictProperties = feature.properties;
                         const region = store.getRegion(properties.id);
                         if (region) {
-                            const delta = now.deltas.get(region.id);
+                            const delta = now.statistics.get(region.id);
                             if (delta) {
-                                const opacity = Math.min(1, Math.max(0, store.currentStatOverlay.translateToOpacity(delta)));
+                                const { color, opacity } = store.currentStatOverlay.translateToOpacity(delta);
                                 geo.setStyle({
                                     ...meteoOverlayStyle,
-                                    fillColor: "#ff0000",
-                                    fillOpacity: opacity
+                                    fillColor: color,
+                                    fillOpacity: Math.min(1, Math.max(0, opacity))
                                 });
                             }
                         }

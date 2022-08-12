@@ -2,11 +2,12 @@
     <div id="controls">
         <button @click="selectOverlay(null)">Aucun</button>
         <button @click="selectOverlay(averageTemperature)">Température moyenne</button>
+        <button @click="selectOverlay(averagePrecipitations)">Précipitations moyennes</button>
     </div>
 </template>
 
 <script lang="ts">
-import { averageTemperature, StatOverlayControl } from "@/models/meteo_view";
+import { averagePrecipitations, averageTemperature, StatOverlayControl } from "@/models/meteo_view";
 import { useStore } from "@/stores/store";
 import { defineComponent } from "vue";
 export default defineComponent({
@@ -16,7 +17,8 @@ export default defineComponent({
     },
     data() {
         return {
-            averageTemperature
+            averageTemperature,
+            averagePrecipitations
         }
     },
     methods: {
