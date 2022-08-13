@@ -1,9 +1,6 @@
 <template>
     <div id="wrapper">
         <div id="map" ref="mapElement"></div>
-        <div id="overlay">
-            <OverlayControl />
-        </div>
     </div>
 </template>
 
@@ -14,7 +11,6 @@ import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
-import { Feature, Geometry } from "geojson";
 import OverlayControl from "./OverlayControl.vue";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
@@ -105,7 +101,7 @@ export default defineComponent({
         });
         const iconLayer = L.layerGroup();
         const updateStatOverlay = () => {
-            const now = store.yearlyData.get(store.year);
+            /*const now = store.yearlyData.get(store.year);
             for (const geo of statOverlayDistricts.values()) {
                 if (store.currentStatOverlay && now) {
                     if (geo.feature) {
@@ -127,8 +123,7 @@ export default defineComponent({
                 } else {
                     geo.setStyle(meteoOverlayStyle);
                 }
-            }
-
+            }*/
         };
         const onYearChanged = (newYear: number, oldYear?: number) => {
             if (oldYear) {
@@ -172,8 +167,6 @@ export default defineComponent({
         return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement };
     },
     async mounted() {
-        await this.store.loadAdminRegionData();
-        await this.store.loadElectoralMap();
         if (this.mapElement) {
             const map = new L.Map(this.mapElement, {
                 center: [45.5001, -73.5679],

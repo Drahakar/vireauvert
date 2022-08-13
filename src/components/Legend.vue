@@ -2,33 +2,25 @@
 <template>
     <div id="legend">
         <select v-model="store.district">
-            <option :value="0">Québec</option>
+            <option :value="0">Province de Québec</option>
             <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
         </select>
-        <div v-if="store.selectedData.statistics">
+        <div v-if="store.selectedData.info">
             <h2>Statistiques</h2>
             <ul>
-                <li v-if="store.selectedData.statistics.avg_temp !== null">
-                    Température moyenne: {{ store.selectedData.statistics.avg_temp }} °C
+                <li v-if="store.selectedData.targetReachedOn">
+                    <img src="/icons/attention.png" class="attention"> Dépassement du 1,5 °C: {{store.selectedData.targetReachedOn }}
                 </li>
-                <li v-if="store.selectedData.statistics.avg_prec !== null">
-                    Précipitations moyennes: {{ store.selectedData.statistics.avg_prec }} mm
+                <li v-if="store.selectedData.info.avg_temp != undefined">
+                    Température moyenne: {{ store.selectedData.info.avg_temp.toLocaleString('fr', { maximumFractionDigits: 1 }) }} °C
                 </li>
-            </ul>
-        </div>
-        <div v-if="store.selectedData.delta">
-            <h2>Variation par rapport à 2000</h2>
-            <ul>
-                <li v-if="store.selectedData.delta.avg_temp !== null">
-                    Température moyenne: {{ store.selectedData.delta.avg_temp }} °C
-                </li>
-                <li v-if="store.selectedData.delta.avg_prec !== null">
-                    Précipitations moyennes: {{ store.selectedData.delta.avg_prec }} mm
+                <li v-if="store.selectedData.info.avg_prec != undefined">
+                    Précipitations moyennes: {{ store.selectedData.info.avg_prec.toLocaleString('fr', { maximumFractionDigits: 0 }) }} mm
                 </li>
             </ul>
         </div>
         <div v-if="!store.selectedData.candidates.isEmpty()">
-            <h2>Candidats</h2>
+            <h2>Candidat(e)s</h2>
             <ul id="candidates">
                 <li v-for="candidate of store.selectedData.candidates" class="candidate">
                     <span class="party" :class="candidate.party.toLowerCase()">{{ candidate.party }}</span> 
@@ -41,7 +33,6 @@
             <ul>
                 <li v-for="catastrophe of store.selectedData.catastrophes">
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        <span>[{{ catastrophe.id }}]</span>
                         <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
                         }}</time>:
                         <span>{{ formatDescription(catastrophe) }}</span>
@@ -71,10 +62,6 @@ export default defineComponent({
         });
         return { store, formatDescription, dateFormat };
     },
-    async mounted() {
-        await this.store.loadYearlyData();
-        await this.store.loadCandidates();
-    },
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {
             this.$emit('onRequestCatastropheFocus', catastrophe);
@@ -87,6 +74,11 @@ export default defineComponent({
 #catastrophes {
     overflow-y: scroll;
     height: 500px; /* TODO: less dumb */
+}
+.attention {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: text-bottom;
 }
 
 #legend select {

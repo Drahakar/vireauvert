@@ -22,5 +22,9 @@ def collect_statistics(name):
         for line in reader:
             match = number_pattern.search(line[0])
             if match:
-                result[int(match.group(1))] = { headers[i]: (float(v) if v else None) for i, v in enumerate(line[1:]) }
+                values = {}
+                for i, v in enumerate(line[1:]):
+                    if v:
+                        values[headers[i]] = float(v)
+                result[int(match.group(1))] = values
     return result

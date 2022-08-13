@@ -24,7 +24,7 @@ export interface StatOverlayControl {
 
 export const averageTemperature: StatOverlayControl = {
     translateToOpacity: function (value: StatSnapshot): StatOverlayParameters {
-        if (value.avg_temp === null) {
+        if (value.avg_temp == undefined) {
             return INVISIBLE;
         }
         return {

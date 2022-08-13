@@ -6,6 +6,7 @@ import Legend from "./components/Legend.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
 import { Catastrophe } from "./models/catastrophes";
+import { useStore } from "./stores/store";
 
 export default defineComponent({
   components: {
@@ -14,15 +15,19 @@ export default defineComponent({
     Timeline
   },
   setup() {
+    const store = useStore();
     const map = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      map
+      map, store
     };
   },
   methods: {
     focusCatastrophe(catastrophe: Catastrophe) {
       this.map?.focusCatastrophe(catastrophe);
     }
+  },
+  async mounted() {
+    await this.store.loadData();
   }
 });
 

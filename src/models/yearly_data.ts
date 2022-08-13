@@ -8,71 +8,51 @@ import { Catastrophe, CatastropheDocument, parseCatatrophe } from "./catastrophe
 export interface YearlySnapshot {
     year: number;
     catastrophes: List<Catastrophe>;
-    statistics: Map<number, StatSnapshot>;
-    deltas?: Map<number, StatSnapshot>;
+    regions: Map<number, RegionInfo>;
 }
 
-export interface StatSnapshot {
-    avg_temp: number | null;
-    avg_prec: number | null;
+export interface RegionInfo {
+    avg_temp?: number;
+    avg_prec?: number;
+    temp_increase: number;
 }
 
 export interface RegionSnapshot {
     catastrophes: List<Catastrophe>;
-    statistics?: StatSnapshot;
+    info?: RegionInfo;
     candidates: List<Candidate>;
-    delta?: StatSnapshot;
+    targetReachedOn?: number;
 }
 
 interface YearlySnapshotDocument {
     catastrophes: CatastropheDocument[];
-    statistics: { [id: string]: StatSnapshot };
+    statistics: {
+        [id: string]: {
+            avg_temp?: number,
+            avg_prec?: number
+        }
+    };
 }
-
-export const EMPTY_SNAPSHOT: YearlySnapshot = {
-    year: 0,
-    catastrophes: List(),
-    statistics: Map()
-};
-
-function hasStats(snapshot: StatSnapshot) {
-    return snapshot.avg_temp !== null && snapshot.avg_prec !== null;
-}
-
-const NULL_STATS: StatSnapshot = {
-    avg_temp: 0,
-    avg_prec: 0
-}
-
-function subtract(a: StatSnapshot, b: StatSnapshot): StatSnapshot {
-    return {
-        avg_temp: a.avg_temp !== null && b.avg_temp !== null ? a.avg_temp - b.avg_temp : null,
-        avg_prec: a.avg_prec !== null && b.avg_prec !== null ? a.avg_prec - b.avg_prec : null,
-    }
-} 
 
 export async function downloadDataForYear(year: number, refYear?: YearlySnapshot): Promise<YearlySnapshot> {
-    try {
-        const response = await axios.get<YearlySnapshotDocument>(`data/yearly_data/${year}.json`);
-        const data = response.data;
-        const snapshot: YearlySnapshot = {
-            year,
-            catastrophes: List(data.catastrophes.map(parseCatatrophe)),
-            statistics: Map(Object.entries(data.statistics).map(([k, v]) => [parseInt(k), v])).filter(hasStats)
-        };
-        if (refYear) {
-            snapshot.deltas = snapshot.statistics.map((snap, id) => {
-                const refSnap = refYear.statistics.get(id);
-                return refSnap ? subtract(snap, refSnap) : NULL_STATS;
-            });
-        }
-        return snapshot;
-    } catch {
-        return {
-            ...EMPTY_SNAPSHOT,
-            year
-        };
-    }
+    const response = await axios.get<YearlySnapshotDocument>(`data/yearly_data/${year}.json`);
+    const data = response.data;
+    const snapshot: YearlySnapshot = {
+        year,
+        catastrophes: List(data.catastrophes.map(parseCatatrophe)),
+        regions: Map(Object.entries(data.statistics).map(([k, v]) => {
+            const regionId = parseInt(k);
+            const refTemp = refYear?.regions.get(regionId)?.avg_temp;
+            const info: RegionInfo = {
+                avg_temp: v.avg_temp,
+                avg_prec: v.avg_prec,
+                temp_increase: v.avg_temp && refTemp ? v.avg_temp - refTemp : 0
+            };
+            return [regionId, info];
+        }))
+    };
+    return snapshot;
+
 }
 
 function getPolygons(geometry: Geometry): Position[][] {
