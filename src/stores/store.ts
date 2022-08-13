@@ -6,7 +6,6 @@ import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
 import { Candidate } from '@/models/candidates';
-import { StatOverlayControl } from '@/models/meteo_view';
 
 export const MIN_YEAR = 2000;
 export const MAX_YEAR = 2035;
@@ -23,8 +22,7 @@ export const useStore = defineStore('store', {
             yearlyData: Map<number, YearlySnapshot>(),
             electoralMap: { features: [] as unknown } as FeatureCollection,
             candidates: List<Candidate>(),
-            temperatureTargetPerRegion: Map<number, number>(),
-            currentStatOverlay: null as (StatOverlayControl | null)
+            temperatureTargetPerRegion: Map<number, number>()
         };
     },
     getters: {

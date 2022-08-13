@@ -26,7 +26,7 @@ def get_party(party_name):
             return 'QS'
         case 'climat québec':
             return 'CQ'
-        case 'pati conservateur ':
+        case 'parti conservateur ':
             return 'PCQ'
         case 'parti vert':
             return 'PV'

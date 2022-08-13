@@ -11,7 +11,6 @@ import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
-import OverlayControl from "./OverlayControl.vue";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -100,31 +99,6 @@ export default defineComponent({
             meteoLayer.addData(elec);
         });
         const iconLayer = L.layerGroup();
-        const updateStatOverlay = () => {
-            /*const now = store.yearlyData.get(store.year);
-            for (const geo of statOverlayDistricts.values()) {
-                if (store.currentStatOverlay && now) {
-                    if (geo.feature) {
-                        const feature = geo.feature as Feature<Geometry, any>;
-                        const properties: DistrictProperties = feature.properties;
-                        const region = store.getRegion(properties.id);
-                        if (region) {
-                            const delta = now.statistics.get(region.id);
-                            if (delta) {
-                                const { color, opacity } = store.currentStatOverlay.translateToOpacity(delta);
-                                geo.setStyle({
-                                    ...meteoOverlayStyle,
-                                    fillColor: color,
-                                    fillOpacity: Math.min(1, Math.max(0, opacity))
-                                });
-                            }
-                        }
-                    }
-                } else {
-                    geo.setStyle(meteoOverlayStyle);
-                }
-            }*/
-        };
         const onYearChanged = (newYear: number, oldYear?: number) => {
             if (oldYear) {
                 const oldLayer = yearLayers.get(oldYear.toString());
@@ -139,7 +113,6 @@ export default defineComponent({
             if (newLayer) {
                 iconLayer.addLayer(newLayer);
             }
-            updateStatOverlay();
         };
         const yearLayers = new Map<string, L.LayerGroup>();
         watch(() => store.yearlyData, (data, oldData) => {
@@ -162,7 +135,6 @@ export default defineComponent({
             onYearChanged(store.year);
         });
         watch(() => store.year, onYearChanged);
-        watch(() => store.currentStatOverlay, updateStatOverlay);
         const mapElement = ref<HTMLDivElement | null>(null);
         return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement };
     },
@@ -190,8 +162,7 @@ export default defineComponent({
                 });
             }
         }
-    },
-    components: { OverlayControl }
+    }
 })
 
 </script>
