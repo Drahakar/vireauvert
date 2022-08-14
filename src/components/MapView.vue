@@ -231,9 +231,16 @@ export default defineComponent({
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.5);
 }
+#gradient div.step {
+    height: 8px;
+}
+@media (min-width: 768px) {  /* for devices >= 'md' */
+    #gradient div.step {
+        height: 16px;
+    }
+}
 
 #gradient div.step {
-    height: 16px;
     position: relative;
     opacity: 0.8;
 }

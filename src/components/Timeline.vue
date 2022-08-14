@@ -1,7 +1,7 @@
 <template>
-    <div id="timeline">
-        <div id="slidertitle">Année de recherche</div>
-        <div id="slidercontainer">
+    <div id="timeline" class="row">
+        <div id="slidertitle" class="col-md-2">Année de recherche</div>
+        <div id="slidercontainer" class="col-md-10">
             <vue-slider 
                 v-model="store.year"
                 :tooltip="'always'"
@@ -44,20 +44,12 @@ export default defineComponent({
 
 <style scoped>
 #timeline {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 30px;
 }
 
 #slidertitle {
     font-weight: bold;
     font-size: 1.2em;
-}
-
-#slidercontainer {
-    flex-grow: 1;
-    margin-left: 30px;
 }
 
 #slidercontainer input {
