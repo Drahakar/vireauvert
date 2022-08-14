@@ -63,18 +63,22 @@
                         <i class="bi bi-telephone-fill"></i>
                     </a>
                     <a :href="candidate.address ? 'http://maps.google.com/?q=' + encodeURIComponent(candidate.address) : undefined"
-                        title="Adresse">
+                        title="Adresse" target="_blank">
                         <i class="bi bi-geo-alt-fill"></i>
                     </a>
-                    <a :href="candidate.facebook" title="Facebook">
+                    <a :href="candidate.facebook" title="Facebook" target="_blank">
                         <i class="bi bi-facebook"></i>
                     </a>
-                    <a :href="candidate.twitter" title="Twitter">
+                    <a :href="candidate.twitter" title="Twitter" target="_blank">
                         <i class="bi bi-twitter"></i>
                     </a>
                 </li>
             </ul>
         </div>
+        <a v-if="!store.selectedData.candidates.isEmpty()" class="btn btn-success"
+            href="https://www.vireauvert.org/envoipropositionspartispolitiques" role="button" target="_blank">
+            Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales
+        </a>
         <div class="card" v-if="!store.selectedData.catastrophes.isEmpty()" id="catastrophes">
             <h5 class="card-header"><i class="bi bi-tornado"></i> Catastrophes</h5>
             <ul class="list-group list-group-flush overflow-auto">
