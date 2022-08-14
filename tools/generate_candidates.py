@@ -3,8 +3,11 @@ import os
 import json
 import locale
 import utils
+import re
 
 locale.setlocale(locale.LC_ALL,'fr-CA.UTF-8')
+
+phone_pattern = re.compile('^(?:\+?1[-. ]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$')
 
 districts = {}
 
@@ -32,6 +35,16 @@ def get_party(party_name):
             return 'PV'
     return None
 
+def format_phone(phone):
+    match = phone_pattern.search(phone)
+    if match:
+        return '+1{}{}{}'.format(
+            match.group(1),
+            match.group(2),
+            match.group(3),
+        )
+    return None
+
 candidates = []
 with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='utf-8') as input_file:
     reader = csv.reader(input_file)
@@ -55,8 +68,9 @@ with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='ut
         }
         if email:
             candidate['email'] = email.strip()
+        phone = format_phone(phone)
         if phone:
-            candidate['phone'] = phone.strip()
+            candidate['phone'] = phone
         if address:
             candidate['address'] = address.strip()
         if facebook:

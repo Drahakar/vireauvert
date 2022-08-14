@@ -57,7 +57,7 @@ Sentry.init({
 }
 
 #legend {
-  padding: 10px 0 10px 10px;
+  padding: 10px;
   height: calc(100vh - 96px);
 }
 

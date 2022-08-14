@@ -98,3 +98,7 @@ export function formatDescription(catastrope: Catastrophe) {
     }
     return severity;
 }
+
+export function getIconUrl(type: CatastropheType) {
+    return `/icons/${type.toLowerCase()}_b.png`
+}

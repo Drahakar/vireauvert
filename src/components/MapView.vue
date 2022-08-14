@@ -20,7 +20,7 @@ import L from "leaflet";
 import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
-import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
+import { Catastrophe, CatastropheType, formatDescription, getIconUrl } from "@/models/catastrophes";
 import { Feature, Geometry } from "geojson";
 import { getGradientColourIndex, temperatureGradient } from "@/models/climate";
 import { RegionSnapshot } from "@/models/yearly_data";
@@ -29,7 +29,7 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
     for (const value of Object.values(CatastropheType)) {
         const icon = L.icon({
-            iconUrl: `/icons/${value.toLowerCase()}_b.png`,
+            iconUrl: getIconUrl(value),
             iconSize: [48, 48]
         });
         icons.set(value, icon);
