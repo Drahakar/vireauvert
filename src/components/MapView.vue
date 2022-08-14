@@ -1,6 +1,16 @@
 <template>
     <div id="wrapper">
         <div id="map" ref="mapElement"></div>
+        <div id="gradient">
+            <div class="step" v-for="(colour, index) of gradientSteps" :style="{ backgroundColor: colour }">
+                <span class="selected" v-if="isSelectedGradientStep(store.selectedData, index)"></span>
+                <span class="tooltip">
+                    + {{ (index * 0.1).toLocaleString('fr-CA', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+                    }} ° C
+                </span>
+            </div>
+            <div class="label">° C</div>
+        </div>
     </div>
 </template>
 
@@ -11,6 +21,9 @@ import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription } from "@/models/catastrophes";
+import { Feature, Geometry } from "geojson";
+import { getGradientColourIndex, temperatureGradient } from "@/models/climate";
+import { RegionSnapshot } from "@/models/yearly_data";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -22,6 +35,10 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
         icons.set(value, icon);
     }
     return icons;
+}
+
+function isSelectedGradientStep(snapshot: RegionSnapshot, index: number): boolean {
+    return snapshot.info != undefined && getGradientColourIndex(snapshot.info.temp_increase) === index;
 }
 
 const unselectedStyle: L.PathOptions = {
@@ -49,7 +66,9 @@ export default defineComponent({
     emits: ["update:district-selected"],
     data() {
         return {
-            map: null as L.Map | null
+            map: null as L.Map | null,
+            gradientSteps: temperatureGradient,
+            isSelectedGradientStep
         };
     },
     setup() {
@@ -98,6 +117,32 @@ export default defineComponent({
             meteoLayer.clearLayers();
             meteoLayer.addData(elec);
         });
+
+        const updateStatOverlay = () => {
+            const now = store.yearlyData.get(store.year);
+            for (const geo of statOverlayDistricts.values()) {
+                if (now) {
+                    if (geo.feature) {
+                        const feature = geo.feature as Feature<Geometry, any>;
+                        const properties: DistrictProperties = feature.properties;
+                        const region = store.getRegion(properties.id);
+                        if (region) {
+                            const info = now.regions.get(region.id);
+                            if (info) {
+                                geo.setStyle({
+                                    ...meteoOverlayStyle,
+                                    fillColor: temperatureGradient[getGradientColourIndex(info.temp_increase)],
+                                    fillOpacity: 0.5,
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    geo.setStyle(meteoOverlayStyle);
+                }
+            }
+        };
+
         const iconLayer = L.layerGroup();
         const onYearChanged = (newYear: number, oldYear?: number) => {
             if (oldYear) {
@@ -113,7 +158,10 @@ export default defineComponent({
             if (newLayer) {
                 iconLayer.addLayer(newLayer);
             }
+
+            updateStatOverlay();
         };
+
         const yearLayers = new Map<string, L.LayerGroup>();
         watch(() => store.yearlyData, (data, oldData) => {
             for (const [year, snapshot] of data.filterNot((_, k) => oldData.has(k))) {
@@ -172,12 +220,62 @@ export default defineComponent({
     height: 100%;
 }
 
-#overlay {
+#gradient {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 16px;
+    top: 16px;
     z-index: 400;
+    width: 42px;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
 }
+
+#gradient div.step {
+    height: 16px;
+    position: relative;
+    opacity: 0.8;
+}
+
+#gradient > div.step + div.step {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#gradient div.label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+#gradient div.step .tooltip {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 64px;
+    top: -5px;
+    right: 105%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 5px;
+}
+
+#gradient div.step:hover .tooltip {
+    visibility: visible;
+}
+#gradient div.step .selected {
+    position: absolute;
+    z-index: 1;
+    right: 110%;
+    top: 2px;
+    width: 0; 
+    height: 0; 
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    
+    border-left: 6px solid black;
+}
+
 </style>
 <style>
 .leaflet-control-container {

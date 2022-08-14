@@ -51,11 +51,14 @@ export const useStore = defineStore('store', {
                     targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
                 }
                 return snapshot;
+            } else {
+                return {
+                    catastrophes: data.catastrophes,
+                    info: data.regions.get(0),
+                    candidates: List(),
+                    targetReachedOn: this.temperatureTargetPerRegion.get(0)
+                };
             }
-            return {
-                catastrophes: data.catastrophes,
-                candidates: List()
-            };
         },
         getRegion: state => (district_id: number) => state.allRegions.find(x => x.districts.some(y => y === district_id))
     },
@@ -93,10 +96,7 @@ export const useStore = defineStore('store', {
                 const data = this.yearlyData.get(year);
                 if (data) {
                     for (const [regionId, info] of data.regions) {
-                        if (targetReached.contains(regionId)) {
-                            continue;
-                        }
-                        if (info.temp_increase >= 1.5) {
+                        if (!targetReached.has(regionId) && info.temp_increase >= 1.5) {
                             targetReached = targetReached.set(regionId, year);
                         }
                     }
