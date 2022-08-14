@@ -58,9 +58,11 @@ Sentry.init({
 
 #legend {
   padding: 10px 0 10px 10px;
+  height: calc(100vh - 96px);
 }
 
 #timeline {
   grid-column: 1 / span 2;
+  height: 96px;
 }
 </style>

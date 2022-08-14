@@ -14,6 +14,9 @@
                 <li v-if="store.selectedData.info.avg_temp != undefined">
                     Température moyenne: {{ store.selectedData.info.avg_temp.toLocaleString('fr', { maximumFractionDigits: 1 }) }} °C
                 </li>
+                <li>
+                    Augmentation par rapport à 1990: {{ store.selectedData.info.temp_increase.toLocaleString('fr', { maximumFractionDigits: 1 }) }} °C
+                </li>
                 <li v-if="store.selectedData.info.avg_prec != undefined">
                     Précipitations moyennes: {{ store.selectedData.info.avg_prec.toLocaleString('fr', { maximumFractionDigits: 0 }) }} mm
                 </li>
@@ -71,9 +74,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#legend {
+    display: flex;
+    flex-direction: column;
+}
+
 #catastrophes {
     overflow-y: scroll;
-    height: 500px; /* TODO: less dumb */
 }
 .attention {
     width: 1.5em;
