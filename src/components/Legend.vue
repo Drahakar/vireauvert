@@ -6,31 +6,55 @@
             <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
         </select>
         <div class="card" v-if="store.selectedData.info">
-            <div class="card-header">Statistiques</div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item" v-if="store.selectedData.targetReachedOn">
-                    <img src="/icons/attention.png" class="attention"> Dépassement du 1,5 °C:
-                    {{ store.selectedData.targetReachedOn }}
-                </li>
-                <li class="list-group-item" v-if="store.selectedData.info.avg_temp != undefined">
-                    <i class="bi bi-thermometer"></i>
-                    Température moyenne: {{ tempFormat.format(store.selectedData.info.avg_temp) }} °C
-                </li>
-                <li class="list-group-item">
-                    <i class="bi bi-thermometer-high"></i>
-                    Augmentation par rapport à 1990: {{ tempFormat.format(store.selectedData.info.temp_increase) }} °C
-                </li>
-                <li class="list-group-item" v-if="store.selectedData.info.avg_prec != undefined">
-                    <i class="bi bi-cloud-rain"></i>
-                    Précipitations moyennes: {{ precFormat.format(store.selectedData.info.avg_prec) }} mm
-                </li>
-            </ul>
+            <h5 class="card-header"><i class="bi bi-percent"></i> Statistiques</h5>
+            <div class="container">
+                <div class="row">
+                    <div class="col" v-if="store.selectedData.targetReachedOn">
+                        <i class="bi bi-exclamation-triangle attention"></i>
+                        Augmentation de 1,5°C dépassée en {{ store.selectedData.targetReachedOn }}
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col stat" v-if="store.selectedData.info.avg_temp != undefined"
+                        title="Température moyenne">
+                        <i class="bi bi-thermometer"></i>
+                        {{ tempFormat.format(store.selectedData.info.avg_temp) }}°C
+                    </div>
+                    <div class="col stat" title="Augmentation par rapport à 1990">
+                        <i class="bi bi-thermometer-high"></i>
+                        {{ tempFormat.format(store.selectedData.info.temp_increase) }}°C
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col stat" v-if="store.selectedData.info.avg_prec != undefined"
+                        title="Précipitations moyennes">
+                        <i class="bi bi-cloud-rain"></i>
+                        {{ precFormat.format(store.selectedData.info.avg_prec) }} mm
+                    </div>
+                    <div class="col stat" v-if="store.selectedData.info.avg_liq_prec != undefined"
+                        title="Précipitations liquides moyennes">
+                        <i class="bi bi-cloud-rain-heavy"></i>
+                        {{ precFormat.format(store.selectedData.info.avg_liq_prec) }} mm
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col stat" v-if="store.selectedData.info.days_above_30 != undefined"
+                        title="Nombres de jours au dessus de 30°C">
+                        <i class="bi bi-thermometer-sun"></i>
+                        {{ dayCountFormat.format(store.selectedData.info.days_above_30) }}
+                    </div>
+                    <div class="col stat" v-if="store.selectedData.info.days_below_min_25 != undefined"
+                        title="Nombres de jours sous -25°C">
+                        <i class="bi bi-thermometer-snow"></i>
+                        {{ dayCountFormat.format(store.selectedData.info.days_below_min_25) }}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card" v-if="!store.selectedData.candidates.isEmpty()">
-            <div class="card-header">Candidat(e)s</div>
+            <h5 class="card-header"><i class="bi bi-person-fill"></i> Candidat(e)s</h5>
             <ul class="list-group list-group-flush">
                 <li v-for="candidate of store.selectedData.candidates" class="list-group-item candidate">
-                    <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{ candidate.party }}</span>
+                    <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
+                            candidate.party
+                    }}</span>
                     <span class="name">{{ candidate.name }}</span>
                     <a :href="candidate.email ? 'mailto:' + candidate.email : undefined" title="Courriel">
                         <i class="bi bi-envelope-fill"></i>
@@ -52,11 +76,11 @@
             </ul>
         </div>
         <div class="card" v-if="!store.selectedData.catastrophes.isEmpty()" id="catastrophes">
-            <div class="card-header">Catastrophes</div>
+            <h5 class="card-header"><i class="bi bi-tornado"></i> Catastrophes</h5>
             <ul class="list-group list-group-flush overflow-auto">
                 <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
+                    <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
                         <span>{{ formatDescription(catastrophe) }}</span>
                         <span v-if="catastrophe.city">
                             à {{ catastrophe.city }}
@@ -85,21 +109,26 @@ export default defineComponent({
     data() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
             day: '2-digit',
-            month: 'long'
+            month: '2-digit'
         });
         const tempFormat = new Intl.NumberFormat('fr-CA', {
-            maximumFractionDigits: 1
+            maximumFractionDigits: 1,
         });
         const precFormat = new Intl.NumberFormat('fr-CA', {
+            useGrouping: false,
             maximumFractionDigits: 0
-        })
+        });
+        const dayCountFormat = new Intl.NumberFormat('fr-CA', {
+            maximumFractionDigits: 2
+        });
         return {
             formatDescription,
             getPartyName,
             getIconUrl,
             dateFormat,
             tempFormat,
-            precFormat
+            precFormat,
+            dayCountFormat
         }
     },
     methods: {
@@ -140,13 +169,10 @@ export default defineComponent({
 }
 
 .attention {
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: text-bottom;
+    color: red;
 }
 
-#legend select {
-    font-size: large;
+.stat {
     font-weight: bold;
 }
 

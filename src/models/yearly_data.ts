@@ -11,9 +11,23 @@ export interface YearlySnapshot {
     regions: Map<number, RegionInfo>;
 }
 
-export interface RegionInfo {
+export enum Property {
+    avg_temp,
+    avg_prec,
+    avg_liq_prec,
+    days_above_30,
+    days_below_min_25
+}
+
+interface RegionStatistics {
     avg_temp?: number;
     avg_prec?: number;
+    avg_liq_prec?: number;
+    days_above_30?: number;
+    days_below_min_25?: number;
+}
+
+export interface RegionInfo extends RegionStatistics {
     temp_increase: number;
 }
 
@@ -27,10 +41,7 @@ export interface RegionSnapshot {
 interface YearlySnapshotDocument {
     catastrophes: CatastropheDocument[];
     statistics: {
-        [id: string]: {
-            avg_temp?: number,
-            avg_prec?: number
-        }
+        [id: string]: RegionStatistics
     };
 }
 
@@ -44,8 +55,7 @@ export async function downloadDataForYear(year: number, refYear?: YearlySnapshot
             const regionId = parseInt(k);
             const refTemp = refYear?.regions.get(regionId)?.avg_temp;
             const info: RegionInfo = {
-                avg_temp: v.avg_temp,
-                avg_prec: v.avg_prec,
+                ...v,
                 temp_increase: v.avg_temp && refTemp ? v.avg_temp - refTemp : 0
             };
             return [regionId, info];
