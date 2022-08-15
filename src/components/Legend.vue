@@ -98,7 +98,8 @@
                     </span>
                     <small class="float-end">{{store.selectedData.catastrophes.size}} en {{store.year}}</small>
                     <div>
-                        <small class="d-block float-end">{{getTypeName(store.catastropheType)}}</small>
+                        <small class="d-block float-end" v-if="store.catastropheType">{{getTypeName(store.catastropheType)}}</small>
+                        <small class="d-block float-end" v-else>Toutes</small>
                     </div>
                 </a>
             </h5>
