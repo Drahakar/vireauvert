@@ -176,6 +176,7 @@ export default defineComponent({
 
 #catastrophes {
     min-height: 0;
+    overflow-y: auto;
 }
 
 .card-header .bi {
