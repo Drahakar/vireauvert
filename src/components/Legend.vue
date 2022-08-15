@@ -1,13 +1,10 @@
 
 <template>
     <div id="legend">
-        <v-select
-            aria-label="Circonscription" :options="getDistrictOptions()"
-            v-model="store.district" label="name"
-            :reduce="getDistrictId"
-            :clearable="false">
+        <v-select aria-label="Circonscription" :options="getDistrictOptions()" v-model="store.district" label="name"
+            :reduce="getDistrictId" :clearable="false">
             <template #no-options="{ search, searching, loading }">
-              Désolé, aucune circonscription trouvée avec ce nom.
+                Désolé, aucune circonscription trouvée avec ce nom.
             </template>
         </v-select>
         <div class="card" v-if="store.selectedData.info">
@@ -15,39 +12,39 @@
             <div class="container">
                 <div class="row">
                     <div class="col" v-if="store.selectedData.targetReachedOn">
-                        <i class="bi bi-exclamation-triangle attention"></i>
+                        <img src="/icons/attention.png">
                         Augmentation de 1,5°C dépassée en {{ store.selectedData.targetReachedOn }}
                     </div>
                     <div class="w-100"></div>
                     <div class="col stat" v-if="store.selectedData.info.avg_temp != undefined"
                         title="Température moyenne">
-                        <i class="bi bi-thermometer"></i>
+                        <img src="/icons/avg_temp.png">
                         {{ tempFormat.format(store.selectedData.info.avg_temp) }}°C
                     </div>
                     <div class="col stat" title="Augmentation par rapport à 1990">
-                        <i class="bi bi-thermometer-high"></i>
+                        <img src="/icons/avg_temp.png">
                         {{ relativeTempFormat.format(store.selectedData.info.temp_increase) }}°C
                     </div>
                     <div class="w-100"></div>
                     <div class="col stat" v-if="store.selectedData.info.avg_prec != undefined"
-                        title="Précipitations moyennes">
-                        <i class="bi bi-cloud-rain"></i>
+                        title="Précipitations totales">
+                        <img src="/icons/total_prec.png">
                         {{ precFormat.format(store.selectedData.info.avg_prec) }} mm
                     </div>
                     <div class="col stat" v-if="store.selectedData.info.avg_liq_prec != undefined"
-                        title="Précipitations liquides moyennes">
-                        <i class="bi bi-cloud-rain-heavy"></i>
+                        title="Précipitations liquides totales">
+                        <img src="/icons/total_prec.png">
                         {{ precFormat.format(store.selectedData.info.avg_liq_prec) }} mm
                     </div>
                     <div class="w-100"></div>
                     <div class="col stat" v-if="store.selectedData.info.days_above_30 != undefined"
                         title="Nombres de jours au dessus de 30°C">
-                        <i class="bi bi-thermometer-sun"></i>
+                        <img src="/icons/days_above_30.png">
                         {{ dayCountFormat.format(store.selectedData.info.days_above_30) }}
                     </div>
                     <div class="col stat" v-if="store.selectedData.info.days_below_min_25 != undefined"
                         title="Nombres de jours sous -25°C">
-                        <i class="bi bi-thermometer-snow"></i>
+                        <img src="/icons/days_below_min_25.png">
                         {{ dayCountFormat.format(store.selectedData.info.days_below_min_25) }}
                     </div>
                 </div>
@@ -55,15 +52,14 @@
         </div>
         <div class="card" v-if="!store.selectedData.candidates.isEmpty()">
             <h5 class="card-header">
-                <a data-bs-toggle="collapse" href="#body-candidates"
-                    aria-expanded="true" aria-controls="body-candidates" id="heading-candidates"
-                    class="d-block">
+                <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true"
+                    aria-controls="body-candidates" id="heading-candidates" class="d-block">
                     <i class="bi bi-chevron-up float-start"></i>
                     Candidat(e)s
                 </a>
             </h5>
-            <ul id ="body-candidates" class="list-group list-group-flush collapse show" aria-labelledby="heading-candidates"
-                ref="candidates">
+            <ul id="body-candidates" class="list-group list-group-flush collapse show"
+                aria-labelledby="heading-candidates" ref="candidates">
                 <li v-for="candidate of store.selectedData.candidates" class="list-group-item candidate">
                     <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
                             candidate.party
@@ -75,8 +71,9 @@
                     <a v-if="candidate.phone" :href="'tel:' + candidate.phone" title="Téléphone">
                         <i class="bi bi-telephone-fill"></i>
                     </a>
-                    <a v-if="candidate.address" :href="'http://maps.google.com/?q=' + encodeURIComponent(candidate.address)"
-                        title="Adresse" target="_blank">
+                    <a v-if="candidate.address"
+                        :href="'http://maps.google.com/?q=' + encodeURIComponent(candidate.address)" title="Adresse"
+                        target="_blank">
                         <i class="bi bi-geo-alt-fill"></i>
                     </a>
                     <a v-if="candidate.facebook" :href="candidate.facebook" title="Facebook" target="_blank">
@@ -94,16 +91,17 @@
         </a>
         <div class="card" id="catastrophes" v-if="showCatastrophes()">
             <h5 class="card-header" id="catastrophes-header">
-                <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes"
-                    aria-expanded="true" aria-controls="body-catastrophes" id="heading-catastrophes"
-                    class="d-block">
+                <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes" aria-expanded="true"
+                    aria-controls="body-catastrophes" id="heading-catastrophes" class="d-block">
                     <i class="bi bi-chevron-up float-start"></i>
                     <span>
                         Catastrophes
                     </span>
-                    <small class="float-end">{{store.selectedData.catastrophes.size}} en {{store.year}}</small>
+                    <small class="float-end">{{ store.selectedData.catastrophes.size }} en {{ store.year }}</small>
                     <div>
-                        <small class="d-block float-end" v-if="store.catastropheType">{{getTypeName(store.catastropheType)}}</small>
+                        <small class="d-block float-end" v-if="store.catastropheType">{{
+                                getTypeName(store.catastropheType)
+                        }}</small>
                         <small class="d-block float-end" v-else>Toutes</small>
                     </div>
                 </a>
@@ -117,7 +115,8 @@
                 </select>
                 <ul class="list-group list-group-flush overflow-auto">
                     <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
-                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
+                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
+                        }}</time>:
                         <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
                             <span>{{ formatDescription(catastrophe) }}</span>
                             <span v-if="catastrophe.city">
@@ -185,7 +184,7 @@ export default defineComponent({
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
         getDistrictOptions(): DistrictProperties[] {
-            return [{id: 0, name: "Province de Québec"}].concat(
+            return [{ id: 0, name: "Province de Québec" }].concat(
                 this.store.allDistricts);
         },
         getDistrictId(district: DistrictProperties) {
@@ -220,7 +219,8 @@ export default defineComponent({
 }
 
 .card-header a[data-bs-toggle="collapse"] {
-    all: unset;  /* remove styling on toggling hyperlink */
+    all: unset;
+    /* remove styling on toggling hyperlink */
 }
 
 .candidate {
@@ -241,12 +241,17 @@ export default defineComponent({
     opacity: 1;
 }
 
-.attention {
-    color: red;
-}
-
 .stat {
     font-weight: bold;
+    max-height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat img {
+    max-width: 32px;
+    max-height: fit-content;
 }
 
 .candidate .party {
