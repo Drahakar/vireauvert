@@ -24,6 +24,7 @@
     "pinia": "^2.0.17",
     "point-in-polygon": "^1.1.0",
     "vue": "^3.2.37",
+    "vue-select": "^4.0.0-beta.3",
     "vue-slider-component": "^4.1.0-beta.2"
   },
   "devDependencies": {
