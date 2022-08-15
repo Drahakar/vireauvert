@@ -1,5 +1,3 @@
-import { LatLng, LatLngTuple } from "leaflet";
-
 export enum CatastropheType {
     Flood = "FLOOD",
     ForestFire = "FOREST_FIRE",
@@ -12,7 +10,10 @@ export enum CatastropheType {
 
 export interface Catastrophe {
     id: string;
-    location: LatLng;
+    location: {
+        lat: number;
+        lng: number
+    };
     city: string;
     type: CatastropheType;
     date: Date;
@@ -29,7 +30,7 @@ export enum Severity {
 
 export interface CatastropheDocument {
     id: string;
-    location: LatLngTuple;
+    location: [number, number];
     city: string;
     type: string;
     date: string;
@@ -39,7 +40,7 @@ export interface CatastropheDocument {
 export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
     return {
         id: doc.id,
-        location: new LatLng(doc.location[0], doc.location[1]),
+        location: { lat: doc.location[0], lng: doc.location[1] },
         city: doc.city,
         type: doc.type as CatastropheType,
         date: new Date(doc.date),
@@ -48,7 +49,7 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
 }
 
 export function getTypeName(type: CatastropheType) {
-    switch(type) {
+    switch (type) {
         case CatastropheType.Flood:
             return 'Inondation';
         case CatastropheType.ForestFire:
