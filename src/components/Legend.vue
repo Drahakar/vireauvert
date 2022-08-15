@@ -92,7 +92,7 @@
             href="https://www.vireauvert.org/envoipropositionspartispolitiques" role="button" target="_blank">
             Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales
         </a>
-        <div class="card" id="catastrophes">
+        <div class="card" id="catastrophes" v-if="showCatastrophes()">
             <h5 class="card-header" id="catastrophes-header">
                 <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes"
                     aria-expanded="true" aria-controls="body-catastrophes" id="heading-catastrophes"
@@ -136,7 +136,7 @@
 import { getPartyName } from '@/models/candidates';
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
 import { DistrictProperties } from '@/models/map';
-import { useStore } from '@/stores/store';
+import { useStore, CURRENT_YEAR } from '@/stores/store';
 import { defineComponent } from 'vue';
 import vSelect from 'vue-select';
 
@@ -190,6 +190,9 @@ export default defineComponent({
         },
         getDistrictId(district: DistrictProperties) {
             return district.id;
+        },
+        showCatastrophes() {
+            return this.store.year <= CURRENT_YEAR;
         }
     }
 })
