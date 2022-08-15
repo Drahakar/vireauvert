@@ -5,9 +5,10 @@
             <vue-slider 
                 v-model="store.year"
                 :tooltip="'always'"
+                :data="years"
                 :min="min"
                 :max="max"
-                :marks="marks"
+                :marks="yearsMarks"
                 :lazy="true"
                 :adsorb="false">
             </vue-slider>
@@ -19,7 +20,7 @@
 import VueSlider from 'vue-slider-component'
 import { defineComponent } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { MAX_YEAR, MIN_YEAR, useStore } from '@/stores/store';
+import { MIN_CONTINUOUS_YEAR, MAX_CONTINUOUS_YEAR, PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2, TIMELINE_YEARS, useStore } from '@/stores/store';
 
 export default defineComponent({    
     components: {
@@ -32,11 +33,11 @@ export default defineComponent({
         };
     },
     data() {
-        const marks = [...Array(((MAX_YEAR - MIN_YEAR) / 5) + 1).keys()].map(x => MIN_YEAR + (x * 5));
         return {
-            min: MIN_YEAR,
-            max: MAX_YEAR,
-            marks
+            min: Math.min(...TIMELINE_YEARS),
+            max: Math.max(...TIMELINE_YEARS),
+            yearsMarks: [...Array(((MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR) / 5) + 1).keys()].map(x => MIN_CONTINUOUS_YEAR + (x * 5)).concat(PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2).sort(),
+            years: TIMELINE_YEARS
         }
     }
 })

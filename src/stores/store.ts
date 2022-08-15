@@ -7,8 +7,12 @@ import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
 import { Candidate } from '@/models/candidates';
 
-export const MIN_YEAR = 2000;
-export const MAX_YEAR = 2035;
+export const MIN_CONTINUOUS_YEAR = 2000;
+export const MAX_CONTINUOUS_YEAR = 2035;
+export const PAST_REFERENCE_YEAR = 1990;
+export const FUTURE_SCENARIO_YEAR1 = 2050;
+export const FUTURE_SCENARIO_YEAR2 = 2100;
+export const TIMELINE_YEARS = [...Array(((MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR)) + 1).keys()].map(x => MIN_CONTINUOUS_YEAR + x ).concat(PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2).sort();
 export const CURRENT_YEAR = new Date().getFullYear();
 
 const collator = new Intl.Collator('fr', { sensitivity: 'base' });
@@ -82,17 +86,15 @@ export const useStore = defineStore('store', {
 
             await addData(CURRENT_YEAR);
 
-            const promises = [];
-            for (let year = CURRENT_YEAR - 1; year >= MIN_YEAR; --year) {
+            const promises: Promise<void>[] = [];
+            TIMELINE_YEARS.forEach(year => {
                 promises.push(addData(year));
-            }
-            for (let year = CURRENT_YEAR + 1; year <= MAX_YEAR; ++year) {
-                promises.push(addData(year));
-            }
+            });
+            
             await Promise.all(promises);
 
             let targetReached = Map<number, number>();
-            for (let year = MIN_YEAR; year <= MAX_YEAR; ++year) {
+            TIMELINE_YEARS.forEach(year => {
                 const data = this.yearlyData.get(year);
                 if (data) {
                     for (const [regionId, info] of data.regions) {
@@ -101,7 +103,7 @@ export const useStore = defineStore('store', {
                         }
                     }
                 }
-            }
+            });
             this.temperatureTargetPerRegion = targetReached;
         }
     }
