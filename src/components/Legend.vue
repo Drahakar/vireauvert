@@ -1,10 +1,15 @@
 
 <template>
     <div id="legend">
-        <select class="form-select" aria-label="Circonscription" v-model="store.district">
-            <option :value="0">Province de Québec</option>
-            <option v-for="district of store.allDistricts" :value="district.id">{{ district.name }}</option>
-        </select>
+        <v-select
+            aria-label="Circonscription" :options="getDistrictOptions()"
+            v-model="store.district" label="name"
+            :reduce="district => district.id"
+            :clearable="false">
+            <template #no-options="{ search, searching, loading }">
+              Désolé, aucune circonscription trouvée avec ce nom.
+            </template>
+        </v-select>
         <div class="card" v-if="store.selectedData.info">
             <h5 class="card-header"><i class="bi bi-percent"></i> Statistiques</h5>
             <div class="container">
@@ -132,10 +137,12 @@ import { getPartyName } from '@/models/candidates';
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
+import vSelect from 'vue-select';
 
 
 export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
+    components: { vSelect },
     setup() {
         const store = useStore();
         const catastropheTypes = Object.values(CatastropheType);
@@ -176,7 +183,11 @@ export default defineComponent({
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {
             this.$emit('onRequestCatastropheFocus', catastrophe);
-        }
+        },
+        getDistrictOptions() {
+            return [{id: 0, name: "Province de Québec"}].concat(
+                this.store.allDistricts);
+        },
     }
 })
 </script>
