@@ -4,7 +4,7 @@
         <v-select
             aria-label="Circonscription" :options="getDistrictOptions()"
             v-model="store.district" label="name"
-            :reduce="(district: DistrictProperties): number => district.id"
+            :reduce="getDistrictId"
             :clearable="false">
             <template #no-options="{ search, searching, loading }">
               Désolé, aucune circonscription trouvée avec ce nom.
@@ -184,10 +184,13 @@ export default defineComponent({
         requestCatastropheFocus(catastrophe: Catastrophe) {
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
-        getDistrictOptions() {
+        getDistrictOptions(): DistrictProperties[] {
             return [{id: 0, name: "Province de Québec"}].concat(
                 this.store.allDistricts);
         },
+        getDistrictId(district: DistrictProperties) {
+            return district.id;
+        }
     }
 })
 </script>
