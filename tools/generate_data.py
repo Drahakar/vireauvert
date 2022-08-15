@@ -1,6 +1,5 @@
 import json
 import locale
-from turtle import st
 import utils
 import os
 
