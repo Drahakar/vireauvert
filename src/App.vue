@@ -40,29 +40,39 @@ Sentry.init({
 </script>
 
 <template>
-  <div id="main">
-    <Legend id="legend" @on-request-catastrophe-focus="focusCatastrophe"></Legend>
-    <MapView id="map-view" ref="map"></MapView>
-    <Timeline id="timeline"></Timeline>
+  <div id="main" class="container-fluid">
+    <div class="row">
+      <Legend id="legend" @on-request-catastrophe-focus="focusCatastrophe"
+          class="col-md-3">
+      </Legend>
+      <MapView id="map-view" ref="map" class="col-md-9"></MapView>
+    </div>
+    <div class="row">
+      <Timeline id="timeline"></Timeline>
+    </div>
   </div>
 </template>
 
 <style scoped>
 #main {
   height: 100vh;
-  display: grid;
-  grid-template-columns: 25% 1fr;
-  grid-template-rows: 1fr 96px;
-  grid-auto-flow: row;
+}
+
+#map-view {
+  height: calc(60vh - 96px);
+}
+@media (min-width: 768px) {  /* for devices >= 'md' */
+  #map-view {
+    height: calc(100vh - 96px);
+  }
 }
 
 #legend {
   padding: 10px;
-  height: calc(100vh - 96px);
+  max-height: calc(100vh - 96px);
 }
 
 #timeline {
-  grid-column: 1 / span 2;
   height: 96px;
 }
 </style>
