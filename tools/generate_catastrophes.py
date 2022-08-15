@@ -5,7 +5,6 @@ from datetime import datetime
 import xml.etree.ElementTree as ET
 from os import path
 import os
-import json
 import csv
 import zipfile
 from bs4 import BeautifulSoup

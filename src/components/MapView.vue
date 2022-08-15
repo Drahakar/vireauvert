@@ -21,9 +21,10 @@ import { defineComponent, ref, watch } from 'vue';
 import { useStore } from "@/stores/store";
 import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl } from "@/models/catastrophes";
-import { Feature, Geometry } from "geojson";
+import { Feature, Geometry, Polygon } from "geojson";
 import { getGradientColourIndex, temperatureGradient } from "@/models/climate";
 import { RegionSnapshot } from "@/models/yearly_data";
+import axios from "axios";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -78,7 +79,6 @@ export default defineComponent({
     emits: ["update:district-selected"],
     data() {
         return {
-            map: null as L.Map | null,
             gradientSteps: temperatureGradient,
             isSelectedGradientStep
         };
@@ -148,12 +148,16 @@ export default defineComponent({
             }
         };
 
+        const map = ref<L.Map | null>(null);
 
         watch(() => store.electoralMap, elec => {
             electoralLayer.clearLayers();
             electoralLayer.addData(elec);
             meteoLayer.clearLayers();
             meteoLayer.addData(elec);
+            if (map.value) {
+                map.value.setMaxBounds(electoralLayer.getBounds());
+            }
         });
 
         const iconLayer = L.layerGroup();
@@ -169,22 +173,34 @@ export default defineComponent({
         watch(() => store.year, updateStatOverlay);
 
         const mapElement = ref<HTMLDivElement | null>(null);
-        return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement };
+        return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement, map };
     },
     async mounted() {
         if (this.mapElement) {
+            const mask = await axios.get<Polygon>('data/masque_electoral.json', { responseType: 'json' });
+
             const map = new L.Map(this.mapElement, {
                 center: [45.5001, -73.5679],
-                zoom: 11
+                zoom: 11,
+                minZoom: 5,
+                zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 maxZoom: 19,
                 attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }).addTo(map);
+            L.geoJSON(mask.data, {
+                interactive: false,
+                style: {
+                    fillColor: '#000000', 
+                    opacity: 0.5
+                }
+            }).addTo(map);
             this.statOverlayLayer.addTo(map);
             this.electoralLayer.addTo(map);
             this.iconLayer.addTo(map);
             this.map = map;
+            this.map.setMaxBounds(this.electoralLayer.getBounds());
         }
     },
     methods: {
