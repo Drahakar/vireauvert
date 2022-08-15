@@ -6,6 +6,7 @@ import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
 import { Candidate } from '@/models/candidates';
+import { CatastropheType } from '@/models/catastrophes';
 
 export const MIN_YEAR = 2000;
 export const MAX_YEAR = 2035;
@@ -18,6 +19,7 @@ export const useStore = defineStore('store', {
         return {
             district: 0,
             year: CURRENT_YEAR,
+            catastropheType: '' as (CatastropheType | ''),
             allRegions: List<AdminRegion>(),
             yearlyData: Map<number, YearlySnapshot>(),
             electoralMap: { features: [] as unknown } as FeatureCollection,
@@ -45,15 +47,19 @@ export const useStore = defineStore('store', {
                 });
                 const region = this.getRegion(this.district);
                 const snapshot: RegionSnapshot = {
-                    catastrophes: filterCatastrophesByRegion(data.catastrophes, feature),
+                    catastrophes: filterCatastrophesByRegion(data.catastrophes, feature, this.catastropheType),
                     info: region ? data.regions.get(region.id) : undefined,
                     candidates: List(this.candidates.filter(x => x.district == this.district)),
                     targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
                 }
                 return snapshot;
             } else {
+                let catastrophes = data.catastrophes;
+                if(this.catastropheType) {
+                    catastrophes = catastrophes.filter(x => x.type === this.catastropheType)
+                }
                 return {
-                    catastrophes: data.catastrophes,
+                    catastrophes,
                     info: data.regions.get(0),
                     candidates: List(),
                     targetReachedOn: this.temperatureTargetPerRegion.get(0)
