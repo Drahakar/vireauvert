@@ -4,7 +4,7 @@
         <v-select
             aria-label="Circonscription" :options="getDistrictOptions()"
             v-model="store.district" label="name"
-            :reduce="district => district.id"
+            :reduce="(district: DistrictProperties): number => district.id"
             :clearable="false">
             <template #no-options="{ search, searching, loading }">
               Désolé, aucune circonscription trouvée avec ce nom.
@@ -135,6 +135,7 @@
 
 import { getPartyName } from '@/models/candidates';
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
+import { DistrictProperties } from '@/models/map';
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 import vSelect from 'vue-select';
