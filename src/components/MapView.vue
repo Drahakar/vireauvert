@@ -112,6 +112,7 @@ export default defineComponent({
                 statOverlayDistricts.set(properties.id.toString(), layer as L.GeoJSON);
             }
         });
+        const map = ref<L.Map | null>(null);
         watch(() => store.district, (newDistrict, oldDistrict) => {
             const oldLayer = districtLayers.get(oldDistrict.toString());
             if (oldLayer) {
@@ -120,6 +121,11 @@ export default defineComponent({
             const newLayer = districtLayers.get(newDistrict.toString());
             if (newLayer) {
                 newLayer.setStyle(selectedStyle);
+                if (map) {
+                    map.value.fitBounds(newLayer.getBounds(), {
+                        animate: true
+                    });
+                }
             }
         });
 
@@ -147,8 +153,6 @@ export default defineComponent({
                 }
             }
         };
-
-        const map = ref<L.Map | null>(null);
 
         watch(() => store.electoralMap, elec => {
             electoralLayer.clearLayers();
