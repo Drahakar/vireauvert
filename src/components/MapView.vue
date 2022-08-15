@@ -134,10 +134,13 @@ export default defineComponent({
                         if (region) {
                             const info = now.regions.get(region.id);
                             if (info) {
+                                // TODO: consider having a colour gradient for
+                                // increases <= 0
+                                const showOverlay = info.temp_increase > 0;
                                 geo.setStyle({
                                     ...meteoOverlayStyle,
                                     fillColor: temperatureGradient[getGradientColourIndex(info.temp_increase)],
-                                    fillOpacity: 0.5,
+                                    fillOpacity: showOverlay ? 0.5 : 0,
                                 });
                             }
                         }
