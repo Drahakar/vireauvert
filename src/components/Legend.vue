@@ -144,7 +144,7 @@ export default defineComponent({
         }
         const tempFormat = new Intl.NumberFormat('fr-CA', tempOptions);
         const relativeTempFormat = new Intl.NumberFormat('fr-CA', {
-            ...tempOptions, signDisplay: "always",
+            ...tempOptions, signDisplay: "exceptZero",
         });
         const precFormat = new Intl.NumberFormat('fr-CA', {
             useGrouping: false,
