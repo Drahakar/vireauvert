@@ -138,7 +138,7 @@ import { getPartyName } from '@/models/candidates';
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
 import { DistrictProperties } from '@/models/map';
 import { useStore, CURRENT_YEAR } from '@/stores/store';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import vSelect from 'vue-select';
 import { Collapse } from 'bootstrap';
 
@@ -149,7 +149,18 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const catastropheTypes = Object.values(CatastropheType);
-        return { store, catastropheTypes };
+        const catastrophes = ref<HTMLElement>();
+        onMounted(() => {
+            if (catastrophes.value) {
+                const catastrophesCollapse = new Collapse(
+                    catastrophes.value, { toggle: false });
+                // For large devices, expand catastrophes initially
+                if (window.innerWidth >= 768) {
+                    catastrophesCollapse.show();
+                }
+            }
+        });
+        return { store, catastropheTypes, catastrophes };
     },
     data() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
@@ -181,14 +192,6 @@ export default defineComponent({
             relativeTempFormat,
             precFormat,
             dayCountFormat
-        }
-    },
-    mounted() {
-        const catastrophesCollapse = new Collapse(
-            this.$refs.catastrophes, { toggle: false });
-        // For large devices, expand catastrophes initially
-        if (window.innerWidth >= 768) {  
-            catastrophesCollapse.show();
         }
     },
     methods: {
