@@ -57,7 +57,8 @@
                     Candidat(e)s
                 </a>
             </h5>
-            <ul id ="body-candidates" class="list-group list-group-flush collapse show" aria-labelledby="heading-candidates">
+            <ul id ="body-candidates" class="list-group list-group-flush collapse show" aria-labelledby="heading-candidates"
+                ref="candidates">
                 <li v-for="candidate of store.selectedData.candidates" class="list-group-item candidate">
                     <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
                             candidate.party
@@ -88,11 +89,17 @@
         </a>
         <div class="card" id="catastrophes">
             <h5 class="card-header" id="catastrophes-header">
-                <a data-bs-toggle="collapse" href="#body-catastrophes"
+                <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes"
                     aria-expanded="true" aria-controls="body-catastrophes" id="heading-catastrophes"
                     class="d-block">
                     <i class="bi bi-chevron-up float-start"></i>
-                    <span>Catastrophes</span>
+                    <span>
+                        Catastrophes
+                    </span>
+                    <small class="float-end">{{store.selectedData.catastrophes.size}} en {{store.year}}</small>
+                    <div>
+                        <small class="d-block float-end">{{getTypeName(store.catastropheType)}}</small>
+                    </div>
                 </a>
             </h5>
             <div id="body-catastrophes" class="collapse show" aria-labelledby="heading-catastrophes">
