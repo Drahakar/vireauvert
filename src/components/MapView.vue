@@ -37,6 +37,8 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
     return icons;
 }
 
+const icons = generateIcons();
+
 function isSelectedGradientStep(snapshot: RegionSnapshot, index: number): boolean {
     return snapshot.info != undefined && getGradientColourIndex(snapshot.info.temp_increase) === index;
 }
@@ -61,6 +63,16 @@ const meteoOverlayStyle: L.PathOptions = {
     weight: 0
 }
 
+function createIcon(catastrophe: Catastrophe) {
+    const title = formatDescription(catastrophe);
+    const marker = L.marker(catastrophe.location, {
+        title: title,
+        icon: icons.get(catastrophe.type)
+    });
+    marker.bindTooltip(title);
+    return marker;
+}
+
 export default defineComponent({
     props: ["district-selected"],
     emits: ["update:district-selected"],
@@ -73,7 +85,6 @@ export default defineComponent({
     },
     setup() {
         const store = useStore();
-        const icons = generateIcons();
         const districtLayers = new Map<string, L.GeoJSON>();
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
@@ -111,12 +122,6 @@ export default defineComponent({
                 newLayer.setStyle(selectedStyle);
             }
         });
-        watch(() => store.electoralMap, elec => {
-            electoralLayer.clearLayers();
-            electoralLayer.addData(elec);
-            meteoLayer.clearLayers();
-            meteoLayer.addData(elec);
-        });
 
         const updateStatOverlay = () => {
             const now = store.yearlyData.get(store.year);
@@ -143,46 +148,26 @@ export default defineComponent({
             }
         };
 
-        const iconLayer = L.layerGroup();
-        const onYearChanged = (newYear: number, oldYear?: number) => {
-            if (oldYear) {
-                const oldLayer = yearLayers.get(oldYear.toString());
-                if (oldLayer) {
-                    iconLayer.removeLayer(oldLayer);
-                }
-            }
-            else {
-                iconLayer.clearLayers();
-            }
-            const newLayer = yearLayers.get(newYear.toString());
-            if (newLayer) {
-                iconLayer.addLayer(newLayer);
-            }
 
-            updateStatOverlay();
-        };
-
-        const yearLayers = new Map<string, L.LayerGroup>();
-        watch(() => store.yearlyData, (data, oldData) => {
-            for (const [year, snapshot] of data.filterNot((_, k) => oldData.has(k))) {
-                if (yearLayers.has(year.toString())) {
-                    continue;
-                }
-                const yearLayer = L.layerGroup();
-                for (const catastrophe of snapshot.catastrophes) {
-                    const title = formatDescription(catastrophe);
-                    const marker = L.marker(catastrophe.location, {
-                        title: title,
-                        icon: icons.get(catastrophe.type)
-                    });
-                    marker.bindTooltip(title);
-                    marker.addTo(yearLayer);
-                }
-                yearLayers.set(year.toString(), yearLayer);
-            }
-            onYearChanged(store.year);
+        watch(() => store.electoralMap, elec => {
+            electoralLayer.clearLayers();
+            electoralLayer.addData(elec);
+            meteoLayer.clearLayers();
+            meteoLayer.addData(elec);
         });
-        watch(() => store.year, onYearChanged);
+
+        const iconLayer = L.layerGroup();
+        watch(() => store.selectedData, data => {
+            iconLayer.clearLayers();
+            for (const catastrophe of data.catastrophes) {
+                const marker = createIcon(catastrophe);
+                marker.addTo(iconLayer);
+            }
+        });
+
+        watch(() => store.yearlyData, updateStatOverlay);
+        watch(() => store.year, updateStatOverlay);
+
         const mapElement = ref<HTMLDivElement | null>(null);
         return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement };
     },
@@ -238,7 +223,7 @@ export default defineComponent({
     opacity: 0.8;
 }
 
-#gradient > div.step + div.step {
+#gradient>div.step+div.step {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -263,19 +248,19 @@ export default defineComponent({
 #gradient div.step:hover .tooltip {
     visibility: visible;
 }
+
 #gradient div.step .selected {
     position: absolute;
     z-index: 1;
     right: 110%;
     top: 2px;
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    
+
     border-left: 6px solid black;
 }
-
 </style>
 <style>
 .leaflet-control-container {

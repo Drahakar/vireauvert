@@ -47,7 +47,7 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
     };
 }
 
-function getTypeName(type: CatastropheType) {
+export function getTypeName(type: CatastropheType) {
     switch(type) {
         case CatastropheType.Flood:
             return 'Inondation';

@@ -79,8 +79,17 @@
             href="https://www.vireauvert.org/envoipropositionspartispolitiques" role="button" target="_blank">
             Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales
         </a>
-        <div class="card" v-if="!store.selectedData.catastrophes.isEmpty()" id="catastrophes">
-            <h5 class="card-header"><i class="bi bi-tornado"></i> Catastrophes</h5>
+        <div class="card" id="catastrophes">
+            <h5 class="card-header" id="catastrophes-header">
+                <i class="bi bi-tornado"></i>
+                <span style="flex-grow: 1">Catastrophes</span>
+                <select style="width:fit-content;" class="form-select" aria-label="Circonscription" v-model="store.catastropheType">
+                    <option value="">Toutes</option>
+                    <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
+                            getTypeName(catastropheType)
+                    }}</option>
+                </select>
+            </h5>
             <ul class="list-group list-group-flush overflow-auto">
                 <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
                     <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
@@ -99,7 +108,7 @@
 <script lang="ts">
 
 import { getPartyName } from '@/models/candidates';
-import { Catastrophe, formatDescription, getIconUrl } from '@/models/catastrophes';
+import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 
@@ -108,7 +117,8 @@ export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
     setup() {
         const store = useStore();
-        return { store };
+        const catastropheTypes = Object.values(CatastropheType);
+        return { store, catastropheTypes };
     },
     data() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
@@ -129,6 +139,7 @@ export default defineComponent({
             formatDescription,
             getPartyName,
             getIconUrl,
+            getTypeName,
             dateFormat,
             tempFormat,
             precFormat,
@@ -152,6 +163,12 @@ export default defineComponent({
 
 #catastrophes {
     min-height: 0;
+}
+
+#catastrophes-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .candidate {

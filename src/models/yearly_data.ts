@@ -3,7 +3,7 @@ import { Feature, Geometry, Position } from "geojson";
 import { List, Map } from "immutable";
 import pointInPolygon from "point-in-polygon";
 import { Candidate } from "./candidates";
-import { Catastrophe, CatastropheDocument, parseCatatrophe } from "./catastrophes";
+import { Catastrophe, CatastropheDocument, CatastropheType, parseCatatrophe } from "./catastrophes";
 
 export interface YearlySnapshot {
     year: number;
@@ -79,10 +79,13 @@ function getPolygons(geometry: Geometry): Position[][] {
     return [];
 }
 
-export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, region?: Feature): List<Catastrophe> {
+export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, region: Feature | undefined, type: CatastropheType | ''): List<Catastrophe> {
     if (region?.geometry && !catastropes.isEmpty()) {
         const polygons = getPolygons(region.geometry);
         return catastropes.filter(x => {
+            if (type && x.type !== type) {
+                return false;
+            }
             const pt = [x.location.lng, x.location.lat];
             return polygons.some(poly => pointInPolygon(pt, poly));
         });
