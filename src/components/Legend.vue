@@ -49,8 +49,15 @@
             </div>
         </div>
         <div class="card" v-if="!store.selectedData.candidates.isEmpty()">
-            <h5 class="card-header"><i class="bi bi-person-fill"></i> Candidat(e)s</h5>
-            <ul class="list-group list-group-flush">
+            <h5 class="card-header">
+                <a data-bs-toggle="collapse" href="#body-candidates"
+                    aria-expanded="true" aria-controls="body-candidates" id="heading-candidates"
+                    class="d-block">
+                    <i class="bi bi-chevron-up float-start"></i>
+                    Candidat(e)s
+                </a>
+            </h5>
+            <ul id ="body-candidates" class="list-group list-group-flush collapse show" aria-labelledby="heading-candidates">
                 <li v-for="candidate of store.selectedData.candidates" class="list-group-item candidate">
                     <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
                             candidate.party
@@ -81,26 +88,32 @@
         </a>
         <div class="card" id="catastrophes">
             <h5 class="card-header" id="catastrophes-header">
-                <i class="bi bi-tornado"></i>
-                <span style="flex-grow: 1">Catastrophes</span>
-                <select style="width:fit-content;" class="form-select" aria-label="Circonscription" v-model="store.catastropheType">
+                <a data-bs-toggle="collapse" href="#body-catastrophes"
+                    aria-expanded="true" aria-controls="body-catastrophes" id="heading-catastrophes"
+                    class="d-block">
+                    <i class="bi bi-chevron-up float-start"></i>
+                    <span>Catastrophes</span>
+                </a>
+            </h5>
+            <div id="body-catastrophes" class="collapse show" aria-labelledby="heading-catastrophes">
+                <select class="form-select" aria-label="Type de catastrophe" v-model="store.catastropheType">
                     <option value="">Toutes</option>
                     <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
                             getTypeName(catastropheType)
                     }}</option>
                 </select>
-            </h5>
-            <ul class="list-group list-group-flush overflow-auto">
-                <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
-                    <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
-                    <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        <span>{{ formatDescription(catastrophe) }}</span>
-                        <span v-if="catastrophe.city">
-                            à {{ catastrophe.city }}
-                        </span>
-                    </a>
-                </li>
-            </ul>
+                <ul class="list-group list-group-flush overflow-auto">
+                    <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
+                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
+                        <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
+                            <span>{{ formatDescription(catastrophe) }}</span>
+                            <span v-if="catastrophe.city">
+                                à {{ catastrophe.city }}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -165,10 +178,17 @@ export default defineComponent({
     min-height: 0;
 }
 
-#catastrophes-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+.card-header .bi {
+    transition: .3s transform ease-in-out;
+    margin-right: 5px;
+}
+
+.card-header .collapsed .bi {
+    transform: rotate(180deg);
+}
+
+.card-header a[data-bs-toggle="collapse"] {
+    all: unset;  /* remove styling on toggling hyperlink */
 }
 
 .candidate {
