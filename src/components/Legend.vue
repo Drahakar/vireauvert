@@ -63,20 +63,20 @@
                             candidate.party
                     }}</span>
                     <span class="name">{{ candidate.name }}</span>
-                    <a :href="candidate.email ? 'mailto:' + candidate.email : undefined" title="Courriel">
+                    <a v-if="candidate.email" :href="'mailto:' + candidate.email" title="Courriel">
                         <i class="bi bi-envelope-fill"></i>
                     </a>
-                    <a :href="candidate.phone ? 'tel:' + candidate.phone : undefined" title="Téléphone">
+                    <a v-if="candidate.phone" :href="'tel:' + candidate.phone" title="Téléphone">
                         <i class="bi bi-telephone-fill"></i>
                     </a>
-                    <a :href="candidate.address ? 'http://maps.google.com/?q=' + encodeURIComponent(candidate.address) : undefined"
+                    <a v-if="candidate.address" :href="'http://maps.google.com/?q=' + encodeURIComponent(candidate.address)"
                         title="Adresse" target="_blank">
                         <i class="bi bi-geo-alt-fill"></i>
                     </a>
-                    <a :href="candidate.facebook" title="Facebook" target="_blank">
+                    <a v-if="candidate.facebook" :href="candidate.facebook" title="Facebook" target="_blank">
                         <i class="bi bi-facebook"></i>
                     </a>
-                    <a :href="candidate.twitter" title="Twitter" target="_blank">
+                    <a v-if="candidate.twitter" :href="candidate.twitter" title="Twitter" target="_blank">
                         <i class="bi bi-twitter"></i>
                     </a>
                 </li>
