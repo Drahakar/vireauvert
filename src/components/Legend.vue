@@ -21,7 +21,7 @@
                     </div>
                     <div class="col stat" title="Augmentation par rapport à 1990">
                         <i class="bi bi-thermometer-high"></i>
-                        {{ tempFormat.format(store.selectedData.info.temp_increase) }}°C
+                        {{ relativeTempFormat.format(store.selectedData.info.temp_increase) }}°C
                     </div>
                     <div class="w-100"></div>
                     <div class="col stat" v-if="store.selectedData.info.avg_prec != undefined"
@@ -146,8 +146,13 @@ export default defineComponent({
             day: '2-digit',
             month: '2-digit'
         });
-        const tempFormat = new Intl.NumberFormat('fr-CA', {
+        const tempOptions = {
+            minimumFractionDigits: 1,
             maximumFractionDigits: 1,
+        }
+        const tempFormat = new Intl.NumberFormat('fr-CA', tempOptions);
+        const relativeTempFormat = new Intl.NumberFormat('fr-CA', {
+            ...tempOptions, signDisplay: "always",
         });
         const precFormat = new Intl.NumberFormat('fr-CA', {
             useGrouping: false,
@@ -163,6 +168,7 @@ export default defineComponent({
             getTypeName,
             dateFormat,
             tempFormat,
+            relativeTempFormat,
             precFormat,
             dayCountFormat
         }
