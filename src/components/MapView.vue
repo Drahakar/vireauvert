@@ -121,7 +121,7 @@ export default defineComponent({
             const newLayer = districtLayers.get(newDistrict.toString());
             if (newLayer) {
                 newLayer.setStyle(selectedStyle);
-                if (map) {
+                if (map.value) {
                     map.value.fitBounds(newLayer.getBounds(), {
                         animate: true
                     });
