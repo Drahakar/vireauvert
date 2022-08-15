@@ -140,7 +140,6 @@ import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 import vSelect from 'vue-select';
 
-
 export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
     components: { vSelect },
