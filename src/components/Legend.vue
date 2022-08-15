@@ -108,7 +108,8 @@
                     </div>
                 </a>
             </h5>
-            <div id="body-catastrophes" class="collapse show" aria-labelledby="heading-catastrophes">
+            <div id="body-catastrophes" class="collapse" aria-labelledby="heading-catastrophes"
+                 ref="catastrophes">
                 <select class="form-select" aria-label="Type de catastrophe" v-model="store.catastropheType">
                     <option value="">Toutes</option>
                     <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
@@ -139,6 +140,8 @@ import { DistrictProperties } from '@/models/map';
 import { useStore, CURRENT_YEAR } from '@/stores/store';
 import { defineComponent } from 'vue';
 import vSelect from 'vue-select';
+import { Collapse } from 'bootstrap';
+
 
 export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
@@ -178,6 +181,14 @@ export default defineComponent({
             relativeTempFormat,
             precFormat,
             dayCountFormat
+        }
+    },
+    mounted() {
+        const catastrophesCollapse = new Collapse(
+            this.$refs.catastrophes, { toggle: false });
+        // For large devices, expand catastrophes initially
+        if (window.innerWidth >= 768) {  
+            catastrophesCollapse.show();
         }
     },
     methods: {
