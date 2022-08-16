@@ -208,6 +208,7 @@ export default defineComponent({
             this.iconLayer.addTo(map);
             this.map = map;
             this.map.setMaxBounds(this.electoralLayer.getBounds());
+            this.map.attributionControl.setPrefix('');
         }
     },
     methods: {
