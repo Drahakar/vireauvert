@@ -1,8 +1,11 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
+import {Tabs, Tab} from 'vue3-tabs-component';
 import { BrowserTracing } from "@sentry/tracing";
 import MapView from "./components/MapView.vue";
 import Legend from "./components/Legend.vue";
+import RegionSearch from '@/components/RegionSearch.vue';
+import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
 import { Catastrophe } from "./models/catastrophes";
@@ -12,6 +15,10 @@ export default defineComponent({
   components: {
     MapView,
     Legend,
+    RegionSearch,
+    Statistics,
+    Tab,
+    Tabs,
     Timeline
   },
   setup() {
@@ -41,38 +48,97 @@ Sentry.init({
 
 <template>
   <div id="main" class="container-fluid">
-    <div class="row">
-      <Legend id="legend" @on-request-catastrophe-focus="focusCatastrophe"
-          class="col-md-3">
-      </Legend>
-      <MapView id="map-view" ref="map" class="col-md-9"></MapView>
+    <!-- Mobile layout -->
+    <div class="d-md-none mobile-layout">
+      <RegionSearch></RegionSearch>
+      <tabs class="d-md-none tabs"
+        nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
+        nav-item-link-class="nav-link" nav-item-link-active-class="active"
+        panels-wrapper-class="flex-grow-1"
+        :options="{ useUrlFragment: false }">
+        <tab name="Carte" :selected="true" panel-class="tab-panel">
+          <Timeline class="timeline"></Timeline>
+          <Statistics></Statistics>
+          <MapView class="map-view flex-grow-1"></MapView>
+        </tab>
+        <tab name="Catastrophes" panel-class="tab-panel">
+          <Timeline class="timeline"></Timeline>
+          <p>CATASTROPHES</p>
+        </tab>
+        <tab name="Candidat(e)s" panel-class="tab-panel">
+          <p>CANDIDAT(E)S</p>
+        </tab>
+      </tabs>
     </div>
-    <div class="row">
-      <Timeline id="timeline"></Timeline>
+    <!-- Desktop layout -->
+    <div class="d-none d-md-block">
+      <div class="row">
+        <div class="legend col-md-3">
+          <RegionSearch></RegionSearch>
+          <Legend @on-request-catastrophe-focus="focusCatastrophe"></Legend>
+        </div>
+        <MapView class="map-view col-md-9"></MapView>
+      </div>
+      <div class="row">
+        <Timeline class="timeline"></Timeline>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 #main {
-  height: 100vh;
+  height:100vh;
 }
 
-#map-view {
-  height: calc(60vh - 96px);
-}
-@media (min-width: 768px) {  /* for devices >= 'md' */
-  #map-view {
-    height: calc(100vh - 96px);
-  }
+.mobile-layout {
+  padding-top: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-#legend {
+.mobile-layout > * {
+  padding-top: 10px;
+}
+
+.map-view {
+  height: calc(100vh - 96px);
+}
+.mobile-layout .map-view {
+  height: calc(65vh - 96px);
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 10px;
   max-height: calc(100vh - 96px);
 }
 
-#timeline {
+.timeline {
   height: 96px;
+}
+.mobile-layout .timeline {
+  padding-top: 0;
+}
+
+.tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>
+
+<style> /* global */
+.tab-panel {
+  padding-top: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.tab-panel > * {
+  margin-top: 10px;
 }
 </style>

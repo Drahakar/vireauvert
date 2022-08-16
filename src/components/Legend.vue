@@ -1,58 +1,7 @@
 
 <template>
     <div id="legend">
-        <v-select
-            aria-label="Circonscription" :options="getDistrictOptions()"
-            v-model="store.district" label="name"
-            :reduce="getDistrictId"
-            :clearable="false">
-            <template #no-options="{ search, searching, loading }">
-              Désolé, aucune circonscription trouvée avec ce nom.
-            </template>
-        </v-select>
-        <div class="card" v-if="store.selectedData.info">
-            <h5 class="card-header"><i class="bi bi-percent"></i> Statistiques</h5>
-            <div class="container">
-                <div class="row">
-                    <div class="col" v-if="store.selectedData.targetReachedOn">
-                        <i class="bi bi-exclamation-triangle attention"></i>
-                        Augmentation de 1,5°C dépassée en {{ store.selectedData.targetReachedOn }}
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col stat" v-if="store.selectedData.info.avg_temp != undefined"
-                        title="Température moyenne">
-                        <i class="bi bi-thermometer"></i>
-                        {{ tempFormat.format(store.selectedData.info.avg_temp) }}°C
-                    </div>
-                    <div class="col stat" title="Augmentation par rapport à 1990">
-                        <i class="bi bi-thermometer-high"></i>
-                        {{ relativeTempFormat.format(store.selectedData.info.temp_increase) }}°C
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col stat" v-if="store.selectedData.info.avg_prec != undefined"
-                        title="Précipitations moyennes">
-                        <i class="bi bi-cloud-rain"></i>
-                        {{ precFormat.format(store.selectedData.info.avg_prec) }} mm
-                    </div>
-                    <div class="col stat" v-if="store.selectedData.info.avg_liq_prec != undefined"
-                        title="Précipitations liquides moyennes">
-                        <i class="bi bi-cloud-rain-heavy"></i>
-                        {{ precFormat.format(store.selectedData.info.avg_liq_prec) }} mm
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col stat" v-if="store.selectedData.info.days_above_30 != undefined"
-                        title="Nombres de jours au dessus de 30°C">
-                        <i class="bi bi-thermometer-sun"></i>
-                        {{ dayCountFormat.format(store.selectedData.info.days_above_30) }}
-                    </div>
-                    <div class="col stat" v-if="store.selectedData.info.days_below_min_25 != undefined"
-                        title="Nombres de jours sous -25°C">
-                        <i class="bi bi-thermometer-snow"></i>
-                        {{ dayCountFormat.format(store.selectedData.info.days_below_min_25) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Statistics></Statistics>
         <div class="card" v-if="!store.selectedData.candidates.isEmpty()">
             <h5 class="card-header">
                 <a data-bs-toggle="collapse" href="#body-candidates"
@@ -136,16 +85,15 @@
 
 import { getPartyName } from '@/models/candidates';
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
-import { DistrictProperties } from '@/models/map';
 import { useStore, CURRENT_YEAR } from '@/stores/store';
 import { defineComponent, ref } from 'vue';
-import vSelect from 'vue-select';
 import { Collapse } from 'bootstrap';
+import Statistics from '@/components/Statistics.vue';
 
 
 export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
-    components: { vSelect },
+    components: { Statistics },
     setup() {
         const store = useStore();
         const catastropheTypes = Object.values(CatastropheType);
@@ -157,31 +105,12 @@ export default defineComponent({
             day: '2-digit',
             month: '2-digit'
         });
-        const tempOptions = {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
-        }
-        const tempFormat = new Intl.NumberFormat('fr-CA', tempOptions);
-        const relativeTempFormat = new Intl.NumberFormat('fr-CA', {
-            ...tempOptions, signDisplay: "always",
-        });
-        const precFormat = new Intl.NumberFormat('fr-CA', {
-            useGrouping: false,
-            maximumFractionDigits: 0
-        });
-        const dayCountFormat = new Intl.NumberFormat('fr-CA', {
-            maximumFractionDigits: 2
-        });
         return {
             formatDescription,
             getPartyName,
             getIconUrl,
             getTypeName,
             dateFormat,
-            tempFormat,
-            relativeTempFormat,
-            precFormat,
-            dayCountFormat
         }
     },
     mounted() {
@@ -197,13 +126,6 @@ export default defineComponent({
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {
             this.$emit('onRequestCatastropheFocus', catastrophe);
-        },
-        getDistrictOptions(): DistrictProperties[] {
-            return [{id: 0, name: "Province de Québec"}].concat(
-                this.store.allDistricts);
-        },
-        getDistrictId(district: DistrictProperties) {
-            return district.id;
         },
         showCatastrophes() {
             return this.store.year <= CURRENT_YEAR;
@@ -253,14 +175,6 @@ export default defineComponent({
 
 .candidate a[href] {
     opacity: 1;
-}
-
-.attention {
-    color: red;
-}
-
-.stat {
-    font-weight: bold;
 }
 
 .candidate .party {
