@@ -9,44 +9,33 @@
         </v-select>
         <div class="card">
             <h5 class="card-header"><i class="bi bi-percent"></i> Statistiques</h5>
-            <div class="container" v-if="store.selectedData.info">
-                <div class="row">
-                    <div class="col" v-if="store.selectedData.targetReachedOn">
-                        <i class="bi bi-exclamation-triangle attention"></i>
-                        Augmentation de 1,5°C dépassée en {{ store.selectedData.targetReachedOn }}
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col stat" v-if="store.selectedData.info.avg_temp != undefined"
-                        title="Température moyenne">
-                        <i class="bi bi-thermometer"></i>
-                        {{ tempFormat.format(store.selectedData.info.avg_temp) }}°C
-                    </div>
-                    <div class="col stat" title="Augmentation par rapport à 1990">
-                        <i class="bi bi-thermometer-high"></i>
-                        {{ relativeTempFormat.format(store.selectedData.info.temp_increase) }}°C
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col stat" v-if="store.selectedData.info.avg_prec != undefined"
-                        title="Précipitations moyennes">
-                        <i class="bi bi-cloud-rain"></i>
-                        {{ precFormat.format(store.selectedData.info.avg_prec) }} mm
-                    </div>
-                    <div class="col stat" v-if="store.selectedData.info.avg_liq_prec != undefined"
-                        title="Précipitations liquides moyennes">
-                        <i class="bi bi-cloud-rain-heavy"></i>
-                        {{ precFormat.format(store.selectedData.info.avg_liq_prec) }} mm
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col stat" v-if="store.selectedData.info.days_above_30 != undefined"
-                        title="Nombres de jours au dessus de 30°C">
-                        <i class="bi bi-thermometer-sun"></i>
-                        {{ dayCountFormat.format(store.selectedData.info.days_above_30) }}
-                    </div>
-                    <div class="col stat" v-if="store.selectedData.info.days_below_min_25 != undefined"
-                        title="Nombres de jours sous -25°C">
-                        <i class="bi bi-thermometer-snow"></i>
-                        {{ dayCountFormat.format(store.selectedData.info.days_below_min_25) }}
-                    </div>
+            <div class="list-group list-group-flush" v-if="store.selectedData.info">
+                <div class="list-group-item stat" v-if="store.selectedData.targetReachedOn">
+                    <i class="bi bi-exclamation-triangle attention"></i>
+                    Augmentation de 1,5°C dépassée en {{ store.selectedData.targetReachedOn }}
+                </div>
+                <div class="w-100"></div>
+                <div class="list-group-item stat" v-if="store.selectedData.info.avg_temp != undefined">
+                    <i class="bi bi-thermometer"></i> Température moyenne:
+                    <strong>{{ tempFormat.format(store.selectedData.info.avg_temp) }}°C
+                    ({{ relativeTempFormat.format(store.selectedData.info.temp_increase) }}°C)</strong>
+                </div>
+                <div class="w-100"></div>
+                <div class="list-group-item stat" v-if="store.selectedData.info.avg_prec != undefined">
+                    <i class="bi bi-cloud-rain"></i>
+                    Précipitations totales:
+                    <strong>{{ precFormat.format(store.selectedData.info.avg_prec) }} mm</strong>
+                </div>
+                <div class="w-100"></div>
+                <div class="list-group-item stat" v-if="store.selectedData.info.days_above_30 != undefined">
+                    <i class="bi bi-thermometer-sun"></i>
+                    Nombres de jours au dessus de 30°C:
+                    <strong>{{ dayCountFormat.format(store.selectedData.info.days_above_30) }}</strong>
+                </div>
+                <div class="list-group-item stat" v-if="store.selectedData.info.days_below_min_25 != undefined">
+                    <i class="bi bi-thermometer-snow"></i>
+                    Nombres de jours sous -25°C:
+                    <strong>{{ dayCountFormat.format(store.selectedData.info.days_below_min_25) }}</strong>
                 </div>
             </div>
             <div v-else class="text-center">Aucune statistique pour cette région et année.</div>
@@ -140,7 +129,6 @@ import { defineComponent, ref } from 'vue';
 import vSelect from 'vue-select';
 import { Collapse } from 'bootstrap';
 
-
 export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
     components: { vSelect },
@@ -155,7 +143,7 @@ export default defineComponent({
             day: '2-digit',
             month: '2-digit'
         });
-        const tempOptions = {
+        const tempOptions: Intl.NumberFormatOptions = {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1,
         }
@@ -168,7 +156,7 @@ export default defineComponent({
             maximumFractionDigits: 0
         });
         const dayCountFormat = new Intl.NumberFormat('fr-CA', {
-            maximumFractionDigits: 2
+            maximumFractionDigits: 0
         });
         return {
             formatDescription,
@@ -239,7 +227,7 @@ export default defineComponent({
 .candidate {
     display: flex;
     align-items: center;
-    gap: 0.4em;
+    gap: 1ch;
 }
 
 .candidate>a {
@@ -267,7 +255,13 @@ export default defineComponent({
 }
 
 .stat {
-    font-weight: bold;
+    display: flex;
+    gap: 1ch;
+    align-items: center;
+}
+
+.stat .bi {
+    font-size: 1.1em;
 }
 
 .candidate .party {

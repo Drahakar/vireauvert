@@ -11,7 +11,6 @@ locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 stat_files = {
     'avg_temp': 'temperatures_moy_regions',
     'avg_prec': 'precipitations_moy_regions',
-    'avg_liq_prec': 'precipitations_liq_moy_regions',
     'days_above_30': 'nb_jours_plus_30_deg',
     'days_below_min_25': 'nb_jours_moins_25_deg'
 }

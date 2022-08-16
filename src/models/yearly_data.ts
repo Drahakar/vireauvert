@@ -12,18 +12,9 @@ export interface YearlySnapshot {
     regions: Map<number, RegionInfo>;
 }
 
-export enum Property {
-    avg_temp,
-    avg_prec,
-    avg_liq_prec,
-    days_above_30,
-    days_below_min_25
-}
-
 interface RegionStatistics {
     avg_temp?: number;
     avg_prec?: number;
-    avg_liq_prec?: number;
     days_above_30?: number;
     days_below_min_25?: number;
 }
