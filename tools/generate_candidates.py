@@ -5,9 +5,10 @@ import locale
 import utils
 import re
 
-locale.setlocale(locale.LC_ALL,'fr-CA.UTF-8')
+locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
-phone_pattern = re.compile('^(?:\+?1[-. ]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$')
+phone_pattern = re.compile(
+    '^(?:\+?1[-. ]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$')
 
 districts = {}
 
@@ -16,6 +17,7 @@ with open(os.path.join(utils.source_directory, 'liste_circonscriptions2017.csv')
     next(reader, None)
     for [id, name] in reader:
         districts[name.lower()] = int(id)
+
 
 def get_party(party_name):
     match party_name.lower():
@@ -35,6 +37,18 @@ def get_party(party_name):
             return 'PV'
     return None
 
+
+party_leaders = [
+    {'party': 'CAQ', 'district': 554},
+    {'party': 'PLQ', 'district': 326},
+    {'party': 'PQ', 'district': 370},
+    {'party': 'QS', 'district': 346},
+    {'party': 'CQ', 'district': 246},
+    {'party': 'PCQ', 'district': 754},
+    #{ 'party': 'PV', 'district': 0 },
+]
+
+
 def format_phone(phone):
     match = phone_pattern.search(phone)
     if match:
@@ -44,6 +58,7 @@ def format_phone(phone):
             match.group(3),
         )
     return None
+
 
 candidates = []
 with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='utf-8') as input_file:
@@ -58,7 +73,7 @@ with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='ut
         if district_id is None:
             continue
         party_id = get_party(party.strip())
-        if party_id is None: 
+        if party_id is None:
             continue
 
         candidate = {
@@ -70,9 +85,16 @@ with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='ut
             candidate['facebook'] = facebook.strip()
         candidates.append(candidate)
 
+for leader in party_leaders:
+    candidate = next(filter(lambda x: x['party'] == leader['party']
+                     and x['district'] == leader['district'], candidates), None)
+    if candidate:
+        copy = {
+            **candidate,
+            'district': 0
+        }
+        candidates.append(copy)
+
 candidates.sort(key=lambda x: locale.strxfrm(x['name']))
 with open(os.path.join(utils.destination_directory, 'candidates.json'), 'w', encoding='utf-8') as output_file:
     json.dump(candidates, output_file)
-
-
-

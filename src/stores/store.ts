@@ -13,7 +13,7 @@ export const MAX_CONTINUOUS_YEAR = 2035;
 export const PAST_REFERENCE_YEAR = 1990;
 export const FUTURE_SCENARIO_YEAR1 = 2050;
 export const FUTURE_SCENARIO_YEAR2 = 2100;
-export const TIMELINE_YEARS = [...Array(((MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR)) + 1).keys()].map(x => MIN_CONTINUOUS_YEAR + x ).concat(PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2).sort();
+export const TIMELINE_YEARS = [...Array(((MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR)) + 1).keys()].map(x => MIN_CONTINUOUS_YEAR + x).concat(PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2).sort();
 export const CURRENT_YEAR = new Date().getFullYear();
 
 const collator = new Intl.Collator('fr', { sensitivity: 'base' });
@@ -44,33 +44,25 @@ export const useStore = defineStore('store', {
                 }
             }
 
-            if (this.district) {
-                const feature = this.electoralMap.features.find(x => {
-                    const properties = x.properties as DistrictProperties;
-                    return properties.id === this.district;
-                });
-                const region = this.getRegion(this.district);
-                const snapshot: RegionSnapshot = {
-                    catastrophes: filterCatastrophesByRegion(data.catastrophes, feature, this.catastropheType),
-                    info: region ? data.regions.get(region.id) : undefined,
-                    candidates: List(this.candidates.filter(x => x.district == this.district)),
-                    targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
-                }
-                return snapshot;
-            } else {
-                let catastrophes = data.catastrophes;
-                if(this.catastropheType) {
-                    catastrophes = catastrophes.filter(x => x.type === this.catastropheType)
-                }
-                return {
-                    catastrophes,
-                    info: data.regions.get(0),
-                    candidates: List(),
-                    targetReachedOn: this.temperatureTargetPerRegion.get(0)
-                };
+            const feature = this.district ? this.electoralMap.features.find(x => {
+                const properties = x.properties as DistrictProperties;
+                return properties.id === this.district;
+            }) : undefined;
+            const region = this.getRegion(this.district);
+            const snapshot: RegionSnapshot = {
+                catastrophes: filterCatastrophesByRegion(data.catastrophes, feature, this.catastropheType),
+                info: region ? data.regions.get(region.id) : undefined,
+                candidates: List(this.candidates.filter(x => x.district == this.district)),
+                targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
             }
+            return snapshot;
         },
-        getRegion: state => (district_id: number) => state.allRegions.find(x => x.districts.some(y => y === district_id))
+        getRegion: state => (district_id: number) => {
+            if (district_id) {
+                return state.allRegions.find(x => x.districts.some(y => y === district_id));
+            }
+            return state.allRegions.get(district_id);
+        }
     },
     actions: {
         async loadData() {
@@ -96,7 +88,7 @@ export const useStore = defineStore('store', {
             TIMELINE_YEARS.forEach(year => {
                 promises.push(addData(year));
             });
-            
+
             await Promise.all(promises);
 
             let targetReached = Map<number, number>();
