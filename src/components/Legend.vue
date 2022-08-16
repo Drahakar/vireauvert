@@ -1,18 +1,15 @@
 
 <template>
     <div id="legend">
-        <v-select
-            aria-label="Circonscription" :options="getDistrictOptions()"
-            v-model="store.district" label="name"
-            :reduce="getDistrictId"
-            :clearable="false">
+        <v-select aria-label="Circonscription" :options="getDistrictOptions()" v-model="store.district" label="name"
+            :reduce="getDistrictId" :clearable="false">
             <template #no-options="{ search, searching, loading }">
-              Désolé, aucune circonscription trouvée avec ce nom.
+                Désolé, aucune circonscription trouvée avec ce nom.
             </template>
         </v-select>
-        <div class="card" v-if="store.selectedData.info">
+        <div class="card">
             <h5 class="card-header"><i class="bi bi-percent"></i> Statistiques</h5>
-            <div class="container">
+            <div class="container" v-if="store.selectedData.info">
                 <div class="row">
                     <div class="col" v-if="store.selectedData.targetReachedOn">
                         <i class="bi bi-exclamation-triangle attention"></i>
@@ -52,37 +49,37 @@
                     </div>
                 </div>
             </div>
+            <div v-else class="text-center">Aucune statistique pour cette région et année.</div>
         </div>
         <div class="card" v-if="!store.selectedData.candidates.isEmpty()">
             <h5 class="card-header">
-                <a data-bs-toggle="collapse" href="#body-candidates"
-                    aria-expanded="true" aria-controls="body-candidates" id="heading-candidates"
-                    class="d-block">
+                <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true"
+                    aria-controls="body-candidates" id="heading-candidates" class="d-block">
                     <i class="bi bi-chevron-up float-start"></i>
                     Candidat(e)s
                 </a>
             </h5>
-            <ul id ="body-candidates" class="list-group list-group-flush collapse show" aria-labelledby="heading-candidates"
-                ref="candidates">
+            <ul id="body-candidates" class="list-group list-group-flush collapse show"
+                aria-labelledby="heading-candidates" ref="candidates">
                 <li v-for="candidate of store.selectedData.candidates" class="list-group-item candidate">
                     <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
                             candidate.party
                     }}</span>
                     <span class="name">{{ candidate.name }}</span>
-                    <a v-if="candidate.email" :href="'mailto:' + candidate.email" title="Courriel">
+                    <a :href="candidate.email ? 'mailto:' + candidate.email : undefined" title="Courriel">
                         <i class="bi bi-envelope-fill"></i>
                     </a>
-                    <a v-if="candidate.phone" :href="'tel:' + candidate.phone" title="Téléphone">
+                    <a :href="candidate.phone ? 'tel:' + candidate.phone : undefined" title="Téléphone">
                         <i class="bi bi-telephone-fill"></i>
                     </a>
-                    <a v-if="candidate.address" :href="'http://maps.google.com/?q=' + encodeURIComponent(candidate.address)"
+                    <a :href="candidate.address ? 'http://maps.google.com/?q=' + encodeURIComponent(candidate.address) : undefined"
                         title="Adresse" target="_blank">
                         <i class="bi bi-geo-alt-fill"></i>
                     </a>
-                    <a v-if="candidate.facebook" :href="candidate.facebook" title="Facebook" target="_blank">
+                    <a :href="candidate.facebook" title="Facebook" target="_blank">
                         <i class="bi bi-facebook"></i>
                     </a>
-                    <a v-if="candidate.twitter" :href="candidate.twitter" title="Twitter" target="_blank">
+                    <a :href="candidate.twitter" title="Twitter" target="_blank">
                         <i class="bi bi-twitter"></i>
                     </a>
                 </li>
@@ -94,22 +91,22 @@
         </a>
         <div class="card" id="catastrophes" v-if="showCatastrophes()">
             <h5 class="card-header" id="catastrophes-header">
-                <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes"
-                    aria-expanded="true" aria-controls="body-catastrophes" id="heading-catastrophes"
-                    class="d-block">
+                <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes" aria-expanded="true"
+                    aria-controls="body-catastrophes" id="heading-catastrophes" class="d-block">
                     <i class="bi bi-chevron-up float-start"></i>
                     <span>
                         Catastrophes
                     </span>
-                    <small class="float-end">{{store.selectedData.catastrophes.size}} en {{store.year}}</small>
+                    <small class="float-end">{{ store.selectedData.catastrophes.size }} en {{ store.year }}</small>
                     <div>
-                        <small class="d-block float-end" v-if="store.catastropheType">{{getTypeName(store.catastropheType)}}</small>
+                        <small class="d-block float-end" v-if="store.catastropheType">{{
+                                getTypeName(store.catastropheType)
+                        }}</small>
                         <small class="d-block float-end" v-else>Toutes</small>
                     </div>
                 </a>
             </h5>
-            <div id="body-catastrophes" class="collapse" aria-labelledby="heading-catastrophes"
-                 ref="catastrophesElem">
+            <div id="body-catastrophes" class="collapse" aria-labelledby="heading-catastrophes" ref="catastrophesElem">
                 <select class="form-select" aria-label="Type de catastrophe" v-model="store.catastropheType">
                     <option value="">Toutes</option>
                     <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
@@ -118,7 +115,8 @@
                 </select>
                 <ul class="list-group list-group-flush overflow-auto">
                     <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
-                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date) }}</time>:
+                        <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
+                        }}</time>:
                         <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
                             <span>{{ formatDescription(catastrophe) }}</span>
                             <span v-if="catastrophe.city">
@@ -199,7 +197,7 @@ export default defineComponent({
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
         getDistrictOptions(): DistrictProperties[] {
-            return [{id: 0, name: "Province de Québec"}].concat(
+            return [{ id: 0, name: "Province de Québec" }].concat(
                 this.store.allDistricts);
         },
         getDistrictId(district: DistrictProperties) {
@@ -234,13 +232,22 @@ export default defineComponent({
 }
 
 .card-header a[data-bs-toggle="collapse"] {
-    all: unset;  /* remove styling on toggling hyperlink */
+    all: unset;
+    /* remove styling on toggling hyperlink */
 }
 
 .candidate {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.4em;
+}
+
+.candidate>a {
+    font-size: 1.5em;
+}
+
+.candidate>a:not([href]) {
+    opacity: 0.3;
 }
 
 .candidate .name {
@@ -272,10 +279,6 @@ export default defineComponent({
     width: 42px;
     text-transform: capitalize;
     padding: 2px;
-}
-
-.candidate .name {
-    margin-left: 0.5em;
 }
 
 .candidate .party.caq {
