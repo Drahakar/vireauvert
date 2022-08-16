@@ -109,7 +109,7 @@
                 </a>
             </h5>
             <div id="body-catastrophes" class="collapse" aria-labelledby="heading-catastrophes"
-                 ref="catastrophes">
+                 ref="catastrophesElem">
                 <select class="form-select" aria-label="Type de catastrophe" v-model="store.catastropheType">
                     <option value="">Toutes</option>
                     <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
@@ -138,7 +138,7 @@ import { getPartyName } from '@/models/candidates';
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
 import { DistrictProperties } from '@/models/map';
 import { useStore, CURRENT_YEAR } from '@/stores/store';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import vSelect from 'vue-select';
 import { Collapse } from 'bootstrap';
 
@@ -149,18 +149,8 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const catastropheTypes = Object.values(CatastropheType);
-        const catastrophes = ref<HTMLElement>();
-        onMounted(() => {
-            if (catastrophes.value) {
-                const catastrophesCollapse = new Collapse(
-                    catastrophes.value, { toggle: false });
-                // For large devices, expand catastrophes initially
-                if (window.innerWidth >= 768) {
-                    catastrophesCollapse.show();
-                }
-            }
-        });
-        return { store, catastropheTypes, catastrophes };
+        const catastrophesElem = ref<HTMLElement | null>(null);
+        return { store, catastropheTypes, catastrophesElem };
     },
     data() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
@@ -192,6 +182,16 @@ export default defineComponent({
             relativeTempFormat,
             precFormat,
             dayCountFormat
+        }
+    },
+    mounted() {
+        if (this.catastrophesElem) {
+            const catastrophesCollapse = new Collapse(
+                this.catastrophesElem, { toggle: false });
+            // For large devices, expand catastrophes initially
+            if (window.innerWidth >= 768) {
+                catastrophesCollapse.show();
+            }
         }
     },
     methods: {
