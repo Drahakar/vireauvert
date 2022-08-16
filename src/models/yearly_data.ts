@@ -1,9 +1,10 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Feature, Geometry, Position } from "geojson";
 import { List, Map } from "immutable";
 import pointInPolygon from "point-in-polygon";
 import { Candidate } from "./candidates";
 import { Catastrophe, CatastropheDocument, CatastropheType, parseCatatrophe } from "./catastrophes";
+import * as Sentry from "@sentry/vue";
 
 export interface YearlySnapshot {
     year: number;
@@ -46,23 +47,35 @@ interface YearlySnapshotDocument {
 }
 
 export async function downloadDataForYear(year: number, refYear?: YearlySnapshot): Promise<YearlySnapshot> {
-    const response = await axios.get<YearlySnapshotDocument>(`data/yearly_data/${year}.json`);
-    const data = response.data;
-    const snapshot: YearlySnapshot = {
-        year,
-        catastrophes: List(data.catastrophes.map(parseCatatrophe)),
-        regions: Map(Object.entries(data.statistics).map(([k, v]) => {
-            const regionId = parseInt(k);
-            const refTemp = refYear?.regions.get(regionId)?.avg_temp;
-            const info: RegionInfo = {
-                ...v,
-                temp_increase: v.avg_temp && refTemp ? v.avg_temp - refTemp : 0
-            };
-            return [regionId, info];
-        }))
-    };
-    return snapshot;
-
+    try {
+        const response = await axios.get<YearlySnapshotDocument>(`data/yearly_data/${year}.json`);
+        const data = response.data;
+        const snapshot: YearlySnapshot = {
+            year,
+            catastrophes: List(data.catastrophes.map(parseCatatrophe)),
+            regions: Map(Object.entries(data.statistics).map(([k, v]) => {
+                const regionId = parseInt(k);
+                const refTemp = refYear?.regions.get(regionId)?.avg_temp;
+                const info: RegionInfo = {
+                    ...v,
+                    temp_increase: v.avg_temp && refTemp ? v.avg_temp - refTemp : 0
+                };
+                return [regionId, info];
+            }))
+        };
+        return snapshot;
+    }
+    catch (err) {
+        if (!(err instanceof AxiosError) || !err.response || err.response.status !== 404) {
+            // If we got something other than a 404, send it to Sentry
+            Sentry.captureException(err);
+        }
+        return {
+            year: year,
+            catastrophes: List(),
+            regions: Map()
+        }
+    }
 }
 
 function getPolygons(geometry: Geometry): Position[][] {
