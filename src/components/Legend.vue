@@ -55,21 +55,8 @@
                             candidate.party
                     }}</span>
                     <span class="name">{{ candidate.name }}</span>
-                    <a :href="candidate.email ? 'mailto:' + candidate.email : undefined" title="Courriel">
-                        <i class="bi bi-envelope-fill"></i>
-                    </a>
-                    <a :href="candidate.phone ? 'tel:' + candidate.phone : undefined" title="Téléphone">
-                        <i class="bi bi-telephone-fill"></i>
-                    </a>
-                    <a :href="candidate.address ? 'http://maps.google.com/?q=' + encodeURIComponent(candidate.address) : undefined"
-                        title="Adresse" target="_blank">
-                        <i class="bi bi-geo-alt-fill"></i>
-                    </a>
-                    <a :href="candidate.facebook" title="Facebook" target="_blank">
+                    <a v-if="candidate.facebook" :href="candidate.facebook" title="Facebook" target="_blank">
                         <i class="bi bi-facebook"></i>
-                    </a>
-                    <a :href="candidate.twitter" title="Twitter" target="_blank">
-                        <i class="bi bi-twitter"></i>
                     </a>
                 </li>
             </ul>
@@ -232,10 +219,6 @@ export default defineComponent({
 
 .candidate>a {
     font-size: 1.5em;
-}
-
-.candidate>a:not([href]) {
-    opacity: 0.3;
 }
 
 .candidate .name {

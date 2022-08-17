@@ -51,7 +51,7 @@ with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='ut
     next(reader, None)
 
     for line in reader:
-        _,district,party,name,email,facebook,phone,twitter,address = line
+        _,district,party,name,_,facebook,_,_,_ = line
         if not name:
             continue
         district_id = districts.get(district.strip().lower(), None)
@@ -66,17 +66,8 @@ with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='ut
             'party': party_id,
             'district': district_id
         }
-        if email:
-            candidate['email'] = email.strip()
-        phone = format_phone(phone)
-        if phone:
-            candidate['phone'] = phone
-        if address:
-            candidate['address'] = address.strip()
         if facebook:
             candidate['facebook'] = facebook.strip()
-        if twitter:
-            candidate['twitter'] = twitter.strip()
         candidates.append(candidate)
 
 candidates.sort(key=lambda x: locale.strxfrm(x['name']))

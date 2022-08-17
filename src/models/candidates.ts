@@ -31,9 +31,5 @@ export interface Candidate {
     name: string;
     party: Party;
     district: number;
-    email?: string;
-    phone?: string;
-    address?: string;
     facebook?: string;
-    twitter?: string;
 }
