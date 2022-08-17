@@ -28,7 +28,8 @@
     </a>
 </template>
 
-<script lang="ts">import { getPartyName } from '@/models/candidates';
+<script lang="ts">
+import { getPartyName } from '@/models/candidates';
 import { useCandidateStore } from '@/stores/candidates';
 import { defineComponent } from 'vue';
 
