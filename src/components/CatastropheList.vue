@@ -45,7 +45,7 @@ import { Catastrophe, CatastropheType, formatDescription, getTypeName } from '@/
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { Collapse } from 'bootstrap';
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 
 export default defineComponent({
@@ -59,10 +59,6 @@ export default defineComponent({
             type: Number,
             default: 0
         },
-        catastropheType: {
-            type: String as PropType<CatastropheType | ''>,
-            default: ''
-        }
     },
     setup() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
@@ -72,12 +68,15 @@ export default defineComponent({
         const catastropheTypes = Object.values(CatastropheType);
         const store = useCatastropheStore();
         const catastrophesElem = ref<HTMLElement | null>(null);
+        const catastropheType = ref<CatastropheType | ''>('');
+
         return {
             formatDescription,
             getTypeName,
             catastropheTypes,
             dateFormat,
             catastrophesElem,
+            catastropheType,
             store
         }
     },
@@ -93,7 +92,11 @@ export default defineComponent({
     },
     computed: {
         catastrophes() {
-            return this.store.findCatastrophes(this.year, this.district);
+            const catastrophes = this.store.findCatastrophes(this.year, this.district);
+            if(this.catastropheType) {
+                return catastrophes.filter(x => x.type === this.catastropheType);
+            }
+            return catastrophes;
         },
         showCatastrophes() {
             return this.year <= CURRENT_YEAR;
