@@ -1,5 +1,5 @@
 <template>
-    <v-select aria-label="Circonscription" :options="districtOptions" v-model="store.district" label="name"
+    <v-select aria-label="Circonscription" :options="districtOptions" v-model="selectedDistrict" label="name"
         :reduce="getDistrictId" :clearable="false">
         <template #no-options="{ search, searching, loading }">
             Désolé, aucune circonscription trouvée avec ce nom.
@@ -10,20 +10,29 @@
 <script lang="ts">
 
 import { allDistricts, DistrictProperties } from '@/models/map';
-import { useStore } from '@/stores/store';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import vSelect from 'vue-select';
 
 export default defineComponent({
     components: { vSelect },
-    setup() {
-        const store = useStore();
-        return { store };
+    emits: ['districtSelected'],
+    props: {
+        district: {
+            type: Number,
+            default: 0
+        }
+    },
+    setup(props, { emit }) {
+        const selectedDistrict = computed({
+            get: () => props.district,
+            set: value => emit('districtSelected', value)
+        });
+        return { selectedDistrict };
     },
     computed: {
         districtOptions(): DistrictProperties[] {
             return [{ id: 0, name: "Province de Québec" }].concat(allDistricts.toArray());
-        }
+        },
     },
     methods: {
         getDistrictId(district: DistrictProperties) {

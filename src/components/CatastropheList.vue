@@ -66,7 +66,7 @@ export default defineComponent({
             month: '2-digit'
         });
         const catastropheTypes = Object.values(CatastropheType);
-        const store = useCatastropheStore();
+        const catastropheStore = useCatastropheStore();
         const catastrophesElem = ref<HTMLElement | null>(null);
         const catastropheType = ref<CatastropheType | ''>('');
 
@@ -77,7 +77,7 @@ export default defineComponent({
             dateFormat,
             catastrophesElem,
             catastropheType,
-            store
+            catastropheStore
         }
     },
     mounted() {
@@ -92,7 +92,7 @@ export default defineComponent({
     },
     computed: {
         catastrophes() {
-            const catastrophes = this.store.findCatastrophes(this.year, this.district);
+            const catastrophes = this.catastropheStore.findCatastrophes(this.year, this.district);
             if(this.catastropheType) {
                 return catastrophes.filter(x => x.type === this.catastropheType);
             }

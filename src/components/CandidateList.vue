@@ -46,7 +46,7 @@ export default defineComponent({
     },
     computed: {
         candidates() {
-            return this.store.candidatesByDistrict(this.district);
+            return this.store.findCandidates(this.district);
         }
     }
 });

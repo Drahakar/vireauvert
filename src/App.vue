@@ -9,10 +9,10 @@ import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
 import { Catastrophe } from "./models/catastrophes";
-import { useStore } from "./stores/store";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
+import { CURRENT_YEAR } from "./models/constants";
 
 export default defineComponent({
   components: {
@@ -23,23 +23,33 @@ export default defineComponent({
     Statistics,
     Timeline
   },
+  data() {
+    return {
+      district: 0,
+      year: CURRENT_YEAR
+    }
+  },
   setup() {
-    const store = useStore();
     const candidateStore = useCandidateStore();
     const catastropheStore = useCatastropheStore();
     const statisticStore = useStatisticStore();
     const map = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      map, store, candidateStore, catastropheStore, statisticStore
+      map, candidateStore, catastropheStore, statisticStore
     };
   },
   methods: {
     focusCatastrophe(catastrophe: Catastrophe) {
       this.map?.focusCatastrophe(catastrophe);
+    },
+    selectDistrict(id: number) {
+      this.district = id;
+    },
+    selectYear(year: number) {
+      this.year = year;
     }
   },
-  async mounted() {
-    await this.store.loadData();
+  async created() {
     await this.candidateStore.loadCandidates();
     await this.catastropheStore.loadCatastrophes();
     await this.statisticStore.loadStatistics();
@@ -58,18 +68,18 @@ Sentry.init({
   <div id="main" class="container-fluid">
     <div class="row">
       <div class="legend col-md-3">
-        <RegionSearch></RegionSearch>
-        <Statistics :district="store.district" :year="store.year"></Statistics>
-        <CandidateList :district="store.district"></CandidateList>
-        <CatastropheList :year="store.year" :district="store.district" @on-request-catastrophe-focus="focusCatastrophe">
+        <RegionSearch :district="district" @district-selected="selectDistrict"></RegionSearch>
+        <Statistics :district="district" :year="year"></Statistics>
+        <CandidateList :district="district"></CandidateList>
+        <CatastropheList :year="year" :district="district" @on-request-catastrophe-focus="focusCatastrophe">
         </CatastropheList>
       </div>
-      <MapView id="map-view" ref="map" class="col-md-9" :district="store.district" :year="store.year"
-        :catastrophes="catastropheStore.findCatastrophes(store.year, store.district)"
-        @district-selected="(id: number) => store.district = id"></MapView>
+      <MapView id="map-view" ref="map" class="col-md-9" :district="district" :year="year"
+        :catastrophes="catastropheStore.findCatastrophes(year, district)"
+        @district-selected="selectDistrict"></MapView>
     </div>
     <div class="row">
-      <Timeline id="timeline"></Timeline>
+      <Timeline id="timeline" :year="year" @year-selected="selectYear"></Timeline>
     </div>
   </div>
 </template>

@@ -7,16 +7,11 @@
 
 <script lang="ts">
 
-import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
         active: Boolean
-    },
-    setup() {
-        const store = useStore();
-        return { store };
     },
 })
 </script>

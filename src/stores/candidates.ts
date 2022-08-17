@@ -10,7 +10,7 @@ export const useCandidateStore = defineStore('candidateStore', {
         }
     },
     getters: {
-        candidatesByDistrict: state => (id: number) => {
+        findCandidates: state => (id: number) => {
             return state.candidates.filter(x => x.district === id);
         }
     },

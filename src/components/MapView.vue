@@ -144,14 +144,15 @@ export default defineComponent({
 const unselectedStyle: L.PathOptions = {
     fillColor: '#cccccc',
     color: '#333333',
-    opacity: 0.5,
+    opacity: 0.5,    
+    fillOpacity: 0.3,
     weight: 1
 };
 const selectedStyle: L.PathOptions = {
     ...unselectedStyle,
     fillColor: '#ffffff',
     opacity: 0.7,
-    fillOpacity: 0.3,
+    fillOpacity: 0.4,
     weight: 2
 };
 
