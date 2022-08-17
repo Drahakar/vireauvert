@@ -220,6 +220,8 @@ for catastrophe in catastrophes:
     
     result.setdefault(catastrophe['date'].year, []).append(obj)
 
+catastrophes_directory = os.path.join(utils.destination_directory, 'catastrophes')
+os.makedirs(catastrophes_directory, exist_ok=True)
 for year, catastrophes in result.items():    
-    with open(os.path.join(utils.destination_directory, 'catastrophes', '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
+    with open(os.path.join(catastrophes_directory, '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
         json.dump(catastrophes, output_file)

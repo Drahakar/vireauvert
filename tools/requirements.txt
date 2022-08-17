@@ -1,0 +1,4 @@
+beautifulsoup4==4.11.1
+geojson==2.5.0
+kml2geojson==5.1.0
+Shapely==1.8.2

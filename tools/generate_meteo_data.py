@@ -1,20 +1,20 @@
 import json
 import csv
+import locale
 from os import path
 import re
 import utils
 import os
 
+locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
 number_pattern = re.compile('(\d+)')
-
 
 def parse_header(header):
     match = number_pattern.search(header)
     if match:
         return int(match.group(1), 10)
     return 0
-
 
 def collect_statistics(name):
     result = {}
@@ -54,6 +54,9 @@ ref_year = result[1990]
 
 first_above_1_5 = {}
 
+statistics_directory = os.path.join(utils.destination_directory, 'statistics')
+os.makedirs(statistics_directory, exist_ok=True)
+
 for year, data in result.items():
     if year > 1990:
         for region, statistics in data.items():
@@ -62,8 +65,8 @@ for year, data in result.items():
                 statistics['temp_delta'] = temp_delta
                 if region not in first_above_1_5 and temp_delta >= 1.5:
                     first_above_1_5[region] = year
-    with open(os.path.join(utils.destination_directory, 'statistics', '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
+    with open(os.path.join(statistics_directory, '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
         json.dump(data, output_file)
 
-with open(os.path.join(utils.destination_directory, 'statistics', 'over_limit.json'), 'w', encoding='utf-8') as output_file:
+with open(os.path.join(statistics_directory, 'over_limit.json'), 'w', encoding='utf-8') as output_file:
     json.dump(first_above_1_5, output_file)

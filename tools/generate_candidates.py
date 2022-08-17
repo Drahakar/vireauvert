@@ -96,5 +96,7 @@ for leader in party_leaders:
         candidates.append(copy)
 
 candidates.sort(key=lambda x: locale.strxfrm(x['name']))
+
+os.makedirs(utils.destination_directory, exist_ok=True)
 with open(os.path.join(utils.destination_directory, 'candidates.json'), 'w', encoding='utf-8') as output_file:
     json.dump(candidates, output_file)
