@@ -13,6 +13,7 @@ import { Catastrophe } from "./models/catastrophes";
 import { useStore } from "./stores/store";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
+import { useStatisticStore } from "./stores/statistics";
 
 export default defineComponent({
   components: {
@@ -28,9 +29,10 @@ export default defineComponent({
     const store = useStore();
     const candidateStore = useCandidateStore();
     const catastropheStore = useCatastropheStore();
+    const statisticStore = useStatisticStore();
     const map = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      map, store, candidateStore, catastropheStore
+      map, store, candidateStore, catastropheStore, statisticStore
     };
   },
   methods: {
@@ -42,6 +44,7 @@ export default defineComponent({
     await this.store.loadData();
     await this.candidateStore.loadCandidates();
     await this.catastropheStore.loadCatastrophes();
+    await this.statisticStore.loadStatistics();
   }
 });
 

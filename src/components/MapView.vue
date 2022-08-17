@@ -3,7 +3,7 @@
         <div id="map" ref="mapElement"></div>
         <div id="gradient">
             <div class="step" v-for="(colour, index) of gradientSteps" :style="{ backgroundColor: colour }">
-                <span class="selected" v-if="isSelectedGradientStep(store.selectedData, index)"></span>
+                <span class="selected" v-if="isSelectedGradientStep(statistics, index)"></span>
                 <span class="tooltip">
                     + {{ (index * 0.1).toLocaleString('fr-CA', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
                     }} ° C
@@ -23,10 +23,11 @@ import { DistrictProperties } from "@/models/map";
 import { Catastrophe, CatastropheType, formatDescription, getIconUrl } from "@/models/catastrophes";
 import { Feature, Geometry, Polygon } from "geojson";
 import { getGradientColourIndex, temperatureGradient } from "@/models/climate";
-import { RegionSnapshot } from "@/models/yearly_data";
+import { RegionStatistics } from "@/models/yearly_data";
 import axios from "axios";
 import { findRegionByDistrict } from "@/models/regions";
 import { useCatastropheStore } from "@/stores/catastrophes";
+import { useStatisticStore } from "@/stores/statistics";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -42,8 +43,8 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 
 const icons = generateIcons();
 
-function isSelectedGradientStep(snapshot: RegionSnapshot, index: number): boolean {
-    return snapshot.info != undefined && getGradientColourIndex(snapshot.info.temp_increase) === index;
+function isSelectedGradientStep(info: RegionStatistics, index: number): boolean {
+    return info.temp_delta != undefined && getGradientColourIndex(info.temp_delta) === index;
 }
 
 const unselectedStyle: L.PathOptions = {
@@ -88,6 +89,7 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const catastropheStore = useCatastropheStore();
+        const statisticStore = useStatisticStore();
         const districtLayers = new Map<string, L.GeoJSON>();
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
@@ -133,29 +135,30 @@ export default defineComponent({
         });
 
         const updateStatOverlay = () => {
-            const now = store.yearlyData.get(store.year);
             for (const geo of statOverlayDistricts.values()) {
-                if (now) {
-                    if (geo.feature) {
-                        const feature = geo.feature as Feature<Geometry, any>;
-                        const properties: DistrictProperties = feature.properties;
-                        const region = findRegionByDistrict(properties.id);
-                        if (region) {
-                            const info = now.regions.get(region.id);
-                            if (info) {
-                                // TODO: consider having a colour gradient for
-                                // increases <= 0
-                                const showOverlay = info.temp_increase > 0;
+                if (geo.feature) {
+                    const feature = geo.feature as Feature<Geometry, any>;
+                    const properties: DistrictProperties = feature.properties;
+                    const region = findRegionByDistrict(properties.id);
+                    if (region) {
+                        const info = statisticStore.findStatistics(store.year, properties.id)
+                        if (info) {
+                            // TODO: consider having a colour gradient for
+                            // increases <= 0
+                            if (info.temp_delta === undefined || info.temp_delta <= 0) {
                                 geo.setStyle({
                                     ...meteoOverlayStyle,
-                                    fillColor: temperatureGradient[getGradientColourIndex(info.temp_increase)],
-                                    fillOpacity: showOverlay ? 0.5 : 0,
+                                    fillOpacity: 0,
+                                });
+                            } else {
+                                geo.setStyle({
+                                    ...meteoOverlayStyle,
+                                    fillColor: temperatureGradient[getGradientColourIndex(info.temp_delta)],
+                                    fillOpacity: 0.5
                                 });
                             }
                         }
                     }
-                } else {
-                    geo.setStyle(meteoOverlayStyle);
                 }
             }
         };
@@ -170,11 +173,11 @@ export default defineComponent({
             }
         });
 
-        watch(() => store.yearlyData, updateStatOverlay);
+        watch(() => statisticStore.statistics, updateStatOverlay);
         const iconLayer = L.layerGroup();
         const updateIcons = (year: number) => {
             iconLayer.clearLayers();
-            for (const catastrophe of catastropheStore.catastrophesByYear(year)) {
+            for (const catastrophe of catastropheStore.findCatastrophes(year)) {
                 const marker = createIcon(catastrophe);
                 marker.addTo(iconLayer);
             }
@@ -188,7 +191,7 @@ export default defineComponent({
         });
 
         const mapElement = ref<HTMLDivElement | null>(null);
-        return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement, map };
+        return { store, statisticStore, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement, map };
     },
     async mounted() {
         if (this.mapElement) {
@@ -218,6 +221,11 @@ export default defineComponent({
             this.map.setMaxBounds(this.electoralLayer.getBounds());
             this.map.attributionControl.setPrefix('');
         }
+    },
+    computed: {
+        statistics(): RegionStatistics {
+            return this.statisticStore.findStatistics(this.store.year, this.store.district);
+        },
     },
     methods: {
         focusCatastrophe(catastrophe: Catastrophe) {

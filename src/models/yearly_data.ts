@@ -1,41 +1,32 @@
 import axios, { AxiosError } from "axios";
-import { Geometry, Position } from "geojson";
 import { List, Map } from "immutable";
-import { Catastrophe, CatastropheType, parseCatatrophe } from "./catastrophes";
+import { Catastrophe, CatastropheType } from "./catastrophes";
 import * as Sentry from "@sentry/vue";
 
-export interface YearlySnapshot {
-    year: number;
-    regions: Map<number, RegionInfo>;
-}
+export type YearlyStatistics = Map<number, RegionStatistics>;
+export const EMPTY_STATISTICS: YearlyStatistics = Map();
 
-interface RegionStatistics {
+export interface RegionStatistics {
+    temp_delta?: number;
     avg_temp?: number;
     avg_prec?: number;
     days_above_30?: number;
     days_below_min_25?: number;
 }
 
-export interface RegionInfo extends RegionStatistics {
-    temp_increase: number;
+export interface YearlyStatisticsDocument {
+    [id: string]: RegionStatistics
 }
 
-export interface RegionSnapshot {
-    info?: RegionInfo;
-    targetReachedOn?: number;
+export function parseYearlyStatistics(doc: YearlyStatisticsDocument): YearlyStatistics {
+    return Map(Object.entries(doc).map(([region, stats]) => [parseInt(region), stats]));
 }
 
-interface YearlySnapshotDocument {
-    statistics: {
-        [id: string]: RegionStatistics
-    };
-}
-
-export async function downloadDataForYear(year: number, refYear?: YearlySnapshot): Promise<YearlySnapshot> {
+export async function downloadDataForYear(year: number, refYear?: YearlyStatistics): Promise<YearlyStatistics> {
     try {
-        const response = await axios.get<YearlySnapshotDocument>(`data/yearly_data/${year}.json`);
+        const response = await axios.get<YearlyStatisticsDocument>(`data/yearly_data/${year}.json`);
         const data = response.data;
-        const snapshot: YearlySnapshot = {
+        const snapshot: YearlyStatistics = {
             year,
             regions: Map(Object.entries(data.statistics).map(([k, v]) => {
                 const regionId = parseInt(k);
@@ -62,15 +53,15 @@ export async function downloadDataForYear(year: number, refYear?: YearlySnapshot
 }
 
 export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, district: number, type: CatastropheType | ''): List<Catastrophe> {
-    if(district === 0 && type === '') {
+    if (district === 0 && type === '') {
         return catastropes;
     }
 
     return catastropes.filter(x => {
-        if(type && x.type !== type) {
+        if (type && x.type !== type) {
             return false;
         }
-        if(district === 0) {
+        if (district === 0) {
             return true;
         }
         return district === x.district;

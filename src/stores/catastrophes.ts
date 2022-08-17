@@ -12,8 +12,12 @@ export const useCatastropheStore = defineStore('catastropheStore', {
         };
     },
     getters: {
-        catastrophesByYear: state => (year: number) => {
-            return state.catastrophes.get(year) ?? List();
+        findCatastrophes: state => (year: number, district = 0) => {
+            let catastrophes = state.catastrophes.get(year) ?? List();
+            if (district) {
+                catastrophes = catastrophes.filter(x => x.district === district);
+            }
+            return catastrophes;
         }
     },
     actions: {
