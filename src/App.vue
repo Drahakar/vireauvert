@@ -1,8 +1,12 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
+import CallToAction from "./components/CallToAction.vue";
+import CandidateList from "./components/CandidateList.vue";
+import CatastropheList from "./components/CatastropheList.vue";
 import MapView from "./components/MapView.vue";
-import Legend from "./components/Legend.vue";
+import RegionSearch from "./components/RegionSearch.vue";
+import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
 import { Catastrophe } from "./models/catastrophes";
@@ -10,8 +14,12 @@ import { useStore } from "./stores/store";
 
 export default defineComponent({
   components: {
+    CallToAction,
+    CandidateList,
+    CatastropheList,
     MapView,
-    Legend,
+    RegionSearch,
+    Statistics,
     Timeline
   },
   setup() {
@@ -42,9 +50,13 @@ Sentry.init({
 <template>
   <div id="main" class="container-fluid">
     <div class="row">
-      <Legend id="legend" @on-request-catastrophe-focus="focusCatastrophe"
-          class="col-md-3">
-      </Legend>
+      <div class="legend col-md-3" >
+        <RegionSearch></RegionSearch>
+        <Statistics></Statistics>
+        <CandidateList></CandidateList>
+        <CallToAction></CallToAction>
+        <CatastropheList @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
+      </div>
       <MapView id="map-view" ref="map" class="col-md-9"></MapView>
     </div>
     <div class="row">
@@ -67,7 +79,10 @@ Sentry.init({
   }
 }
 
-#legend {
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 10px;
   max-height: calc(100vh - 96px);
 }
