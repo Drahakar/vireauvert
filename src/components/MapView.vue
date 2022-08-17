@@ -1,7 +1,7 @@
 <template>
     <div id="wrapper">
-        <div id="map" ref="mapElement"></div>
-        <div id="gradient">
+        <div class="map" ref="mapElement"></div>
+        <div class="gradient">
             <div class="step" v-for="(colour, index) of gradientSteps" :style="{ backgroundColor: colour }">
                 <span class="selected" v-if="isSelectedGradientStep(store.selectedData, index)"></span>
                 <span class="tooltip">
@@ -225,11 +225,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#map {
+.map {
     height: 100%;
 }
 
-#gradient {
+.gradient {
     position: absolute;
     right: 16px;
     top: 16px;
@@ -240,31 +240,31 @@ export default defineComponent({
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.5);
 }
-#gradient div.step {
-    height: 8px;
+.gradient div.step {
+    height: 6px;
 }
 @media (min-width: 768px) {  /* for devices >= 'md' */
-    #gradient div.step {
+    .gradient div.step {
         height: 16px;
     }
 }
 
-#gradient div.step {
+.gradient div.step {
     position: relative;
     opacity: 0.8;
 }
 
-#gradient>div.step+div.step {
+.gradient>div.step+div.step {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-#gradient div.label {
+.gradient div.label {
     font-weight: bold;
     margin-bottom: 4px;
     text-align: center;
 }
 
-#gradient div.step .tooltip {
+.gradient div.step .tooltip {
     visibility: hidden;
     position: absolute;
     z-index: 1;
@@ -276,11 +276,11 @@ export default defineComponent({
     border-radius: 5px;
 }
 
-#gradient div.step:hover .tooltip {
+.gradient div.step:hover .tooltip {
     visibility: visible;
 }
 
-#gradient div.step .selected {
+.gradient div.step .selected {
     position: absolute;
     z-index: 1;
     right: 110%;

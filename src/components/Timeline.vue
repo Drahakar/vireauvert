@@ -1,5 +1,5 @@
 <template>
-    <div id="timeline" class="row">
+    <div class="timeline row">
         <div id="slidertitle" class="col-md-2">Année de recherche</div>
         <div id="slidercontainer" class="col-md-10">
             <vue-slider 
@@ -44,7 +44,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#timeline {
+.timeline {
     padding: 30px;
 }
 

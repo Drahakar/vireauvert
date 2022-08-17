@@ -1,5 +1,6 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
+import {Tabs, Tab} from 'vue3-tabs-component';
 import { BrowserTracing } from "@sentry/tracing";
 import CallToAction from "./components/CallToAction.vue";
 import CandidateList from "./components/CandidateList.vue";
@@ -9,8 +10,8 @@ import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
-import { Catastrophe } from "./models/catastrophes";
-import { useStore } from "./stores/store";
+import { Catastrophe, getTypeName } from "./models/catastrophes";
+import { useStore, CURRENT_YEAR } from "./stores/store";
 
 export default defineComponent({
   components: {
@@ -20,18 +21,38 @@ export default defineComponent({
     MapView,
     RegionSearch,
     Statistics,
+    Tab,
+    Tabs,
     Timeline
   },
   setup() {
     const store = useStore();
-    const map = ref<InstanceType<typeof MapView> | null>(null);
+    const mobileMap = ref<InstanceType<typeof MapView> | null>(null);
+    const desktopMap = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      map, store
+      mobileMap, desktopMap, store
     };
   },
   methods: {
     focusCatastrophe(catastrophe: Catastrophe) {
-      this.map?.focusCatastrophe(catastrophe);
+      // TODO: do this through event instead, see mitt library, then we don't
+      // need refs
+      this.mobileMap?.focusCatastrophe(catastrophe);
+      this.desktopMap?.focusCatastrophe(catastrophe);
+    },
+    catastrophesInfo() {
+      if (this.store.catastropheType) {
+        return 'Catastrophes affichées: ' + getTypeName(this.store.catastropheType);
+      } else if (!this.catastrophesDisabled()) {
+        const num = this.store.selectedData.catastrophes.size;
+        const pluralized = 'catastrophe' + (num > 1 ? 's' : '');
+        return num.toString() + ' ' + pluralized + ' en ' + this.store.year.toString();
+      } else {
+        return '';
+      }
+    },
+    catastrophesDisabled() {
+      return this.store.year > CURRENT_YEAR;
     }
   },
   async mounted() {
@@ -49,18 +70,49 @@ Sentry.init({
 
 <template>
   <div id="main" class="container-fluid">
-    <div class="row">
-      <div class="legend col-md-3" >
-        <RegionSearch></RegionSearch>
-        <Statistics></Statistics>
-        <CandidateList></CandidateList>
-        <CallToAction></CallToAction>
-        <CatastropheList @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
-      </div>
-      <MapView id="map-view" ref="map" class="col-md-9"></MapView>
+    <!-- Mobile layout -->
+    <div class="d-md-none mobile-layout">
+      <RegionSearch></RegionSearch>
+      <tabs class="d-md-none tabs"
+        nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
+        nav-item-link-class="nav-link" nav-item-link-active-class="active"
+        nav-item-link-disabled-class="disabled"
+        panels-wrapper-class="flex-grow-1"
+        :options="{ useUrlFragment: false }">
+        <tab name="Carte" :selected="true" panel-class="tab-panel">
+          <Timeline class="timeline"></Timeline>
+          <MapView class="map-view flex-grow-1" ref="mobileMap"></MapView>
+          <span>{{catastrophesInfo()}}</span>
+          <Statistics></Statistics>
+        </tab>
+        <tab name="Catastrophes" panel-class="tab-panel"
+          :is-disabled="catastrophesDisabled()">
+          <Timeline class="timeline"></Timeline>
+          <CatastropheList class="flex-grow-1"
+            @on-request-catastrophe-focus="focusCatastrophe">
+          </CatastropheList>
+        </tab>
+        <tab name="Candidat(e)s" panel-class="tab-panel">
+          <CandidateList></CandidateList>
+          <CallToAction class="call-to-action"></CallToAction>
+        </tab>
+      </tabs>
     </div>
-    <div class="row">
-      <Timeline id="timeline"></Timeline>
+    <!-- Desktop layout -->
+    <div class="d-none d-md-block desktop-layout">
+      <div class="row">
+        <div class="legend col-md-3" >
+          <RegionSearch></RegionSearch>
+          <Statistics></Statistics>
+          <CandidateList></CandidateList>
+          <CallToAction class="call-to-action"></CallToAction>
+          <CatastropheList @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
+        </div>
+        <MapView ref="desktopMap" class="map-view col-md-9"></MapView>
+      </div>
+      <div class="row">
+        <Timeline id="timeline"></Timeline>
+      </div>
     </div>
   </div>
 </template>
@@ -70,13 +122,22 @@ Sentry.init({
   height: 100vh;
 }
 
-#map-view {
-  height: calc(60vh - 96px);
+.mobile-layout {
+  padding-top: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-@media (min-width: 768px) {  /* for devices >= 'md' */
-  #map-view {
-    height: calc(100vh - 96px);
-  }
+
+.mobile-layout > * {
+  padding-top: 10px;
+}
+
+.map-view {
+  min-height: 300px;
+}
+.desktop-layout .map-view {
+  height: calc(100vh - 96px);
 }
 
 .legend {
@@ -87,7 +148,32 @@ Sentry.init({
   max-height: calc(100vh - 96px);
 }
 
-#timeline {
+.timeline {
   height: 96px;
+}
+.mobile-layout .timeline {
+  padding-top: 0;
+}
+
+.tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.call-to-action {
+  margin: 15px;
+}
+</style>
+
+<style> /* global */
+.tab-panel {
+  padding-top: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.tab-panel > * {
+  margin-top: 10px;
 }
 </style>
