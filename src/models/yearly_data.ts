@@ -25,7 +25,6 @@ export interface RegionInfo extends RegionStatistics {
 export interface RegionSnapshot {
     catastrophes: List<Catastrophe>;
     info?: RegionInfo;
-    candidates: List<Candidate>;
     targetReachedOn?: number;
 }
 

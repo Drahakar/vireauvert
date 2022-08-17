@@ -11,6 +11,7 @@ import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
 import { Catastrophe } from "./models/catastrophes";
 import { useStore } from "./stores/store";
+import { useCandidateStore } from "./stores/candidates";
 
 export default defineComponent({
   components: {
@@ -24,9 +25,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const candidateStore = useCandidateStore();
     const map = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      map, store
+      map, store, candidateStore
     };
   },
   methods: {
@@ -36,6 +38,7 @@ export default defineComponent({
   },
   async mounted() {
     await this.store.loadData();
+    await this.candidateStore.loadCandidates();
   }
 });
 

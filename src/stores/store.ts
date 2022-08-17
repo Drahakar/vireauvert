@@ -1,11 +1,9 @@
-import { DistrictProperties } from '@/models/map';
-import { allRegions, findRegionByDistrict } from '@/models/regions';
+import { findRegionByDistrict } from '@/models/regions';
 import { downloadDataForYear, filterCatastrophesByRegion, RegionSnapshot, YearlySnapshot } from '@/models/yearly_data';
 import axios from 'axios';
 import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
-import { Candidate } from '@/models/candidates';
 import { CatastropheType } from '@/models/catastrophes';
 
 export const MIN_CONTINUOUS_YEAR = 2000;
@@ -24,7 +22,6 @@ export const useStore = defineStore('store', {
             catastropheType: '' as (CatastropheType | ''),
             yearlyData: Map<number, YearlySnapshot>(),
             electoralMap: { features: [] as unknown } as FeatureCollection,
-            candidates: List<Candidate>(),
             temperatureTargetPerRegion: Map<number, number>()
         };
     },
@@ -33,20 +30,14 @@ export const useStore = defineStore('store', {
             const data = this.yearlyData.get(this.year);
             if (!data) {
                 return {
-                    catastrophes: List(),
-                    candidates: List()
+                    catastrophes: List()
                 }
             }
 
-            const feature = this.district ? this.electoralMap.features.find(x => {
-                const properties = x.properties as DistrictProperties;
-                return properties.id === this.district;
-            }) : undefined;
             const region = findRegionByDistrict(this.district);
             const snapshot: RegionSnapshot = {
-                catastrophes: filterCatastrophesByRegion(data.catastrophes, feature, this.catastropheType),
+                catastrophes: filterCatastrophesByRegion(data.catastrophes, this.district, this.catastropheType),
                 info: region ? data.regions.get(region.id) : undefined,
-                candidates: List(this.candidates.filter(x => x.district == this.district)),
                 targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
             }
             return snapshot;
@@ -60,7 +51,6 @@ export const useStore = defineStore('store', {
             };
 
             this.electoralMap = await download<FeatureCollection>('carte_electorale.json');
-            this.candidates = List(await download<Candidate[]>('candidates.json'));
 
             const refYear = await downloadDataForYear(1990);
 
