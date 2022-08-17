@@ -1,5 +1,5 @@
 import { DistrictProperties } from '@/models/map';
-import { AdminRegion } from '@/models/regions';
+import { allRegions, findRegionByDistrict } from '@/models/regions';
 import { downloadDataForYear, filterCatastrophesByRegion, RegionSnapshot, YearlySnapshot } from '@/models/yearly_data';
 import axios from 'axios';
 import { FeatureCollection } from 'geojson';
@@ -24,7 +24,6 @@ export const useStore = defineStore('store', {
             district: 0,
             year: CURRENT_YEAR,
             catastropheType: '' as (CatastropheType | ''),
-            allRegions: List<AdminRegion>(),
             yearlyData: Map<number, YearlySnapshot>(),
             electoralMap: { features: [] as unknown } as FeatureCollection,
             candidates: List<Candidate>(),
@@ -48,7 +47,7 @@ export const useStore = defineStore('store', {
                 const properties = x.properties as DistrictProperties;
                 return properties.id === this.district;
             }) : undefined;
-            const region = this.getRegion(this.district);
+            const region = findRegionByDistrict(this.district);
             const snapshot: RegionSnapshot = {
                 catastrophes: filterCatastrophesByRegion(data.catastrophes, feature, this.catastropheType),
                 info: region ? data.regions.get(region.id) : undefined,
@@ -56,12 +55,6 @@ export const useStore = defineStore('store', {
                 targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
             }
             return snapshot;
-        },
-        getRegion: state => (district_id: number) => {
-            if (district_id) {
-                return state.allRegions.find(x => x.districts.some(y => y === district_id));
-            }
-            return state.allRegions.get(district_id);
         }
     },
     actions: {
@@ -71,7 +64,6 @@ export const useStore = defineStore('store', {
                 return response.data;
             };
 
-            this.allRegions = List(await download<AdminRegion[]>('admin_regions.json'));
             this.electoralMap = await download<FeatureCollection>('carte_electorale.json');
             this.candidates = List(await download<Candidate[]>('candidates.json'));
 

@@ -25,6 +25,7 @@ import { Feature, Geometry, Polygon } from "geojson";
 import { getGradientColourIndex, temperatureGradient } from "@/models/climate";
 import { RegionSnapshot } from "@/models/yearly_data";
 import axios from "axios";
+import { findRegionByDistrict } from "@/models/regions";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -136,7 +137,7 @@ export default defineComponent({
                     if (geo.feature) {
                         const feature = geo.feature as Feature<Geometry, any>;
                         const properties: DistrictProperties = feature.properties;
-                        const region = store.getRegion(properties.id);
+                        const region = findRegionByDistrict(properties.id);
                         if (region) {
                             const info = now.regions.get(region.id);
                             if (info) {
