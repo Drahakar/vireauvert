@@ -45,7 +45,8 @@
                 <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true"
                     aria-controls="body-candidates" id="heading-candidates" class="d-block">
                     <i class="bi bi-chevron-up float-start"></i>
-                    Candidat(e)s
+                    <span v-if="store.district">Candidat(e)s</span>
+                    <span v-else>Chefs de partis</span>
                 </a>
             </h5>
             <ul id="body-candidates" class="list-group list-group-flush collapse show"

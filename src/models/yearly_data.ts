@@ -83,10 +83,10 @@ function getPolygons(geometry: Geometry): Position[][] {
     return [];
 }
 
-export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, region: Feature | undefined, type: CatastropheType | ''): List<Catastrophe> {
-    if (region?.geometry && !catastropes.isEmpty()) {
+export function filterCatastrophesByRegion(catastrophes: List<Catastrophe>, region: Feature | undefined, type: CatastropheType | ''): List<Catastrophe> {
+    if (region?.geometry && !catastrophes.isEmpty()) {
         const polygons = getPolygons(region.geometry);
-        return catastropes.filter(x => {
+        return catastrophes.filter(x => {
             if (type && x.type !== type) {
                 return false;
             }
@@ -94,5 +94,8 @@ export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, regio
             return polygons.some(poly => pointInPolygon(pt, poly));
         });
     }
-    return List();
+    if (type) {
+        return catastrophes.filter(x => x.type === type);
+    }
+    return catastrophes;
 }
