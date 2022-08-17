@@ -3,8 +3,8 @@ import { Map } from "immutable";
 import { defineStore } from "pinia";
 import * as Sentry from "@sentry/vue";
 import { TIMELINE_YEARS } from "@/models/constants";
-import { EMPTY_STATISTICS, parseYearlyStatistics, RegionStatistics, YearlyStatistics, YearlyStatisticsDocument } from "@/models/yearly_data";
-import { allRegions, findRegionByDistrict } from "@/models/regions";
+import { parseYearlyStatistics, RegionStatistics, YearlyStatistics, YearlyStatisticsDocument } from "@/models/yearly_data";
+import { findRegionByDistrict } from "@/models/regions";
 
 export const useStatisticStore = defineStore('statisticStore', {
     state: () => {
@@ -29,7 +29,14 @@ export const useStatisticStore = defineStore('statisticStore', {
             return {};
         },
         getYearOverTarget: state => (district: number): number | undefined => {
-            return state.temperatureTargetPerRegion.get(district);
+            let year = state.temperatureTargetPerRegion.get(district);
+            if (year === undefined) {
+                const region = findRegionByDistrict(district);
+                if (region) {
+                    year = state.temperatureTargetPerRegion.get(region.id);
+                }
+            }
+            return year;
         }
     },
     actions: {

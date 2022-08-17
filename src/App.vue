@@ -1,7 +1,6 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
-import CallToAction from "./components/CallToAction.vue";
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
 import MapView from "./components/MapView.vue";
@@ -17,7 +16,6 @@ import { useStatisticStore } from "./stores/statistics";
 
 export default defineComponent({
   components: {
-    CallToAction,
     CandidateList,
     CatastropheList,
     MapView,
@@ -61,10 +59,9 @@ Sentry.init({
     <div class="row">
       <div class="legend col-md-3" >
         <RegionSearch></RegionSearch>
-        <Statistics></Statistics>
-        <CandidateList></CandidateList>
-        <CallToAction></CallToAction>
-        <CatastropheList @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
+        <Statistics :district="store.district" :year="store.year"></Statistics>
+        <CandidateList :district="store.district"></CandidateList>
+        <CatastropheList :year="store.year" :district="store.district" @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
       </div>
       <MapView id="map-view" ref="map" class="col-md-9"></MapView>
     </div>

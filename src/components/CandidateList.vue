@@ -22,19 +22,18 @@
             </li>
         </ul>
     </div>
-    <a v-if="!candidates.isEmpty()" class="btn btn-success"
-        href="https://www.vireauvert.org/envoipropositionspartispolitiques" role="button" target="_blank">
-        Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales
-    </a>
+    <CallToAction :active="!candidates.isEmpty()"></CallToAction>
 </template>
 
 <script lang="ts">
 import { getPartyName } from '@/models/candidates';
 import { useCandidateStore } from '@/stores/candidates';
 import { defineComponent } from 'vue';
+import CallToAction from './CallToAction.vue';
 
 
 export default defineComponent({
+    components: { CallToAction },
     props: {
         district: {
             type: Number,
