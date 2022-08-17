@@ -26,6 +26,7 @@ import { getGradientColourIndex, temperatureGradient } from "@/models/climate";
 import { RegionSnapshot } from "@/models/yearly_data";
 import axios from "axios";
 import { findRegionByDistrict } from "@/models/regions";
+import { useCatastropheStore } from "@/stores/catastrophes";
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
     const icons = new Map<CatastropheType, L.Icon>();
@@ -86,6 +87,7 @@ export default defineComponent({
     },
     setup() {
         const store = useStore();
+        const catastropheStore = useCatastropheStore();
         const districtLayers = new Map<string, L.GeoJSON>();
         const electoralLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
@@ -168,17 +170,22 @@ export default defineComponent({
             }
         });
 
+        watch(() => store.yearlyData, updateStatOverlay);
         const iconLayer = L.layerGroup();
-        watch(() => store.selectedData, data => {
+        const updateIcons = (year: number) => {
             iconLayer.clearLayers();
-            for (const catastrophe of data.catastrophes) {
+            for (const catastrophe of catastropheStore.catastrophesByYear(year)) {
                 const marker = createIcon(catastrophe);
                 marker.addTo(iconLayer);
             }
+        };
+        watch(() => catastropheStore.catastrophes, () => {
+            updateIcons(store.year);
         });
-
-        watch(() => store.yearlyData, updateStatOverlay);
-        watch(() => store.year, updateStatOverlay);
+        watch(() => store.year, year => {
+            updateIcons(year);
+            updateStatOverlay();
+        });
 
         const mapElement = ref<HTMLDivElement | null>(null);
         return { store, electoralLayer, statOverlayLayer: meteoLayer, iconLayer, mapElement, map };
@@ -200,7 +207,7 @@ export default defineComponent({
             L.geoJSON(mask.data, {
                 interactive: false,
                 style: {
-                    fillColor: '#000000', 
+                    fillColor: '#000000',
                     opacity: 0.5
                 }
             }).addTo(map);
@@ -241,10 +248,14 @@ export default defineComponent({
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.5);
 }
+
 #gradient div.step {
     height: 8px;
 }
-@media (min-width: 768px) {  /* for devices >= 'md' */
+
+@media (min-width: 768px) {
+
+    /* for devices >= 'md' */
     #gradient div.step {
         height: 16px;
     }

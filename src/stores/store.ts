@@ -5,14 +5,7 @@ import { FeatureCollection } from 'geojson';
 import { defineStore } from 'pinia';
 import { List, Map } from 'immutable';
 import { CatastropheType } from '@/models/catastrophes';
-
-export const MIN_CONTINUOUS_YEAR = 2000;
-export const MAX_CONTINUOUS_YEAR = 2035;
-export const PAST_REFERENCE_YEAR = 1990;
-export const FUTURE_SCENARIO_YEAR1 = 2050;
-export const FUTURE_SCENARIO_YEAR2 = 2100;
-export const TIMELINE_YEARS = [...Array(((MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR)) + 1).keys()].map(x => MIN_CONTINUOUS_YEAR + x).concat(PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2).sort();
-export const CURRENT_YEAR = new Date().getFullYear();
+import { CURRENT_YEAR, TIMELINE_YEARS } from '@/models/constants';
 
 export const useStore = defineStore('store', {
     state: () => {
@@ -29,14 +22,11 @@ export const useStore = defineStore('store', {
         selectedData(): RegionSnapshot {
             const data = this.yearlyData.get(this.year);
             if (!data) {
-                return {
-                    catastrophes: List()
-                }
+                return {}
             }
 
             const region = findRegionByDistrict(this.district);
             const snapshot: RegionSnapshot = {
-                catastrophes: filterCatastrophesByRegion(data.catastrophes, this.district, this.catastropheType),
                 info: region ? data.regions.get(region.id) : undefined,
                 targetReachedOn: region ? this.temperatureTargetPerRegion.get(region.id) : undefined
             }

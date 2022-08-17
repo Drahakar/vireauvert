@@ -12,6 +12,7 @@ import { defineComponent, ref } from "vue";
 import { Catastrophe } from "./models/catastrophes";
 import { useStore } from "./stores/store";
 import { useCandidateStore } from "./stores/candidates";
+import { useCatastropheStore } from "./stores/catastrophes";
 
 export default defineComponent({
   components: {
@@ -26,9 +27,10 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const candidateStore = useCandidateStore();
+    const catastropheStore = useCatastropheStore();
     const map = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      map, store, candidateStore
+      map, store, candidateStore, catastropheStore
     };
   },
   methods: {
@@ -39,6 +41,7 @@ export default defineComponent({
   async mounted() {
     await this.store.loadData();
     await this.candidateStore.loadCandidates();
+    await this.catastropheStore.loadCatastrophes();
   }
 });
 
@@ -76,7 +79,10 @@ Sentry.init({
 #map-view {
   height: calc(60vh - 96px);
 }
-@media (min-width: 768px) {  /* for devices >= 'md' */
+
+@media (min-width: 768px) {
+
+  /* for devices >= 'md' */
   #map-view {
     height: calc(100vh - 96px);
   }
