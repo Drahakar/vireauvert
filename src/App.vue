@@ -57,13 +57,16 @@ Sentry.init({
 <template>
   <div id="main" class="container-fluid">
     <div class="row">
-      <div class="legend col-md-3" >
+      <div class="legend col-md-3">
         <RegionSearch></RegionSearch>
         <Statistics :district="store.district" :year="store.year"></Statistics>
         <CandidateList :district="store.district"></CandidateList>
-        <CatastropheList :year="store.year" :district="store.district" @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
+        <CatastropheList :year="store.year" :district="store.district" @on-request-catastrophe-focus="focusCatastrophe">
+        </CatastropheList>
       </div>
-      <MapView id="map-view" ref="map" class="col-md-9"></MapView>
+      <MapView id="map-view" ref="map" class="col-md-9" :district="store.district" :year="store.year"
+        :catastrophes="catastropheStore.findCatastrophes(store.year, store.district)"
+        @district-selected="(id: number) => store.district = id"></MapView>
     </div>
     <div class="row">
       <Timeline id="timeline"></Timeline>
