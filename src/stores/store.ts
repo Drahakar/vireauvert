@@ -16,8 +16,6 @@ export const FUTURE_SCENARIO_YEAR2 = 2100;
 export const TIMELINE_YEARS = [...Array(((MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR)) + 1).keys()].map(x => MIN_CONTINUOUS_YEAR + x).concat(PAST_REFERENCE_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2).sort();
 export const CURRENT_YEAR = new Date().getFullYear();
 
-const collator = new Intl.Collator('fr', { sensitivity: 'base' });
-
 export const useStore = defineStore('store', {
     state: () => {
         return {
@@ -31,9 +29,6 @@ export const useStore = defineStore('store', {
         };
     },
     getters: {
-        allDistricts(): DistrictProperties[] {
-            return this.electoralMap.features.map(x => x.properties as DistrictProperties).sort((a, b) => collator.compare(a.name, b.name));
-        },
         selectedData(): RegionSnapshot {
             const data = this.yearlyData.get(this.year);
             if (!data) {

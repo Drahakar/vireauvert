@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { Feature, Geometry, Position } from "geojson";
+import { Geometry, Position } from "geojson";
 import { List, Map } from "immutable";
-import pointInPolygon from "point-in-polygon";
 import { Candidate } from "./candidates";
 import { Catastrophe, CatastropheDocument, CatastropheType, parseCatatrophe } from "./catastrophes";
 import * as Sentry from "@sentry/vue";
@@ -83,19 +82,18 @@ function getPolygons(geometry: Geometry): Position[][] {
     return [];
 }
 
-export function filterCatastrophesByRegion(catastrophes: List<Catastrophe>, region: Feature | undefined, type: CatastropheType | ''): List<Catastrophe> {
-    if (region?.geometry && !catastrophes.isEmpty()) {
-        const polygons = getPolygons(region.geometry);
-        return catastrophes.filter(x => {
-            if (type && x.type !== type) {
-                return false;
-            }
-            const pt = [x.location.lng, x.location.lat];
-            return polygons.some(poly => pointInPolygon(pt, poly));
-        });
+export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, district: number, type: CatastropheType | ''): List<Catastrophe> {
+    if(district === 0 && type === '') {
+        return catastropes;
     }
-    if (type) {
-        return catastrophes.filter(x => x.type === type);
-    }
-    return catastrophes;
+
+    return catastropes.filter(x => {
+        if(type && x.type !== type) {
+            return false;
+        }
+        if(district === 0) {
+            return true;
+        }
+        return district === x.district;
+    });
 }

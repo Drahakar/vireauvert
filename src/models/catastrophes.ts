@@ -18,6 +18,7 @@ export interface Catastrophe {
     type: CatastropheType;
     date: Date;
     severity: Severity;
+    district: number;
 }
 
 export enum Severity {
@@ -35,6 +36,7 @@ export interface CatastropheDocument {
     type: string;
     date: string;
     severity: Severity;
+    district: number;
 }
 
 export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
@@ -44,7 +46,8 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
         city: doc.city,
         type: doc.type as CatastropheType,
         date: new Date(doc.date),
-        severity: doc.severity
+        severity: doc.severity,
+        district: doc.district
     };
 }
 
