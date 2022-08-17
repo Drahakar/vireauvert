@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { getGradientColourIndex, temperatureGradient, colourToHex } from '@/models/climate';
+import { getGradientColourIndex, temperatureGradient, colourToHex } from '@/utils/colours';
 import { RegionStatistics } from '@/models/yearly_data';
 import { defineComponent, PropType } from 'vue';
 

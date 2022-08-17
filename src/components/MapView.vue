@@ -9,14 +9,14 @@
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { defineComponent, PropType, ref, watch } from "vue";
-import { Catastrophe, CatastropheType, formatDescription, getIconUrl } from "@/models/catastrophes";
+import { Catastrophe } from "@/models/catastrophes";
 import axios from "axios";
-import { Feature, Geometry, Polygon } from "geojson";
+import { Polygon } from "geojson";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
-import { getGradientColourIndex, colourToHex, multiplyColours, parseColour, temperatureGradient } from "@/models/climate";
 import Thermometre from "./Thermometre.vue";
+import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
 export default defineComponent({
     emits: ["districtSelected"],
     props: {
@@ -37,35 +37,32 @@ export default defineComponent({
         const statisticStore = useStatisticStore();
         const mapElement = ref<HTMLDivElement | null>(null);
         const map = ref<L.Map | null>(null);
-        const updateColour = (feature: Feature<Geometry, DistrictProperties>, layer: L.GeoJSON) => {
-            const statistics = statisticStore.findStatistics(props.year, feature.properties.id);
-            setColour(layer, feature.properties.id === props.district, statistics.temp_delta);
+        const updateColour = (district: DistrictLayer) => {
+            const statistics = statisticStore.findStatistics(props.year, district.feature.properties.id);
+            setMapLayerColour(district.layer, district.feature.properties.id === props.district, statistics.temp_delta);
         };
-        const districtLayers = new Map<string, {
-            feature: Feature<Geometry, DistrictProperties>;
-            layer: L.GeoJSON;
-        }>();
+        const districtLayers = new Map<string, DistrictLayer>();
         const mapLayer = L.geoJSON(undefined, {
             onEachFeature: (feature, layer) => {
                 const properties: DistrictProperties = feature.properties;
+                const district: DistrictLayer = { feature, layer: layer as L.GeoJSON };
                 districtLayers.set(properties.id.toString(), { feature, layer: layer as L.GeoJSON });
                 layer.addEventListener("click", () => {
                     const newId = props.district !== properties.id ? properties.id : 0;
                     emit("districtSelected", newId);
                 });
                 layer.bindTooltip(properties.name);
-                updateColour(feature, layer as L.GeoJSON);
-            },
-            style: unselectedStyle
+                updateColour(district);
+            }
         });
         watch(() => props.district, (newId, oldId) => {
             const oldLayer = districtLayers.get(oldId.toString());
             if (oldLayer) {
-                updateColour(oldLayer.feature, oldLayer.layer);
+                updateColour(oldLayer);
             }
             const newLayer = districtLayers.get(newId.toString());
             if (newLayer) {
-                updateColour(newLayer.feature, newLayer.layer);
+                updateColour(newLayer);
                 if (map.value) {
                     map.value.fitBounds(newLayer.layer.getBounds(), {
                         animate: true
@@ -74,14 +71,14 @@ export default defineComponent({
             }
         });
         watch(() => props.year, () => {
-            for (const { feature, layer } of districtLayers.values()) {
-                updateColour(feature, layer);
+            for (const district of districtLayers.values()) {
+                updateColour(district);
             }
         });
-        watch(() => statisticStore.statistics, () => {
-            if (statisticStore.statistics.has(props.year)) {
-                for (const { feature, layer } of districtLayers.values()) {
-                    updateColour(feature, layer);
+        watch(() => statisticStore.statistics, stats => {
+            if (stats.has(props.year)) {
+                for (const district of districtLayers.values()) {
+                    updateColour(district);
                 }
             }
         });
@@ -89,8 +86,8 @@ export default defineComponent({
         watch(() => props.catastrophes, catastrophes => {
             iconLayer.clearLayers();
             for (const catastrophe of catastrophes) {
-                const icon = createIcon(catastrophe);
-                icon.addTo(iconLayer);
+                const marker = createMapMarker(catastrophe);
+                marker.addTo(iconLayer);
             }
         });
         return { mapElement, map, mapLayer, iconLayer, statisticStore };
@@ -124,6 +121,7 @@ export default defineComponent({
             this.mapLayer.addData(mapDataResponse.data);
             this.mapLayer.addTo(map);
             this.iconLayer.addTo(map);
+
             this.map = map;
             this.map.setMaxBounds(this.mapLayer.getBounds());
             this.map.attributionControl.setPrefix("");
@@ -141,57 +139,6 @@ export default defineComponent({
     components: { Thermometre }
 });
 
-const unselectedStyle: L.PathOptions = {
-    fillColor: '#cccccc',
-    color: '#333333',
-    opacity: 0.5,    
-    fillOpacity: 0.3,
-    weight: 1
-};
-const selectedStyle: L.PathOptions = {
-    ...unselectedStyle,
-    fillColor: '#ffffff',
-    opacity: 0.7,
-    fillOpacity: 0.4,
-    weight: 2
-};
-
-function setColour(layer: L.GeoJSON, selected: boolean, tempDelta?: number) {
-    let style = selected ? selectedStyle : unselectedStyle;
-    if (tempDelta) {
-        const tempColour = temperatureGradient[getGradientColourIndex(tempDelta)];
-        const newColour = colourToHex(multiplyColours(parseColour(style.fillColor), tempColour));
-        style = {
-            ...style,
-            fillColor: newColour
-        };
-    }
-    layer.setStyle(style);
-}
-
-function createIcon(catastrophe: Catastrophe) {
-    const title = formatDescription(catastrophe);
-    const marker = L.marker(catastrophe.location, {
-        title: title,
-        icon: icons.get(catastrophe.type)
-    });
-    marker.bindTooltip(title);
-    return marker;
-}
-
-function generateIcons(): Map<CatastropheType, L.Icon> {
-    const icons = new Map<CatastropheType, L.Icon>();
-    for (const value of Object.values(CatastropheType)) {
-        const icon = L.icon({
-            iconUrl: getIconUrl(value),
-            iconSize: [48, 48]
-        });
-        icons.set(value, icon);
-    }
-    return icons;
-}
-
-const icons = generateIcons();
 </script>
 
 <style scoped>
