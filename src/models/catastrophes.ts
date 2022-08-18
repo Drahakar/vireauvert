@@ -86,14 +86,14 @@ function getSeverityDescription(severity: Severity) {
             return '';
     }
 }
-export function formatDescription(catastrope: Catastrophe) {
-    const plural = catastrope.type === CatastropheType.StormWinds;
-    const feminine = catastrope.type === CatastropheType.Flood || catastrope.type === CatastropheType.Tornado || catastrope.type === CatastropheType.FreezingRain;
+export function formatDescription(catastrophe: Catastrophe) {
+    const plural = catastrophe.type === CatastropheType.StormWinds;
+    const feminine = catastrophe.type === CatastropheType.Flood || catastrophe.type === CatastropheType.Tornado || catastrophe.type === CatastropheType.FreezingRain;
 
-    let severity = getSeverityDescription(catastrope.severity);
+    let severity = getSeverityDescription(catastrophe.severity);
     if (severity) {
-        severity = `${getTypeName(catastrope.type)} ${severity}`;
-        if (feminine && catastrope.severity != Severity.Extreme) {
+        severity = `${getTypeName(catastrophe.type)} ${severity}`;
+        if (feminine && catastrophe.severity != Severity.Extreme) {
             severity += 'e';
         }
         if (plural) {
