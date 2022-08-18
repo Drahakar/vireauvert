@@ -1,13 +1,10 @@
 <template>
     <div id="gradient">
         <div class="step" v-for="(colour, index) of gradientSteps" :style="{ backgroundColor: colourToHex(colour) }">
+            <span class="marking" v-if="index % 10 === 0">{{ (index * 0.1) - 1 }} °C</span>
             <span class="selected" v-if="isSelectedGradientStep(statistics, index)"></span>
-            <span class="tooltip">
-                + {{ (index * 0.1).toLocaleString('fr-CA', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
-                }} ° C
-            </span>
         </div>
-        <div class="label">° C</div>
+        <div class="label">°C</div>
     </div>
 </template>
 
@@ -48,48 +45,39 @@ export default defineComponent({
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-#gradient div.step {
+#gradient .step {
+    position: relative;
     height: 8px;
 }
 
 @media (min-width: 768px) {
 
     /* for devices >= 'md' */
-    #gradient div.step {
-        height: 16px;
+    #gradient .step {
+        height: 12px;
     }
 }
 
-#gradient div.step {
-    position: relative;
-    opacity: 0.8;
+#gradient .step .marking {
+    text-align: center;
+    font-size: small;
+    position: absolute;
+    top: -4px;
+    width: 100%;
+    height: 14px;
+    text-shadow: 0 0 3px #FFFFFF;
 }
 
-#gradient>div.step+div.step {
+#gradient>.step+.step {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-#gradient div.label {
+#gradient .label {
     font-weight: bold;
     margin-bottom: 4px;
     text-align: center;
 }
 
-#gradient div.step .tooltip {
-    visibility: hidden;
-    position: absolute;
-    z-index: 1;
-    width: 64px;
-    top: -5px;
-    right: 105%;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 5px;
-}
-
-#gradient div.step:hover .tooltip {
-    visibility: visible;
-}
 
 #gradient div.step .selected {
     position: absolute;

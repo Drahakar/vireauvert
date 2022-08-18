@@ -1,11 +1,5 @@
 export type Colour = [number, number, number];
 
-function hslToRgb(h: number, s: number, l: number): Colour {
-    const a = s * Math.min(l, 1 - l);
-    const f = (n: number, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return [f(0), f(8), f(4)];
-}
-
 export function colourToHex(colour: Colour): string {
     return '#' + colour.map(x => {
         const val = Math.min(Math.floor(x * 255), 255);
@@ -13,11 +7,32 @@ export function colourToHex(colour: Colour): string {
     }).join('');
 }
 
-export const temperatureGradient: Colour[] = Array.from(Array(41).keys()).map(x => {
-    const ratio = (1 - (x / 40)) * 50;
-    const colour = hslToRgb(ratio, 1, 0.5);
-    return colour;
-});
+function lerpColours(a: Colour, b: Colour, ratio: number): Colour {
+    const f = (x: number, y: number, a: number) => x + a * (y - x);
+    return [
+        f(a[0], b[0], ratio),
+        f(a[1], b[1], ratio),
+        f(a[2], b[2], ratio)
+    ];
+}
+
+function generateGradientSegment(a: string, b: string, count: number): Colour[] {
+    const x = parseColour(a);
+    const y = parseColour(b);
+
+    const result: Colour[] = [];
+    for (let i = 0; i <= count; ++i) {
+        const step = lerpColours(x, y, i / count);
+        result.push(step);
+    }
+    return result;
+}
+
+export const temperatureGradient: Colour[] = ([] as Colour[]).concat(
+    generateGradientSegment('#99BBFF', '#FFEEEE', 8),
+    generateGradientSegment('#FFEEEE', '#FFDD00', 5),
+    generateGradientSegment('#FFDD00', '#FF0000', 35),
+);
 
 export function parseColour(value?: string): Colour {
     if (!value) {
@@ -31,7 +46,7 @@ export function parseColour(value?: string): Colour {
 }
 
 export function getGradientColourIndex(temperature: number) {
-    return Math.min(temperatureGradient.length - 1, Math.max(0, Math.round(temperature * 10)));
+    return Math.min(temperatureGradient.length - 1, Math.max(0, Math.round((temperature + 1) * 10)));
 }
 
 export function multiplyColours(a: Colour, b: Colour): Colour {
