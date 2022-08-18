@@ -8,7 +8,7 @@
             <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
         <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType"
-            @input="(e) => $emit('onFilterCatastrophes', e.target.value)">
+            @input="(e) => $emit('onFilterCatastrophes', (e.target as HTMLSelectElement).value)">
             <option value="">Toutes</option>
             <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
                     getTypeName(catastropheType)

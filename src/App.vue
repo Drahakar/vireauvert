@@ -1,6 +1,7 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
-import {Tabs, Tab} from 'vue3-tabs-component';
+import { List } from 'immutable';
+import { Tabs, Tab } from 'vue3-tabs-component';
 import { BrowserTracing } from "@sentry/tracing";
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
@@ -9,7 +10,7 @@ import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
-import { Catastrophe, getTypeName } from "./models/catastrophes";
+import { Catastrophe, CatastropheType, getTypeName } from "./models/catastrophes";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
@@ -30,7 +31,7 @@ export default defineComponent({
     return {
       district: 0,
       year: CURRENT_YEAR,
-      catastropheFilter: '',
+      catastropheFilter: '' as CatastropheType,
     }
   },
   setup() {
@@ -56,15 +57,15 @@ export default defineComponent({
     selectYear(year: number) {
       this.year = year;
     },
-    selectCatastropheType(catastropheType: string) {
+    selectCatastropheType(catastropheType: CatastropheType) {
       this.catastropheFilter = catastropheType;
     }
   },
   computed: {
-    catastrophesDisabled() {
+    catastrophesDisabled(): boolean {
       return this.year > CURRENT_YEAR;
     },
-    catastrophesInfo() {
+    catastrophesInfo(): string {
       if (this.catastropheFilter) {
         return 'Catastrophes affichées: ' + getTypeName(this.catastropheFilter);
       } else if (!this.catastrophesDisabled) {
@@ -75,7 +76,7 @@ export default defineComponent({
         return '';
       }
     },
-    catastrophes() {
+    catastrophes(): List<Catastrophe> {
       return this.catastropheStore.findCatastrophes(
           this.year, this.district, this.catastropheFilter)
     }
