@@ -128,7 +128,7 @@ def parse_old_line(line):
         severity = parse_old_severity(severite.upper())
         if severity >= event['min_severity']:
             date = datetime.strptime(date_observation, '%Y/%m/%d %H:%M:%S')
-            if date.year >= 2000:
+            if date.year >= 1990:
                 location = cities.get(code_municipalite)
                 if location:
                     return {
