@@ -29,9 +29,6 @@ export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, distr
         if (type && x.type !== type) {
             return false;
         }
-        if (district === 0) {
-            return true;
-        }
-        return district === x.district;
+        return district === 0 || district === x.district;
     });
 }
