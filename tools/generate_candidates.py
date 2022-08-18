@@ -5,7 +5,7 @@ import locale
 import utils
 import re
 
-locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
+locale.setlocale(locale.LC_ALL, 'fr_CA.UTF-8')
 
 phone_pattern = re.compile(
     '^(?:\+?1[-. ]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$')

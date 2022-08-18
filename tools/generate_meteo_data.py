@@ -6,7 +6,7 @@ import re
 import utils
 import os
 
-locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
+locale.setlocale(locale.LC_ALL, 'fr_CA.UTF-8')
 
 number_pattern = re.compile('(\d+)')
 

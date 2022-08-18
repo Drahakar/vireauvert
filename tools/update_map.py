@@ -9,7 +9,7 @@ import geojson
 from shapely import ops
 from shapely import geometry
 
-locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
+locale.setlocale(locale.LC_ALL, 'fr_CA.UTF-8')
 
 result = kml2geojson.main.convert(path.join(
     utils.source_directory, 'carte2017simple.kml'), 'carte_electorale')[0]

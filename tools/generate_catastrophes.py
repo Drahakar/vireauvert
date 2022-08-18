@@ -14,7 +14,7 @@ import utils
 import geojson
 from shapely import geometry
 
-locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
+locale.setlocale(locale.LC_ALL, 'fr_CA.UTF-8')
 
 def load_cities():
     cities_xml = ET.parse(path.join(utils.source_directory, 'municipalites.xml'))
