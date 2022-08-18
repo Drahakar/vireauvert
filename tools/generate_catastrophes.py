@@ -1,4 +1,5 @@
 from enum import Enum, IntEnum
+import json
 from pydoc import describe
 import re
 from datetime import datetime
@@ -10,6 +11,10 @@ import zipfile
 from bs4 import BeautifulSoup
 import locale
 import utils
+import geojson
+from shapely import geometry
+
+locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
 def load_cities():
     cities_xml = ET.parse(path.join(utils.source_directory, 'municipalites.xml'))
@@ -27,7 +32,27 @@ def load_cities():
             cities[code] = [convert_lat_lon(lat), convert_lat_lon(lng)]
     return cities
 
+def load_map() -> dict[int, geometry.base.BaseGeometry]:
+    with open(path.join(utils.destination_directory, 'carte_electorale.json'), 'r', encoding='utf-8') as input_file:
+        map = geojson.load(input_file)
+
+    districts = {}
+    for feature in map['features']:
+        shape = geometry.shape(feature['geometry'])
+        id = feature['properties']['id']
+        districts[id] = shape
+    return districts
+
+def contains_point(geo: geometry.base.BaseGeometry, pt: geometry.Point) -> bool:
+    if isinstance(geo, geometry.GeometryCollection):
+        for sub in geo.geoms:
+            if contains_point(sub, pt):
+                return True
+        return False    
+    return geo.contains(pt)
+
 cities = load_cities()
+district_shapes = load_map()
 
 class Severity(IntEnum):
     Unknown = 0
@@ -162,31 +187,39 @@ def parse_kmz(path, catastrophes):
                             }
                             catastrophes.append(fire)
 
-def collect_all_catastrophes():
-    catastrophes = []
+catastrophes = []
 
-    parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
-    parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
+parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
+parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
-    fire_origin_directory = path.join(utils.source_directory, 'Feux_pt_ori')
-    for file_path in os.listdir(fire_origin_directory):
-        if path.splitext(file_path)[1] == '.kmz':
-            parse_kmz(path.join(fire_origin_directory, file_path), catastrophes)
+fire_origin_directory = path.join(utils.source_directory, 'Feux_pt_ori')
+for file_path in os.listdir(fire_origin_directory):
+    if path.splitext(file_path)[1] == '.kmz':
+        parse_kmz(path.join(fire_origin_directory, file_path), catastrophes)
 
-    catastrophes.sort(key=lambda x: x['date'])
+catastrophes.sort(key=lambda x: x['date'])
 
-    result = {}
-    for catastrophe in catastrophes:
-        obj = {
-            'id': catastrophe['id'],
-            'location': catastrophe['location'],
-            'type': catastrophe['type'].value,
-            'date': catastrophe['date'].isoformat(),
-            'severity': catastrophe['severity'].value
-        }
-        if 'city' in catastrophe:
-            obj['city'] = catastrophe['city']
-        
-        result.setdefault(catastrophe['date'].year, []).append(obj)
+result = {}
+for catastrophe in catastrophes:
+    obj = {
+        'id': catastrophe['id'],
+        'location': catastrophe['location'],
+        'type': catastrophe['type'].value,
+        'date': catastrophe['date'].isoformat(),
+        'severity': catastrophe['severity'].value,
+        'district': 0
+    }
+    if 'city' in catastrophe:
+        obj['city'] = catastrophe['city']
+    
+    pt = geometry.Point(obj['location'][1], obj['location'][0])
+    for id, shape in district_shapes.items():
+        if contains_point(shape, pt):
+            obj['district'] = id
+            break
+    
+    result.setdefault(catastrophe['date'].year, []).append(obj)
 
-    return result
+for year, catastrophes in result.items():    
+    with open(os.path.join(utils.destination_directory, 'catastrophes', '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
+        json.dump(catastrophes, output_file)

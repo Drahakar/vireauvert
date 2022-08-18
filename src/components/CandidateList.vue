@@ -1,72 +1,70 @@
+
 <template>
-    <div class="card" v-if="!store.selectedData.candidates.isEmpty()">
+    <div class="card" v-if="!candidates.isEmpty()">
         <h5 class="card-header">
-            <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true"
-                aria-controls="body-candidates" id="heading-candidates" class="d-block">
+            <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true" aria-controls="body-candidates"
+                id="heading-candidates" class="d-block">
                 <i class="bi bi-chevron-up float-start"></i>
-                <span v-if="store.district">Candidat(e)s</span>
+                <span v-if="district">Candidat(e)s</span>
                 <span v-else>Chefs de partis</span>
             </a>
         </h5>
-        <ul id="body-candidates" class="list-group list-group-flush collapse show"
-            aria-labelledby="heading-candidates" ref="candidates">
-            <li v-for="candidate of store.selectedData.candidates" class="list-group-item candidate">
+        <ul id="body-candidates" class="list-group list-group-flush collapse show" aria-labelledby="heading-candidates"
+            ref="candidates">
+            <li v-for="candidate of candidates" class="list-group-item candidate">
                 <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
                         candidate.party
                 }}</span>
                 <span class="name">{{ candidate.name }}</span>
-                <a v-if="candidate.facebook" :href="candidate.facebook" title="Facebook" target="_blank">
+                <a :href="candidate.facebook" title="Facebook" target="_blank">
                     <i class="bi bi-facebook"></i>
                 </a>
             </li>
         </ul>
     </div>
+    <CallToAction :active="!candidates.isEmpty()"></CallToAction>
 </template>
 
 <script lang="ts">
-
 import { getPartyName } from '@/models/candidates';
-import { useStore } from '@/stores/store';
+import { useCandidateStore } from '@/stores/candidates';
 import { defineComponent } from 'vue';
+import CallToAction from './CallToAction.vue';
+
 
 export default defineComponent({
-    setup() {
-        const store = useStore();
-        return { store };
-    },
-    data() {
-        return {
-            getPartyName,
+    components: { CallToAction },
+    props: {
+        district: {
+            type: Number,
+            default: 0
         }
     },
-})
+    setup() {
+        const store = useCandidateStore();
+        return { store, getPartyName }
+    },
+    computed: {
+        candidates() {
+            return this.store.findCandidates(this.district);
+        }
+    }
+});
 </script>
 
 <style scoped>
-
-/* TODO: either remove collapsing, or move to global css classes for re-use. */
-.card-header .bi {
-    transition: .3s transform ease-in-out;
-    margin-right: 5px;
-}
-
-.card-header .collapsed .bi {
-    transform: rotate(180deg);
-}
-
-.card-header a[data-bs-toggle="collapse"] {
-    all: unset;
-    /* remove styling on toggling hyperlink */
-}
-
 .candidate {
     display: flex;
     align-items: center;
-    gap: 1ch;
+    gap: 0.4em;
 }
 
 .candidate>a {
     font-size: 1.5em;
+}
+
+.candidate>a:not([href]) {
+    opacity: 0.3;
 }
 
 .candidate .name {

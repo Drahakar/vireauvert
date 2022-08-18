@@ -1,5 +1,6 @@
+
 <template>
-    <div class="card" id="catastrophes" v-if="showCatastrophes()">
+    <div class="card" id="catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
             <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes" aria-expanded="true"
                 aria-controls="body-catastrophes" id="heading-catastrophes" class="d-block">
@@ -7,24 +8,24 @@
                 <span>
                     Catastrophes
                 </span>
-                <small class="float-end">{{ store.selectedData.catastrophes.size }} en {{ store.year }}</small>
+                <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
                 <div>
-                    <small class="d-block float-end" v-if="store.catastropheType">{{
-                            getTypeName(store.catastropheType)
+                    <small class="d-block float-end" v-if="catastropheType">{{
+                            getTypeName(catastropheType)
                     }}</small>
                     <small class="d-block float-end" v-else>Toutes</small>
                 </div>
             </a>
         </h5>
         <div id="body-catastrophes" class="collapse" aria-labelledby="heading-catastrophes" ref="catastrophesElem">
-            <select class="form-select" aria-label="Type de catastrophe" v-model="store.catastropheType">
+            <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType">
                 <option value="">Toutes</option>
                 <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
                         getTypeName(catastropheType)
                 }}</option>
             </select>
             <ul class="list-group list-group-flush overflow-auto">
-                <li class="list-group-item" v-for="catastrophe of store.selectedData.catastrophes">
+                <li class="list-group-item" v-for="catastrophe of catastrophes">
                     <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
                     }}</time>:
                     <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
@@ -40,30 +41,43 @@
 </template>
 
 <script lang="ts">
-
-import { Catastrophe, CatastropheType, formatDescription, getIconUrl, getTypeName } from '@/models/catastrophes';
-import { useStore, CURRENT_YEAR } from '@/stores/store';
-import { defineComponent, ref } from 'vue';
+import { Catastrophe, CatastropheType, formatDescription, getTypeName } from '@/models/catastrophes';
+import { CURRENT_YEAR } from '@/models/constants';
+import { useCatastropheStore } from '@/stores/catastrophes';
 import { Collapse } from 'bootstrap';
+import { defineComponent, ref } from 'vue';
+
 
 export default defineComponent({
     emits: ['onRequestCatastropheFocus'],
-    setup() {
-        const store = useStore();
-        const catastropheTypes = Object.values(CatastropheType);
-        const catastrophesElem = ref<HTMLElement | null>(null);
-        return { store, catastropheTypes, catastrophesElem };
+    props: {
+        year: {
+            type: Number,
+            default: CURRENT_YEAR
+        },
+        district: {
+            type: Number,
+            default: 0
+        },
     },
-    data() {
+    setup() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
             day: '2-digit',
             month: '2-digit'
         });
+        const catastropheTypes = Object.values(CatastropheType);
+        const catastropheStore = useCatastropheStore();
+        const catastrophesElem = ref<HTMLElement | null>(null);
+        const catastropheType = ref<CatastropheType | ''>('');
+
         return {
             formatDescription,
-            getIconUrl,
             getTypeName,
+            catastropheTypes,
             dateFormat,
+            catastrophesElem,
+            catastropheType,
+            catastropheStore
         }
     },
     mounted() {
@@ -76,38 +90,29 @@ export default defineComponent({
             }
         }
     },
+    computed: {
+        catastrophes() {
+            const catastrophes = this.catastropheStore.findCatastrophes(this.year, this.district);
+            if(this.catastropheType) {
+                return catastrophes.filter(x => x.type === this.catastropheType);
+            }
+            return catastrophes;
+        },
+        showCatastrophes() {
+            return this.year <= CURRENT_YEAR;
+        }
+    },
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
-        showCatastrophes() {
-            return this.store.year <= CURRENT_YEAR;
-        }
     }
-})
+});
 </script>
 
 <style scoped>
-
 #catastrophes {
     min-height: 0;
     overflow-y: auto;
 }
-
-/* TODO: either remove collapsing, or move to global css classes for re-use. */
-.card-header .bi {
-    transition: .3s transform ease-in-out;
-    margin-right: 5px;
-}
-
-.card-header .collapsed .bi {
-    transform: rotate(180deg);
-}
-
-.card-header a[data-bs-toggle="collapse"] {
-    all: unset;
-    /* remove styling on toggling hyperlink */
-}
-
 </style>
-
