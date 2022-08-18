@@ -10,7 +10,7 @@ export const useStatisticStore = defineStore('statisticStore', {
     state: () => {
         return {
             statistics: Map<number, YearlyStatistics>(),
-            temperatureTargetPerRegion: Map<number, number>()
+            temperatureTargetYearPerRegion: Map<number, number>()
         };
     },
     getters: {
@@ -29,11 +29,11 @@ export const useStatisticStore = defineStore('statisticStore', {
             return {};
         },
         getYearOverTarget: state => (district: number): number | undefined => {
-            let year = state.temperatureTargetPerRegion.get(district);
+            let year = state.temperatureTargetYearPerRegion.get(district);
             if (year === undefined) {
                 const region = findRegionByDistrict(district);
                 if (region) {
-                    year = state.temperatureTargetPerRegion.get(region.id);
+                    year = state.temperatureTargetYearPerRegion.get(region.id);
                 }
             }
             return year;
@@ -55,7 +55,7 @@ export const useStatisticStore = defineStore('statisticStore', {
             }
             {
                 const response = await axios.get<Record<string, number>>(`data/statistics/over_limit.json`);
-                this.temperatureTargetPerRegion = Map(Object.entries(response.data).map(([k, v]) => [parseInt(k), v]));
+                this.temperatureTargetYearPerRegion = Map(Object.entries(response.data).map(([k, v]) => [parseInt(k), v]));
             }
         }
     }
