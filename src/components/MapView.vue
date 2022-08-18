@@ -16,7 +16,7 @@ import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
-import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
+import { DistrictLayer, getIcons, setMapLayerColour } from "@/utils/map_helpers";
 export default defineComponent({
     emits: ["districtSelected"],
     props: {
@@ -85,10 +85,7 @@ export default defineComponent({
         const iconLayer = L.layerGroup();
         watch(() => props.catastrophes, catastrophes => {
             iconLayer.clearLayers();
-            for (const catastrophe of catastrophes) {
-                const marker = createMapMarker(catastrophe);
-                marker.addTo(iconLayer);
-            }
+            getIcons(props.year, catastrophes).addTo(iconLayer);
         });
         return { mapElement, map, mapLayer, iconLayer, statisticStore };
     },
