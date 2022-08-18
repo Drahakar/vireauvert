@@ -35,20 +35,21 @@ def collect_statistics(name):
 
 
 stat_files = {
-    'avg_temp': 'temperatures_moy_regions',
-    'avg_prec': 'precipitations_moy_regions',
-    'days_above_30': 'nb_jours_plus_30_deg',
-    'days_below_min_25': 'nb_jours_moins_25_deg'
+    'avg_temp': ['temperatures_moy_regions','temperatures_moy_nord'],
+    'avg_prec': ['precipitations_moy_regions'],
+    'days_above_30': ['nb_jours_plus_30_deg'],
+    'days_below_min_25': ['nb_jours_moins_25_deg']
 }
 
 result = {}
 
-for prop, file_name in stat_files.items():
-    for year, statistics in collect_statistics(file_name).items():
-        for_year: dict = result.setdefault(year, {})
-        for region, value in statistics.items():
-            for_region = for_year.setdefault(str(region), {})
-            for_region[prop] = value
+for prop, file_names in stat_files.items():
+    for file_name in file_names:
+        for year, statistics in collect_statistics(file_name).items():
+            for_year: dict = result.setdefault(year, {})
+            for region, value in statistics.items():
+                for_region = for_year.setdefault(str(region), {})
+                for_region[prop] = value
 
 ref_year = result[1990]
 
