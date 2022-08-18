@@ -2,7 +2,6 @@
 import * as Sentry from "@sentry/vue";
 import {Tabs, Tab} from 'vue3-tabs-component';
 import { BrowserTracing } from "@sentry/tracing";
-import CallToAction from "./components/CallToAction.vue";
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
 import MapView from "./components/MapView.vue";
@@ -11,11 +10,13 @@ import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
 import { Catastrophe, getTypeName } from "./models/catastrophes";
-import { useStore, CURRENT_YEAR } from "./stores/store";
+import { useCandidateStore } from "./stores/candidates";
+import { useCatastropheStore } from "./stores/catastrophes";
+import { useStatisticStore } from "./stores/statistics";
+import { CURRENT_YEAR } from "./models/constants";
 
 export default defineComponent({
   components: {
-    CallToAction,
     CandidateList,
     CatastropheList,
     MapView,
@@ -25,38 +26,64 @@ export default defineComponent({
     Tabs,
     Timeline
   },
+  data() {
+    return {
+      district: 0,
+      year: CURRENT_YEAR,
+      catastropheFilter: '',
+    }
+  },
   setup() {
-    const store = useStore();
+    const candidateStore = useCandidateStore();
+    const catastropheStore = useCatastropheStore();
+    const statisticStore = useStatisticStore();
     const mobileMap = ref<InstanceType<typeof MapView> | null>(null);
     const desktopMap = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      mobileMap, desktopMap, store
+      mobileMap, desktopMap, candidateStore, catastropheStore, statisticStore
     };
   },
   methods: {
     focusCatastrophe(catastrophe: Catastrophe) {
-      // TODO: do this through event instead, see mitt library, then we don't
-      // need refs
+      // TODO: maybe do this through event instead, see mitt library, then we
+      // don't need refs
       this.mobileMap?.focusCatastrophe(catastrophe);
       this.desktopMap?.focusCatastrophe(catastrophe);
     },
+    selectDistrict(id: number) {
+      this.district = id;
+    },
+    selectYear(year: number) {
+      this.year = year;
+    },
+    selectCatastropheType(catastropheType: string) {
+      this.catastropheFilter = catastropheType;
+    }
+  },
+  computed: {
+    catastrophesDisabled() {
+      return this.year > CURRENT_YEAR;
+    },
     catastrophesInfo() {
-      if (this.store.catastropheType) {
-        return 'Catastrophes affichées: ' + getTypeName(this.store.catastropheType);
-      } else if (!this.catastrophesDisabled()) {
-        const num = this.store.selectedData.catastrophes.size;
+      if (this.catastropheFilter) {
+        return 'Catastrophes affichées: ' + getTypeName(this.catastropheFilter);
+      } else if (!this.catastrophesDisabled) {
+        const num = this.catastrophes.size;
         const pluralized = 'catastrophe' + (num > 1 ? 's' : '');
-        return num.toString() + ' ' + pluralized + ' en ' + this.store.year.toString();
+        return num.toString() + ' ' + pluralized + ' en ' + this.year.toString();
       } else {
         return '';
       }
     },
-    catastrophesDisabled() {
-      return this.store.year > CURRENT_YEAR;
+    catastrophes() {
+      return this.catastropheStore.findCatastrophes(
+          this.year, this.district, this.catastropheFilter)
     }
   },
-  async mounted() {
-    await this.store.loadData();
+  async created() {
+    await this.candidateStore.loadCandidates();
+    await this.catastropheStore.loadCatastrophes();
+    await this.statisticStore.loadStatistics();
   }
 });
 
@@ -72,7 +99,7 @@ Sentry.init({
   <div id="main" class="container-fluid">
     <!-- Mobile layout -->
     <div class="d-md-none mobile-layout">
-      <RegionSearch></RegionSearch>
+      <RegionSearch :district="district" @district-selected="selectDistrict"></RegionSearch>
       <tabs class="d-md-none tabs"
         nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
         nav-item-link-class="nav-link" nav-item-link-active-class="active"
@@ -80,21 +107,25 @@ Sentry.init({
         panels-wrapper-class="flex-grow-1"
         :options="{ useUrlFragment: false }">
         <tab name="Carte" :selected="true" panel-class="tab-panel">
-          <Timeline class="timeline"></Timeline>
-          <MapView class="map-view flex-grow-1" ref="mobileMap"></MapView>
-          <span>{{catastrophesInfo()}}</span>
-          <Statistics></Statistics>
+          <Timeline class="timeline" :year="year" @year-selected="selectYear"></Timeline>
+          <MapView ref="mobileMap" class="map-view flex-grow-1"
+            :district="district" :year="year"
+            :catastrophes="catastrophes"
+            @district-selected="selectDistrict"></MapView>
+          <span>{{catastrophesInfo}}</span>
+          <Statistics :district="district" :year="year"></Statistics>
         </tab>
         <tab name="Catastrophes" panel-class="tab-panel"
-          :is-disabled="catastrophesDisabled()">
-          <Timeline class="timeline"></Timeline>
+          :is-disabled="catastrophesDisabled">
+          <Timeline class="timeline" :year="year" @year-selected="selectYear"></Timeline>
           <CatastropheList class="flex-grow-1"
-            @on-request-catastrophe-focus="focusCatastrophe">
+            :year="year" :district="district"
+            @on-request-catastrophe-focus="focusCatastrophe"
+            @on-filter-catastrophes="selectCatastropheType">
           </CatastropheList>
         </tab>
         <tab name="Candidat(e)s" panel-class="tab-panel">
-          <CandidateList></CandidateList>
-          <CallToAction class="call-to-action"></CallToAction>
+          <CandidateList :district="district"></CandidateList>
         </tab>
       </tabs>
     </div>
@@ -102,16 +133,22 @@ Sentry.init({
     <div class="d-none d-md-block desktop-layout">
       <div class="row">
         <div class="legend col-md-3" >
-          <RegionSearch></RegionSearch>
-          <Statistics></Statistics>
-          <CandidateList></CandidateList>
-          <CallToAction class="call-to-action"></CallToAction>
-          <CatastropheList @on-request-catastrophe-focus="focusCatastrophe"></CatastropheList>
+          <RegionSearch :district="district" @district-selected="selectDistrict"></RegionSearch>
+          <Statistics :district="district" :year="year"></Statistics>
+          <CandidateList :district="district"></CandidateList>
+          <CatastropheList class="flex-grow-1"
+            :year="year" :district="district"
+            @on-request-catastrophe-focus="focusCatastrophe"
+            @on-filter-catastrophes="selectCatastropheType">
+          </CatastropheList>
         </div>
-        <MapView ref="desktopMap" class="map-view col-md-9"></MapView>
+        <MapView ref="desktopMap" class="map-view col-md-9"
+          :district="district" :year="year"
+          :catastrophes="catastrophes"
+          @district-selected="selectDistrict"></MapView>
       </div>
       <div class="row">
-        <Timeline id="timeline"></Timeline>
+        <Timeline class="timeline" :year="year" @year-selected="selectYear"></Timeline>
       </div>
     </div>
   </div>
@@ -161,9 +198,6 @@ Sentry.init({
   flex-direction: column;
 }
 
-.call-to-action {
-  margin: 15px;
-}
 </style>
 
 <style> /* global */

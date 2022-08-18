@@ -18,6 +18,7 @@ export interface Catastrophe {
     type: CatastropheType;
     date: Date;
     severity: Severity;
+    district: number;
 }
 
 export enum Severity {
@@ -35,6 +36,7 @@ export interface CatastropheDocument {
     type: string;
     date: string;
     severity: Severity;
+    district: number;
 }
 
 export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
@@ -44,7 +46,8 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
         city: doc.city,
         type: doc.type as CatastropheType,
         date: new Date(doc.date),
-        severity: doc.severity
+        severity: doc.severity,
+        district: doc.district
     };
 }
 
@@ -83,14 +86,14 @@ function getSeverityDescription(severity: Severity) {
             return '';
     }
 }
-export function formatDescription(catastrope: Catastrophe) {
-    const plural = catastrope.type === CatastropheType.StormWinds;
-    const feminine = catastrope.type === CatastropheType.Flood || catastrope.type === CatastropheType.Tornado || catastrope.type === CatastropheType.FreezingRain;
+export function formatDescription(catastrophe: Catastrophe) {
+    const plural = catastrophe.type === CatastropheType.StormWinds;
+    const feminine = catastrophe.type === CatastropheType.Flood || catastrophe.type === CatastropheType.Tornado || catastrophe.type === CatastropheType.FreezingRain;
 
-    let severity = getSeverityDescription(catastrope.severity);
+    let severity = getSeverityDescription(catastrophe.severity);
     if (severity) {
-        severity = `${getTypeName(catastrope.type)} ${severity}`;
-        if (feminine && catastrope.severity != Severity.Extreme) {
+        severity = `${getTypeName(catastrophe.type)} ${severity}`;
+        if (feminine && catastrophe.severity != Severity.Extreme) {
             severity += 'e';
         }
         if (plural) {
