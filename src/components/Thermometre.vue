@@ -49,7 +49,7 @@ export default defineComponent({
 }
 
 #gradient div.step {
-    height: 8px;
+    height: 6px;
 }
 
 @media (min-width: 768px) {
