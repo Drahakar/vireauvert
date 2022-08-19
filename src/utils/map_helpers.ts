@@ -4,7 +4,6 @@ import { Catastrophe, formatDescription, CatastropheType, getIconUrl } from "@/m
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours, parseColour } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
-import { List } from "immutable";
 
 export interface DistrictLayer {
     feature: Feature<Geometry, DistrictProperties>;
@@ -14,26 +13,25 @@ export interface DistrictLayer {
 const unselectedStyle: L.PathOptions = {
     fillColor: '#cccccc',
     color: '#333333',
-    opacity: 0.5,
-    fillOpacity: 0.3,
+    opacity: 0.8,
+    fillOpacity: 0.5,
     weight: 1
 };
 const selectedStyle: L.PathOptions = {
     ...unselectedStyle,
-    fillColor: '#ffffff',
-    opacity: 0.7,
-    fillOpacity: 0.5,
+    opacity: 1,
+    fillOpacity: 0.7,
     weight: 2
 };
 
 export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta?: number) {
     let style = selected ? selectedStyle : unselectedStyle;
     if (tempDelta) {
-        const tempColour = temperatureGradient[getGradientColourIndex(tempDelta)];
-        const newColour = colourToHex(multiplyColours(parseColour(style.fillColor), tempColour));
+        let colour = temperatureGradient[getGradientColourIndex(tempDelta)];
+        colour = multiplyColours(colour, [1, 0, 0], 0.9);
         style = {
             ...style,
-            fillColor: newColour
+            fillColor: colourToHex(colour)
         };
     }
     layer.setStyle(style);

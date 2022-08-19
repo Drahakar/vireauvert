@@ -49,10 +49,10 @@ export function getGradientColourIndex(temperature: number) {
     return Math.min(temperatureGradient.length - 1, Math.max(0, Math.round((temperature + 1) * 10)));
 }
 
-export function multiplyColours(a: Colour, b: Colour): Colour {
+export function multiplyColours(base: Colour, add: Colour, ratio = 0.5): Colour {
     return [
-        Math.min(1, a[0] * b[0]),
-        Math.min(1, a[1] * b[1]),
-        Math.min(1, a[2] * b[2])
+        Math.min(1, (base[0] * ratio) + (add[0] * (1 - ratio))),
+        Math.min(1, (base[1] * ratio) + (add[1] * (1 - ratio))),
+        Math.min(1, (base[2] * ratio) + (add[2] * (1 - ratio)))
     ];
 }
