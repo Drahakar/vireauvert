@@ -53,8 +53,6 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 
 export const mapIcons = generateIcons();
 
-const iconCache = new Map<string, L.LayerGroup>();
-
 export function createMapMarker(catastrophe: Catastrophe) {
     const title = formatDescription(catastrophe);
     const marker = L.marker(catastrophe.location, {
