@@ -85,6 +85,11 @@ with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='ut
             candidate['facebook'] = facebook.strip()
         candidates.append(candidate)
 
+        if district_id == utils.UNGAVA_ID:
+            ungava_clone = candidate.copy()
+            ungava_clone['district'] = district_id + 1
+            candidates.append(ungava_clone)
+
 for leader in party_leaders:
     candidate = next(filter(lambda x: x['party'] == leader['party']
                      and x['district'] == leader['district'], candidates), None)
