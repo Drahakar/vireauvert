@@ -1,15 +1,17 @@
 <template>
-    <div id="gradient">
-        <div id="step-offset">
-            <div class="step" v-for="(colour, index) of gradientSteps"
-                :style="{ backgroundColor: colourToHex(colour) }">
-                <span class="marking" v-if="index % 10 === 0">{{ (index * 0.1) - 1 }} °C</span>
+    <div>
+        <div id="gradient">
+            <div id="step-offset">
+                <div class="step" v-for="(colour, index) of gradientSteps"
+                    :style="{ backgroundColor: colourToHex(colour) }">
+                    <span class="marking" v-if="index % 10 === 0">{{ (index * 0.1) - 1 }} °C</span>
+                </div>
+                <div class="selected-wrapper"
+                    :style="{ top: index ? `${(gradientSteps.length - (index + 1)) * 12}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
+                    <span class="selected"></span>
+                </div>
+                <div class="label">°C</div>
             </div>
-            <div class="selected-wrapper"
-                :style="{ top: index ? `${(gradientSteps.length - (index + 1)) * 12}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
-                <span class="selected"></span>
-            </div>
-            <div class="label">°C</div>
         </div>
     </div>
 </template>

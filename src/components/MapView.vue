@@ -3,9 +3,7 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <div id="thermo">
-            <Thermometre :statistics="selectedStatistics" :district="district"></Thermometre>
-        </div>
+        <Thermometre id="thermo" :statistics="selectedStatistics" :district="district"></Thermometre>à
     </div>
 </template>
 
