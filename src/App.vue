@@ -31,7 +31,7 @@ export default defineComponent({
     return {
       district: 0,
       year: CURRENT_YEAR,
-      catastropheFilter: '' as CatastropheType,
+      catastropheFilter: '' as CatastropheType | '',
     }
   },
   setup() {

@@ -78,7 +78,7 @@ export default defineComponent({
             // TODO: switch tab
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
-        filterCatastrophes(event) {
+        filterCatastrophes(event: Event) {
             const elem = event.target as HTMLSelectElement;
             this.$emit('onFilterCatastrophes', elem.value);
         }

@@ -1,4 +1,4 @@
-import { Catastrophe, CatastropheDocument, parseCatatrophe } from "@/models/catastrophes";
+import { Catastrophe, CatastropheDocument, CatastropheType, parseCatatrophe } from "@/models/catastrophes";
 import axios, { AxiosError } from "axios";
 import { List, Map } from "immutable";
 import { defineStore } from "pinia";
