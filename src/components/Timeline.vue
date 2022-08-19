@@ -2,8 +2,7 @@
     <div id="timeline" class="row">
         <div id="slidertitle" class="col-md-2">Année de recherche</div>
         <div id="slidercontainer" class="col-md-10">
-            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="yearsMarks"
-                :lazy="true" :adsorb="false">
+            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
             </vue-slider>
         </div>
     </div>
@@ -13,7 +12,7 @@
 import VueSlider from 'vue-slider-component'
 import { computed, defineComponent } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { TIMELINE_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, FUTURE_SCENARIO_YEAR1, FUTURE_SCENARIO_YEAR2 } from '@/models/constants';
+import { TIMELINE_YEARS, } from '@/models/constants';
 
 export default defineComponent({
     components: { VueSlider },
@@ -33,7 +32,7 @@ export default defineComponent({
     },
     data() {
         return {
-            yearsMarks: TIMELINE_YEARS.filter(x => x % 5 === 0),
+            marks: TIMELINE_YEARS.filter(x => x % 5 === 0),
             years: TIMELINE_YEARS
         }
     }

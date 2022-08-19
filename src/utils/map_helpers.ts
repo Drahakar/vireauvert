@@ -4,6 +4,7 @@ import { Catastrophe, formatDescription, CatastropheType, getIconUrl } from "@/m
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours, parseColour } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
+import { List } from "immutable";
 
 export interface DistrictLayer {
     feature: Feature<Geometry, DistrictProperties>;
@@ -13,7 +14,7 @@ export interface DistrictLayer {
 const unselectedStyle: L.PathOptions = {
     fillColor: '#cccccc',
     color: '#333333',
-    opacity: 0.5,    
+    opacity: 0.5,
     fillOpacity: 0.3,
     weight: 1
 };
@@ -52,7 +53,9 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 
 export const mapIcons = generateIcons();
 
-export function createMapMarker(catastrophe: Catastrophe) {
+const iconCache = new Map<string, L.LayerGroup>();
+
+function createMapMarker(catastrophe: Catastrophe) {
     const title = formatDescription(catastrophe);
     const marker = L.marker(catastrophe.location, {
         title: title,
@@ -60,4 +63,17 @@ export function createMapMarker(catastrophe: Catastrophe) {
     });
     marker.bindTooltip(title);
     return marker;
+}
+
+export function getIcons(year: number, catastrophes: List<Catastrophe>) {
+    let cached = iconCache.get(year.toString());
+    if (cached === undefined) {
+        cached = L.layerGroup();
+        for (const catastrophe of catastrophes) {
+            const marker = createMapMarker(catastrophe);
+            marker.addTo(cached);
+        }
+        iconCache.set(year.toString(), cached);
+    }
+    return cached;
 }
