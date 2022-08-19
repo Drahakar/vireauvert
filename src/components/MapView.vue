@@ -1,6 +1,6 @@
 <template>
     <div id="wrapper">
-        <div id="map" ref="mapElement"></div>
+        <div class="map" ref="mapElement"></div>
         <Thermometre :statistics="selectedStatistics"></Thermometre>
     </div>
 </template>
@@ -142,7 +142,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#map {
+.map {
     height: 100%;
 }
 </style>

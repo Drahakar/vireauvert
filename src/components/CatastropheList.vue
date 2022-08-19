@@ -1,42 +1,29 @@
 
 <template>
-    <div class="card" id="catastrophes" v-if="showCatastrophes">
+    <div class="card catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
-            <a data-bs-toggle="collapse" data-bs-target="#body-catastrophes" aria-expanded="true"
-                aria-controls="body-catastrophes" id="heading-catastrophes" class="d-block">
-                <i class="bi bi-chevron-up float-start"></i>
-                <span>
-                    Catastrophes
-                </span>
-                <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
-                <div>
-                    <small class="d-block float-end" v-if="catastropheType">{{
-                            getTypeName(catastropheType, true)
-                    }}</small>
-                    <small class="d-block float-end" v-else>Toutes</small>
-                </div>
-            </a>
+            <span>Catastrophes</span>
+            <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
-        <div id="body-catastrophes" class="collapse" aria-labelledby="heading-catastrophes" ref="catastrophesElem">
-            <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType">
-                <option value="">Toutes</option>
-                <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
-                        getTypeName(catastropheType, true)
-                }}</option>
-            </select>
-            <ul class="list-group list-group-flush overflow-auto">
-                <li class="list-group-item" v-for="catastrophe of catastrophes">
-                    <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
-                    }}</time>:
-                    <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                        <span>{{ formatDescription(catastrophe) }}</span>
-                        <span v-if="catastrophe.city">
-                            à {{ catastrophe.city }}
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <select class="form-select" aria-label="Type de catastrophe"
+            v-model="catastropheType" @input="filterCatastrophes">
+            <option value="">Toutes</option>
+            <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
+                    getTypeName(catastropheType, true)
+            }}</option>
+        </select>
+        <ul class="list-group list-group-flush overflow-auto">
+            <li class="list-group-item" v-for="catastrophe of catastrophes">
+                <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
+                }}</time>:
+                <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
+                    <span>{{ formatDescription(catastrophe) }}</span>
+                    <span v-if="catastrophe.city">
+                        à {{ catastrophe.city }}
+                    </span>
+                </a>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -44,12 +31,11 @@
 import { Catastrophe, CatastropheType, formatDescription, getTypeName } from '@/models/catastrophes';
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
-import { Collapse } from 'bootstrap';
 import { defineComponent, ref } from 'vue';
 
 
 export default defineComponent({
-    emits: ['onRequestCatastropheFocus'],
+    emits: ['onRequestCatastropheFocus', 'onFilterCatastrophes'],
     props: {
         year: {
             type: Number,
@@ -67,7 +53,6 @@ export default defineComponent({
         });
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
-        const catastrophesElem = ref<HTMLElement | null>(null);
         const catastropheType = ref<CatastropheType | ''>('');
 
         return {
@@ -75,28 +60,14 @@ export default defineComponent({
             getTypeName,
             catastropheTypes,
             dateFormat,
-            catastrophesElem,
             catastropheType,
             catastropheStore
         }
     },
-    mounted() {
-        if (this.catastrophesElem) {
-            const catastrophesCollapse = new Collapse(
-                this.catastrophesElem, { toggle: false });
-            // For large devices, expand catastrophes initially
-            if (window.innerWidth >= 768) {
-                catastrophesCollapse.show();
-            }
-        }
-    },
     computed: {
         catastrophes() {
-            const catastrophes = this.catastropheStore.findCatastrophes(this.year, this.district);
-            if(this.catastropheType) {
-                return catastrophes.filter(x => x.type === this.catastropheType);
-            }
-            return catastrophes;
+            return this.catastropheStore.findCatastrophes(
+                this.year, this.district, this.catastropheType);
         },
         showCatastrophes() {
             return this.year <= CURRENT_YEAR;
@@ -104,14 +75,19 @@ export default defineComponent({
     },
     methods: {
         requestCatastropheFocus(catastrophe: Catastrophe) {
+            // TODO: switch tab
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
+        filterCatastrophes(event: Event) {
+            const elem = event.target as HTMLSelectElement;
+            this.$emit('onFilterCatastrophes', elem.value);
+        }
     }
 });
 </script>
 
 <style scoped>
-#catastrophes {
+.catastrophes {
     min-height: 0;
     overflow-y: auto;
 }

@@ -47,7 +47,7 @@ export default defineComponent({
 
 #gradient .step {
     position: relative;
-    height: 8px;
+    height: 6px;
 }
 
 @media (min-width: 768px) {
