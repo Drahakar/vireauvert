@@ -13,6 +13,9 @@ import locale
 import utils
 import geojson
 from shapely import geometry
+import shapefile
+
+MIN_YEAR = 1990
 
 locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
@@ -115,7 +118,7 @@ def parse_new_line(line):
                 "location": [float(coord_y), float(coord_x)],
                 "city": municipalite,
                 "type": event['type'],
-                "date": date,
+                "date": date.date(),
                 "severity": severity
             }
     return None
@@ -128,7 +131,7 @@ def parse_old_line(line):
         severity = parse_old_severity(severite.upper())
         if severity >= event['min_severity']:
             date = datetime.strptime(date_observation, '%Y/%m/%d %H:%M:%S')
-            if date.year >= 2000:
+            if date.year >= MIN_YEAR:
                 location = cities.get(code_municipalite)
                 if location:
                     return {
@@ -136,7 +139,7 @@ def parse_old_line(line):
                         "location": location,
                         "city": nom,
                         "type": event['type'],
-                        "date": date,
+                        "date": date.date(),
                         "severity": severity
                     }
     return None
@@ -150,52 +153,39 @@ def parse_file(path, catastrophes, parser):
             if catastrophe:
                 catastrophes.append(catastrophe)
 
-def parse_kmz(path, catastrophes):
-    namespaces = {'kml': 'http://www.opengis.net/kml/2.2'}
-    with zipfile.ZipFile(path, 'r') as zip:
-        for zip_entry in zip.filelist:
-            if os.path.splitext(zip_entry.filename)[1] == '.kml':
-                with zip.open(zip_entry) as doc:
-                    kml = ET.parse(doc)
-                    for placemark in kml.iterfind('.//kml:Placemark', namespaces):
-                        description = placemark.find('kml:description', namespaces)
-                        soup = BeautifulSoup(description.text, 'html.parser')
-                        tables = soup.find_all('table')
-                        properties = {}
-                        for row in tables[1].find_all('tr'):
-                            [key, value] = row.find_all('td')
-                            properties[key.text.strip()] = value.text.strip()
+def parse_shp(path, catastrophes):
+    reader = shapefile.Reader(path)
+    for shape in reader.shapeRecords(['ANNEE', 'DATE_DEBUT', 'LATITUDE', 'LONGITUDE', 'CLE', 'SUP_HA']):
+        record = shape.record
+        if record.ANNEE >= MIN_YEAR:
+            severity = Severity.Unknown
+            match record.SUP_HA:
+                case ha if ha < 100:
+                    severity = Severity.Minor
+                case ha if ha >= 100 and ha < 1000:
+                    severity = Severity.Moderate
+                case ha if ha >= 1000 and ha < 10000:
+                    severity = Severity.Important
+                case ha if ha >= 10000:
+                    severity = Severity.Extreme
+            
+            if severity >= Severity.Important:
+                fire = {
+                    "id": str(int(record.CLE)),
+                    "location": [record.LATITUDE, record.LONGITUDE],
+                    "type": CatastropheType.ForestFire,
+                    "date": record.DATE_DEBUT,
+                    "severity": severity
+                }
+                catastrophes.append(fire)
 
-                        severity = Severity.Unknown
-                        match locale.atof(properties['SUP_HA']):
-                            case ha if ha < 100:
-                                severity = Severity.Minor
-                            case ha if ha >= 100 and ha < 1000:
-                                severity = Severity.Moderate
-                            case ha if ha >= 1000 and ha < 10000:
-                                severity = Severity.Important
-                            case ha if ha >= 10000:
-                                severity = Severity.Extreme
-                        
-                        if severity >= Severity.Important:
-                            fire = {
-                                "id": properties['CLE'],
-                                "location": [locale.atof(properties['LATITUDE']), locale.atof(properties['LONGITUDE'])],
-                                "type": CatastropheType.ForestFire,
-                                "date": datetime.strptime(properties['DATE_DEBUT'], '%Y-%m-%d'),
-                                "severity": severity
-                            }
-                            catastrophes.append(fire)
-
+    
 catastrophes = []
 
 parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
 parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
 
-fire_origin_directory = path.join(utils.source_directory, 'Feux_pt_ori')
-for file_path in os.listdir(fire_origin_directory):
-    if path.splitext(file_path)[1] == '.kmz':
-        parse_kmz(path.join(fire_origin_directory, file_path), catastrophes)
+parse_shp(path.join(utils.source_directory, 'Feux_pt_ori', 'FEUX_PT_ORI_1972_2021.shp'), catastrophes)
 
 catastrophes.sort(key=lambda x: x['date'])
 

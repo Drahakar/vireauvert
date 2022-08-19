@@ -35,20 +35,21 @@ def collect_statistics(name):
 
 
 stat_files = {
-    'avg_temp': 'temperatures_moy_regions',
-    'avg_prec': 'precipitations_moy_regions',
-    'days_above_30': 'nb_jours_plus_30_deg',
-    'days_below_min_25': 'nb_jours_moins_25_deg'
+    'avg_temp': ['temperatures_moy_regions', 'temperatures_moy_circs'],
+    'avg_prec': ['precipitations_moy_regions', 'precipitations_moy_circs'],
+    'days_above_30': ['nb_jours_plus_30_deg'],
+    'days_below_min_25': ['nb_jours_moins_25_deg_regions', 'nb_jours_moins_25_deg_circs']
 }
 
 result = {}
 
-for prop, file_name in stat_files.items():
-    for year, statistics in collect_statistics(file_name).items():
-        for_year: dict = result.setdefault(year, {})
-        for region, value in statistics.items():
-            for_region = for_year.setdefault(str(region), {})
-            for_region[prop] = value
+for prop, file_names in stat_files.items():
+    for file_name in file_names:
+        for year, statistics in collect_statistics(file_name).items():
+            for_year: dict = result.setdefault(year, {})
+            for region, value in statistics.items():
+                for_region = for_year.setdefault(str(region), {})
+                for_region[prop] = value
 
 ref_year = result[1990]
 
@@ -58,7 +59,8 @@ for year, data in result.items():
     if year > 1990:
         for region, statistics in data.items():
             if region in ref_year:
-                temp_delta = statistics['avg_temp'] - ref_year[region]['avg_temp']
+                temp_delta = statistics['avg_temp'] - \
+                    ref_year[region]['avg_temp']
                 statistics['temp_delta'] = temp_delta
                 if region not in first_above_1_5 and temp_delta >= 1.5:
                     first_above_1_5[region] = year

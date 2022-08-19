@@ -117,9 +117,9 @@ Sentry.init({
           <span :class="{invisible: catastrophesDisabled}">
               {{catastrophes.size}}
               <span v-if="catastropheFilter">
-                  {{getTypeName(catastropheFilter, catastrophes.size > 1).toLowerCase()}}
+                  {{getTypeName(catastropheFilter, catastrophes.size != 1).toLowerCase()}}
               </span>
-              <span v-else-if="catastrophes.size > 1">catastrophes</span>
+              <span v-else-if="catastrophes.size != 1">catastrophes</span>
               <span v-else>catastrophe</span>
               en {{year}}
           </span>
@@ -181,7 +181,7 @@ Sentry.init({
 }
 
 .map-view {
-  min-height: 300px;
+  min-height: 400px;
 }
 .desktop-layout .map-view {
   height: calc(100vh - 96px);

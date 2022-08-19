@@ -4,6 +4,7 @@ import { Catastrophe, formatDescription, CatastropheType, getIconUrl } from "@/m
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours, parseColour } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
+import { List } from "immutable";
 
 export interface DistrictLayer {
     feature: Feature<Geometry, DistrictProperties>;
@@ -13,7 +14,7 @@ export interface DistrictLayer {
 const unselectedStyle: L.PathOptions = {
     fillColor: '#cccccc',
     color: '#333333',
-    opacity: 0.5,    
+    opacity: 0.5,
     fillOpacity: 0.3,
     weight: 1
 };
@@ -51,6 +52,8 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 }
 
 export const mapIcons = generateIcons();
+
+const iconCache = new Map<string, L.LayerGroup>();
 
 export function createMapMarker(catastrophe: Catastrophe) {
     const title = formatDescription(catastrophe);

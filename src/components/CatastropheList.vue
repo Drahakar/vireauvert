@@ -2,16 +2,14 @@
 <template>
     <div class="card catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
-            <span>
-                Catastrophes
-            </span>
+            <span>Catastrophes</span>
             <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
         <select class="form-select" aria-label="Type de catastrophe"
             v-model="catastropheType" @input="filterCatastrophes">
             <option value="">Toutes</option>
             <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
-                    getTypeName(catastropheType)
+                    getTypeName(catastropheType, true)
             }}</option>
         </select>
         <ul class="list-group list-group-flush overflow-auto">
@@ -51,7 +49,7 @@ export default defineComponent({
     setup() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
             day: '2-digit',
-            month: '2-digit'
+            month: 'long'
         });
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
