@@ -1,6 +1,8 @@
 <template>
     <div id="wrapper">
-        <div class="map" ref="mapElement"></div>
+        <keep-alive>
+            <div class="map" ref="mapElement"></div>
+        </keep-alive>
         <Thermometre :statistics="selectedStatistics"></Thermometre>
     </div>
 </template>
