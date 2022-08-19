@@ -55,7 +55,7 @@ export const mapIcons = generateIcons();
 
 const iconCache = new Map<string, L.LayerGroup>();
 
-function createMapMarker(catastrophe: Catastrophe) {
+export function createMapMarker(catastrophe: Catastrophe) {
     const title = formatDescription(catastrophe);
     const marker = L.marker(catastrophe.location, {
         title: title,
@@ -63,17 +63,4 @@ function createMapMarker(catastrophe: Catastrophe) {
     });
     marker.bindTooltip(title);
     return marker;
-}
-
-export function getIcons(year: number, catastrophes: List<Catastrophe>) {
-    let cached = iconCache.get(year.toString());
-    if (cached === undefined) {
-        cached = L.layerGroup();
-        for (const catastrophe of catastrophes) {
-            const marker = createMapMarker(catastrophe);
-            marker.addTo(cached);
-        }
-        iconCache.set(year.toString(), cached);
-    }
-    return cached;
 }
