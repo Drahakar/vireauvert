@@ -11,7 +11,7 @@
                 <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
                 <div>
                     <small class="d-block float-end" v-if="catastropheType">{{
-                            getTypeName(catastropheType)
+                            getTypeName(catastropheType, true)
                     }}</small>
                     <small class="d-block float-end" v-else>Toutes</small>
                 </div>
@@ -21,7 +21,7 @@
             <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType">
                 <option value="">Toutes</option>
                 <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
-                        getTypeName(catastropheType)
+                        getTypeName(catastropheType, true)
                 }}</option>
             </select>
             <ul class="list-group list-group-flush overflow-auto">

@@ -51,25 +51,19 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
     };
 }
 
-export function getTypeName(type: CatastropheType) {
-    switch (type) {
-        case CatastropheType.Flood:
-            return 'Inondation';
-        case CatastropheType.ForestFire:
-            return 'Feu de forêt';
-        case CatastropheType.ViolentStorm:
-            return 'Orage violent';
-        case CatastropheType.Tornado:
-            return 'Tornade';
-        case CatastropheType.FreezingRain:
-            return 'Pluie verglaçante';
-        case CatastropheType.WinterStorm:
-            return 'Tempête hivernale';
-        case CatastropheType.StormWinds:
-            return 'Vents de tempête';
-        default:
-            return '';
-    }
+const typeNames = new Map<CatastropheType, [string, string]>([
+    [CatastropheType.Flood, ['Inondation', 'Inondations']],
+    [CatastropheType.ForestFire, ['Feu de forêt', 'Feux de forêt']],
+    [CatastropheType.ViolentStorm, ['Orage violent', 'Orages violents']],
+    [CatastropheType.Tornado, ['Tornade', 'Tornades']],
+    [CatastropheType.FreezingRain, ['Pluie verglaçante', 'Pluies verglaçantes']],
+    [CatastropheType.WinterStorm, ['Tempête hivernale', 'Tempêtes hivernales']],
+    [CatastropheType.StormWinds, ['Vent de tempête', 'Vents de tempête']],
+]);
+
+export function getTypeName(type: CatastropheType, plural = false) {
+    const names = typeNames.get(type);
+    return names ? names[plural ? 1 : 0] : '';
 }
 
 function getSeverityDescription(severity: Severity) {
