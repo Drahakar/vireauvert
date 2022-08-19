@@ -8,31 +8,21 @@
                 Statistiques
             </a>
         </h5>
-        <table id="body-statistics" class="table table-bordered table-sm collapse show" aria-labelledby="heading-statistics">
+        <table id="body-statistics" class="table table-bordered table-sm align-middle"
+            aria-labelledby="heading-statistics">
             <tbody>
-                <tr v-if="targetReachedOn !== undefined">
-                    <td><i class="bi bi-exclamation-triangle text-danger"></i>Année de dépassement du 1,5°C par rapport à 1990</td>
-                    <td class="fw-bold text-end">{{ targetReachedOn }}</td>
-                </tr>
-                <tr v-if="statistics.avg_temp != undefined">
-                    <td><i class="bi bi-thermometer-half"></i>Température moyenne</td>
-                    <td class="fw-bold text-end">{{ tempFormat.format(statistics.avg_temp) }}°C</td>
-                </tr>
-                <tr v-if="statistics.temp_delta != undefined">
-                    <td><i class="bi bi-thermometer-high"></i>Variation de la température moyenne depuis 1990</td>
-                    <td class="fw-bold text-end">{{ relativeTempFormat.format(statistics.temp_delta) }}°C</td>
-                </tr>
-                <tr v-if="statistics.avg_prec != undefined">
-                    <td><i class="bi bi-cloud-rain"></i>Précipitations totales</td>
-                    <td class="fw-bold text-end">{{ precFormat.format(statistics.avg_prec) }}&nbsp;mm</td>
-                </tr>
-                <tr v-if="statistics.days_above_30 != undefined">
-                    <td><i class="bi bi-thermometer-sun"></i>Nombres de jours au dessus de 30°C</td>
-                    <td class="fw-bold text-end">{{ dayCountFormat.format(statistics.days_above_30) }}</td>
-                </tr>
-                <tr v-if="statistics.days_below_min_25 != undefined">
-                    <td><i class="bi bi-thermometer-snow"></i>Nombres de jours sous -25°C</td>
-                    <td class="fw-bold text-end">{{ dayCountFormat.format(statistics.days_below_min_25) }}</td>
+                <tr v-for="template of templates" ref="rows"
+                    :style="{ visibility: statistics[template.key] !== undefined ? 'visible' : 'collapse' }">
+                    <td><i class="bi" :class="template.icon_classes"></i>{{ template.description }}
+                        <a class="link" role="button" tabindex="0" data-bs-container="body" data-bs-toggle="popover"
+                            data-bs-placement="right" data-bs-trigger="focus" :data-bs-content="template.help_text"
+                            v-if="template.help_text" :title="template.description">
+                            <i class="bi bi-question-circle-fill m-0"></i>
+                        </a>
+                    </td>
+                    <td class="text-end text-nowrap fw-bold">
+                        {{ formatStatistic(template, statistics) }}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -40,10 +30,10 @@
 </template>
 
 <script lang="ts">
-import { RegionStatistics } from '@/models/yearly_data';
 import { useStatisticStore } from '@/stores/statistics';
-import { defineComponent } from 'vue';
-
+import { allStatTemplates, ExtendedStatistics, formatStatistic } from '@/utils/stat_helpers';
+import { Popover } from 'bootstrap';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     props: {
@@ -57,36 +47,32 @@ export default defineComponent({
         }
     },
     setup() {
-        const store = useStatisticStore();
-        const tempOptions: Intl.NumberFormatOptions = {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
-        }
-        const tempFormat = new Intl.NumberFormat('fr-CA', tempOptions);
-        const relativeTempFormat = new Intl.NumberFormat('fr-CA', {
-            ...tempOptions, signDisplay: "always",
-        });
-        const precFormat = new Intl.NumberFormat('fr-CA', {
-            useGrouping: false,
-            maximumFractionDigits: 0
-        });
-        const dayCountFormat = new Intl.NumberFormat('fr-CA', {
-            maximumFractionDigits: 0
-        });
         return {
-            store,
-            tempFormat,
-            relativeTempFormat,
-            precFormat,
-            dayCountFormat
+            store: useStatisticStore(),
+            rows: ref<HTMLElement[]>([]),
+            templates: allStatTemplates,
+            popovers: [] as Popover[],
+            formatStatistic
         };
     },
+    mounted() {
+        this.popovers.length = 0;
+        for (const elem of this.rows) {
+            const button = elem.querySelector('[data-bs-toggle="popover"]');
+            if (button) {
+                const popover = new Popover(button, {
+                    html: true
+                });
+                this.popovers.push(popover);
+            }
+        }
+    },
     computed: {
-        statistics(): RegionStatistics {
-            return this.store.findStatistics(this.year, this.district);
-        },
-        targetReachedOn(): number | undefined {
-            return this.store.getYearOverTarget(this.district)
+        statistics(): ExtendedStatistics {
+            return {
+                ... this.store.findStatistics(this.year, this.district),
+                target_reached_on: this.store.getYearOverTarget(this.district)
+            }
         }
     }
 });
@@ -94,6 +80,7 @@ export default defineComponent({
 
 <style scoped>
 #body-statistics .bi {
-    margin-right: 1ch;
+    margin-right: 0.5ch;
+    font-size: 1.1em;
 }
 </style>
