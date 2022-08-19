@@ -3,7 +3,7 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <Thermometre :statistics="selectedStatistics"></Thermometre>
+        <Thermometre id="thermo" :statistics="selectedStatistics" :district="district"></Thermometre>à
     </div>
 </template>
 
@@ -149,7 +149,32 @@ export default defineComponent({
 }
 
 #wrapper {
-    overflow: hidden;
+    position: relative;
+}
+
+#thermo {
+    position: absolute;
+    z-index: 400;
+    right: 16px;
+    top: 16px;
+    max-height: calc(100% - 48px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(127, 127, 127, 0.7) rgba(255, 255, 255, 0.7);
+
+}
+
+#thermo::-webkit-scrollbar {
+    width: 4px;
+}
+
+#thermo::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+#thermo::-webkit-scrollbar-thumb {
+    background-color: rgba(127, 127, 127, 0.7);
+    border-radius: 4px;
 }
 </style>
 <style>
