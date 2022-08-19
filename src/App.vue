@@ -41,7 +41,8 @@ export default defineComponent({
     const mobileMap = ref<InstanceType<typeof MapView> | null>(null);
     const desktopMap = ref<InstanceType<typeof MapView> | null>(null);
     return {
-      mobileMap, desktopMap, candidateStore, catastropheStore, statisticStore
+      mobileMap, desktopMap, candidateStore, catastropheStore, statisticStore,
+      getTypeName
     };
   },
   methods: {
@@ -57,7 +58,7 @@ export default defineComponent({
     selectYear(year: number) {
       this.year = year;
     },
-    selectCatastropheType(catastropheType: CatastropheType) {
+    selectCatastropheType(catastropheType: CatastropheType | '') {
       this.catastropheFilter = catastropheType;
     }
   },
@@ -113,7 +114,15 @@ Sentry.init({
             :district="district" :year="year"
             :catastrophes="catastrophes"
             @district-selected="selectDistrict"></MapView>
-          <span>{{catastrophesInfo}}</span>
+          <span :class="{invisible: catastrophesDisabled}">
+              {{catastrophes.size}}
+              <span v-if="catastropheFilter">
+                  {{getTypeName(catastropheFilter, catastrophes.size > 1).toLowerCase()}}
+              </span>
+              <span v-else-if="catastrophes.size > 1">catastrophes</span>
+              <span v-else>catastrophe</span>
+              en {{year}}
+          </span>
           <Statistics :district="district" :year="year"></Statistics>
         </tab>
         <tab name="Catastrophes" panel-class="tab-panel"
@@ -191,6 +200,10 @@ Sentry.init({
 }
 .mobile-layout .timeline {
   padding-top: 0;
+}
+
+.invisible {
+  visibility: hidden;
 }
 
 .tabs {

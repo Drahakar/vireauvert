@@ -7,8 +7,8 @@
             </span>
             <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
-        <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType"
-            @input="(e) => $emit('onFilterCatastrophes', (e.target as HTMLSelectElement).value)">
+        <select class="form-select" aria-label="Type de catastrophe"
+            v-model="catastropheType" @input="filterCatastrophes">
             <option value="">Toutes</option>
             <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
                     getTypeName(catastropheType)
@@ -80,6 +80,10 @@ export default defineComponent({
             // TODO: switch tab
             this.$emit('onRequestCatastropheFocus', catastrophe);
         },
+        filterCatastrophes(event) {
+            const elem = event.target as HTMLSelectElement;
+            this.$emit('onFilterCatastrophes', elem.value);
+        }
     }
 });
 </script>
