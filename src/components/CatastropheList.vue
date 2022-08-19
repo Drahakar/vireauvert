@@ -63,7 +63,7 @@ export default defineComponent({
     setup() {
         const dateFormat = new Intl.DateTimeFormat('fr-CA', {
             day: '2-digit',
-            month: '2-digit'
+            month: 'long'
         });
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
