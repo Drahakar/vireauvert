@@ -145,6 +145,10 @@ export default defineComponent({
 .map {
     height: 100%;
 }
+
+#wrapper {
+    overflow: hidden;
+}
 </style>
 <style>
 .leaflet-control-container {
