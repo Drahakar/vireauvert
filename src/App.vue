@@ -5,7 +5,7 @@ import { defineComponent, reactive, ref } from "vue";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
-import { DEFAULT_FILTER, UserFilter } from "./models/user";
+import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import MobileApp from "./MobileApp.vue";
 import DesktopApp from "./DesktopApp.vue";
 
@@ -41,12 +41,12 @@ export default defineComponent({
             isDesktop.value = query.matches;
         });
 
-        const filter = reactive(DEFAULT_FILTER);
-        return { filter, loadingCompleted, isDesktop };
+        const state = reactive(DEFAULT_USER_STATE);
+        return { state, loadingCompleted, isDesktop };
     },
     methods: {
-        updateFilter(filter: UserFilter) {
-            this.filter = filter;
+        updateState(state: UserState) {
+            this.state = state;
         },
     }
 });
@@ -61,8 +61,8 @@ Sentry.init({
 
 <template>
     <div id="main" class="container-fluid">
-        <DesktopApp v-if="isDesktop" :filter="filter" @filter-changed="updateFilter"></DesktopApp>
-        <MobileApp v-else:filter="filter" @filter-changed="updateFilter"></MobileApp>
+        <DesktopApp v-if="isDesktop" :filter="state" @state-changed="updateState"></DesktopApp>
+        <MobileApp v-else:filter="filter" @state-changed="updateState"></MobileApp>
         <div id="loading-overlay" v-if="!loadingCompleted">
             <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
             <h3 class="mt-2">Chargement des données...</h3>

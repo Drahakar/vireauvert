@@ -9,7 +9,7 @@ import Timeline from "./components/Timeline.vue";
 import { computed, defineComponent, PropType, ref } from "vue";
 import { Catastrophe, CatastropheFilter, getTypeName } from "./models/catastrophes";
 import { CURRENT_YEAR } from "./models/constants";
-import { DEFAULT_FILTER, UserFilter } from "./models/user";
+import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import { useCatastropheStore } from "./stores/catastrophes";
 
 export default defineComponent({
@@ -21,23 +21,23 @@ export default defineComponent({
         Statistics,
         Timeline
     },
-    emits: ['filterChanged'],
+    emits: ['stateChanged'],
     props: {
-        filter: {
-            type: Object as PropType<UserFilter>,
-            default: DEFAULT_FILTER
+        userState: {
+            type: Object as PropType<UserState>,
+            default: DEFAULT_USER_STATE
         }
     },
     setup(props, { emit }) {
-        const currentFilter = computed({
-            get: () => props.filter,
-            set: value => emit('filterChanged', value)
+        const currentState = computed({
+            get: () => props.userState,
+            set: value => emit('stateChanged', value)
         });
 
         const catastropheStore = useCatastropheStore();
         const map = ref<InstanceType<typeof MapView> | null>(null);
         return {
-            map, currentFilter, catastropheStore, getTypeName
+            map, currentState, catastropheStore, getTypeName
         };
     },
     methods: {
@@ -45,22 +45,22 @@ export default defineComponent({
             this.map?.focusCatastrophe(catastrophe);
         },
         selectDistrict(id: number) {
-            this.currentFilter.district = id;
+            this.currentState.district = id;
         },
         selectYear(year: number) {
-            this.currentFilter.year = year;
+            this.currentState.year = year;
         },
         selectCatastropheType(catastropheType: CatastropheFilter) {
-            this.currentFilter.catastrophe = catastropheType;
+            this.currentState.catastrophe = catastropheType;
         }
     },
     computed: {
         catastrophesDisabled(): boolean {
-            return this.currentFilter.year > CURRENT_YEAR;
+            return this.currentState.year > CURRENT_YEAR;
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.currentFilter.year, this.currentFilter.district, this.currentFilter.catastrophe)
+                this.currentState.year, this.currentState.district, this.currentState.catastrophe)
         }
     }
 });
@@ -70,18 +70,18 @@ export default defineComponent({
     <div class="d-md-block desktop-layout">
         <div class="row">
             <div class="legend col-md-3">
-                <RegionSearch :district="currentFilter.district" @district-selected="selectDistrict"></RegionSearch>
-                <Statistics :district="currentFilter.district" :year="currentFilter.year"></Statistics>
-                <CandidateList :district="currentFilter.district"></CandidateList>
-                <CatastropheList class="flex-grow-1" :year="currentFilter.year" :district="currentFilter.district"
+                <RegionSearch :district="currentState.district" @district-selected="selectDistrict"></RegionSearch>
+                <Statistics :district="currentState.district" :year="currentState.year"></Statistics>
+                <CandidateList :district="currentState.district"></CandidateList>
+                <CatastropheList class="flex-grow-1" :year="currentState.year" :district="currentState.district"
                     @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
                 </CatastropheList>
             </div>
-            <MapView ref="map" class="map-view col-md-9" :district="currentFilter.district" :year="currentFilter.year"
+            <MapView ref="map" class="map-view col-md-9" :district="currentState.district" :year="currentState.year"
                 :catastrophes="catastrophes" @district-selected="selectDistrict"></MapView>
         </div>
         <div class="row">
-            <Timeline class="timeline" :year="currentFilter.year" @year-selected="selectYear"></Timeline>
+            <Timeline class="timeline" :year="currentState.year" @year-selected="selectYear"></Timeline>
         </div>
     </div>
 </template>
