@@ -6,7 +6,7 @@ import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, reactive, ref } from "vue";
 import { Catastrophe, CatastropheFilter, getTypeName } from "./models/catastrophes";
 import { CURRENT_YEAR } from "./models/constants";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
@@ -21,23 +21,17 @@ export default defineComponent({
         Statistics,
         Timeline
     },
-    emits: ['stateChanged'],
     props: {
         userState: {
             type: Object as PropType<UserState>,
             default: DEFAULT_USER_STATE
         }
     },
-    setup(props, { emit }) {
-        const currentState = computed({
-            get: () => props.userState,
-            set: value => emit('stateChanged', value)
-        });
-
+    setup() {
         const catastropheStore = useCatastropheStore();
         const map = ref<InstanceType<typeof MapView> | null>(null);
         return {
-            map, currentState, catastropheStore, getTypeName
+            map, catastropheStore, getTypeName
         };
     },
     methods: {
@@ -45,28 +39,28 @@ export default defineComponent({
             this.map?.focusCatastrophe(catastrophe);
         },
         selectDistrict(id: number) {
-            this.currentState.district = id;
+            this.userState.district = id;
         },
         selectYear(year: number) {
-            this.currentState.year = year;
+            this.userState.year = year;
         },
         selectCatastropheType(catastropheType: CatastropheFilter) {
-            this.currentState.catastrophe = catastropheType;
+            this.userState.catastrophe = catastropheType;
         },
         mapMoved(location: [number, number]) {
-            this.currentState.location = location;
+            this.userState.location = location;
         },
         mapZoomed(zoom: number) {
-            this.currentState.zoom = zoom;
+            this.userState.zoom = zoom;
         }
     },
     computed: {
         catastrophesDisabled(): boolean {
-            return this.currentState.year > CURRENT_YEAR;
+            return this.userState.year > CURRENT_YEAR;
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.currentState.year, this.currentState.district, this.currentState.catastrophe)
+                this.userState.year, this.userState.district, this.userState.catastrophe)
         }
     }
 });
@@ -76,19 +70,19 @@ export default defineComponent({
     <div class="d-md-block desktop-layout">
         <div class="row">
             <div class="legend col-md-3">
-                <RegionSearch :district="currentState.district" @district-selected="selectDistrict"></RegionSearch>
-                <Statistics :district="currentState.district" :year="currentState.year"></Statistics>
-                <CandidateList :district="currentState.district"></CandidateList>
-                <CatastropheList class="flex-grow-1" :year="currentState.year" :district="currentState.district"
+                <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
+                <Statistics :district="userState.district" :year="userState.year"></Statistics>
+                <CandidateList :district="userState.district"></CandidateList>
+                <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
                     @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
                 </CatastropheList>
             </div>
-            <MapView ref="map" class="map-view col-md-9" :district="currentState.district" :year="currentState.year"
-                :catastrophes="catastrophes" @district-selected="selectDistrict" :location="currentState.location"
-                @location-changed="mapMoved" :zoom="currentState.zoom" @zoom-changed="mapZoomed"></MapView>
+            <MapView ref="map" class="map-view col-md-9" :district="userState.district" :year="userState.year"
+                :catastrophes="catastrophes" @district-selected="selectDistrict" :location="userState.location"
+                @location-changed="mapMoved" :zoom="userState.zoom" @zoom-changed="mapZoomed"></MapView>
         </div>
         <div class="row">
-            <Timeline class="timeline" :year="currentState.year" @year-selected="selectYear"></Timeline>
+            <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"></Timeline>
         </div>
     </div>
 </template>

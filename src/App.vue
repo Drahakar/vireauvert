@@ -1,7 +1,7 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, watch } from "vue";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
@@ -43,11 +43,6 @@ export default defineComponent({
 
         const state = reactive(DEFAULT_USER_STATE);
         return { state, loadingCompleted, isDesktop };
-    },
-    methods: {
-        updateState(state: UserState) {
-            this.state = state;
-        },
     }
 });
 
@@ -61,8 +56,8 @@ Sentry.init({
 
 <template>
     <div id="main" class="container-fluid">
-        <DesktopApp v-if="isDesktop" :filter="state" @state-changed="updateState"></DesktopApp>
-        <MobileApp v-else:filter="filter" @state-changed="updateState"></MobileApp>
+        <DesktopApp v-if="isDesktop" :userState="state"></DesktopApp>
+        <MobileApp v-else :userState="state"></MobileApp>
         <div id="loading-overlay" v-if="!loadingCompleted">
             <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
             <h3 class="mt-2">Chargement des données...</h3>

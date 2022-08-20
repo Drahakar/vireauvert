@@ -24,23 +24,17 @@ export default defineComponent({
         Tabs,
         Timeline
     },
-    emits: ['stateChanged'],
     props: {
-        filter: {
+        userState: {
             type: Object as PropType<UserState>,
             default: DEFAULT_USER_STATE
         }
     },
-    setup(props, { emit }) {
-        const currentState = computed({
-            get: () => props.filter,
-            set: value => emit('stateChanged', value)
-        });
-
+    setup() {
         const catastropheStore = useCatastropheStore();
         const map = ref<InstanceType<typeof MapView> | null>(null);
         return {
-            map, currentState, catastropheStore, getTypeName
+            map, catastropheStore, getTypeName
         };
     },
     methods: {
@@ -48,28 +42,28 @@ export default defineComponent({
             this.map?.focusCatastrophe(catastrophe);
         },
         selectDistrict(id: number) {
-            this.currentState.district = id;
+            this.userState.district = id;
         },
         selectYear(year: number) {
-            this.currentState.year = year;
+            this.userState.year = year;
         },
         selectCatastropheType(catastropheType: CatastropheFilter) {
-            this.currentState.catastrophe = catastropheType;
+            this.userState.catastrophe = catastropheType;
         },
         mapMoved(location: [number, number]) {
-            this.currentState.location = location;
+            this.userState.location = location;
         },
         mapZoomed(zoom: number) {
-            this.currentState.zoom = zoom;
+            this.userState.zoom = zoom;
         }
     },
     computed: {
         catastrophesDisabled(): boolean {
-            return this.currentState.year > CURRENT_YEAR;
+            return this.userState.year > CURRENT_YEAR;
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.currentState.year, this.currentState.district, this.currentState.catastrophe)
+                this.userState.year, this.userState.district, this.userState.catastrophe)
         }
     }
 });
@@ -77,35 +71,35 @@ export default defineComponent({
 
 <template>
     <div class="mobile-layout">
-        <RegionSearch :district="currentState.district" @district-selected="selectDistrict"></RegionSearch>
+        <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
         <tabs class="tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
-                <Timeline class="timeline" :year="currentState.year" @year-selected="selectYear"></Timeline>
-                <MapView ref="mobileMap" class="map-view flex-grow-1" :district="currentState.district"
-                    :year="currentState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
-                    :location="currentState.location" @location-changed="mapMoved" :zoom="currentState.zoom"
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"></Timeline>
+                <MapView ref="mobileMap" class="map-view flex-grow-1" :district="userState.district"
+                    :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
+                    :location="userState.location" @location-changed="mapMoved" :zoom="userState.zoom"
                     @zoom-changed="mapZoomed"></MapView>
                 <span :class="{ invisible: catastrophesDisabled }">
                     {{ catastrophes.size }}
-                    <span v-if="currentState.catastrophe">
-                        {{ getTypeName(currentState.catastrophe, catastrophes.size != 1).toLowerCase() }}
+                    <span v-if="userState.catastrophe">
+                        {{ getTypeName(userState.catastrophe, catastrophes.size != 1).toLowerCase() }}
                     </span>
                     <span v-else-if="catastrophes.size != 1">catastrophes</span>
                     <span v-else>catastrophe</span>
-                    en {{ currentState.year }}
+                    en {{ userState.year }}
                 </span>
-                <Statistics :district="currentState.district" :year="currentState.year"></Statistics>
+                <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>
             <tab name="Catastrophes" panel-class="tab-panel" :is-disabled="catastrophesDisabled">
-                <Timeline class="timeline" :year="currentState.year" @year-selected="selectYear"></Timeline>
-                <CatastropheList class="flex-grow-1" :year="currentState.year" :district="currentState.district"
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"></Timeline>
+                <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
                     @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
                 </CatastropheList>
             </tab>
             <tab name="Candidat(e)s" panel-class="tab-panel">
-                <CandidateList :district="currentState.district"></CandidateList>
+                <CandidateList :district="userState.district"></CandidateList>
             </tab>
         </tabs>
     </div>
