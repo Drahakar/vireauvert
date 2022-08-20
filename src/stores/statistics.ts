@@ -1,8 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Map } from "immutable";
 import { defineStore } from "pinia";
-import * as Sentry from "@sentry/vue";
-import { TIMELINE_YEARS } from "@/models/constants";
 import { parseYearlyStatistics, RegionStatistics, YearlyStatistics, YearlyStatisticsDocument } from "@/models/yearly_data";
 import { findRegionByDistrict } from "@/models/regions";
 
@@ -41,22 +39,16 @@ export const useStatisticStore = defineStore('statisticStore', {
     },
     actions: {
         async loadStatistics() {
-            for (const year of TIMELINE_YEARS) {
-                try {
-                    const response = await axios.get<YearlyStatisticsDocument>(`data/statistics/${year}.json`);
-                    const statistics = parseYearlyStatistics(response.data);
-                    this.statistics = this.statistics.set(year, statistics);
-                }
-                catch (err) {
-                    if (!(err instanceof AxiosError) || !err.response || err.response.status !== 404) {
-                        Sentry.captureException(err);
-                    }
-                }
+            const response = await axios.get<{
+                statistics: { [year: string]: YearlyStatisticsDocument },
+                over_target: { [id: string]: number }
+            }>(`data/statistics.json`);
+
+            for (const [year, doc] of Object.entries(response.data.statistics)) {
+                const statistics = parseYearlyStatistics(doc);
+                this.statistics = this.statistics.set(parseInt(year, 10), statistics);
             }
-            {
-                const response = await axios.get<Record<string, number>>(`data/statistics/over_limit.json`);
-                this.temperatureTargetYearPerRegion = Map(Object.entries(response.data).map(([k, v]) => [parseInt(k), v]));
-            }
+            this.temperatureTargetYearPerRegion = Map(Object.entries(response.data.over_target).map(([k, v]) => [parseInt(k), v]));
         }
     }
 })

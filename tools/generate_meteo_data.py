@@ -53,6 +53,7 @@ for prop, file_names in stat_files.items():
 
 ref_year = result[1990]
 
+all_stats = {}
 first_above_1_5 = {}
 
 for year, data in result.items():
@@ -64,8 +65,11 @@ for year, data in result.items():
                 statistics['temp_delta'] = temp_delta
                 if region not in first_above_1_5 and temp_delta >= 1.5:
                     first_above_1_5[region] = year
-    with open(os.path.join(utils.destination_directory, 'statistics', '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
-        json.dump(data, output_file)
+    all_stats[str(year)] = data
 
-with open(os.path.join(utils.destination_directory, 'statistics', 'over_limit.json'), 'w', encoding='utf-8') as output_file:
-    json.dump(first_above_1_5, output_file)
+output = {
+    'statistics': all_stats,
+    'over_target': first_above_1_5
+}
+with open(os.path.join(utils.destination_directory, 'statistics.json'), 'w', encoding='utf-8') as output_file:
+    json.dump(output, output_file)
