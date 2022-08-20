@@ -9,12 +9,13 @@ import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { Catastrophe, CatastropheFilter, getTypeName } from "./models/catastrophes";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { CURRENT_YEAR } from "./models/constants";
+import { DEFAULT_FILTER } from "./models/user";
 
 export default defineComponent({
     components: {
@@ -26,13 +27,6 @@ export default defineComponent({
         Tab,
         Tabs,
         Timeline
-    },
-    data() {
-        return {
-            district: 0,
-            year: CURRENT_YEAR,
-            catastropheFilter: '' as CatastropheFilter,
-        }
     },
     setup() {
         const candidateStore = useCandidateStore();
@@ -55,9 +49,12 @@ export default defineComponent({
             }
         });
 
+        const filter = reactive(DEFAULT_FILTER);
+
         const mobileMap = ref<InstanceType<typeof MapView> | null>(null);
         const desktopMap = ref<InstanceType<typeof MapView> | null>(null);
         return {
+            filter,
             mobileMap,
             desktopMap,
             catastropheStore,
@@ -73,33 +70,22 @@ export default defineComponent({
             this.desktopMap?.focusCatastrophe(catastrophe);
         },
         selectDistrict(id: number) {
-            this.district = id;
+            this.filter.district = id;
         },
         selectYear(year: number) {
-            this.year = year;
+            this.filter.year = year;
         },
         selectCatastropheType(catastropheType: CatastropheFilter) {
-            this.catastropheFilter = catastropheType;
+            this.filter.catastrophe = catastropheType;
         }
     },
     computed: {
         catastrophesDisabled(): boolean {
-            return this.year > CURRENT_YEAR;
-        },
-        catastrophesInfo(): string {
-            if (this.catastropheFilter) {
-                return 'Catastrophes affichées: ' + getTypeName(this.catastropheFilter);
-            } else if (!this.catastrophesDisabled) {
-                const num = this.catastrophes.size;
-                const pluralized = 'catastrophe' + (num > 1 ? 's' : '');
-                return num.toString() + ' ' + pluralized + ' en ' + this.year.toString();
-            } else {
-                return '';
-            }
+            return this.filter.year > CURRENT_YEAR;
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.year, this.district, this.catastropheFilter)
+                this.filter.year, this.filter.district, this.filter.catastrophe)
         }
     }
 });
@@ -116,35 +102,35 @@ Sentry.init({
     <div id="main" class="container-fluid">
         <!-- Mobile layout -->
         <div class="d-md-none mobile-layout">
-            <RegionSearch :district="district" @district-selected="selectDistrict"></RegionSearch>
+            <RegionSearch :district="filter.district" @district-selected="selectDistrict"></RegionSearch>
             <tabs class="d-md-none tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
                 nav-item-link-class="nav-link" nav-item-link-active-class="active"
                 nav-item-link-disabled-class="disabled" panels-wrapper-class="flex-grow-1"
                 :options="{ useUrlFragment: false }">
                 <tab name="Carte" :selected="true" panel-class="tab-panel">
-                    <Timeline class="timeline" :year="year" @year-selected="selectYear"></Timeline>
-                    <MapView ref="mobileMap" class="map-view flex-grow-1" :district="district" :year="year"
+                    <Timeline class="timeline" :year="filter.year" @year-selected="selectYear"></Timeline>
+                    <MapView ref="mobileMap" class="map-view flex-grow-1" :district="filter.district" :year="filter.year"
                         :catastrophes="catastrophes" @district-selected="selectDistrict"></MapView>
                     <span :class="{ invisible: catastrophesDisabled }">
                         {{ catastrophes.size }}
-                        <span v-if="catastropheFilter">
-                            {{ getTypeName(catastropheFilter, catastrophes.size != 1).toLowerCase() }}
+                        <span v-if="filter.catastrophe">
+                            {{ getTypeName(filter.catastrophe, catastrophes.size != 1).toLowerCase() }}
                         </span>
                         <span v-else-if="catastrophes.size != 1">catastrophes</span>
                         <span v-else>catastrophe</span>
-                        en {{ year }}
+                        en {{ filter.year }}
                     </span>
-                    <Statistics :district="district" :year="year"></Statistics>
+                    <Statistics :district="filter.district" :year="filter.year"></Statistics>
                 </tab>
                 <tab name="Catastrophes" panel-class="tab-panel" :is-disabled="catastrophesDisabled">
-                    <Timeline class="timeline" :year="year" @year-selected="selectYear"></Timeline>
-                    <CatastropheList class="flex-grow-1" :year="year" :district="district"
+                    <Timeline class="timeline" :year="filter.year" @year-selected="selectYear"></Timeline>
+                    <CatastropheList class="flex-grow-1" :year="filter.year" :district="filter.district"
                         @on-request-catastrophe-focus="focusCatastrophe"
                         @on-filter-catastrophes="selectCatastropheType">
                     </CatastropheList>
                 </tab>
                 <tab name="Candidat(e)s" panel-class="tab-panel">
-                    <CandidateList :district="district"></CandidateList>
+                    <CandidateList :district="filter.district"></CandidateList>
                 </tab>
             </tabs>
         </div>
@@ -152,19 +138,19 @@ Sentry.init({
         <div class="d-none d-md-block desktop-layout">
             <div class="row">
                 <div class="legend col-md-3">
-                    <RegionSearch :district="district" @district-selected="selectDistrict"></RegionSearch>
-                    <Statistics :district="district" :year="year"></Statistics>
-                    <CandidateList :district="district"></CandidateList>
-                    <CatastropheList class="flex-grow-1" :year="year" :district="district"
+                    <RegionSearch :district="filter.district" @district-selected="selectDistrict"></RegionSearch>
+                    <Statistics :district="filter.district" :year="filter.year"></Statistics>
+                    <CandidateList :district="filter.district"></CandidateList>
+                    <CatastropheList class="flex-grow-1" :year="filter.year" :district="filter.district"
                         @on-request-catastrophe-focus="focusCatastrophe"
                         @on-filter-catastrophes="selectCatastropheType">
                     </CatastropheList>
                 </div>
-                <MapView ref="desktopMap" class="map-view col-md-9" :district="district" :year="year"
+                <MapView ref="desktopMap" class="map-view col-md-9" :district="filter.district" :year="filter.year"
                     :catastrophes="catastrophes" @district-selected="selectDistrict"></MapView>
             </div>
             <div class="row">
-                <Timeline class="timeline" :year="year" @year-selected="selectYear"></Timeline>
+                <Timeline class="timeline" :year="filter.year" @year-selected="selectYear"></Timeline>
             </div>
         </div>
         <div id="loading-overlay" v-if="!loadingCompleted">
