@@ -2,7 +2,7 @@
 <template>
     <div class="card catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
-            <span>Catastrophes</span>
+            <span>Événements extrêmes</span>
             <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
         <select class="form-select" aria-label="Type de catastrophe"
