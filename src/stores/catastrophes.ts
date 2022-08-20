@@ -24,7 +24,7 @@ export const useCatastropheStore = defineStore('catastropheStore', {
     actions: {
         async loadCatastrophes() {
             const response = await axios.get<{ [year: string]: CatastropheDocument[] }>(`data/catastrophes.json`);
-            for(const [year, docs] of Object.entries(response.data)) {
+            for (const [year, docs] of Object.entries(response.data)) {
                 const catastrophes = docs.map(parseCatatrophe);
                 this.catastrophes = this.catastrophes.set(parseInt(year, 10), List(catastrophes));
             }
