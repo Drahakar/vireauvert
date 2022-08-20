@@ -208,8 +208,7 @@ for catastrophe in catastrophes:
             obj['district'] = id
             break
     
-    result.setdefault(catastrophe['date'].year, []).append(obj)
+    result.setdefault(str(catastrophe['date'].year), []).append(obj)
 
-for year, catastrophes in result.items():    
-    with open(os.path.join(utils.destination_directory, 'catastrophes', '{}.json'.format(year)), 'w', encoding='utf-8') as output_file:
-        json.dump(catastrophes, output_file)
+with open(os.path.join(utils.destination_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
+    json.dump(result, output_file)

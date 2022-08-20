@@ -1,9 +1,7 @@
 import { Catastrophe, CatastropheDocument, CatastropheType, parseCatatrophe } from "@/models/catastrophes";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { List, Map } from "immutable";
 import { defineStore } from "pinia";
-import * as Sentry from "@sentry/vue";
-import { CURRENT_YEAR, MIN_CONTINUOUS_YEAR } from "@/models/constants";
 
 export const useCatastropheStore = defineStore('catastropheStore', {
     state: () => {
@@ -25,17 +23,10 @@ export const useCatastropheStore = defineStore('catastropheStore', {
     },
     actions: {
         async loadCatastrophes() {
-            for (let year = MIN_CONTINUOUS_YEAR; year <= CURRENT_YEAR; ++year) {
-                try {
-                    const response = await axios.get<CatastropheDocument[]>(`data/catastrophes/${year}.json`);
-                    const catastrophes = response.data.map(parseCatatrophe);
-                    this.catastrophes = this.catastrophes.set(year, List(catastrophes));
-                }
-                catch (err) {
-                    if (!(err instanceof AxiosError) || !err.response || err.response.status !== 404) {
-                        Sentry.captureException(err);
-                    }
-                }
+            const response = await axios.get<{ [year: string]: CatastropheDocument[] }>(`data/catastrophes.json`);
+            for (const [year, docs] of Object.entries(response.data)) {
+                const catastrophes = docs.map(parseCatatrophe);
+                this.catastrophes = this.catastrophes.set(parseInt(year, 10), List(catastrophes));
             }
         }
     }
