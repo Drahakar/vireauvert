@@ -1,5 +1,5 @@
 import { List, Map } from "immutable";
-import { Catastrophe, CatastropheType } from "./catastrophes";
+import { Catastrophe, CatastropheFilter } from "./catastrophes";
 
 export type YearlyStatistics = Map<number, RegionStatistics>;
 export const EMPTY_STATISTICS: YearlyStatistics = Map();
@@ -20,7 +20,7 @@ export function parseYearlyStatistics(doc: YearlyStatisticsDocument): YearlyStat
     return Map(Object.entries(doc).map(([region, stats]) => [parseInt(region), stats]));
 }
 
-export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, district: number, type: CatastropheType | ''): List<Catastrophe> {
+export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, district: number, type: CatastropheFilter): List<Catastrophe> {
     if (district === 0 && type === '') {
         return catastropes;
     }

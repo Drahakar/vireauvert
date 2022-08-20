@@ -8,6 +8,8 @@ export enum CatastropheType {
     StormWinds = "STORM_WINDS"
 }
 
+export type CatastropheFilter = CatastropheType | '';
+
 export interface Catastrophe {
     id: string;
     location: {

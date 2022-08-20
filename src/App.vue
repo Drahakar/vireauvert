@@ -10,7 +10,7 @@ import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, ref } from "vue";
-import { Catastrophe, CatastropheType, getTypeName } from "./models/catastrophes";
+import { Catastrophe, CatastropheFilter, getTypeName } from "./models/catastrophes";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
@@ -31,7 +31,7 @@ export default defineComponent({
         return {
             district: 0,
             year: CURRENT_YEAR,
-            catastropheFilter: '' as CatastropheType | '',
+            catastropheFilter: '' as CatastropheFilter,
         }
     },
     setup() {
@@ -78,7 +78,7 @@ export default defineComponent({
         selectYear(year: number) {
             this.year = year;
         },
-        selectCatastropheType(catastropheType: CatastropheType | '') {
+        selectCatastropheType(catastropheType: CatastropheFilter) {
             this.catastropheFilter = catastropheType;
         }
     },

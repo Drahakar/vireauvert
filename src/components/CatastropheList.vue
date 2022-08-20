@@ -1,4 +1,3 @@
-
 <template>
     <div class="card catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
@@ -28,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Catastrophe, CatastropheType, formatDescription, getTypeName } from '@/models/catastrophes';
+import { Catastrophe, CatastropheFilter, CatastropheType, formatDescription, getTypeName } from '@/models/catastrophes';
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { defineComponent, ref } from 'vue';
@@ -53,7 +52,7 @@ export default defineComponent({
         });
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
-        const catastropheType = ref<CatastropheType | ''>('');
+        const catastropheType = ref<CatastropheFilter>('');
 
         return {
             formatDescription,
