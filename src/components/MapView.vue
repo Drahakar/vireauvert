@@ -124,9 +124,9 @@ export default defineComponent({
                 maxZoom: MAX_ZOOM,
                 zoomControl: true
             });
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            L.tileLayer("https://geoegl.msp.gouv.qc.ca/carto/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=carte_gouv_qc_public&STYLE=default&TILEMATRIXSET=EPSG_3857&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fpng", {
                 maxZoom: 19,
-                attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
+                attribution: '<a href=\"https://www.quebec.ca/droit-auteur\">&copy; Gouvernement du Québec </a>'
             }).addTo(map);
             L.geoJSON(maskDataResponse.data, {
                 interactive: false,
