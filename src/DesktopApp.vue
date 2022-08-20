@@ -52,6 +52,12 @@ export default defineComponent({
         },
         selectCatastropheType(catastropheType: CatastropheFilter) {
             this.currentState.catastrophe = catastropheType;
+        },
+        mapMoved(location: [number, number]) {
+            this.currentState.location = location;
+        },
+        mapZoomed(zoom: number) {
+            this.currentState.zoom = zoom;
         }
     },
     computed: {
@@ -78,7 +84,8 @@ export default defineComponent({
                 </CatastropheList>
             </div>
             <MapView ref="map" class="map-view col-md-9" :district="currentState.district" :year="currentState.year"
-                :catastrophes="catastrophes" @district-selected="selectDistrict"></MapView>
+                :catastrophes="catastrophes" @district-selected="selectDistrict" :location="currentState.location"
+                @location-changed="mapMoved" :zoom="currentState.zoom" @zoom-changed="mapZoomed"></MapView>
         </div>
         <div class="row">
             <Timeline class="timeline" :year="currentState.year" @year-selected="selectYear"></Timeline>

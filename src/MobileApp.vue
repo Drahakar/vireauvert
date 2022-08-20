@@ -55,6 +55,12 @@ export default defineComponent({
         },
         selectCatastropheType(catastropheType: CatastropheFilter) {
             this.currentState.catastrophe = catastropheType;
+        },
+        mapMoved(location: [number, number]) {
+            this.currentState.location = location;
+        },
+        mapZoomed(zoom: number) {
+            this.currentState.zoom = zoom;
         }
     },
     computed: {
@@ -77,8 +83,10 @@ export default defineComponent({
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
                 <Timeline class="timeline" :year="currentState.year" @year-selected="selectYear"></Timeline>
-                <MapView ref="mobileMap" class="map-view flex-grow-1" :district="currentState.district" :year="currentState.year"
-                    :catastrophes="catastrophes" @district-selected="selectDistrict"></MapView>
+                <MapView ref="mobileMap" class="map-view flex-grow-1" :district="currentState.district"
+                    :year="currentState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
+                    :location="currentState.location" @location-changed="mapMoved" :zoom="currentState.zoom"
+                    @zoom-changed="mapZoomed"></MapView>
                 <span :class="{ invisible: catastrophesDisabled }">
                     {{ catastrophes.size }}
                     <span v-if="currentState.catastrophe">
