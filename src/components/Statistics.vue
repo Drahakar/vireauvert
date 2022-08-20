@@ -8,7 +8,7 @@
                 Statistiques
             </a>
         </h5>
-        <table id="body-statistics" class="table table-bordered table-sm" aria-labelledby="heading-statistics">
+        <table id="body-statistics" class="table table-bordered table-sm collapse show" aria-labelledby="heading-statistics">
             <tbody>
                 <tr v-if="targetReachedOn !== undefined">
                     <td><i class="bi bi-exclamation-triangle text-danger"></i>Année de dépassement du 1,5°C par rapport à 1990</td>

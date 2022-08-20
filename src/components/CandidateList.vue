@@ -2,10 +2,14 @@
 <template>
     <div class="card" v-if="!candidates.isEmpty()">
         <h5 class="card-header">
-            <span v-if="district">Candidat(e)s</span>
-            <span v-else>Chefs de partis</span>
+            <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true" aria-controls="body-candidates"
+                id="heading-candidates" class="d-block">
+                <i class="bi bi-chevron-up float-start"></i>
+                <template v-if="district">Candidat(e)s</template>
+                <template v-else>Chefs de partis</template>
+            </a>
         </h5>
-        <ul id="body-candidates" class="list-group list-group-flush" ref="candidates">
+        <ul id="body-candidates" class="list-group list-group-flush collapse show" ref="candidates">
             <li v-for="candidate of candidates" class="list-group-item candidate">
                 <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
                         candidate.party
