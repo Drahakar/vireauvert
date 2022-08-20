@@ -63,7 +63,8 @@ def format_phone(phone):
 candidates = []
 with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='utf-8') as input_file:
     reader = csv.reader(input_file)
-    next(reader, None)
+    next(reader, None) # "Dernière modification le..."
+    next(reader, None) # En-têtes de colonnes
 
     for line in reader:
         _,district,party,name,_,facebook,_,_,_ = line
