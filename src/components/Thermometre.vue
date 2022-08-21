@@ -1,23 +1,25 @@
 <template>
     <div>
         <div id="gradient">
+            <div class="label">°C</div>
             <div id="step-offset">
-                <div class="step" v-for="(colour, index) of gradientSteps"
+                <div class="step" v-for="colour of gradientSteps"
                     :style="{ backgroundColor: colourToHex(colour) }">
-                    <span class="marking" v-if="index % 10 === 0">{{ (index * 0.1) - 1 }} °C</span>
                 </div>
-                <div class="selected-wrapper"
-                    :style="{ top: index ? `${(gradientSteps.length - (index + 1)) * 12}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
-                    <span class="selected"></span>
+                <div v-for="marking of markings" class="marking text-nowrap text-end"
+                :style="{bottom: `calc(0.2em + ${marking.position * 8}px)`}">
+                    {{ marking.temp }}
                 </div>
-                <div class="label">°C</div>
+                <div class="selected"
+                    :style="{ bottom: index ? `${index * 8}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { getGradientColourIndex, temperatureGradient, colourToHex } from '@/utils/colours';
+import { getGradientColourIndex, temperatureGradient, colourToHex, gradientScale, minTemp } from '@/utils/colours';
 import { RegionStatistics } from '@/models/yearly_data';
 import { defineComponent, PropType } from 'vue';
 
@@ -36,7 +38,16 @@ export default defineComponent({
         return {};
     },
     data() {
-        return { gradientSteps: temperatureGradient, colourToHex };
+        const markingFormat = new Intl.NumberFormat('fr-CA', {
+            signDisplay: 'exceptZero'
+        })
+        const markings = Array.from(Array(Math.ceil(temperatureGradient.length * gradientScale)).keys()).map(x => {
+            return {
+                position: Math.floor(x / gradientScale),
+                temp: markingFormat.format(x + minTemp)
+            }
+        });
+        return { gradientSteps: temperatureGradient, markings, colourToHex };
     },
     computed: {
         index() {
@@ -48,11 +59,11 @@ export default defineComponent({
 
 <style scoped>
 #gradient {
-    width: 46px;
     min-height: 0;
 }
 
 #step-offset {
+    position: relative;
     margin-left: 4px;
     padding: 5px;
     display: flex;
@@ -62,25 +73,20 @@ export default defineComponent({
 
 .step {
     position: relative;
-    height: 6px;
+    height: 8px;
+    width: 3ch;
+    margin-right: calc(1ch + 4px);
 }
 
-@media (min-width: 768px) {
-
-    /* for devices >= 'md' */
-    .step {
-        height: 12px;
-    }
-}
-
-.step .marking {
+.marking {
     text-align: center;
     font-size: small;
     position: absolute;
-    top: -4px;
     width: 100%;
     height: 14px;
-    text-shadow: 0 0 3px #FFFFFF;
+    right: 2px;
+    line-height: 1em;
+    font-weight: bold;
 }
 
 .step+.step {
@@ -89,11 +95,13 @@ export default defineComponent({
 
 .label {
     font-weight: bold;
-    margin-bottom: 4px;
+    padding-bottom: 4px;
     text-align: center;
+    height: 24px;
+    margin-left: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
 }
-
-.selected {
+.selected{
     position: absolute;
     z-index: 1;
     left: -4px;
@@ -103,5 +111,7 @@ export default defineComponent({
     border-bottom: 6px solid transparent;
 
     border-left: 6px solid black;
+    margin-bottom: 3px;
 }
+
 </style>

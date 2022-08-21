@@ -158,6 +158,7 @@ export default defineComponent({
     right: 16px;
     top: 16px;
     max-height: calc(100% - 48px);
+    overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(127, 127, 127, 0.7) rgba(255, 255, 255, 0.7);

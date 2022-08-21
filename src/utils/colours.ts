@@ -29,9 +29,10 @@ function generateGradientSegment(a: string, b: string, count: number): Colour[] 
 }
 
 export const temperatureGradient: Colour[] = ([] as Colour[]).concat(
-    generateGradientSegment('#99BBFF', '#FFEEEE', 8),
-    generateGradientSegment('#FFEEEE', '#FFDD00', 5),
-    generateGradientSegment('#FFDD00', '#FF0000', 35),
+    generateGradientSegment('#99BBFF', '#FFEEEE', 15),
+    generateGradientSegment('#FFEEEE', '#FFDD00', 10),
+    generateGradientSegment('#FFDD00', '#FF0000', 42),
+    generateGradientSegment('#FF0000', '#360000', 10),
 );
 
 export function parseColour(value?: string): Colour {
@@ -45,8 +46,11 @@ export function parseColour(value?: string): Colour {
     ];
 }
 
+export const gradientScale = 0.1;
+export const minTemp = -1;
+
 export function getGradientColourIndex(temperature: number) {
-    return Math.min(temperatureGradient.length - 1, Math.max(0, Math.round((temperature + 1) * 10)));
+    return Math.min(temperatureGradient.length - 1, Math.max(0, Math.round((temperature - minTemp) / gradientScale)));
 }
 
 export function multiplyColours(base: Colour, add: Colour, ratio = 0.5): Colour {
