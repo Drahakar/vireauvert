@@ -30,8 +30,9 @@
 </template>
 
 <script lang="ts">
+import { useLocaleStore } from '@/stores/locale';
 import { useStatisticStore } from '@/stores/statistics';
-import { allStatTemplates, ExtendedStatistics, formatStatistic } from '@/utils/stat_helpers';
+import { allStatTemplates, ExtendedStatistics, StatTemplate } from '@/utils/stat_helpers';
 import { Popover } from 'bootstrap';
 import { defineComponent, ref } from 'vue';
 
@@ -49,10 +50,10 @@ export default defineComponent({
     setup() {
         return {
             store: useStatisticStore(),
+            localeStore: useLocaleStore(),
             rows: ref<HTMLElement[]>([]),
             templates: allStatTemplates,
-            popovers: [] as Popover[],
-            formatStatistic
+            popovers: [] as Popover[]
         };
     },
     mounted() {
@@ -73,6 +74,16 @@ export default defineComponent({
                 ... this.store.findStatistics(this.year, this.district),
                 target_reached_on: this.store.getYearOverTarget(this.district)
             }
+        }
+    },
+    methods: {
+        formatStatistic(template: StatTemplate, statistics: ExtendedStatistics) {
+            const value = statistics[template.key];
+            if (value !== undefined) {
+                const formatter = this.localeStore.getNumberFormat(template.formatter_options);
+                return formatter.format(value);
+            }
+            return '';
         }
     }
 });

@@ -3,12 +3,11 @@
         <div id="gradient">
             <div class="label">°C</div>
             <div id="step-offset">
-                <div class="step" v-for="colour of gradientSteps"
-                    :style="{ backgroundColor: colourToHex(colour) }">
+                <div class="step" v-for="colour of gradientSteps" :style="{ backgroundColor: colourToHex(colour) }">
                 </div>
                 <div v-for="marking of markings" class="marking text-nowrap text-end"
-                :style="{bottom: `calc(0.2em + ${marking.position * 8}px)`}">
-                    {{ marking.temp }}
+                    :style="{ bottom: `calc(0.2em + ${marking.position * 8}px)` }">
+                    {{ markingFormat.format(marking.temp) }}
                 </div>
                 <div class="selected"
                     :style="{ bottom: index ? `${index * 8}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
@@ -22,6 +21,7 @@
 import { getGradientColourIndex, temperatureGradient, colourToHex, gradientScale, minTemp } from '@/utils/colours';
 import { RegionStatistics } from '@/models/yearly_data';
 import { defineComponent, PropType } from 'vue';
+import { useLocaleStore } from '@/stores/locale';
 
 export default defineComponent({
     props: {
@@ -34,17 +34,15 @@ export default defineComponent({
             default: 0
         }
     },
-    setup(props) {
-        return {};
+    setup() {
+        const localeStore = useLocaleStore();
+        return { localeStore };
     },
     data() {
-        const markingFormat = new Intl.NumberFormat('fr-CA', {
-            signDisplay: 'exceptZero'
-        })
         const markings = Array.from(Array(Math.ceil(temperatureGradient.length * gradientScale)).keys()).map(x => {
             return {
                 position: Math.floor(x / gradientScale),
-                temp: markingFormat.format(x + minTemp)
+                temp: x + minTemp
             }
         });
         return { gradientSteps: temperatureGradient, markings, colourToHex };
@@ -52,6 +50,11 @@ export default defineComponent({
     computed: {
         index() {
             return this.statistics.temp_delta != undefined ? getGradientColourIndex(this.statistics.temp_delta) : undefined;
+        },
+        markingFormat() {
+            return this.localeStore.getNumberFormat({
+                signDisplay: 'exceptZero'
+            });
         }
     }
 })
@@ -101,7 +104,8 @@ export default defineComponent({
     margin-left: 4px;
     background-color: rgba(255, 255, 255, 0.7);
 }
-.selected{
+
+.selected {
     position: absolute;
     z-index: 1;
     left: -4px;
@@ -113,5 +117,4 @@ export default defineComponent({
     border-left: 6px solid black;
     margin-bottom: 3px;
 }
-
 </style>
