@@ -7,7 +7,7 @@
                 </div>
                 <div v-for="marking of markings" class="marking text-nowrap text-end"
                     :style="{ bottom: `calc(0.2em + ${marking.position * 8}px)` }">
-                    {{ markingFormat.format(marking.temp) }}
+                    {{ $n(marking.temp, 'compact_delta') }}
                 </div>
                 <div class="selected"
                     :style="{ bottom: index ? `${index * 8}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
@@ -21,7 +21,6 @@
 import { getGradientColourIndex, temperatureGradient, colourToHex, gradientScale, minTemp } from '@/utils/colours';
 import { RegionStatistics } from '@/models/yearly_data';
 import { defineComponent, PropType } from 'vue';
-import { useLocaleStore } from '@/stores/locale';
 
 export default defineComponent({
     props: {
@@ -33,10 +32,6 @@ export default defineComponent({
             type: Number,
             default: 0
         }
-    },
-    setup() {
-        const localeStore = useLocaleStore();
-        return { localeStore };
     },
     data() {
         const markings = Array.from(Array(Math.ceil(temperatureGradient.length * gradientScale)).keys()).map(x => {
@@ -51,11 +46,6 @@ export default defineComponent({
         index() {
             return this.statistics.temp_delta != undefined ? getGradientColourIndex(this.statistics.temp_delta) : undefined;
         },
-        markingFormat() {
-            return this.localeStore.getNumberFormat({
-                signDisplay: 'exceptZero'
-            });
-        }
     }
 })
 </script>

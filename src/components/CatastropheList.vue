@@ -1,24 +1,27 @@
 <template>
     <div class="card catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
-            <span>Événements extrêmes</span>
+            <span>{{ $t('catastrophes', 2) }}</span>
             <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
         <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType"
             @input="filterCatastrophes">
-            <option value="">Toutes</option>
+            <option value="">{{ $t('all', 2) }}</option>
             <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
-                    getTypeName(catastropheType, true)
+                    $t(`catastrophe_${catastropheType}`, 2)
             }}</option>
         </select>
         <ul class="list-group list-group-flush overflow-auto">
             <li class="list-group-item" v-for="catastrophe of catastrophes">
-                <time :datetime="catastrophe.date.toISOString()">{{ dateFormat.format(catastrophe.date)
-                }}</time>:
+                <time :datetime="catastrophe.date.toISOString()">
+                    {{ $d(catastrophe.date, 'event_date') }}
+                </time>:
                 <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                    <span>{{ formatDescription(catastrophe) }}</span>
-                    <span v-if="catastrophe.city">
-                        à {{ catastrophe.city }}
+                    <span>
+                        {{ $t('catastrophe_with_severity', { catastrophe }) }}
+                        <template v-if="catastrophe.city">
+                            {{ $t('at') }} {{ catastrophe.city }}
+                        </template>
                     </span>
                 </a>
             </li>
@@ -27,10 +30,9 @@
 </template>
 
 <script lang="ts">
-import { Catastrophe, CatastropheFilter, CatastropheType, formatDescription, getTypeName } from '@/models/catastrophes';
+import { Catastrophe, CatastropheFilter, CatastropheType } from '@/models/catastrophes';
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
-import { useLocaleStore } from '@/stores/locale';
 import { defineComponent, ref } from 'vue';
 
 
@@ -47,18 +49,14 @@ export default defineComponent({
         },
     },
     setup() {
-        const localeStore = useLocaleStore();
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
         const catastropheType = ref<CatastropheFilter>('');
 
         return {
-            formatDescription,
-            getTypeName,
             catastropheTypes,
             catastropheType,
-            catastropheStore,
-            localeStore
+            catastropheStore
         }
     },
     computed: {
@@ -68,12 +66,6 @@ export default defineComponent({
         },
         showCatastrophes() {
             return this.year <= CURRENT_YEAR;
-        },
-        dateFormat() {
-            return this.localeStore.getDateTimeFormat({
-                day: '2-digit',
-                month: 'long'
-            });
         }
     },
     methods: {

@@ -1,7 +1,7 @@
 <template>
-    <a v-if="active" class="btn btn-success"
-        href="https://www.vireauvert.org/envoipropositionspartispolitiques" role="button" target="_blank">
-        Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales
+    <a v-if="active" class="btn btn-success" href="https://www.vireauvert.org/envoipropositionspartispolitiques"
+        role="button" target="_blank">
+        {{ $t('call_to_action') }}
     </a>
 </template>
 

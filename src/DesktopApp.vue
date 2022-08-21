@@ -6,8 +6,8 @@ import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
-import { defineComponent, PropType, reactive, ref } from "vue";
-import { Catastrophe, CatastropheFilter, getTypeName } from "./models/catastrophes";
+import { defineComponent, PropType, ref } from "vue";
+import { Catastrophe, CatastropheFilter } from "./models/catastrophes";
 import { CURRENT_YEAR } from "./models/constants";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import { useCatastropheStore } from "./stores/catastrophes";
@@ -31,7 +31,7 @@ export default defineComponent({
         const catastropheStore = useCatastropheStore();
         const map = ref<InstanceType<typeof MapView> | null>(null);
         return {
-            map, catastropheStore, getTypeName
+            map, catastropheStore
         };
     },
     methods: {

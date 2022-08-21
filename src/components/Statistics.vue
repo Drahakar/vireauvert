@@ -5,7 +5,7 @@
             <a data-bs-toggle="collapse" href="#body-statistics" aria-expanded="true" aria-controls="body-statistics"
                 id="heading-statistics" class="d-block">
                 <i class="bi bi-chevron-up float-start"></i>
-                Statistiques
+                {{ $t('statistics') }}
             </a>
         </h5>
         <table id="body-statistics" class="table table-bordered table-sm align-middle"
@@ -13,10 +13,11 @@
             <tbody>
                 <tr v-for="template of templates" ref="rows"
                     :style="{ visibility: statistics[template.key] !== undefined ? 'visible' : 'collapse' }">
-                    <td><i class="bi" :class="template.icon_classes"></i>{{ template.description }}
-                        <a class="link" role="button" tabindex="0" data-bs-container="body" data-bs-toggle="popover"
-                            data-bs-placement="right" data-bs-trigger="focus" :data-bs-content="template.help_text"
-                            v-if="template.help_text" :title="template.description">
+                    <td><i class="bi" :class="template.icon_classes"></i>{{ $t(`statistic_${template.key}`) }}
+                        <a v-if="$t(`statistic_help_${template.key}`)" class="link" role="button" tabindex="0"
+                            data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right"
+                            data-bs-trigger="focus" :data-bs-content="$t(`statistic_help_${template.key}`)"
+                            :title="$t(`statistic_${template.key}`)">
                             <i class="bi bi-question-circle-fill m-0"></i>
                         </a>
                     </td>
@@ -30,7 +31,6 @@
 </template>
 
 <script lang="ts">
-import { useLocaleStore } from '@/stores/locale';
 import { useStatisticStore } from '@/stores/statistics';
 import { allStatTemplates, ExtendedStatistics, StatTemplate } from '@/utils/stat_helpers';
 import { Popover } from 'bootstrap';
@@ -50,7 +50,6 @@ export default defineComponent({
     setup() {
         return {
             store: useStatisticStore(),
-            localeStore: useLocaleStore(),
             rows: ref<HTMLElement[]>([]),
             templates: allStatTemplates,
             popovers: [] as Popover[]
@@ -80,8 +79,7 @@ export default defineComponent({
         formatStatistic(template: StatTemplate, statistics: ExtendedStatistics) {
             const value = statistics[template.key];
             if (value !== undefined) {
-                const formatter = this.localeStore.getNumberFormat(template.formatter_options);
-                return formatter.format(value);
+                return this.$n(value, template.format_name);
             }
             return '';
         }

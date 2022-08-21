@@ -6,64 +6,38 @@ export interface ExtendedStatistics extends RegionStatistics {
 
 export interface StatTemplate {
     key: keyof ExtendedStatistics;
-    description: string;
     icon_classes: string[]
-    formatter_options?: Intl.NumberFormatOptions;
-    help_text?: string;
+    format_name: string;
 }
-
-const tempOptions: Intl.NumberFormatOptions = {
-    style: 'unit',
-    unit: 'celsius',
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-}
-const dayCountFormat = {
-    maximumFractionDigits: 0
-};
 
 export const allStatTemplates: StatTemplate[] = [
     {
         key: 'target_reached_on',
-        description: 'Année de dépassement du 1,5°C par rapport à 1990',
-        formatter_options: { useGrouping: false },
+        format_name: 'integer',
         icon_classes: ['bi-exclamation-triangle', 'text-danger']
     },
     {
-        key: "avg_temp",
-        description: 'Température moyenne',
-        formatter_options: tempOptions,
+        key: 'avg_temp',
+        format_name: 'temperature',
         icon_classes: ['bi-thermometer-half']
     },
     {
         key: 'temp_delta',
-        description: 'Variation de la température moyenne depuis 1990',
-        formatter_options: {
-            ...tempOptions,
-            signDisplay: "always",
-        },
+        format_name: 'temperature_delta',
         icon_classes: ['bi-thermometer-high']
     },
     {
         key: 'avg_prec',
-        description: 'Précipitations totales',
-        formatter_options: {
-            useGrouping: false,
-            maximumFractionDigits: 0,
-            style: 'unit',
-            unit: 'millimeter'
-        },
+        format_name: 'precipitations',
         icon_classes: ['bi-cloud-rain']
     },
     {
         key: 'days_above_30',
-        description: 'Nombres de jours au dessus de 30°C',
-        formatter_options: dayCountFormat,
+        format_name: 'integer',
         icon_classes: ['bi-thermometer-sun']
     },
     {
         key: 'days_below_min_25',
-        description: 'Nombres de jours sous -25°C',
-        formatter_options: dayCountFormat,
+        format_name: 'integer',
         icon_classes: ['bi-thermometer-snow']
     }];

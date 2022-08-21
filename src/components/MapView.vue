@@ -19,6 +19,7 @@ import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
+import { useI18n } from "vue-i18n";
 
 const MIN_ZOOM = 5;
 
@@ -96,10 +97,11 @@ export default defineComponent({
             }
         });
         const iconLayer = L.layerGroup();
+        const i18n = useI18n();
         watch(() => props.catastrophes, catastrophes => {
             iconLayer.clearLayers();
             for (const catastrophe of catastrophes) {
-                const marker = createMapMarker(catastrophe);
+                const marker = createMapMarker(catastrophe, i18n);
                 marker.addTo(iconLayer);
             }
         });

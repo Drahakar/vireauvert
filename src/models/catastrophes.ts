@@ -1,3 +1,5 @@
+import { Composer } from "vue-i18n";
+
 export enum CatastropheType {
     Flood = "FLOOD",
     ForestFire = "FOREST_FIRE",
@@ -51,52 +53,6 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
         severity: doc.severity,
         district: doc.district
     };
-}
-
-const typeNames = new Map<CatastropheType, [string, string]>([
-    [CatastropheType.Flood, ['Inondation', 'Inondations']],
-    [CatastropheType.ForestFire, ['Feu de forêt', 'Feux de forêt']],
-    [CatastropheType.ViolentStorm, ['Orage violent', 'Orages violents']],
-    [CatastropheType.Tornado, ['Tornade', 'Tornades']],
-    [CatastropheType.FreezingRain, ['Pluie verglaçante', 'Pluies verglaçantes']],
-    [CatastropheType.WinterStorm, ['Tempête hivernale', 'Tempêtes hivernales']],
-    [CatastropheType.StormWinds, ['Vent de tempête', 'Vents de tempête']],
-]);
-
-export function getTypeName(type: CatastropheType, plural = false) {
-    const names = typeNames.get(type);
-    return names ? names[plural ? 1 : 0] : '';
-}
-
-function getSeverityDescription(severity: Severity) {
-    switch (severity) {
-        case Severity.Extreme:
-            return 'extrême';
-        case Severity.Important:
-            return 'important';
-        case Severity.Moderate:
-            return 'modéré';
-        case Severity.Minor:
-            return 'mineur';
-        default:
-            return '';
-    }
-}
-export function formatDescription(catastrophe: Catastrophe) {
-    const plural = catastrophe.type === CatastropheType.StormWinds;
-    const feminine = catastrophe.type === CatastropheType.Flood || catastrophe.type === CatastropheType.Tornado || catastrophe.type === CatastropheType.FreezingRain;
-
-    let severity = getSeverityDescription(catastrophe.severity);
-    if (severity) {
-        severity = `${getTypeName(catastrophe.type)} ${severity}`;
-        if (feminine && catastrophe.severity != Severity.Extreme) {
-            severity += 'e';
-        }
-        if (plural) {
-            severity += 's';
-        }
-    }
-    return severity;
 }
 
 export function getIconUrl(type: CatastropheType) {
