@@ -19,8 +19,11 @@ import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
+
+const MIN_ZOOM = 5;
+
 export default defineComponent({
-    emits: ["districtSelected"],
+    emits: ["districtSelected", 'locationChanged', 'zoomChanged'],
     props: {
         district: {
             type: Number,
@@ -33,6 +36,14 @@ export default defineComponent({
         catastrophes: {
             type: Object as PropType<List<Catastrophe>>,
             default: List()
+        },
+        location: {
+            type: Object as PropType<L.LatLngTuple>,
+            default: [0, 0]
+        },
+        zoom: {
+            type: Number,
+            default: MIN_ZOOM
         }
     },
     setup(props, { emit }) {
@@ -104,9 +115,9 @@ export default defineComponent({
             const mapDataResponse = await axios.get<Polygon>("data/carte_electorale.json", { responseType: "json" });
             const maskDataResponse = await axios.get<Polygon>("data/masque_electoral.json", { responseType: "json" });
             const map = new L.Map(this.mapElement, {
-                center: [45.5001, -73.5679],
-                zoom: 11,
-                minZoom: 5,
+                center: this.location,
+                zoom: this.zoom,
+                minZoom: MIN_ZOOM,
                 zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -124,6 +135,12 @@ export default defineComponent({
             this.mapLayer.addTo(map);
             this.iconLayer.addTo(map);
 
+            map.addEventListener('moveend', () => {
+                this.$emit('locationChanged', map.getCenter());
+            });
+            map.addEventListener('zoomend', () => {
+                this.$emit('zoomChanged', map.getZoom());
+            })
             this.map = map;
             this.map.setMaxBounds(this.mapLayer.getBounds());
             this.map.attributionControl.setPrefix("");
