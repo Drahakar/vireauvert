@@ -8,7 +8,8 @@ import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "vue-select/dist/vue-select.css";
 import { createI18n } from 'vue-i18n';
-import * as frCA from '@/locales/fr-CA';
+import frCA from '@/locales/fr-CA';
+import { datetimeFormats, numberFormats } from './locales/formats';
 
 const pinia = createPinia();
 
@@ -17,13 +18,13 @@ const i18n = createI18n({
     globalInjection: true,
     locale: 'fr-CA',
     messages: {
-        'fr-CA': frCA.messages
+        'fr-CA': frCA
     },
     numberFormats: {
-        'fr-CA': frCA.numberFormats
+        'fr-CA': numberFormats
     },
     datetimeFormats: {
-        'fr-CA': frCA.datetimeFormats
+        'fr-CA': datetimeFormats
     }
 });
 

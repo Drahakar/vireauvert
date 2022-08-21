@@ -1,12 +1,11 @@
 import { Catastrophe, CatastropheType, Severity } from "@/models/catastrophes";
-import { IntlDateTimeFormats, IntlNumberFormats } from "vue-i18n";
 import { MessageContext } from "@intlify/core-base";
 
 function isCatastropheFeminine(type: CatastropheType) {
     return type === CatastropheType.Flood || type === CatastropheType.Tornado || type === CatastropheType.FreezingRain;
 }
 
-export const messages = {
+export default {
     // General translations
     all: "Toute | Toutes",
     in_year: "en {year}",
@@ -94,39 +93,3 @@ export const messages = {
     // Timeline
     research_year: "Année de recherche",
 };
-
-export const numberFormats = {
-    temperature: {
-        style: 'unit',
-        unit: 'celsius',
-        minimumFractionDigits: 1,
-        maximumFractionDigits: 1,
-    },
-    temperature_delta: {
-        style: 'unit',
-        unit: 'celsius',
-        minimumFractionDigits: 1,
-        maximumFractionDigits: 1,
-        signDisplay: 'exceptZero'
-    },
-    precipitations: {
-        useGrouping: false,
-        maximumFractionDigits: 0,
-        style: 'unit',
-        unit: 'millimeter'
-    },
-    integer: {
-        useGrouping: false,
-        maximumFractionDigits: 0,
-    },
-    compact_delta: {
-        signDisplay: 'exceptZero'
-    }
-} as IntlNumberFormats;
-
-export const datetimeFormats = {
-    event_date: {
-        day: '2-digit',
-        month: 'long'
-    }
-} as IntlDateTimeFormats;
