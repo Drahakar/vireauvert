@@ -19,7 +19,7 @@ import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
-import { useI18n } from "vue-i18n";
+import { Composer, useI18n } from "vue-i18n";
 
 const MIN_ZOOM = 5;
 const MAX_ZOOM = 15;
@@ -104,15 +104,11 @@ export default defineComponent({
         const iconLayer = L.layerGroup();
         const i18n = useI18n();
         watch(() => props.catastrophes, catastrophes => {
-            iconLayer.clearLayers();
-            for (const catastrophe of catastrophes) {
-                const marker = createMapMarker(catastrophe, i18n);
-                marker.addTo(iconLayer);
-            }
+            refreshIcons(iconLayer, catastrophes, i18n);
         });
         const mapWrapper = ref<HTMLDivElement | null>(null);
         const mapResizeObserver = ref<ResizeObserver | null>(null);
-        return { mapElement, map, mapLayer, iconLayer, statisticStore, mapWrapper, mapResizeObserver };
+        return { mapElement, map, mapLayer, iconLayer, statisticStore, mapWrapper, mapResizeObserver, i18n };
     },
     computed: {
         selectedStatistics() {
@@ -143,6 +139,7 @@ export default defineComponent({
             }).addTo(map);
             this.mapLayer.addData(mapDataResponse.data);
             this.mapLayer.addTo(map);
+            refreshIcons(this.iconLayer, this.catastrophes, this.i18n);
             this.iconLayer.addTo(map);
 
             map.addEventListener('moveend', () => {
@@ -186,6 +183,14 @@ export default defineComponent({
     },
     components: { Thermometre }
 });
+
+function refreshIcons(iconLayer: L.LayerGroup, catastrophes: List<Catastrophe>, i18n: Composer) {
+    iconLayer.clearLayers();
+    for (const catastrophe of catastrophes) {
+        const marker = createMapMarker(catastrophe, i18n);
+        marker.addTo(iconLayer);
+    }
+}
 
 </script>
 
