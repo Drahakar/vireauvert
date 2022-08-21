@@ -17,12 +17,7 @@
                     {{ $d(catastrophe.date, 'event_date') }}
                 </time>:
                 <a href="#" @click.prevent="requestCatastropheFocus(catastrophe)">
-                    <span>
-                        {{ $t('catastrophe_with_severity', { catastrophe }) }}
-                        <template v-if="catastrophe.city">
-                            {{ $t('at') }} {{ catastrophe.city }}
-                        </template>
-                    </span>
+                    {{ $t('catastrophe_with_severity', { catastrophe, show_city: true }) }}
                 </a>
             </li>
         </ul>
