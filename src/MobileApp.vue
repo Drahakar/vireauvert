@@ -8,10 +8,11 @@ import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { computed, defineComponent, PropType, ref } from "vue";
-import { Catastrophe, CatastropheFilter, getTypeName } from "./models/catastrophes";
+import { Catastrophe, CatastropheFilter } from "./models/catastrophes";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { CURRENT_YEAR } from "./models/constants";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
+import { allDistricts } from './models/map';
 
 export default defineComponent({
     components: {
@@ -34,7 +35,8 @@ export default defineComponent({
         const catastropheStore = useCatastropheStore();
         const map = ref<InstanceType<typeof MapView> | null>(null);
         return {
-            map, catastropheStore, getTypeName
+            map,
+            catastropheStore
         };
     },
     methods: {
@@ -55,6 +57,9 @@ export default defineComponent({
         },
         mapZoomed(zoom: number) {
             this.userState.zoom = zoom;
+        },
+        getDistrictName(id: number) {
+            return allDistricts.find(x => x.id === id)?.name ?? '';
         }
     },
     computed: {
@@ -83,12 +88,14 @@ export default defineComponent({
                     @zoom-changed="mapZoomed"></MapView>
                 <span :class="{ invisible: catastrophesDisabled }">
                     {{ catastrophes.size }}
-                    <span v-if="userState.catastrophe">
-                        {{ getTypeName(userState.catastrophe, catastrophes.size != 1).toLowerCase() }}
+                    <span v-if="userState.catastrophe" class="text-lowercase">
+                        {{ $t(`catastrophe_${userState.catastrophe}`, catastrophes.size) }}
                     </span>
-                    <span v-else-if="catastrophes.size != 1">catastrophes</span>
-                    <span v-else>catastrophe</span>
-                    en {{ userState.year }}
+                    <span v-else class="text-lowercase"> {{ $t('catastrophes', catastrophes.size) }}</span>
+                    {{ $t('in') }} {{ userState.year }}
+                    <span v-if="userState.district">
+                        {{ $t('at') }} {{ getDistrictName(userState.district) }}
+                    </span>
                 </span>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>

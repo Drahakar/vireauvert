@@ -51,4 +51,4 @@ export const useStatisticStore = defineStore('statisticStore', {
             this.temperatureTargetYearPerRegion = Map(Object.entries(response.data.over_target).map(([k, v]) => [parseInt(k), v]));
         }
     }
-})
+});

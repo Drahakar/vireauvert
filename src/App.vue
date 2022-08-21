@@ -1,11 +1,11 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
-import { defineComponent, reactive, ref, watch } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
-import { DEFAULT_USER_STATE, UserState } from "./models/user";
+import { DEFAULT_USER_STATE } from "./models/user";
 import MobileApp from "./MobileApp.vue";
 import DesktopApp from "./DesktopApp.vue";
 
@@ -41,8 +41,11 @@ export default defineComponent({
             isDesktop.value = query.matches;
         });
 
-        const state = reactive(DEFAULT_USER_STATE);
-        return { state, loadingCompleted, isDesktop };
+        return {
+            state: reactive(DEFAULT_USER_STATE),
+            loadingCompleted,
+            isDesktop
+        };
     }
 });
 

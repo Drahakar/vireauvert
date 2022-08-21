@@ -5,15 +5,15 @@
             <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true" aria-controls="body-candidates"
                 id="heading-candidates" class="d-block">
                 <i class="bi bi-chevron-up float-start"></i>
-                <template v-if="district">Candidat(e)s</template>
-                <template v-else>Chefs de partis</template>
+                <template v-if="district">{{ $t('candidates') }}</template>
+                <template v-else>{{ $t('party_leaders') }}</template>
             </a>
         </h5>
         <ul id="body-candidates" class="list-group list-group-flush collapse show" ref="candidates">
             <li v-for="candidate of candidates" class="list-group-item candidate">
-                <span class="party" :class="candidate.party.toLowerCase()" :title="getPartyName(candidate.party)">{{
-                        candidate.party
-                }}</span>
+                <span class="party" :class="candidate.party.toLowerCase()" :title="$t(`party_${candidate.party}`)">
+                    {{ $t(`party_acro_${candidate.party}`) }}
+                </span>
                 <span class="name">{{ candidate.name }}</span>
                 <a :href="candidate.facebook" title="Facebook" target="_blank">
                     <i class="bi bi-facebook"></i>
@@ -25,7 +25,6 @@
 </template>
 
 <script lang="ts">
-import { getPartyName } from '@/models/candidates';
 import { useCandidateStore } from '@/stores/candidates';
 import { defineComponent } from 'vue';
 import CallToAction from './CallToAction.vue';
@@ -41,7 +40,7 @@ export default defineComponent({
     },
     setup() {
         const store = useCandidateStore();
-        return { store, getPartyName }
+        return { store }
     },
     computed: {
         candidates() {

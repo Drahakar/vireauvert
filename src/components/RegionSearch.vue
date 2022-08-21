@@ -2,7 +2,7 @@
     <v-select aria-label="Circonscription" :options="districtOptions" v-model="selectedDistrict" label="name"
         :reduce="getDistrictId" :clearable="false">
         <template #no-options="{ search, searching, loading }">
-            Désolé, aucune circonscription trouvée avec ce nom.
+            {{ $t('no_district_search_results') }}
         </template>
     </v-select>
 </template>
@@ -31,7 +31,8 @@ export default defineComponent({
     },
     computed: {
         districtOptions(): DistrictProperties[] {
-            return [{ id: 0, name: "Province de Québec" }].concat(allDistricts.toArray());
+            const options = [{ id: 0, name: this.$t('province_of_quebec') }].concat(allDistricts.toArray());
+            return options;
         },
     },
     methods: {
