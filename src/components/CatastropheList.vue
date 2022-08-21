@@ -5,8 +5,8 @@
             <span>Événements extrêmes</span>
             <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
         </h5>
-        <select class="form-select" aria-label="Type de catastrophe"
-            v-model="catastropheType" @input="filterCatastrophes">
+        <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType"
+            @input="filterCatastrophes">
             <option value="">Toutes</option>
             <option v-for="catastropheType of catastropheTypes" :value="catastropheType">{{
                     getTypeName(catastropheType, true)
@@ -31,6 +31,7 @@
 import { Catastrophe, CatastropheType, formatDescription, getTypeName } from '@/models/catastrophes';
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
+import { useLocaleStore } from '@/stores/locale';
 import { defineComponent, ref } from 'vue';
 
 
@@ -47,10 +48,7 @@ export default defineComponent({
         },
     },
     setup() {
-        const dateFormat = new Intl.DateTimeFormat('fr-CA', {
-            day: '2-digit',
-            month: 'long'
-        });
+        const localeStore = useLocaleStore();
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
         const catastropheType = ref<CatastropheType | ''>('');
@@ -59,9 +57,9 @@ export default defineComponent({
             formatDescription,
             getTypeName,
             catastropheTypes,
-            dateFormat,
             catastropheType,
-            catastropheStore
+            catastropheStore,
+            localeStore
         }
     },
     computed: {
@@ -71,6 +69,12 @@ export default defineComponent({
         },
         showCatastrophes() {
             return this.year <= CURRENT_YEAR;
+        },
+        dateFormat() {
+            return this.localeStore.getDateTimeFormat({
+                day: '2-digit',
+                month: 'long'
+            });
         }
     },
     methods: {
