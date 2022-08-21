@@ -1,5 +1,6 @@
 import { Catastrophe, CatastropheType, Severity } from "@/models/catastrophes";
-import { IntlDateTimeFormats, IntlNumberFormats, useI18n } from "vue-i18n";
+import { IntlDateTimeFormats, IntlNumberFormats } from "vue-i18n";
+import { MessageContext } from "@intlify/core-base";
 
 function isCatastropheFeminine(type: CatastropheType) {
     return type === CatastropheType.Flood || type === CatastropheType.Tornado || type === CatastropheType.FreezingRain;
@@ -8,8 +9,8 @@ function isCatastropheFeminine(type: CatastropheType) {
 export const messages = {
     // General translations
     all: "Toute | Toutes",
-    at: "à",
-    in: "en",
+    in_year: "en {year}",
+    at_location: "à {location}",
 
     // Catastrophes
 
@@ -29,15 +30,20 @@ export const messages = {
     severity_1: "mineur | mineure",
     severity_0: "inconnu | inconnue",
 
-    catastrophe_with_severity: ({ linked, named }: any) => {
-        const catastrophe: Catastrophe = named('catastrophe');
+    catastrophe_with_severity: ({ linked, named }: MessageContext) => {
+        const catastrophe = named('catastrophe') as Catastrophe;
 
         const translatedType = linked(`catastrophe_${catastrophe.type}`);
         let translatedSeverity = linked(`severity_${catastrophe.severity}`);
         if (isCatastropheFeminine(catastrophe.type) && catastrophe.severity !== Severity.Extreme) {
             translatedSeverity += 'e';
         }
-        return `${translatedType} ${translatedSeverity}`;
+
+        let result = `${translatedType} ${translatedSeverity}`;
+        if (named('show_city') && catastrophe.city) {
+            result += ` à ${catastrophe.city}`;
+        }
+        return result;
     },
 
     // Parties and candidates

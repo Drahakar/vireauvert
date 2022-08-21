@@ -81,7 +81,8 @@ export default defineComponent({
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
-                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :isMobile="true"></Timeline>
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :isMobile="true">
+                </Timeline>
                 <MapView ref="mobileMap" class="map-view flex-grow-1" :district="userState.district"
                     :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
                     :location="userState.location" @location-changed="mapMoved" :zoom="userState.zoom"
@@ -92,9 +93,9 @@ export default defineComponent({
                         {{ $t(`catastrophe_${userState.catastrophe}`, catastrophes.size) }}
                     </span>
                     <span v-else class="text-lowercase"> {{ $t('catastrophes', catastrophes.size) }}</span>
-                    {{ $t('in') }} {{ userState.year }}
+                    {{ $t('in_year', { year: userState.year }) }}
                     <span v-if="userState.district">
-                        {{ $t('at') }} {{ getDistrictName(userState.district) }}
+                        {{ $t('at_location', {location: getDistrictName(userState.district)}) }}
                     </span>
                 </span>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
