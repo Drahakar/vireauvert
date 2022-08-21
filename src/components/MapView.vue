@@ -22,6 +22,7 @@ import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_h
 import { useI18n } from "vue-i18n";
 
 const MIN_ZOOM = 5;
+const MAX_ZOOM = 15;
 
 export default defineComponent({
     emits: ["districtSelected", 'locationChanged', 'zoomChanged'],
@@ -120,6 +121,7 @@ export default defineComponent({
                 center: this.location,
                 zoom: this.zoom,
                 minZoom: MIN_ZOOM,
+                maxZoom: MAX_ZOOM,
                 zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
