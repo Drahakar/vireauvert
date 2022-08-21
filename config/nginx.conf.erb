@@ -10,8 +10,10 @@ events {
 
 http {
 	gzip on;
-	gzip_comp_level 2;
+	gzip_comp_level 6;
 	gzip_min_length 512;
+	gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+	gzip_vary on;
 	gzip_proxied any; # Heroku router sends Via header
 
 	server_tokens off;
@@ -30,6 +32,8 @@ http {
 
 	server {
 		listen <%= ENV["PORT"] %>;
+		charset UTF-8;
+		port_in_redirect off;
 		server_name _;
 		keepalive_timeout 5;
 		client_max_body_size <%= ENV['NGINX_CLIENT_MAX_BODY_SIZE'] || 1 %>M;
