@@ -18,6 +18,10 @@ export default defineComponent({
     components: { VueSlider },
     emits: ['yearSelected'],
     props: {
+        isMobile: {
+            type: Boolean,
+            default: false,
+        },
         year: {
             type: Number,
             default: 0
@@ -32,7 +36,7 @@ export default defineComponent({
     },
     data() {
         return {
-            marks: TIMELINE_YEARS.filter(x => x % 5 === 0),
+            marks: TIMELINE_YEARS.filter(x => x % (this.isMobile ? 10 : 5) === 0),
             years: TIMELINE_YEARS
         }
     }
