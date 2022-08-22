@@ -11,6 +11,11 @@
                     <div class="vue-slider-process" :style="[style, temperatureGradientStyle(end)]"></div>
                     <div class="vue-slider-process prevision-indicator" :style="[style, modeledYearsStyle]"></div>
                 </template>
+                <template v-slot:mark="{ pos, label }">
+                    <div class="vue-slider-mark" :style="{ left: `${pos}%` }">
+                        <div class="vue-slider-mark-label">{{ label }}</div>
+                    </div>
+                </template>
             </vue-slider>
             
         </div>
@@ -75,7 +80,7 @@ export default defineComponent({
     data() {
         const ratio = TIMELINE_YEARS.filter(x => x <= BEGIN_MODELED_YEAR).length/TIMELINE_YEARS.length;
         return {
-            marks: TIMELINE_YEARS.filter(x => x % (this.isMobile ? 10 : 5) === 0),
+            marks: TIMELINE_YEARS,
             years: TIMELINE_YEARS,
             modeledYearsStyle: [
                 'left:' + (ratio * 100) +'%', 
@@ -120,6 +125,25 @@ export default defineComponent({
 
 .vue-slider .vue-slider-process.prevision-indicator {    
     background: repeating-linear-gradient(to right, #ffffff, #ffffff 5px, transparent 2px, transparent 10px );
+}
+.vue-slider .vue-slider-marks .vue-slider-mark{
+    display:none;
+}
+
+@media screen and (min-width: 768px) {
+    .vue-slider .vue-slider-marks .vue-slider-mark:nth-child(5n+1),
+    .vue-slider .vue-slider-marks .vue-slider-mark:nth-last-child(2),
+    .vue-slider .vue-slider-marks .vue-slider-mark:last-child{
+        display:block;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .vue-slider .vue-slider-marks .vue-slider-mark:nth-child(10n+1),
+    .vue-slider .vue-slider-marks .vue-slider-mark:nth-last-child(2),
+    .vue-slider .vue-slider-marks .vue-slider-mark:last-child{
+        display:block;
+    }
 }
 
 .vue-slider .vue-slider-process {
