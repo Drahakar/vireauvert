@@ -46,6 +46,8 @@ export default {
         return result;
     },
 
+    no_future_catastrophes: "Les évênements extrêmes ne sont disponibles que pour les années passées",
+
     // Parties and candidates
 
     party_leaders: "Chefs de parti",

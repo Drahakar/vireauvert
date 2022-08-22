@@ -63,16 +63,16 @@ export default defineComponent({
         }
     },
     computed: {
-        catastrophesDisabled(): boolean {
-            return this.userState.year > CURRENT_YEAR;
-        },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
                 this.userState.year, this.userState.district, this.userState.catastrophe)
         },
         catastropheTabSuffix() {
             // Tab library we're using doesn't have slots, so we generate HTML by hand
-            return this.catastrophesDisabled ? '' : `<span class="badge rounded-pill bg-danger ms-2">${this.catastrophes.size}</span>`;
+            if (this.userState.year <= CURRENT_YEAR) {
+                return `<span class="badge rounded-pill bg-danger ms-2">${this.catastrophes.size}</span>`;
+            }
+            return '';
         }
     }
 });
@@ -93,8 +93,8 @@ export default defineComponent({
                     @zoom-changed="mapZoomed"></MapView>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>
-            <tab name="Catastrophes" panel-class="tab-panel" :is-disabled="catastrophesDisabled">
-                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :isMobile="true" :suffix="catastropheTabSuffix"></Timeline>
+            <tab name="Catastrophes" panel-class="tab-panel" :suffix="catastropheTabSuffix">
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :isMobile="true"></Timeline>
                 <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
                     @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
                 </CatastropheList>
