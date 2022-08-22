@@ -101,7 +101,7 @@ export default defineComponent({
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>
             <tab name="Catastrophes" panel-class="tab-panel" :is-disabled="catastrophesDisabled">
-                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"></Timeline>
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :isMobile="true"></Timeline>
                 <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
                     @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
                 </CatastropheList>
