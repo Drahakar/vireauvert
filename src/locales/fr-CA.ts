@@ -10,6 +10,7 @@ export default {
     all: "Toute | Toutes",
     in_year: "en {year}",
     at_location: "à {location}",
+    count_by_year: "{count} en {year}",
 
     // Catastrophes
 
@@ -44,6 +45,8 @@ export default {
         }
         return result;
     },
+
+    no_future_catastrophes: "Les évênements extrêmes ne sont disponibles que pour les années passées",
 
     // Parties and candidates
 

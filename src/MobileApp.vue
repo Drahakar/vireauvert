@@ -7,7 +7,7 @@ import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { Catastrophe, CatastropheFilter } from "./models/catastrophes";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { CURRENT_YEAR } from "./models/constants";
@@ -63,12 +63,16 @@ export default defineComponent({
         }
     },
     computed: {
-        catastrophesDisabled(): boolean {
-            return this.userState.year > CURRENT_YEAR;
-        },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
                 this.userState.year, this.userState.district, this.userState.catastrophe)
+        },
+        catastropheTabSuffix() {
+            // Tab library we're using doesn't have slots, so we generate HTML by hand
+            if (this.userState.year <= CURRENT_YEAR) {
+                return `<span class="badge rounded-pill bg-danger ms-2">${this.catastrophes.size}</span>`;
+            }
+            return '';
         }
     }
 });
@@ -87,20 +91,9 @@ export default defineComponent({
                     :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
                     :location="userState.location" @location-changed="mapMoved" :zoom="userState.zoom"
                     @zoom-changed="mapZoomed"></MapView>
-                <span :class="{ invisible: catastrophesDisabled }">
-                    {{ catastrophes.size }}
-                    <span v-if="userState.catastrophe" class="text-lowercase">
-                        {{ $t(`catastrophe_${userState.catastrophe}`, catastrophes.size) }}
-                    </span>
-                    <span v-else class="text-lowercase"> {{ $t('catastrophes', catastrophes.size) }}</span>
-                    {{ $t('in_year', { year: userState.year }) }}
-                    <span v-if="userState.district">
-                        {{ $t('at_location', {location: getDistrictName(userState.district)}) }}
-                    </span>
-                </span>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>
-            <tab name="Catastrophes" panel-class="tab-panel" :is-disabled="catastrophesDisabled">
+            <tab name="Catastrophes" panel-class="tab-panel" :suffix="catastropheTabSuffix">
                 <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :isMobile="true"></Timeline>
                 <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
                     @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
