@@ -7,8 +7,8 @@
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
                     <div :class="['vue-slider-mark-label', 'custom-label', 'event-count', 'badge', 'text-bg-danger']">{{catastrophesCountByYears(value)}}</div>
                 </template>
-                <template v-slot:process="{ style }">
-                    <div class="vue-slider-process" :style="[style]"></div>
+                <template v-slot:process="{ style, end }">
+                    <div class="vue-slider-process" :style="[style, temperatureGradientStyle(end)]"></div>
                     <div class="vue-slider-process prevision-indicator" :style="[style, modeledYearsStyle]"></div>
                 </template>
             </vue-slider>
@@ -23,7 +23,20 @@ import { computed, PropType, defineComponent } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { TIMELINE_YEARS,BEGIN_MODELED_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
+import { useStatisticStore } from '@/stores/statistics';
 import { CatastropheFilter } from '@/models/catastrophes';
+import { temperatureGradient, getGradientColourIndex,colourToHex } from '@/utils/colours';
+
+ function generateTemperatureGradient(statisticStore: ReturnType<typeof useStatisticStore>, district: number, progressPercent: number): String[] {
+        const shownYears = TIMELINE_YEARS.slice(0, progressPercent/100 * TIMELINE_YEARS.length);
+        const yearRatio = (1 / shownYears.length * 100);
+        const temperatureDeltas: (number|undefined)[] = TIMELINE_YEARS.map(year => statisticStore.findStatistics(year, district).temp_delta);
+      
+        return temperatureDeltas.map((tempDelta: number|undefined, index: number) => {
+            const colour = temperatureGradient[getGradientColourIndex(tempDelta ?? 0)];
+            return `${colourToHex(colour)} ${yearRatio * index}%`;
+        });
+    }
 
 export default defineComponent({
     components: { VueSlider },
@@ -52,9 +65,11 @@ export default defineComponent({
             set: value => emit('yearSelected', value)
         });
         const catastropheStore = useCatastropheStore();
+        const statisticStore = useStatisticStore();
         return { 
             selectedYear,
             catastropheStore, 
+            statisticStore
         };
     },
     data() {
@@ -71,6 +86,12 @@ export default defineComponent({
     methods: {
         catastrophesCountByYears(year: number): Number {
             return this.catastropheStore.findCatastrophes(year, this.district, this.catastropheFilter).size;
+        },
+        temperatureGradientStyle(progressPercent: number) {
+            const gradient = generateTemperatureGradient(this.statisticStore, this.district, progressPercent).join(",")
+            return {
+                '--background-process': `linear-gradient(to right, ${gradient})`
+            }
         }
     }
 });
@@ -99,5 +120,9 @@ export default defineComponent({
 
 .vue-slider .vue-slider-process.prevision-indicator {    
     background: repeating-linear-gradient(to right, #ffffff, #ffffff 5px, transparent 2px, transparent 10px );
+}
+
+.vue-slider .vue-slider-process {
+    background: var(--background-process);
 }
 </style>
