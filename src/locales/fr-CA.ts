@@ -10,6 +10,7 @@ export default {
     all: "Toute | Toutes",
     in_year: "en {year}",
     at_location: "à {location}",
+    count_by_year: "{count} en {year}",
 
     // Catastrophes
 

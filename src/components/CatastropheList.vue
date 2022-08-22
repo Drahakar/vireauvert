@@ -2,7 +2,7 @@
     <div class="card catastrophes" v-if="showCatastrophes">
         <h5 class="card-header" id="catastrophes-header">
             <span>{{ $t('catastrophes', 2) }}</span>
-            <small class="float-end">{{ catastrophes.size }} en {{ year }}</small>
+            <small class="float-end">{{ $t('count_by_year', {count: catastrophes.size, year }) }}</small>
         </h5>
         <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType"
             @input="filterCatastrophes">
