@@ -15,6 +15,7 @@
                     <div class="vue-slider-mark" :style="{ left: `${pos}%` }">
                         <div class="vue-slider-mark-label">{{ label }}</div>
                     </div>
+                    <div class="catastrophe-dot" :style="{ left: `calc(${pos}% - 14.5px)` }"></div>
                 </template>
             </vue-slider>
             
@@ -128,6 +129,17 @@ export default defineComponent({
 }
 .vue-slider .vue-slider-marks .vue-slider-mark{
     display:none;
+}
+
+.vue-slider .catastrophe-dot {
+    display:inline-block;
+    top: -10px;
+    border: 5px solid #ff0000;
+    border-radius: 5px;
+    height:5px;
+    width:5px;
+    z-index:6;
+
 }
 
 @media screen and (min-width: 768px) {
