@@ -117,6 +117,7 @@ export default defineComponent({
         if (this.mapElement) {
             const mapDataResponse = await axios.get<Polygon>("data/carte_electorale.json", { responseType: "json" });
             const maskDataResponse = await axios.get<Polygon>("data/masque_electoral.json", { responseType: "json" });
+
             const map = new L.Map(this.mapElement, {
                 center: this.location,
                 zoom: this.zoom,
@@ -125,7 +126,6 @@ export default defineComponent({
                 zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                maxZoom: 19,
                 attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }).addTo(map);
             L.geoJSON(maskDataResponse.data, {
@@ -146,8 +146,8 @@ export default defineComponent({
                 this.$emit('zoomChanged', map.getZoom());
             })
             this.map = map;
-            this.map.setMaxBounds(this.mapLayer.getBounds());
-            this.map.attributionControl.setPrefix("");
+            this.map.setMaxBounds(this.mapLayer.getBounds().pad(0.05));
+            this.map.attributionControl.setPrefix('');
         }
     },
     methods: {
