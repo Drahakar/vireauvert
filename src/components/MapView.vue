@@ -1,5 +1,5 @@
 <template>
-    <div id="wrapper">
+    <div id="wrapper" ref="mapWrapper">
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
@@ -46,6 +46,10 @@ export default defineComponent({
         zoom: {
             type: Number,
             default: MIN_ZOOM
+        },
+        zoomLimitOffset: {
+            type: Number,
+            default: 0
         }
     },
     setup(props, { emit }) {
@@ -106,7 +110,9 @@ export default defineComponent({
                 marker.addTo(iconLayer);
             }
         });
-        return { mapElement, map, mapLayer, iconLayer, statisticStore };
+        const mapWrapper = ref<HTMLDivElement | null>(null);
+        const mapResizeObserver = ref<ResizeObserver | null>(null);
+        return { mapElement, map, mapLayer, iconLayer, statisticStore, mapWrapper, mapResizeObserver };
     },
     computed: {
         selectedStatistics() {
@@ -117,15 +123,15 @@ export default defineComponent({
         if (this.mapElement) {
             const mapDataResponse = await axios.get<Polygon>("data/carte_electorale.json", { responseType: "json" });
             const maskDataResponse = await axios.get<Polygon>("data/masque_electoral.json", { responseType: "json" });
+
             const map = new L.Map(this.mapElement, {
                 center: this.location,
                 zoom: this.zoom,
-                minZoom: MIN_ZOOM,
-                maxZoom: MAX_ZOOM,
+                minZoom: MIN_ZOOM + this.zoomLimitOffset,
+                maxZoom: MAX_ZOOM + this.zoomLimitOffset,
                 zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                maxZoom: 19,
                 attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }).addTo(map);
             L.geoJSON(maskDataResponse.data, {
@@ -144,10 +150,29 @@ export default defineComponent({
             });
             map.addEventListener('zoomend', () => {
                 this.$emit('zoomChanged', map.getZoom());
-            })
+            });
+
+            L.control.scale({
+                imperial: false
+            }).addTo(map);
+
             this.map = map;
-            this.map.setMaxBounds(this.mapLayer.getBounds());
-            this.map.attributionControl.setPrefix("");
+            this.map.setMaxBounds(this.mapLayer.getBounds().pad(0.05));
+            this.map.attributionControl.setPrefix('');
+
+            if (this.mapWrapper) {
+                this.mapResizeObserver = new ResizeObserver(() => {
+                    map.invalidateSize({
+                        pan: true,
+                    });
+                });
+                this.mapResizeObserver.observe(this.mapWrapper);
+            }
+        }
+    },
+    unmounted() {
+        if (this.mapResizeObserver && this.mapWrapper) {
+            this.mapResizeObserver.unobserve(this.mapWrapper);
         }
     },
     methods: {

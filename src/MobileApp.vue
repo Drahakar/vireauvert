@@ -90,7 +90,7 @@ export default defineComponent({
                 <MapView ref="mobileMap" class="map-view flex-grow-1" :district="userState.district"
                     :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
                     :location="userState.location" @location-changed="mapMoved" :zoom="userState.zoom"
-                    @zoom-changed="mapZoomed"></MapView>
+                    @zoom-changed="mapZoomed" :zoom-limit-offset="-1"></MapView>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>
             <tab name="Catastrophes" panel-class="tab-panel" :suffix="catastropheTabSuffix">
