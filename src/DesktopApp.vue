@@ -82,7 +82,7 @@ export default defineComponent({
                 @location-changed="mapMoved" :zoom="userState.zoom" @zoom-changed="mapZoomed"></MapView>
         </div>
         <div class="row">
-            <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"></Timeline>
+            <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district"></Timeline>
         </div>
     </div>
 </template>

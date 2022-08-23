@@ -57,14 +57,13 @@ all_stats = {}
 first_above_1_5 = {}
 
 for year, data in result.items():
-    if year > 1990:
-        for region, statistics in data.items():
-            if region in ref_year:
-                temp_delta = statistics['avg_temp'] - \
-                    ref_year[region]['avg_temp']
-                statistics['temp_delta'] = temp_delta
-                if region not in first_above_1_5 and temp_delta >= 1.5:
-                    first_above_1_5[region] = year
+    for region, statistics in data.items():
+        if region in ref_year:
+            temp_delta = statistics['avg_temp'] - \
+                ref_year[region]['avg_temp']
+            statistics['temp_delta'] = temp_delta
+            if region not in first_above_1_5 and temp_delta >= 1.5:
+                first_above_1_5[region] = year
     all_stats[str(year)] = data
 
 output = {
