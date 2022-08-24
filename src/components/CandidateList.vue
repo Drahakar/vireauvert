@@ -10,12 +10,13 @@
             </a>
         </h5>
         <ul id="body-candidates" class="list-group list-group-flush collapse show" ref="candidates">
-            <li v-for="candidate of candidates" class="list-group-item candidate">
+            <li v-for="candidate of candidates"
+                class="list-group-item candidate d-flex align-items-center p-0 ps-2 pe-2">
                 <span class="party" :class="candidate.party.toLowerCase()" :title="$t(`party_${candidate.party}`)">
                     {{ $t(`party_acro_${candidate.party}`) }}
                 </span>
                 <span class="name">{{ candidate.name }}</span>
-                <a :href="candidate.facebook" title="Facebook" target="_blank">
+                <a :href="candidate.facebook" :title="$t('facebook')" target="_blank">
                     <i class="bi bi-facebook"></i>
                 </a>
             </li>
@@ -46,17 +47,11 @@ export default defineComponent({
         candidates() {
             return this.store.findCandidates(this.district);
         }
-    }
+    },
 });
 </script>
 
 <style scoped>
-.candidate {
-    display: flex;
-    align-items: center;
-    gap: 0.4em;
-}
-
 .candidate>a {
     font-size: 1.5em;
 }
@@ -83,9 +78,10 @@ export default defineComponent({
     font-weight: bold;
     border-radius: 4px;
     text-align: center;
-    width: 42px;
+    width: 2.3rem;
     text-transform: capitalize;
     padding: 2px;
+    margin-right: 0.7ch;
 }
 
 .candidate .party.caq {
