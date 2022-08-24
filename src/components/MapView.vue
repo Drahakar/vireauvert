@@ -161,10 +161,13 @@ export default defineComponent({
             this.map.attributionControl.setPrefix('');
 
             if (this.mapWrapper) {
-                this.mapResizeObserver = new ResizeObserver(() => {
-                    map.invalidateSize({
-                        pan: true,
-                    });
+                this.mapResizeObserver = new ResizeObserver(entries => {
+                    const rect = entries[0].contentRect;
+                    if (rect.width > 0 && rect.height > 0) {
+                        map.invalidateSize({
+                            pan: true,
+                        });
+                    }
                 });
                 this.mapResizeObserver.observe(this.mapWrapper);
             }
