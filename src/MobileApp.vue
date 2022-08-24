@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import { Tabs, Tab } from 'vue3-tabs-component';
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
+import Header from "./components/Header.vue";
 import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
@@ -18,6 +19,7 @@ export default defineComponent({
     components: {
         CandidateList,
         CatastropheList,
+        Header,
         MapView,
         RegionSearch,
         Statistics,
@@ -80,8 +82,9 @@ export default defineComponent({
 
 <template>
     <div class="mobile-layout">
-        <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
-        <tabs class="tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
+        <Header class="header col-12"></Header>
+        <RegionSearch class="search side-margins" :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
+        <tabs class="tabs" nav-class="nav nav-pills nav-justified tabs-header" nav-item-class="nav-item"
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
@@ -91,16 +94,22 @@ export default defineComponent({
                     :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
                     :location="userState.location" @location-changed="mapMoved" :zoom="userState.zoom"
                     @zoom-changed="mapZoomed"></MapView>
-                <Statistics :district="userState.district" :year="userState.year"></Statistics>
+                <div class="side-margins">
+                    <Statistics :district="userState.district" :year="userState.year"></Statistics>
+                </div>
             </tab>
             <tab name="Catastrophes" panel-class="tab-panel" :suffix="catastropheTabSuffix">
                 <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district" :isMobile="true"></Timeline>
-                <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
-                    @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
-                </CatastropheList>
+                <div class="side-margins">
+                    <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
+                        @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
+                    </CatastropheList>
+                </div>
             </tab>
             <tab name="Candidat(e)s" panel-class="tab-panel">
-                <CandidateList :district="userState.district"></CandidateList>
+                <div class="side-margins">
+                    <CandidateList :district="userState.district"></CandidateList>
+                </div>
             </tab>
         </tabs>
     </div>
@@ -108,19 +117,28 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.header {
+    padding-top: 0;
+    height: 48px;
+}
+
 .mobile-layout {
-    padding-top: 10px;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.mobile-layout>* {
+.map-view {
+    min-height: 400px;
+}
+
+.search {
     padding-top: 10px;
 }
 
-.map-view {
-    min-height: 400px;
+.side-margins {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
 }
 
 .timeline {
@@ -136,8 +154,16 @@ export default defineComponent({
 }
 
 .tabs {
+    padding-top: 10px;
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+</style>
+
+<style> /* global */
+.tabs-header {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
 }
 </style>

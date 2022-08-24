@@ -70,7 +70,10 @@ Sentry.init({
 
 <style scoped>
 #main {
+    width: 100%;
     height: 100vh;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 #loading-overlay {
