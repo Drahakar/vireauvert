@@ -111,7 +111,7 @@ export default defineComponent({
         });
         const mapWrapper = ref<HTMLDivElement | null>(null);
         const mapResizeObserver = ref<ResizeObserver | null>(null);
-        return { mapElement, map, mapLayer, icons, statisticStore, mapWrapper, mapResizeObserver, i18n };
+        return { mapElement, map, mapLayer, icons, statisticStore, mapWrapper, mapResizeObserver, i18n, districtLayers };
     },
     computed: {
         selectedStatistics() {
@@ -167,6 +167,15 @@ export default defineComponent({
                     });
                 });
                 this.mapResizeObserver.observe(this.mapWrapper);
+            }
+
+            if (this.district) {
+                const layer = this.districtLayers.get(this.district.toString());
+                if (layer) {
+                    map.fitBounds(layer.layer.getBounds(), {
+                        animate: false
+                    });
+                }
             }
         }
     },
