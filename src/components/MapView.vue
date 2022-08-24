@@ -1,5 +1,5 @@
 <template>
-    <div id="wrapper">
+    <div id="wrapper" ref="mapWrapper">
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
@@ -19,7 +19,7 @@ import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
-import { useI18n } from "vue-i18n";
+import { Composer, useI18n } from "vue-i18n";
 
 const MIN_ZOOM = 5;
 const MAX_ZOOM = 15;
@@ -46,6 +46,10 @@ export default defineComponent({
         zoom: {
             type: Number,
             default: MIN_ZOOM
+        },
+        zoomLimitOffset: {
+            type: Number,
+            default: 0
         }
     },
     setup(props, { emit }) {
@@ -97,16 +101,17 @@ export default defineComponent({
                 }
             }
         });
-        const iconLayer = L.layerGroup();
+        const icons: MapIcons = {
+            layer: L.layerGroup(),
+            index: new Map<string, L.Marker>()
+        };
         const i18n = useI18n();
         watch(() => props.catastrophes, catastrophes => {
-            iconLayer.clearLayers();
-            for (const catastrophe of catastrophes) {
-                const marker = createMapMarker(catastrophe, i18n);
-                marker.addTo(iconLayer);
-            }
+            refreshIcons(icons, catastrophes, i18n);
         });
-        return { mapElement, map, mapLayer, iconLayer, statisticStore };
+        const mapWrapper = ref<HTMLDivElement | null>(null);
+        const mapResizeObserver = ref<ResizeObserver | null>(null);
+        return { mapElement, map, mapLayer, icons, statisticStore, mapWrapper, mapResizeObserver, i18n };
     },
     computed: {
         selectedStatistics() {
@@ -117,15 +122,15 @@ export default defineComponent({
         if (this.mapElement) {
             const mapDataResponse = await axios.get<Polygon>("data/carte_electorale.json", { responseType: "json" });
             const maskDataResponse = await axios.get<Polygon>("data/masque_electoral.json", { responseType: "json" });
+
             const map = new L.Map(this.mapElement, {
                 center: this.location,
                 zoom: this.zoom,
-                minZoom: MIN_ZOOM,
-                maxZoom: MAX_ZOOM,
+                minZoom: MIN_ZOOM + this.zoomLimitOffset,
+                maxZoom: MAX_ZOOM + this.zoomLimitOffset,
                 zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                maxZoom: 19,
                 attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }).addTo(map);
             L.geoJSON(maskDataResponse.data, {
@@ -137,17 +142,37 @@ export default defineComponent({
             }).addTo(map);
             this.mapLayer.addData(mapDataResponse.data);
             this.mapLayer.addTo(map);
-            this.iconLayer.addTo(map);
+            refreshIcons(this.icons, this.catastrophes, this.i18n);
+            this.icons.layer.addTo(map);
 
             map.addEventListener('moveend', () => {
                 this.$emit('locationChanged', map.getCenter());
             });
             map.addEventListener('zoomend', () => {
                 this.$emit('zoomChanged', map.getZoom());
-            })
+            });
+
+            L.control.scale({
+                imperial: false
+            }).addTo(map);
+
             this.map = map;
-            this.map.setMaxBounds(this.mapLayer.getBounds());
-            this.map.attributionControl.setPrefix("");
+            this.map.setMaxBounds(this.mapLayer.getBounds().pad(0.05));
+            this.map.attributionControl.setPrefix('');
+
+            if (this.mapWrapper) {
+                this.mapResizeObserver = new ResizeObserver(() => {
+                    map.invalidateSize({
+                        pan: true,
+                    });
+                });
+                this.mapResizeObserver.observe(this.mapWrapper);
+            }
+        }
+    },
+    unmounted() {
+        if (this.mapResizeObserver && this.mapWrapper) {
+            this.mapResizeObserver.unobserve(this.mapWrapper);
         }
     },
     methods: {
@@ -161,6 +186,30 @@ export default defineComponent({
     },
     components: { Thermometre }
 });
+
+interface MapIcons {
+    layer: L.LayerGroup;
+    index: Map<string, L.Marker>;
+}
+
+function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Composer) {
+    const missing = new Set<string>(icons.index.keys());
+    for (const catastrophe of catastrophes) {
+        if (!icons.index.has(catastrophe.id)) {
+            const marker = createMapMarker(catastrophe, i18n);
+            icons.index.set(catastrophe.id, marker);
+            marker.addTo(icons.layer);
+        }
+        missing.delete(catastrophe.id);
+    }
+    for (const id of missing) {
+        const marker = icons.index.get(id);
+        if (marker) {
+            icons.index.delete(id);
+            icons.layer.removeLayer(marker);
+        }
+    }
+}
 
 </script>
 

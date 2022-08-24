@@ -5,11 +5,13 @@
             <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
                 <template v-slot:label="{value}">
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
-                    <div :class="['vue-slider-mark-label', 'custom-label', 'event-count', 'badge', 'text-bg-danger']">{{catastrophesCountByYears(value)}}</div>
                 </template>
                 <template v-slot:process="{ style, end }">
                     <div class="vue-slider-process" :style="[style, temperatureGradientStyle(end)]"></div>
                     <div class="vue-slider-process prevision-indicator" :style="[style, modeledYearsStyle]"></div>
+                </template>
+                <template v-slot:step="{value}">
+                    <div :class="['catastrophe-dot', catastropheCountSizeClass(value)]"></div>
                 </template>
             </vue-slider>
             
@@ -75,7 +77,7 @@ export default defineComponent({
     data() {
         const ratio = TIMELINE_YEARS.filter(x => x <= BEGIN_MODELED_YEAR).length/TIMELINE_YEARS.length;
         return {
-            marks: TIMELINE_YEARS.filter(x => x % (this.isMobile ? 10 : 5) === 0),
+            marks: TIMELINE_YEARS,
             years: TIMELINE_YEARS,
             modeledYearsStyle: [
                 'left:' + (ratio * 100) +'%', 
@@ -91,6 +93,18 @@ export default defineComponent({
             const gradient = generateTemperatureGradient(this.statisticStore, this.district, progressPercent).join(",")
             return {
                 '--background-process': `linear-gradient(to right, ${gradient})`
+            }
+        },
+        catastropheCountSizeClass(year: number): String {
+            const catastropheCount = this.catastrophesCountByYears(year);
+            if(catastropheCount === 0) {
+                return 'catastrophe-size-none';
+            } else if (catastropheCount > 50) {
+                return 'catastrophe-size-large';
+            } else if (catastropheCount > 20) {
+                return 'catastrophe-size-medium';
+            } else {
+                return 'catastrophe-size-small'
             }
         }
     }
@@ -120,6 +134,90 @@ export default defineComponent({
 
 .vue-slider .vue-slider-process.prevision-indicator {    
     background: repeating-linear-gradient(to right, #ffffff, #ffffff 5px, transparent 2px, transparent 10px );
+}
+.vue-slider .vue-slider-mark .vue-slider-mark-label{
+    display:none;
+}
+
+.vue-slider .catastrophe-dot {
+    display:inline-block;
+    top: -10px;
+    border: 5px solid #d36767;
+    border-radius: 5px;
+    left:-2px;
+    z-index:8;
+    width:100%;
+    height:100%;
+
+}
+
+.vue-slider .catastrophe-dot.catastrophe-size-none {
+    display:none;
+}
+
+.vue-slider .catastrophe-dot.catastrophe-size-medium {
+    border: 8px solid #d36767;
+    border-radius: 8px;
+    top: -8px;
+    left: -6px
+}
+
+
+.vue-slider .catastrophe-dot.catastrophe-size-large {
+    border: 10px solid #d36767;
+    border-radius: 10px;
+    top: -8px;
+    left: -8px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .timeline {
+        padding:30px 15px;
+    }
+
+    .vue-slider .catastrophe-dot {
+        display:inline-block;
+        top: -13px;
+        border: 3px solid #d36767;
+        border-radius: 3px;
+        left:-2px;
+        z-index:8;
+        width:100%;
+        height:100%;
+    }
+    .vue-slider .catastrophe-dot.catastrophe-size-medium {
+        border: 4px solid #d36767;
+        border-radius: 4px;
+        top: -12px;
+        left: -6px
+    }
+
+
+    .vue-slider .catastrophe-dot.catastrophe-size-large {
+        border: 5px solid #d36767;
+        border-radius: 5px;
+        top: -11px;
+        left: -6px;
+    }
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label{
+        display:block;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label{
+        display:block;
+    }
 }
 
 .vue-slider .vue-slider-process {
