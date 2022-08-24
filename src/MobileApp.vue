@@ -141,3 +141,8 @@ export default defineComponent({
     flex-direction: column;
 }
 </style>
+<style>
+a[role=tab] {
+    white-space: nowrap;
+}
+</style>
