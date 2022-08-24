@@ -75,8 +75,8 @@ export default {
 
     statistics: "Statistiques",
 
-    statistic_target_reached_on: "Année de dépassement du 1,5°C par rapport à 1990",
-    statistic_temp_delta: "Variation de la température moyenne depuis 1990",
+    statistic_target_reached_on: "Cible de 1,5°C dépassée pour la première fois en {0}",
+    statistic_temp_delta: "Variation de la température depuis 1990",
     statistic_avg_temp: "Température moyenne",
     statistic_avg_prec: "Précipitations totales",
     statistic_days_above_30: "Nombres de jours au dessus de 30°C",
