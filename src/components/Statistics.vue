@@ -21,7 +21,7 @@
                             <i class="bi bi-question-circle-fill m-0"></i>
                         </a>
                     </td>
-                    <td class="text-end text-nowrap fw-bold">
+                    <td class="text-end text-nowrap fw-bold stat">
                         {{ formatStatistic(template, statistics) }}
                     </td>
                 </tr>
@@ -91,5 +91,8 @@ export default defineComponent({
 #body-statistics .bi {
     margin-right: 0.5ch;
     font-size: 1.1em;
+}
+.stat {
+    min-width: 9ch;
 }
 </style>
