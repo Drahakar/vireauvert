@@ -29,8 +29,8 @@ function generateGradientSegment(a: string, b: string, count: number): Colour[] 
 }
 
 export const temperatureGradient: Colour[] = ([] as Colour[]).concat(
-    generateGradientSegment('#99BBFF', '#FFEEEE', 15),
-    generateGradientSegment('#FFEEEE', '#FFDD00', 10),
+    generateGradientSegment('#99BBFF', '#FFEEEE', 10),
+    generateGradientSegment('#FFEEEE', '#FFDD00', 15),
     generateGradientSegment('#FFDD00', '#FF0000', 42),
     generateGradientSegment('#FF0000', '#360000', 10),
 );
