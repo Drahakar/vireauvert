@@ -19,7 +19,7 @@ import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
-import { useI18n } from "vue-i18n";
+import { Composer, useI18n } from "vue-i18n";
 
 const MIN_ZOOM = 5;
 const MAX_ZOOM = 15;
@@ -101,18 +101,17 @@ export default defineComponent({
                 }
             }
         });
-        const iconLayer = L.layerGroup();
+        const icons: MapIcons = {
+            layer: L.layerGroup(),
+            index: new Map<string, L.Marker>()
+        };
         const i18n = useI18n();
         watch(() => props.catastrophes, catastrophes => {
-            iconLayer.clearLayers();
-            for (const catastrophe of catastrophes) {
-                const marker = createMapMarker(catastrophe, i18n);
-                marker.addTo(iconLayer);
-            }
+            refreshIcons(icons, catastrophes, i18n);
         });
         const mapWrapper = ref<HTMLDivElement | null>(null);
         const mapResizeObserver = ref<ResizeObserver | null>(null);
-        return { mapElement, map, mapLayer, iconLayer, statisticStore, mapWrapper, mapResizeObserver };
+        return { mapElement, map, mapLayer, icons, statisticStore, mapWrapper, mapResizeObserver, i18n };
     },
     computed: {
         selectedStatistics() {
@@ -143,7 +142,8 @@ export default defineComponent({
             }).addTo(map);
             this.mapLayer.addData(mapDataResponse.data);
             this.mapLayer.addTo(map);
-            this.iconLayer.addTo(map);
+            refreshIcons(this.icons, this.catastrophes, this.i18n);
+            this.icons.layer.addTo(map);
 
             map.addEventListener('moveend', () => {
                 this.$emit('locationChanged', map.getCenter());
@@ -186,6 +186,30 @@ export default defineComponent({
     },
     components: { Thermometre }
 });
+
+interface MapIcons {
+    layer: L.LayerGroup;
+    index: Map<string, L.Marker>;
+}
+
+function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Composer) {
+    const missing = new Set<string>(icons.index.keys());
+    for (const catastrophe of catastrophes) {
+        if (!icons.index.has(catastrophe.id)) {
+            const marker = createMapMarker(catastrophe, i18n);
+            icons.index.set(catastrophe.id, marker);
+            marker.addTo(icons.layer);
+        }
+        missing.delete(catastrophe.id);
+    }
+    for (const id of missing) {
+        const marker = icons.index.get(id);
+        if (marker) {
+            icons.index.delete(id);
+            icons.layer.removeLayer(marker);
+        }
+    }
+}
 
 </script>
 
