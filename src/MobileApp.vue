@@ -81,7 +81,7 @@ export default defineComponent({
 <template>
     <div class="mobile-layout">
         <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
-        <tabs class="tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
+        <tabs class="tabs" nav-class="nav nav-pills nav-fill" nav-item-class="nav-item"
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
