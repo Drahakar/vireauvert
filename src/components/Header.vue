@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header-logo flex-1">
             <a href="https://www.vireauvert.org/" target="_blank">
-                <img class="logo float-end" src="public/VAV_2022.png">
+                <img class="logo float-end" src="/VAV_2022.png">
             </a>
         </div>
         <div class="header-info flex-1">
