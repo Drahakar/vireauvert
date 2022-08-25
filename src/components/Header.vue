@@ -29,7 +29,7 @@ export default defineComponent({
 }
 
 .header-logo {
-    min-width: 30%;
+    min-width: 25%;
     height: 100%;
 }
 
