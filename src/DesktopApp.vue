@@ -93,11 +93,12 @@ export default defineComponent({
 <style scoped>
 .header {
     height: 64px;
+    margin-bottom: 8px;
 }
 
 .map-view {
     min-height: 400px;
-    height: calc(100vh - 96px - 64px);
+    height: calc(100vh - 96px - 64px - 8px);
 }
 
 .legend {
@@ -105,7 +106,7 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
     padding: 10px;
-    max-height: calc(100vh - 96px - 64px);
+    max-height: calc(100vh - 96px - 64px - 8px);
 }
 
 .timeline {
