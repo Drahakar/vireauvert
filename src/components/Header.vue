@@ -1,10 +1,12 @@
 <template>
     <div class="header">
         <div class="header-logo flex-1">
-            <img class="logo" src="public/VAV_2022.png">
+            <a href="https://www.vireauvert.org/" target="_blank">
+                <img class="logo float-end" src="public/VAV_2022.png">
+            </a>
         </div>
         <div class="header-info flex-1">
-            <p>ALLO</p>
+            <!-- TODO: call to action? -->
         </div>
     </div>
 </template>
@@ -27,7 +29,7 @@ export default defineComponent({
 }
 
 .header-logo {
-    min-width: 150px;
+    min-width: 30%;
     height: 100%;
 }
 

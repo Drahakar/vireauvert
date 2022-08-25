@@ -58,7 +58,7 @@ Sentry.init({
 </script>
 
 <template>
-    <div id="main" class="container-fluid">
+    <div id="main" class="mx-0">
         <DesktopApp v-if="isDesktop" :userState="state"></DesktopApp>
         <MobileApp v-else :userState="state"></MobileApp>
         <div id="loading-overlay" v-if="!loadingCompleted">
@@ -70,10 +70,7 @@ Sentry.init({
 
 <style scoped>
 #main {
-    width: 100%;
     height: 100vh;
-    padding-left: 0;
-    padding-right: 0;
 }
 
 #loading-overlay {

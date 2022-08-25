@@ -50,7 +50,7 @@ export default {
 
     // Parties and candidates
 
-    party_leaders: "Chefs de parti",
+    party_leaders: "Chef(fe)s de parti",
     candidates: "Candidat(e)s",
 
     party_CAQ: "Coalition Avenir Québec",
@@ -69,14 +69,15 @@ export default {
     party_acro_PV: "PVQ",
     party_acro_QS: "QS",
 
+    facebook: "Page Facebook",
     call_to_action: "Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales",
 
     // Statistics
 
     statistics: "Statistiques",
 
-    statistic_target_reached_on: "Année de dépassement du 1,5°C par rapport à 1990",
-    statistic_temp_delta: "Variation de la température moyenne depuis 1990",
+    statistic_target_reached_on: "Cible de 1,5°C dépassée pour la première fois en {0}",
+    statistic_temp_delta: "Variation de la température depuis 1990",
     statistic_avg_temp: "Température moyenne",
     statistic_avg_prec: "Précipitations totales",
     statistic_days_above_30: "Nombres de jours au dessus de 30°C",

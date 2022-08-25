@@ -71,7 +71,7 @@ export default defineComponent({
 <template>
     <div class="d-md-block desktop-layout">
         <Header class="header col-12"></Header>
-        <div class="row">
+        <div class="row g-0">
             <div class="legend col-md-3">
                 <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
@@ -84,7 +84,7 @@ export default defineComponent({
                 :catastrophes="catastrophes" @district-selected="selectDistrict" :location="userState.location"
                 @location-changed="mapMoved" :zoom="userState.zoom" @zoom-changed="mapZoomed"></MapView>
         </div>
-        <div class="row">
+        <div class="row g-0">
             <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district"></Timeline>
         </div>
     </div>
@@ -97,7 +97,7 @@ export default defineComponent({
 
 .map-view {
     min-height: 400px;
-    height: calc(100vh - 96px - 65px);
+    height: calc(100vh - 96px - 64px);
 }
 
 .legend {
@@ -105,7 +105,7 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
     padding: 10px;
-    max-height: calc(100vh - 96px - 65px);
+    max-height: calc(100vh - 96px - 64px);
 }
 
 .timeline {

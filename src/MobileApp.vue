@@ -166,4 +166,7 @@ export default defineComponent({
     padding-left: 0.75rem;
     padding-right: 0.75rem;
 }
+a[role=tab] {
+    white-space: nowrap;
+}
 </style>
