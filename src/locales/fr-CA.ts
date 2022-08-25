@@ -50,7 +50,7 @@ export default {
 
     // Parties and candidates
 
-    party_leaders: "Chefs de parti",
+    party_leaders: "Chef(fe)s de parti",
     candidates: "Candidat(e)s",
 
     party_CAQ: "Coalition Avenir Québec",
@@ -69,6 +69,7 @@ export default {
     party_acro_PV: "PVQ",
     party_acro_QS: "QS",
 
+    facebook: "Page Facebook",
     call_to_action: "Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales",
 
     // Statistics
