@@ -1,21 +1,12 @@
 import { RegionStatistics } from "@/models/yearly_data";
 
-export interface ExtendedStatistics extends RegionStatistics {
-    target_reached_on?: number;
-}
-
 export interface StatTemplate {
-    key: keyof ExtendedStatistics;
+    key: keyof RegionStatistics;
     icon_classes: string[]
     format_name: string;
 }
 
 export const allStatTemplates: StatTemplate[] = [
-    {
-        key: 'target_reached_on',
-        format_name: 'integer',
-        icon_classes: ['bi-exclamation-triangle', 'text-danger']
-    },
     {
         key: 'avg_temp',
         format_name: 'temperature',
