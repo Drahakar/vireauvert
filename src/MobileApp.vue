@@ -100,7 +100,7 @@ export default defineComponent({
                 </CatastropheList>
             </tab>
             <tab name="Candidat(e)s" panel-class="tab-panel">
-                <CandidateList :district="userState.district"></CandidateList>
+                <CandidateList :district="userState.district" :collapse="true"></CandidateList>
             </tab>
         </tabs>
     </div>

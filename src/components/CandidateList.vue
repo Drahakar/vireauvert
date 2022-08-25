@@ -2,14 +2,14 @@
 <template>
     <div class="card" v-if="!candidates.isEmpty()">
         <h5 class="card-header">
-            <a data-bs-toggle="collapse" href="#body-candidates" aria-expanded="true" aria-controls="body-candidates"
-                id="heading-candidates" class="d-block">
+            <a data-bs-toggle="collapse" href="#body-candidates" :aria-expanded="collapse ? 'true': 'false'" aria-controls="body-candidates"
+                id="heading-candidates" class= "d-block" :class="[{'collapsed': !collapse}]">
                 <i class="bi bi-chevron-up float-start"></i>
                 <template v-if="district">{{ $t('candidates') }}</template>
                 <template v-else>{{ $t('party_leaders') }}</template>
             </a>
         </h5>
-        <ul id="body-candidates" class="list-group list-group-flush collapse show" ref="candidates">
+        <ul id="body-candidates" class="list-group list-group-flush collapse" :class="[{'show': collapse}]" ref="candidates">
             <li v-for="candidate of candidates"
                 class="list-group-item candidate d-flex align-items-center p-0 ps-2 pe-2">
                 <span class="party" :class="candidate.party.toLowerCase()" :title="$t(`party_${candidate.party}`)">
@@ -37,6 +37,10 @@ export default defineComponent({
         district: {
             type: Number,
             default: 0
+        },
+        collapse: {
+            type: Boolean,
+            default: false
         }
     },
     setup() {
