@@ -1,11 +1,14 @@
 <template>
-    <div v-if="targetReachedOn !== undefined"
-        class="card bg-danger text-white d-flex flex-row align-items-center justify-content-center p-1 ps-2 pe-2">
+    <button ref="targetButton"
+        class="btn btn-danger text-white d-flex flex-row align-items-center justify-content-center p-1 ps-2 pe-2"
+        data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
+        :data-bs-content="$t('statistic_help_target_reached_on')"
+        :style="{ visibility: targetReachedOn !== undefined ? 'visible' : 'collapse' }">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
         <i18n-t keypath="statistic_target_reached_on">
             <strong class="ms-1">{{ targetReachedOn }}</strong>
         </i18n-t>
-    </div>
+    </button>
     <div class="card">
         <h5 class="card-header">
             <a data-bs-toggle="collapse" href="#body-statistics" aria-expanded="true" aria-controls="body-statistics"
@@ -18,12 +21,11 @@
             <li v-for="{ value, template } of statistics"
                 class="list-group-item d-flex flex-row align-items-center p-1 ps-2 pe-2" ref="rows">
                 <i class="bi me-2" :class="template.icon_classes"></i>
-                <span class="flex-grow-1">
+                <span class="flex-grow-1 d-flex align-items-center">
                     <span>{{ $t(`statistic_${template.key}`) }}</span>
-                    <a v-if="$t(`statistic_help_${template.key}`)" class="link" role="button" tabindex="0"
+                    <a v-if="$t(`statistic_help_${template.key}`)" class="link-secondary ms-2" role="button" tabindex="0"
                         data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right"
-                        data-bs-trigger="focus" :data-bs-content="$t(`statistic_help_${template.key}`)"
-                        :title="$t(`statistic_${template.key}`)">
+                        data-bs-trigger="focus" :data-bs-content="$t(`statistic_help_${template.key}`)">
                         <i class="bi bi-question-circle-fill m-0"></i>
                     </a>
                 </span>
@@ -36,11 +38,10 @@
 </template>
 
 <script lang="ts">
-import { RegionStatistics } from '@/models/yearly_data';
 import { useStatisticStore } from '@/stores/statistics';
 import { allStatTemplates, StatTemplate } from '@/utils/stat_helpers';
 import { Popover } from 'bootstrap';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 
 export default defineComponent({
     props: {
@@ -54,22 +55,56 @@ export default defineComponent({
         }
     },
     setup() {
-        return {
-            store: useStatisticStore(),
-            rows: ref<HTMLElement[]>([]),
-            popovers: [] as Popover[]
-        };
-    },
-    mounted() {
-        this.popovers.length = 0;
-        for (const elem of this.rows) {
-            const button = elem.querySelector('[data-bs-toggle="popover"]');
+        const popovers: { elem: HTMLElement, pop: Popover }[] = [];
+        const rows = ref<HTMLElement[]>([]);
+        const targetButton = ref<HTMLElement | null>(null);
+
+        const removePopover = (row: HTMLElement) => {
+            const index = popovers.findIndex(x => x.elem === row);
+            if (index != -1) {
+                popovers.splice(index, 1);
+            }
+        }
+        const addPopover = (row: HTMLElement) => {
+            const button = row.getAttribute('data-bs-toggle') === 'popover' ? row : row.querySelector('[data-bs-toggle="popover"]');
             if (button) {
                 const popover = new Popover(button, {
                     html: true
                 });
-                this.popovers.push(popover);
+                popovers.push({ elem: row, pop: popover });
             }
+        }
+
+        watch(rows, (current, previous) => {
+            previous.forEach(removePopover);
+            current.forEach(addPopover);
+        });
+
+        watch(targetButton, (current, previous) => {
+            if (previous) {
+                removePopover(previous);
+            }
+            if (current) {
+                addPopover(current);
+            }
+        });
+
+        return {
+            store: useStatisticStore(),
+            rows,
+            targetButton,
+            removePopover,
+            addPopover
+        };
+    },
+    mounted() {
+        for (const row of this.rows) {
+            this.removePopover(row);
+            this.addPopover(row);
+        }
+        if (this.targetButton) {
+            this.removePopover(this.targetButton);
+            this.addPopover(this.targetButton);
         }
     },
     computed: {
