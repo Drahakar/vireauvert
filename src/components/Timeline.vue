@@ -4,6 +4,7 @@
         <div id="slidercontainer" class="col-md-10">
             <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
                 <template v-slot:label="{value}">
+                <div class="markline"></div>
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
                 </template>
                 <template v-slot:process="{ style, end }">
@@ -199,6 +200,18 @@ export default defineComponent({
         border-radius: 5px;
         top: -11px;
         left: -6px;
+    }
+
+    .vue-slider .vue-slider-mark:last-of-type .markline {
+        border-left: .5px solid;
+        height: 10px;
+        border-color: #ccc;
+        width: 1px;
+        top: -14px;
+    }
+
+     .vue-slider .vue-slider-mark:last-of-type .custom-label.vue-slider-mark-label {
+        top: -45px;
     }
 }
 
