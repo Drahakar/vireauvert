@@ -43,9 +43,7 @@ party_leaders = [
     {'party': 'PLQ', 'district': 326},
     {'party': 'PQ', 'district': 370},
     {'party': 'QS', 'district': 346},
-    {'party': 'CQ', 'district': 246},
     {'party': 'PCQ', 'district': 754},
-    #{ 'party': 'PV', 'district': 0 },
 ]
 
 
