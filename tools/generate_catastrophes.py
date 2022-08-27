@@ -119,11 +119,12 @@ def parse_old_file(path, catastrophes):
                     location = feature['geometry']['coordinates']
                     catastrophe = {
                         "id": str(properties['no_seq_observation']),
-                        "location": [location[1], location[0]],
+                        "location": location,
                         "city": properties['nom'],
                         "type": event['type'],
                         "date": date.date(),
-                        "severity": severity
+                        "severity": severity,
+                        "loc_approx": properties['imprecision'] == 'localisation'
                     }
                     catastrophes.append(catastrophe)
 
@@ -132,7 +133,7 @@ def parse_new_file(path, catastrophes):
         reader = csv.reader(input_file)
         next(reader, None)
         for line in reader:
-            code_alea,alea,code_municipalite,municipalite,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
+            code_alea,alea,code_municipalite,municipalite,precision_localisation,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
             event = event_types.get(alea.lower())
                 
             if event:
@@ -141,11 +142,12 @@ def parse_new_file(path, catastrophes):
                     date = datetime.strptime(date_debut if date_debut else date_signalement, '%Y-%m-%d')
                     catastrophe = {
                         "id": "{}{}{}".format(code_alea, code_municipalite, date.date().strftime('%Y%m%d')),
-                        "location": [float(coord_y), float(coord_x)],
+                        "location": [float(coord_x), float(coord_y)],
                         "city": municipalite,
                         "type": event['type'],
                         "date": date.date(),
-                        "severity": severity
+                        "severity": severity,
+                        "loc_approx": precision_localisation.lower() == 'imprécise'
                     }
                     catastrophes.append(catastrophe)
 
@@ -168,10 +170,11 @@ def parse_shp(path, catastrophes):
             if severity >= Severity.Important:
                 fire = {
                     "id": str(int(record.CLE)),
-                    "location": [record.LATITUDE, record.LONGITUDE],
+                    "location": [record.LONGITUDE, record.LATITUDE],
                     "type": CatastropheType.ForestFire,
                     "date": record.DATE_DEBUT,
-                    "severity": severity
+                    "severity": severity,
+                    'loc_approx': False
                 }
                 catastrophes.append(fire)
 
@@ -193,7 +196,8 @@ for catastrophe in catastrophes:
         'type': catastrophe['type'].value,
         'date': catastrophe['date'].isoformat(),
         'severity': catastrophe['severity'].value,
-        'district': 0
+        'district': 0,
+        'loc_approx': catastrophe['loc_approx']
     }
     if 'city' in catastrophe:
         obj['city'] = catastrophe['city']

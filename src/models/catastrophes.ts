@@ -23,6 +23,7 @@ export interface Catastrophe {
     date: Date;
     severity: Severity;
     district: number;
+    loc_approx: boolean;
 }
 
 export enum Severity {
@@ -41,17 +42,19 @@ export interface CatastropheDocument {
     date: string;
     severity: Severity;
     district: number;
+    loc_approx: boolean;
 }
 
 export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
     return {
         id: doc.id,
-        location: { lat: doc.location[0], lng: doc.location[1] },
+        location: { lat: doc.location[1], lng: doc.location[0] },
         city: doc.city,
         type: doc.type as CatastropheType,
         date: new Date(doc.date),
         severity: doc.severity,
-        district: doc.district
+        district: doc.district,
+        loc_approx: doc.loc_approx
     };
 }
 
