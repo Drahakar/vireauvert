@@ -25,8 +25,8 @@ export default defineComponent({
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+    justify-content: center;
+    align-items: center;
 }
 
 .header-logo {
@@ -35,8 +35,6 @@ export default defineComponent({
 }
 
 .header-info {
-    background-color: #202020;
-    color: #fff;
     flex: 1;
 }
 
