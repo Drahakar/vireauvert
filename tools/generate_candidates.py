@@ -12,7 +12,7 @@ phone_pattern = re.compile(
 
 districts = {}
 
-with open(os.path.join(utils.source_directory, 'liste_circonscriptions2017.csv'), encoding='utf-8') as input_file:
+with open(os.path.join(utils.source_directory, 'liste_circonscriptions.csv'), encoding='utf-8') as input_file:
     reader = csv.reader(input_file, delimiter=';')
     next(reader, None)
     for [id, name] in reader:

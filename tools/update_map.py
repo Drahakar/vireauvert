@@ -11,9 +11,9 @@ from shapely import geometry
 import copy
 
 result = kml2geojson.main.convert(path.join(
-    utils.source_directory, 'carte2017simple.kml'), 'carte_electorale')[0]
+    utils.source_directory, 'carte_simple.kml'), 'carte_electorale')[0]
 
-with open(path.join(utils.source_directory, 'liste_circonscriptions2017.csv'), 'r', encoding='utf-8') as input_file:
+with open(path.join(utils.source_directory, 'liste_circonscriptions.csv'), 'r', encoding='utf-8') as input_file:
     reader = csv.reader(input_file, delimiter=';')
     next(reader, None)
     districts = {x[1]: int(x[0]) for x in reader}
