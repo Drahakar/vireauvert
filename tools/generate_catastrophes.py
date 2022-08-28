@@ -7,8 +7,6 @@ import xml.etree.ElementTree as ET
 from os import path
 import os
 import csv
-import zipfile
-from bs4 import BeautifulSoup
 import locale
 import utils
 import geojson
@@ -18,22 +16,6 @@ import shapefile
 MIN_YEAR = 1990
 
 locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
-
-def load_cities():
-    cities_xml = ET.parse(path.join(utils.source_directory, 'municipalites.xml'))
-
-    def convert_lat_lon(dms):
-        deg, minutes, seconds, direction =  re.split('[°\'"]', dms)
-        return (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction.strip() in ['O', 'S'] else 1)
-
-    cities = {}
-    for city in cities_xml.iterfind('./Municipalite'):
-        code = city.findtext('Code_municipalite')
-        lat = city.findtext('Latitutde')
-        lng = city.findtext('Longitude')
-        if code and lat and lng:
-            cities[code] = [convert_lat_lon(lat), convert_lat_lon(lng)]
-    return cities
 
 def load_map() -> dict[int, geometry.base.BaseGeometry]:
     with open(path.join(utils.destination_directory, 'carte_electorale.json'), 'r', encoding='utf-8') as input_file:
@@ -54,7 +36,6 @@ def contains_point(geo: geometry.base.BaseGeometry, pt: geometry.Point) -> bool:
         return False    
     return geo.contains(pt)
 
-cities = load_cities()
 district_shapes = load_map()
 
 class Severity(IntEnum):
@@ -123,35 +104,50 @@ def parse_new_line(line):
             }
     return None
 
-def parse_old_line(line):
-    no,_,date_observation,code_municipalite,nom,_,_,type,severite,_,_ = line
+def parse_old_file(path, catastrophes):
+    with open(path, 'r', encoding='utf-8') as input_file:
+        event_collection = geojson.load(input_file)
 
-    event = event_types.get(type.lower())
-    if event:
-        severity = parse_old_severity(severite.upper())
-        if severity >= event['min_severity']:
-            date = datetime.strptime(date_observation, '%Y/%m/%d %H:%M:%S')
-            if date.year >= MIN_YEAR:
-                location = cities.get(code_municipalite)
-                if location:
-                    return {
-                        "id": no,
-                        "location": location,
-                        "city": nom,
+    for feature in event_collection['features']:
+        properties = feature['properties']
+        date = datetime.strptime(properties['date_observation'], '%Y/%m/%d %H:%M:%S')
+        if date.year >= MIN_YEAR:
+            event = event_types.get(properties['type'].lower())
+            if event:
+                severity = parse_old_severity(properties['severite'].upper())
+                if severity >= event['min_severity']:
+                    location = feature['geometry']['coordinates']
+                    catastrophe = {
+                        "id": str(properties['no_seq_observation']),
+                        "location": [location[1], location[0]],
+                        "city": properties['nom'],
                         "type": event['type'],
                         "date": date.date(),
                         "severity": severity
                     }
-    return None
+                    catastrophes.append(catastrophe)
 
-def parse_file(path, catastrophes, parser):
+def parse_new_file(path, catastrophes):
     with open(path, 'r', encoding='utf-8') as input_file:
         reader = csv.reader(input_file)
         next(reader, None)
         for line in reader:
-            catastrophe = parser(line)
-            if catastrophe:
-                catastrophes.append(catastrophe)
+            code_alea,alea,code_municipalite,municipalite,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
+            event = event_types.get(alea.lower())
+                
+            if event:
+                severity = parse_new_severity(severite)
+                if severity >= event['min_severity']:
+                    date = datetime.strptime(date_debut if date_debut else date_signalement, '%Y-%m-%d')
+                    catastrophe = {
+                        "id": "{}{}{}".format(code_alea, code_municipalite, date.date().strftime('%Y%m%d')),
+                        "location": [float(coord_y), float(coord_x)],
+                        "city": municipalite,
+                        "type": event['type'],
+                        "date": date.date(),
+                        "severity": severity
+                    }
+                    catastrophes.append(catastrophe)
 
 def parse_shp(path, catastrophes):
     reader = shapefile.Reader(path)
@@ -182,8 +178,8 @@ def parse_shp(path, catastrophes):
     
 catastrophes = []
 
-parse_file(path.join(utils.source_directory, 'catastrophes_pre2020.csv'), catastrophes, parse_old_line)
-parse_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes, parse_new_line)
+parse_old_file(path.join(utils.source_directory, 'catastrophes_pre2020.json'), catastrophes)
+parse_new_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes)
 
 parse_shp(path.join(utils.source_directory, 'Feux_pt_ori', 'FEUX_PT_ORI_1972_2021.shp'), catastrophes)
 
