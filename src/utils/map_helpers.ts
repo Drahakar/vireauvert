@@ -1,6 +1,6 @@
 import L from "leaflet";
 
-import { Catastrophe, CatastropheType, getIconUrl } from "@/models/catastrophes";
+import { Catastrophe, CatastropheGroup, CatastropheType, getIconUrl } from "@/models/catastrophes";
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours, parseColour } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
@@ -52,11 +52,11 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 
 export const mapIcons = generateIcons();
 
-export function createMapMarker(catastrophe: Catastrophe, i18n: Composer) {
-    const title = i18n.t('catastrophe_with_severity', { catastrophe });
-    const marker = L.marker(catastrophe.location, {
+export function createMapMarker(group: CatastropheGroup, i18n: Composer) {
+    const title = i18n.t('catastrophe_group', { group });
+    const marker = L.marker(group.location, {
         title: title,
-        icon: mapIcons.get(catastrophe.type)
+        icon: mapIcons.get(group.type)
     });
     marker.bindTooltip(title);
     return marker;

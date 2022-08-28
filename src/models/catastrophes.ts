@@ -1,3 +1,4 @@
+import { List } from "immutable";
 import { Composer } from "vue-i18n";
 
 export enum CatastropheType {
@@ -12,12 +13,14 @@ export enum CatastropheType {
 
 export type CatastropheFilter = CatastropheType | '';
 
+export interface CatastropheLocation {
+    lat: number;
+    lng: number
+}
+
 export interface Catastrophe {
     id: string;
-    location: {
-        lat: number;
-        lng: number
-    };
+    location: CatastropheLocation;
     city: string;
     type: CatastropheType;
     date: Date;
@@ -60,4 +63,36 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
 
 export function getIconUrl(type: CatastropheType) {
     return `/icons/${type.toLowerCase()}_b.png`
+}
+
+export interface CatastropheGroup {
+    id: string;
+    location: CatastropheLocation;
+    city: string;
+    type: CatastropheType;
+    district: number;
+    loc_approx: boolean;
+    instances: List<{
+        id: string;
+        date: Date;
+        severity: Severity;
+    }>;
+}
+
+export function groupCatastrophes(catastrophes: List<Catastrophe>) {
+    return catastrophes
+        .groupBy(x => `${x.type}/${x.location.lat.toFixed(4)}/${x.location.lng.toFixed(4)}`)
+        .map((x, k) => {
+            const first = x.first()!;
+            const group: CatastropheGroup = {
+                id: k,
+                location: first.location,
+                type: first.type,
+                city: first.city,
+                district: first.district,
+                loc_approx: x.some(x => x.loc_approx),
+                instances: x.toList()
+            };
+            return group;
+        }).toList();
 }
