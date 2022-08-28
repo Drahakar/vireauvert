@@ -8,6 +8,7 @@ import { useStatisticStore } from "./stores/statistics";
 import { DEFAULT_USER_STATE } from "./models/user";
 import MobileApp from "./MobileApp.vue";
 import DesktopApp from "./DesktopApp.vue";
+import { useMapStore } from "./stores/map";
 
 export default defineComponent({
     components: {
@@ -18,13 +19,15 @@ export default defineComponent({
         const candidateStore = useCandidateStore();
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
+        const mapStore = useMapStore();
 
         const loadingCompleted = ref<boolean>(false);
 
         const storeLoads = Promise.allSettled([
             candidateStore.loadCandidates(),
             catastropheStore.loadCatastrophes(),
-            statisticStore.loadStatistics()
+            statisticStore.loadStatistics(),
+            mapStore.loadMap()
         ]);
         storeLoads.then(promises => {
             loadingCompleted.value = true;

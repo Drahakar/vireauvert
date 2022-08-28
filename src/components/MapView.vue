@@ -20,6 +20,7 @@ import { useStatisticStore } from "@/stores/statistics";
 import Thermometre from "./Thermometre.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
 import { Composer, useI18n } from "vue-i18n";
+import { useMapStore } from "@/stores/map";
 
 const MIN_ZOOM = 5;
 const MAX_ZOOM = 15;
@@ -54,14 +55,16 @@ export default defineComponent({
     },
     setup(props, { emit }) {
         const statisticStore = useStatisticStore();
-        const mapElement = ref<HTMLDivElement | null>(null);
+        const mapStore = useMapStore();
+
         const map = ref<L.Map | null>(null);
         const updateColour = (district: DistrictLayer) => {
             const statistics = statisticStore.findStatistics(props.year, district.feature.properties.id);
             setMapLayerColour(district.layer, district.feature.properties.id === props.district, statistics.temp_delta);
         };
+
         const districtLayers = new Map<string, DistrictLayer>();
-        const mapLayer = L.geoJSON(undefined, {
+        const mapLayer = L.geoJSON(mapStore.districts, {
             onEachFeature: (feature, layer) => {
                 const properties: DistrictProperties = feature.properties;
                 const district: DistrictLayer = { feature, layer: layer as L.GeoJSON };
@@ -74,6 +77,27 @@ export default defineComponent({
                 updateColour(district);
             }
         });
+        watch(() => mapStore.districts, data => {
+            mapLayer.clearLayers();
+            if (data) {
+                mapLayer.addData(data);
+            }
+        });
+
+        const maskLayer = L.geoJSON(mapStore.mask, {
+            interactive: false,
+            style: {
+                fillColor: "#000000",
+                opacity: 0.5
+            }
+        });
+        watch(() => mapStore.mask, data => {
+            maskLayer.clearLayers();
+            if (data) {
+                maskLayer.addData(data);
+            }
+        });
+
         watch(() => props.district, (newId, oldId) => {
             const oldLayer = districtLayers.get(oldId.toString());
             if (oldLayer) {
@@ -109,9 +133,27 @@ export default defineComponent({
         watch(() => props.catastrophes, catastrophes => {
             refreshIcons(icons, catastrophes, i18n);
         });
-        const mapWrapper = ref<HTMLDivElement | null>(null);
-        const mapResizeObserver = ref<ResizeObserver | null>(null);
-        return { mapElement, map, mapLayer, icons, statisticStore, mapWrapper, mapResizeObserver, i18n, districtLayers };
+
+        const mapResizeObserver = new ResizeObserver(entries => {
+            const rect = entries[0].contentRect;
+            if (map.value && rect.width > 0 && rect.height > 0) {
+                map.value.invalidateSize({
+                    pan: true,
+                });
+            }
+        });
+        return {
+            mapElement: ref<HTMLDivElement | null>(null),
+            map,
+            mapLayer,
+            maskLayer,
+            icons,
+            statisticStore,
+            mapWrapper: ref<HTMLDivElement | null>(null),
+            mapResizeObserver: mapResizeObserver,
+            i18n,
+            districtLayers
+        };
     },
     computed: {
         selectedStatistics() {
@@ -120,9 +162,6 @@ export default defineComponent({
     },
     async mounted() {
         if (this.mapElement) {
-            const mapDataResponse = await axios.get<Polygon>("data/carte_electorale.json", { responseType: "json" });
-            const maskDataResponse = await axios.get<Polygon>("data/masque_electoral.json", { responseType: "json" });
-
             const map = new L.Map(this.mapElement, {
                 center: this.location,
                 zoom: this.zoom,
@@ -131,17 +170,11 @@ export default defineComponent({
                 zoomControl: true
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
-            L.geoJSON(maskDataResponse.data, {
-                interactive: false,
-                style: {
-                    fillColor: "#000000",
-                    opacity: 0.5
-                }
-            }).addTo(map);
-            this.mapLayer.addData(mapDataResponse.data);
+            this.maskLayer.addTo(map);
             this.mapLayer.addTo(map);
+
             refreshIcons(this.icons, this.catastrophes, this.i18n);
             this.icons.layer.addTo(map);
 
@@ -161,14 +194,6 @@ export default defineComponent({
             this.map.attributionControl.setPrefix('');
 
             if (this.mapWrapper) {
-                this.mapResizeObserver = new ResizeObserver(entries => {
-                    const rect = entries[0].contentRect;
-                    if (rect.width > 0 && rect.height > 0) {
-                        map.invalidateSize({
-                            pan: true,
-                        });
-                    }
-                });
                 this.mapResizeObserver.observe(this.mapWrapper);
             }
 
@@ -183,7 +208,7 @@ export default defineComponent({
         }
     },
     unmounted() {
-        if (this.mapResizeObserver && this.mapWrapper) {
+        if (this.mapWrapper) {
             this.mapResizeObserver.unobserve(this.mapWrapper);
         }
     },
