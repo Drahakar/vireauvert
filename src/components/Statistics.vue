@@ -17,7 +17,7 @@
                 {{ $t('statistics') }}
             </a>
         </h5>
-        <ul id="body-statistics" class="list-group list-group-flush" aria-labelledby="heading-statistics">
+        <ul id="body-statistics" class="list-group list-group-flush collapse show" aria-labelledby="heading-statistics">
             <li v-for="{ value, template } of statistics"
                 class="list-group-item d-flex flex-row align-items-center p-1 ps-2 pe-2" ref="rows">
                 <i class="bi me-2" :class="template.icon_classes"></i>

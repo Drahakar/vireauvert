@@ -108,7 +108,7 @@ export default defineComponent({
             </tab>
             <tab name="Candidat(e)s" panel-class="tab-panel">
                 <div class="side-margins">
-                    <CandidateList :district="userState.district"></CandidateList>
+                    <CandidateList :district="userState.district" :collapse="true"></CandidateList>
                 </div>
             </tab>
         </tabs>
