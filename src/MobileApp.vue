@@ -82,7 +82,7 @@ export default defineComponent({
 
 <template>
     <div class="mobile-layout">
-        <Header class="header col-12"></Header>
+        <Header class="header col-12 justify-content-start"></Header>
         <RegionSearch class="search" :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
         <tabs class="tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
