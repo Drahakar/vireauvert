@@ -83,33 +83,28 @@ export default defineComponent({
 <template>
     <div class="mobile-layout">
         <Header class="header col-12"></Header>
-        <RegionSearch class="search side-margins" :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
-        <tabs class="tabs" nav-class="nav nav-pills nav-justified tabs-header" nav-item-class="nav-item"
+        <RegionSearch class="search" :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
+        <tabs class="tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
-                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district" :isMobile="true">
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"
+                    :district="userState.district" :isMobile="true">
                 </Timeline>
                 <MapView ref="mobileMap" class="map-view flex-grow-1" :district="userState.district"
                     :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
                     :location="userState.location" @location-changed="mapMoved" :zoom="userState.zoom"
                     @zoom-changed="mapZoomed" :zoom-limit-offset="-1"></MapView>
-                <div class="side-margins">
-                    <Statistics :district="userState.district" :year="userState.year"></Statistics>
-                </div>
+                <Statistics :district="userState.district" :year="userState.year"></Statistics>
             </tab>
             <tab name="Catastrophes" panel-class="tab-panel" :suffix="catastropheTabSuffix">
                 <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district" :isMobile="true"></Timeline>
-                <div class="side-margins">
-                    <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
-                        @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
-                    </CatastropheList>
-                </div>
+                <CatastropheList class="flex-grow-1" :year="userState.year" :district="userState.district"
+                    @on-request-catastrophe-focus="focusCatastrophe" @on-filter-catastrophes="selectCatastropheType">
+                </CatastropheList>
             </tab>
             <tab name="Candidat(e)s" panel-class="tab-panel">
-                <div class="side-margins">
-                    <CandidateList :district="userState.district" :collapse="true"></CandidateList>
-                </div>
+                <CandidateList :district="userState.district" :collapse="true"></CandidateList>
             </tab>
         </tabs>
     </div>
@@ -136,11 +131,6 @@ export default defineComponent({
     padding-top: 10px;
 }
 
-.side-margins {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-}
-
 .timeline {
     height: 96px;
 }
@@ -162,10 +152,6 @@ export default defineComponent({
 </style>
 
 <style> /* global */
-.tabs-header {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-}
 a[role=tab] {
     white-space: nowrap;
 }

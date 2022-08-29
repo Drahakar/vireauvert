@@ -61,9 +61,9 @@ Sentry.init({
 </script>
 
 <template>
-    <div id="main">
+    <div id="main" class="container-fluid">
         <DesktopApp v-if="isDesktop" :userState="state"></DesktopApp>
-        <MobileApp v-else class="mx-0" :userState="state"></MobileApp>
+        <MobileApp v-else :userState="state"></MobileApp>
         <div id="loading-overlay" v-if="!loadingCompleted">
             <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
             <h3 class="mt-2">Chargement des données...</h3>
