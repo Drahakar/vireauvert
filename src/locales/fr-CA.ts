@@ -1,8 +1,43 @@
-import { Catastrophe, CatastropheType, Severity } from "@/models/catastrophes";
+import { Catastrophe, CatastropheGroup, CatastropheType, Severity } from "@/models/catastrophes";
 import { MessageContext } from "@intlify/core-base";
 
 function isCatastropheFeminine(type: CatastropheType) {
     return type === CatastropheType.Flood || type === CatastropheType.Tornado || type === CatastropheType.FreezingRain;
+}
+
+const catastrophes = {
+    FLOOD: ["Inondation", "Inondations"],
+    FOREST_FIRE: ["Feu de forêt", "Feux de forêt"],
+    VIOLENT_STORM: ["Orage violent", "Orages violents"],
+    TORNADO: ["Tornade", "Tornades"],
+    FREEZING_RAIN: ["Pluie verglaçante", "Pluies verglaçantes"],
+    WINTER_STORM: ["Tempête hivernale", "Tempêtes hivernales"],
+    STORM_WINDS: ["Vent de tempête", "Vents de tempête"]
+};
+
+function translateSeverity(severity: Severity, feminine: boolean, plural = false) {
+    let result = "inconnu";
+    switch (severity) {
+        case Severity.Extreme:
+            result = "extrême";
+            break;
+        case Severity.Important:
+            result = "important";
+            break;
+        case Severity.Moderate:
+            result = "modéré";
+            break;
+        case Severity.Minor:
+            result = "mineur";
+            break;
+    };
+    if (feminine && !result.endsWith('e')) {
+        result += 'e';
+    }
+    if(plural && !result.endsWith('s')) {
+        result += 's';
+    }
+    return result;
 }
 
 export default {
@@ -15,35 +50,51 @@ export default {
     // Catastrophes
 
     catastrophes: "Événement extrême | Événements extrêmes",
-    catastrophe_FLOOD: "Inondation | Inondations",
-    catastrophe_FOREST_FIRE: "Feu de forêt | Feux de forêt",
-    catastrophe_VIOLENT_STORM: "Orage violent | Orages violents",
-    catastrophe_TORNADO: "Tornade | Tornades",
-    catastrophe_FREEZING_RAIN: "Pluie verglaçante | Pluies verglaçantes",
-    catastrophe_WINTER_STORM: "Tempête hivernale | Tempêtes hivernales",
-    catastrophe_STORM_WINDS: "Vent de tempête | Vents de tempête",
-
-    // dirty hack: use pluralisation support for genders instead
-    severity_4: "extrême | extrême",
-    severity_3: "important | importante",
-    severity_2: "modéré | modérée",
-    severity_1: "mineur | mineure",
-    severity_0: "inconnu | inconnue",
+    catastrophe_FLOOD: ({ plural }: MessageContext) => plural(catastrophes.FLOOD),
+    catastrophe_FOREST_FIRE: ({ plural }: MessageContext) => plural(catastrophes.FOREST_FIRE),
+    catastrophe_VIOLENT_STORM: ({ plural }: MessageContext) => plural(catastrophes.FREEZING_RAIN),
+    catastrophe_TORNADO: ({ plural }: MessageContext) => plural(catastrophes.TORNADO),
+    catastrophe_FREEZING_RAIN: ({ plural }: MessageContext) => plural(catastrophes.FREEZING_RAIN),
+    catastrophe_WINTER_STORM: ({ plural }: MessageContext) => plural(catastrophes.WINTER_STORM),
+    catastrophe_STORM_WINDS: ({ plural }: MessageContext) => plural(catastrophes.STORM_WINDS),
 
     catastrophe_with_severity: ({ linked, named }: MessageContext) => {
         const catastrophe = named('catastrophe') as Catastrophe;
 
         const translatedType = linked(`catastrophe_${catastrophe.type}`);
-        let translatedSeverity = linked(`severity_${catastrophe.severity}`);
-        if (isCatastropheFeminine(catastrophe.type) && catastrophe.severity !== Severity.Extreme) {
-            translatedSeverity += 'e';
-        }
+        const translatedSeverity = translateSeverity(catastrophe.severity, isCatastropheFeminine(catastrophe.type));
 
         let result = `${translatedType} ${translatedSeverity}`;
         if (named('show_city') && catastrophe.city) {
-            result += ` à ${catastrophe.city}`;
+            if (catastrophe.loc_approx) {
+                result += ' près de ';
+            } else {
+                result += ' à ';
+            }
+            result += catastrophe.city;
         }
         return result;
+    },
+
+    catastrophe_group: ({ named }: MessageContext) => {
+        const group = named('group') as CatastropheGroup;
+
+        const parts = [];
+        if (group.instances.size > 1) {
+            parts.push(group.instances.size.toString(), catastrophes[group.type][1].toLocaleLowerCase('fr-CA'));
+        } else {
+            parts.push(catastrophes[group.type][0]);
+        }
+
+        const best = group.instances.minBy(x => x.severity)!;
+        const worst = group.instances.maxBy(x => x.severity)!;
+        if (best.severity !== worst.severity) {
+            parts.push('de sévérité', translateSeverity(best.severity, true), 'à', translateSeverity(worst.severity, true));
+        } else {
+            const feminine = isCatastropheFeminine(group.type);
+            parts.push(translateSeverity(best.severity, feminine, group.instances.size > 1));
+        }
+        return parts.join(' ');
     },
 
     no_future_catastrophes: "Les évênements extrêmes ne sont disponibles que pour les années passées",

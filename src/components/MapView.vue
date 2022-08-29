@@ -11,7 +11,7 @@
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { defineComponent, PropType, ref, watch } from "vue";
-import { Catastrophe } from "@/models/catastrophes";
+import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
@@ -236,13 +236,13 @@ interface MapIcons {
 
 function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Composer) {
     const missing = new Set<string>(icons.index.keys());
-    for (const catastrophe of catastrophes) {
-        if (!icons.index.has(catastrophe.id)) {
-            const marker = createMapMarker(catastrophe, i18n);
-            icons.index.set(catastrophe.id, marker);
+    for (const group of groupCatastrophes(catastrophes)) {
+        if (!icons.index.has(group.id)) {
+            const marker = createMapMarker(group, i18n);
+            icons.index.set(group.id, marker);
             marker.addTo(icons.layer);
         }
-        missing.delete(catastrophe.id);
+        missing.delete(group.id);
     }
     for (const id of missing) {
         const marker = icons.index.get(id);
@@ -268,5 +268,13 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 .leaflet-control-container {
     width: 100%;
     height: 100%;
+}
+
+.catastrophe-popup .leaflet-popup-content {
+    margin: 0;
+}
+
+.catastrophe-popup .leaflet-popup-content .list-group-flush {
+    border-radius: 6px;
 }
 </style>
