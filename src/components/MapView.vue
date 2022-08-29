@@ -12,8 +12,6 @@ import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { defineComponent, PropType, ref, watch } from "vue";
 import { Catastrophe } from "@/models/catastrophes";
-import axios from "axios";
-import { Polygon } from "geojson";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
@@ -81,6 +79,10 @@ export default defineComponent({
             mapLayer.clearLayers();
             if (data) {
                 mapLayer.addData(data);
+                const bounds = mapLayer.getBounds();
+                if (map.value && bounds.isValid()) {
+                    map.value.setMaxBounds(bounds.pad(0.05));
+                }
             }
         });
 
@@ -190,7 +192,10 @@ export default defineComponent({
             }).addTo(map);
 
             this.map = map;
-            this.map.setMaxBounds(this.mapLayer.getBounds().pad(0.05));
+            const bounds = this.mapLayer.getBounds();
+            if (bounds.isValid()) {
+                this.map.setMaxBounds(bounds.pad(0.05));
+            }
             this.map.attributionControl.setPrefix('');
 
             if (this.mapWrapper) {
