@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import { Tabs, Tab } from 'vue3-tabs-component';
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
+import Header from "./components/Header.vue";
 import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
@@ -18,6 +19,7 @@ export default defineComponent({
     components: {
         CandidateList,
         CatastropheList,
+        Header,
         MapView,
         RegionSearch,
         Statistics,
@@ -80,7 +82,8 @@ export default defineComponent({
 
 <template>
     <div class="mobile-layout">
-        <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
+        <Header class="header col-12 justify-content-start"></Header>
+        <RegionSearch class="search" :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
         <tabs class="tabs" nav-class="nav nav-pills nav-justified" nav-item-class="nav-item"
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
@@ -108,19 +111,23 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.header {
+    padding-top: 0;
+    height: 48px;
+}
+
 .mobile-layout {
-    padding-top: 10px;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.mobile-layout>* {
-    padding-top: 10px;
-}
-
 .map-view {
     min-height: 400px;
+}
+
+.search {
+    padding-top: 10px;
 }
 
 .timeline {
@@ -136,12 +143,14 @@ export default defineComponent({
 }
 
 .tabs {
+    padding-top: 10px;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 </style>
-<style>
+
+<style> /* global */
 a[role=tab] {
     white-space: nowrap;
 }

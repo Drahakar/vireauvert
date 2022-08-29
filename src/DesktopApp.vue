@@ -2,6 +2,7 @@
 import { List } from 'immutable';
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
+import Header from "./components/Header.vue";
 import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
@@ -16,6 +17,7 @@ export default defineComponent({
     components: {
         CandidateList,
         CatastropheList,
+        Header,
         MapView,
         RegionSearch,
         Statistics,
@@ -70,6 +72,7 @@ export default defineComponent({
     <div class="d-md-block desktop-layout">
         <div class="row">
             <div class="legend col-md-3">
+                <Header class="header"></Header>
                 <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
                 <CandidateList :district="userState.district"></CandidateList>
@@ -88,6 +91,10 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.header {
+    height: 128px;
+}
+
 .map-view {
     min-height: 400px;
     height: calc(100vh - 96px);
