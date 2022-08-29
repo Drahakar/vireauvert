@@ -69,7 +69,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="d-md-block">
+    <div class="d-md-block desktop-layout">
         <div class="row">
             <div class="legend col-md-3">
                 <Header class="header"></Header>

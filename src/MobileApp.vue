@@ -88,8 +88,7 @@ export default defineComponent({
             nav-item-link-class="nav-link" nav-item-link-active-class="active" nav-item-link-disabled-class="disabled"
             panels-wrapper-class="flex-grow-1" :options="{ useUrlFragment: false }">
             <tab name="Carte" :selected="true" panel-class="tab-panel">
-                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear"
-                    :district="userState.district" :isMobile="true">
+                <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district" :isMobile="true">
                 </Timeline>
                 <MapView ref="mobileMap" class="map-view flex-grow-1" :district="userState.district"
                     :year="userState.year" :catastrophes="catastrophes" @district-selected="selectDistrict"
