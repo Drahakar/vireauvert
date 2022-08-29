@@ -3,7 +3,7 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <Thermometre id="thermo" :statistics="selectedStatistics" :district="district"></Thermometre>
+        <Thermometre :statistics="selectedStatistics" :district="district"></Thermometre>
     </div>
 </template>
 
@@ -262,32 +262,6 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 
 #wrapper {
     position: relative;
-}
-
-#thermo {
-    position: absolute;
-    z-index: 400;
-    right: 16px;
-    top: 16px;
-    max-height: calc(100% - 48px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(127, 127, 127, 0.7) rgba(255, 255, 255, 0.7);
-
-}
-
-#thermo::-webkit-scrollbar {
-    width: 4px;
-}
-
-#thermo::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-#thermo::-webkit-scrollbar-thumb {
-    background-color: rgba(127, 127, 127, 0.7);
-    border-radius: 4px;
 }
 </style>
 <style>
