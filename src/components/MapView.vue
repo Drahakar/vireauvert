@@ -269,4 +269,12 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
     width: 100%;
     height: 100%;
 }
+
+.catastrophe-popup .leaflet-popup-content {
+    margin: 0;
+}
+
+.catastrophe-popup .leaflet-popup-content .list-group-flush {
+    border-radius: 6px;
+}
 </style>

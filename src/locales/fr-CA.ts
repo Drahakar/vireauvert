@@ -74,7 +74,7 @@ export default {
         let result = `${translatedType} ${translatedSeverity}`;
         if (named('show_city') && catastrophe.city) {
             if (catastrophe.loc_approx) {
-                result += ' autour de ';
+                result += ' près de ';
             } else {
                 result += ' à ';
             }
