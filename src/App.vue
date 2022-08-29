@@ -61,9 +61,9 @@ Sentry.init({
 </script>
 
 <template>
-    <div id="main" class="mx-0">
-        <DesktopApp v-if="isDesktop" class="desktop-layout" :userState="state"></DesktopApp>
-        <MobileApp v-else class="mobile-layout" :userState="state"></MobileApp>
+    <div id="main">
+        <DesktopApp v-if="isDesktop" :userState="state"></DesktopApp>
+        <MobileApp v-else class="mx-0" :userState="state"></MobileApp>
         <div id="loading-overlay" v-if="!loadingCompleted">
             <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
             <h3 class="mt-2">Chargement des données...</h3>
@@ -93,8 +93,6 @@ Sentry.init({
 
 <style>
 /* global */
-.mobile-layout {}
-.desktop-layout {}
 .tab-panel {
     padding-top: 10px;
     height: 100%;

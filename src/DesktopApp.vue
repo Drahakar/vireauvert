@@ -69,10 +69,10 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="d-md-block desktop-layout">
-        <Header class="header col-12"></Header>
-        <div class="row g-0">
+    <div class="container-fluid d-md-block">
+        <div class="row">
             <div class="legend col-md-3">
+                <Header class="header"></Header>
                 <RegionSearch :district="userState.district" @district-selected="selectDistrict"></RegionSearch>
                 <Statistics :district="userState.district" :year="userState.year"></Statistics>
                 <CandidateList :district="userState.district"></CandidateList>
@@ -84,7 +84,7 @@ export default defineComponent({
                 :catastrophes="catastrophes" @district-selected="selectDistrict" :location="userState.location"
                 @location-changed="mapMoved" :zoom="userState.zoom" @zoom-changed="mapZoomed"></MapView>
         </div>
-        <div class="row g-0">
+        <div class="row">
             <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district"></Timeline>
         </div>
     </div>
@@ -92,13 +92,12 @@ export default defineComponent({
 
 <style scoped>
 .header {
-    height: 64px;
-    margin-bottom: 8px;
+    height: 128px;
 }
 
 .map-view {
     min-height: 400px;
-    height: calc(100vh - 96px - 64px - 8px);
+    height: calc(100vh - 96px);
 }
 
 .legend {
@@ -106,7 +105,7 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
     padding: 10px;
-    max-height: calc(100vh - 96px - 64px - 8px);
+    max-height: calc(100vh - 96px);
 }
 
 .timeline {
