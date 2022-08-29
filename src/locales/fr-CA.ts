@@ -58,13 +58,6 @@ export default {
     catastrophe_WINTER_STORM: ({ plural }: MessageContext) => plural(catastrophes.WINTER_STORM),
     catastrophe_STORM_WINDS: ({ plural }: MessageContext) => plural(catastrophes.STORM_WINDS),
 
-    // dirty hack: use pluralisation support for genders instead
-    severity_4: "extrême",
-    severity_3: "important",
-    severity_2: "modéré",
-    severity_1: "mineur",
-    severity_0: "inconnu",
-
     catastrophe_with_severity: ({ linked, named }: MessageContext) => {
         const catastrophe = named('catastrophe') as Catastrophe;
 
