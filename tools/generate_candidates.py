@@ -17,11 +17,12 @@ with open(os.path.join(utils.source_directory, 'liste_circonscriptions.csv'), en
     next(reader, None)
     for [id, name] in reader:
         districts[name.lower()] = int(id)
+    districts['bourget'] = districts['camille-laurin']
 
 
 def get_party(party_name):
     match party_name.lower():
-        case 'caq':
+        case 'coalition avenir québec':
             return 'CAQ'
         case 'parti libéral':
             return 'PLQ'
@@ -31,7 +32,7 @@ def get_party(party_name):
             return 'QS'
         case 'climat québec':
             return 'CQ'
-        case 'pati conservateur':
+        case 'parti conservateur':
             return 'PCQ'
         case 'parti vert':
             return 'PV'
@@ -47,25 +48,14 @@ party_leaders = [
 ]
 
 
-def format_phone(phone):
-    match = phone_pattern.search(phone)
-    if match:
-        return '+1{}{}{}'.format(
-            match.group(1),
-            match.group(2),
-            match.group(3),
-        )
-    return None
-
-
 candidates = []
 with open(os.path.join(utils.source_directory, 'candidatures.csv'), encoding='utf-8') as input_file:
     reader = csv.reader(input_file)
-    next(reader, None) # "Dernière modification le..."
-    next(reader, None) # En-têtes de colonnes
+    next(reader, None)  # "Dernière modification le..."
+    next(reader, None)  # En-têtes de colonnes
 
     for line in reader:
-        _,district,party,name,_,facebook,_,_,_ = line
+        _, district, party, name, _, facebook, _, _, _ = line
         if not name:
             continue
         district_id = districts.get(district.strip().lower(), None)
