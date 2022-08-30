@@ -2,7 +2,7 @@
     <div class="card catastrophes">
         <h5 class="card-header" id="catastrophes-header">
             <span>{{ $t('catastrophes', 2) }}</span>
-            <small v-if="areCatastrophesAvailable" class="float-end">{{ $t('count_by_year', { count: catastrophes.size, year }) }}</small>
+            <small class="float-end">{{ $t('count_by_year', { count: catastropheCount, year }) }}</small>
         </h5>
         <template v-if="areCatastrophesAvailable">
             <select class="form-select" aria-label="Type de catastrophe" v-model="catastropheType"
@@ -67,6 +67,9 @@ export default defineComponent({
         },
         areCatastrophesAvailable() {
             return this.year <= CURRENT_YEAR;
+        },
+        catastropheCount() {
+            return this.year > CURRENT_YEAR ? '??' : this.catastrophes.size;
         }
     },
     methods: {
