@@ -2,20 +2,19 @@
     <div class="timeline row">
         <div id="slidertitle" class="col-md-2" v-t="'research_year'"></div>
         <div id="slidercontainer" class="col-md-10">
-            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
+            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false" :rail-style="temperatureGradientStyle">
                 <template v-slot:label="{value}">
                 <div class="markline"></div>
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
                 </template>
-                <template v-slot:process="{ style, end }">
-                    <div class="vue-slider-process" :style="[style, temperatureGradientStyle(end)]"></div>
+                <template v-slot:process="{ style}">
+                    <div class="vue-slider-process" :style="[style]"></div>
                     <div class="vue-slider-process prevision-indicator" :style="[style, modeledYearsStyle]"></div>
                 </template>
                 <template v-slot:step="{value}">
                     <div :class="['catastrophe-dot', catastropheCountSizeClass(value)]"></div>
                 </template>
             </vue-slider>
-            
         </div>
     </div>
 </template>
@@ -30,9 +29,8 @@ import { useStatisticStore } from '@/stores/statistics';
 import { CatastropheFilter } from '@/models/catastrophes';
 import { temperatureGradient, getGradientColourIndex,colourToHex } from '@/utils/colours';
 
- function generateTemperatureGradient(statisticStore: ReturnType<typeof useStatisticStore>, district: number, progressPercent: number): String[] {
-        const shownYears = TIMELINE_YEARS.slice(0, progressPercent/100 * TIMELINE_YEARS.length);
-        const yearRatio = (1 / shownYears.length * 100);
+ function generateTemperatureGradient(statisticStore: ReturnType<typeof useStatisticStore>, district: number): String[] {
+        const yearRatio = (1 / TIMELINE_YEARS.length * 100);
         const temperatureDeltas: (number|undefined)[] = TIMELINE_YEARS.map(year => statisticStore.findStatistics(year, district).temp_delta);
       
         return temperatureDeltas.map((tempDelta: number|undefined, index: number) => {
@@ -86,15 +84,17 @@ export default defineComponent({
             ]   
         }
     },
-    methods: {
-        catastrophesCountByYears(year: number): Number {
-            return this.catastropheStore.findCatastrophes(year, this.district, this.catastropheFilter).size;
-        },
-        temperatureGradientStyle(progressPercent: number) {
-            const gradient = generateTemperatureGradient(this.statisticStore, this.district, progressPercent).join(",")
+    computed: {
+        temperatureGradientStyle() {
+            const gradient = generateTemperatureGradient(this.statisticStore, this.district).join(",")
             return {
                 '--background-process': `linear-gradient(to right, ${gradient})`
             }
+        },
+    },
+    methods: {
+        catastrophesCountByYears(year: number): Number {
+            return this.catastropheStore.findCatastrophes(year, this.district, this.catastropheFilter).size;
         },
         catastropheCountSizeClass(year: number): String {
             const catastropheCount = this.catastrophesCountByYears(year);
@@ -232,8 +232,13 @@ export default defineComponent({
         display:block;
     }
 }
+</style>
 
-.vue-slider .vue-slider-process {
+<style>
+.vue-slider .vue-slider-rail {
     background: var(--background-process);
+}
+.vue-slider .vue-slider-process {
+    background-color: transparent;
 }
 </style>
