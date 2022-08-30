@@ -1,8 +1,7 @@
 <template>
     <v-select aria-label="Circonscription" :options="districtOptions" v-model="selectedDistrict" label="name"
         :reduce="getDistrictId" :clearable="false">
-        <template #no-options="{ search, searching, loading }">
-            {{ $t('no_district_search_results') }}
+        <template #no-options="{ search, searching, loading }" v-t="'no_district_search_results'">
         </template>
     </v-select>
 </template>

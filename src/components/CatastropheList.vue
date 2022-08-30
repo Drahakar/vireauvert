@@ -23,9 +23,7 @@
                 </li>
             </ul>
         </template>
-        <div class="no-future-catastrophes" v-else>
-            {{ $t('no_future_catastrophes') }}
-        </div>
+        <div class="no-future-catastrophes" v-else v-t="'no_future_catastrophes'"></div>
     </div>
 
 </template>
