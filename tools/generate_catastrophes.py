@@ -202,7 +202,7 @@ for catastrophe in catastrophes:
     if 'city' in catastrophe:
         obj['city'] = catastrophe['city']
     
-    pt = geometry.Point(obj['location'][1], obj['location'][0])
+    pt = geometry.Point(obj['location'])
     for id, shape in district_shapes.items():
         if contains_point(shape, pt):
             obj['district'] = id
