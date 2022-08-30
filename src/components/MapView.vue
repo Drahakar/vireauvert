@@ -90,7 +90,9 @@ export default defineComponent({
             interactive: false,
             style: {
                 fillColor: "#000000",
-                opacity: 0.5
+                color: '#000000',
+                opacity: 0.4,
+                fillOpacity: 0.4
             }
         });
         watch(() => mapStore.mask, data => {
