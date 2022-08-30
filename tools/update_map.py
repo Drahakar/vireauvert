@@ -8,6 +8,7 @@ import geojson
 import geojson.mapping
 from shapely import ops
 from shapely import geometry
+from shapely import validation
 import copy
 
 result = kml2geojson.main.convert(path.join(
@@ -25,8 +26,7 @@ for feature in result['features']:
 
 ungava_index = next(i for i, v in enumerate(result['features']) if v['properties']['id'] == utils.UNGAVA_ID)
 ungava_shape = geometry.shape(result['features'][ungava_index]['geometry'])
-[north_geo, south_geo] = ops.split(
-    ungava_shape, geometry.LineString([(-180, 55), (180, 55)])).geoms
+[north_geo, south_geo] = ops.split(ungava_shape, geometry.LineString([(-180, 55), (180, 55)])).geoms
 
 ungava_north = result['features'][ungava_index]
 ungava_south = copy.deepcopy(ungava_north)
@@ -42,12 +42,20 @@ district_map = {str(id): name for name, id in districts.items()}
 district_map[str(ungava_north['properties']['id'])] = ungava_north['properties']['name']
 district_map[str(ungava_south['properties']['id'])] = ungava_south['properties']['name']
 
-polygons = [geometry.shape(f['geometry']) for f in result['features']]
-merged: geometry.Polygon = ops.unary_union(
-    [p if p.is_valid else p.buffer(0) for p in polygons])
+polygons = []
+for feature in result['features']:
+    polygon = validation.make_valid(geometry.shape(feature['geometry']))
+    feature['bbox'] = polygon.bounds
+    feature['geometry'] = geojson.mapping.to_mapping(polygon)
+    polygons.append(polygon)
 
-box = geometry.Polygon(
-    [(-180, -180), (-180, 180), (180, 180), (180, -180)]).difference(merged)
+EPSILON = 0.000001
+merged = ops.unary_union(polygons)
+merged = geometry.Polygon(merged.exterior)
+merged = merged.buffer(EPSILON, 1, join_style=geometry.JOIN_STYLE.mitre).buffer(-EPSILON, 1, join_style=geometry.JOIN_STYLE.mitre)
+
+world = geometry.Polygon([(-180, -180), (-180, 180), (180, 180), (180, -180)])
+box = world.difference(merged)
 
 with open(path.join(utils.destination_directory, '..', '..', 'src', 'models', 'districts.json'), 'w', encoding='utf-8') as output_file:
     json.dump(district_map, output_file)
