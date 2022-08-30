@@ -52,7 +52,7 @@ export default {
     catastrophes: "Événement extrême | Événements extrêmes",
     catastrophe_FLOOD: ({ plural }: MessageContext) => plural(catastrophes.FLOOD),
     catastrophe_FOREST_FIRE: ({ plural }: MessageContext) => plural(catastrophes.FOREST_FIRE),
-    catastrophe_VIOLENT_STORM: ({ plural }: MessageContext) => plural(catastrophes.FREEZING_RAIN),
+    catastrophe_VIOLENT_STORM: ({ plural }: MessageContext) => plural(catastrophes.VIOLENT_STORM),
     catastrophe_TORNADO: ({ plural }: MessageContext) => plural(catastrophes.TORNADO),
     catastrophe_FREEZING_RAIN: ({ plural }: MessageContext) => plural(catastrophes.FREEZING_RAIN),
     catastrophe_WINTER_STORM: ({ plural }: MessageContext) => plural(catastrophes.WINTER_STORM),
