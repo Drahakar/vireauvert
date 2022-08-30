@@ -1,6 +1,6 @@
 <template>
     <div class="timeline row">
-        <div id="slidertitle" class="col-md-2">{{ $t('research_year') }}</div>
+        <div id="slidertitle" class="col-md-2" v-t="'research_year'"></div>
         <div id="slidercontainer" class="col-md-10">
             <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
                 <template v-slot:label="{value}">

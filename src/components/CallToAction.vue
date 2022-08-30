@@ -1,7 +1,6 @@
 <template>
     <a v-if="active" class="btn btn-success" href="https://www.vireauvert.org/envoipropositionspartispolitiques"
-        role="button" target="_blank">
-        {{ $t('call_to_action') }}
+        role="button" target="_blank" v-t="'call_to_action'">
     </a>
 </template>
 
