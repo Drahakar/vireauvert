@@ -2,7 +2,7 @@ import { Catastrophe, CatastropheGroup, CatastropheType, Severity } from "@/mode
 import { MessageContext } from "@intlify/core-base";
 
 function isCatastropheFeminine(type: CatastropheType) {
-    return type === CatastropheType.Flood || type === CatastropheType.Tornado || type === CatastropheType.FreezingRain;
+    return type === CatastropheType.Flood || type === CatastropheType.Tornado || type === CatastropheType.FreezingRain || type === CatastropheType.HeatWave;
 }
 
 const catastrophes = {
@@ -12,7 +12,8 @@ const catastrophes = {
     TORNADO: ["Tornade", "Tornades"],
     FREEZING_RAIN: ["Pluie verglaçante", "Pluies verglaçantes"],
     WINTER_STORM: ["Tempête hivernale", "Tempêtes hivernales"],
-    STORM_WINDS: ["Vent de tempête", "Vents de tempête"]
+    STORM_WINDS: ["Vent de tempête", "Vents de tempête"],
+    HEAT_WAVE: ["Vague de chaleur", "Vagues de chaleur"]
 };
 
 function translateSeverity(severity: Severity, feminine: boolean, plural = false) {
@@ -57,6 +58,7 @@ export default {
     catastrophe_FREEZING_RAIN: ({ plural }: MessageContext) => plural(catastrophes.FREEZING_RAIN),
     catastrophe_WINTER_STORM: ({ plural }: MessageContext) => plural(catastrophes.WINTER_STORM),
     catastrophe_STORM_WINDS: ({ plural }: MessageContext) => plural(catastrophes.STORM_WINDS),
+    catastrophe_HEAT_WAVE: ({ plural }: MessageContext) => plural(catastrophes.HEAT_WAVE),
 
     catastrophe_with_severity: ({ linked, named }: MessageContext) => {
         const catastrophe = named('catastrophe') as Catastrophe;

@@ -1,5 +1,4 @@
 import { List } from "immutable";
-import { Composer } from "vue-i18n";
 
 export enum CatastropheType {
     Flood = "FLOOD",
@@ -8,7 +7,8 @@ export enum CatastropheType {
     Tornado = "TORNADO",
     FreezingRain = "FREEZING_RAIN",
     WinterStorm = "WINTER_STORM",
-    StormWinds = "STORM_WINDS"
+    StormWinds = "STORM_WINDS",
+    HeatWave = "HEAT_WAVE"
 }
 
 export type CatastropheFilter = CatastropheType | '';
