@@ -1,10 +1,8 @@
-from genericpath import isfile
 import os
 import csv
 import multiprocessing
-import sys
 import utils
-from datetime import datetime
+from datetime import datetime, timedelta
 import unicodedata
 import string
 from urllib import request
@@ -12,27 +10,69 @@ from urllib import request
 climate_directory = os.path.join(utils.source_directory, 'raw_climate_data')
 os.makedirs(climate_directory, exist_ok=True)
 
-def download_data_for_station(station_id, year_start, year_end):
-    destination_path = os.path.join(climate_directory, '{}.csv'.format(station_id))
-    if os.path.isfile(destination_path):
-        return
-    
-    HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-    with open(destination_path + '.csv', 'w', encoding='utf-8') as output_file:
-        for year in range(year_start, year_end + 1):
-            for month in range(1, 13):
-                url = 'https://dd.weather.gc.ca/climate/observations/daily/csv/QC/climate_daily_QC_{}_{}-{:02d}_P1D.csv'.format(station_id, year, month)
-                req = request.Request(url, headers=HEADERS)
-                try:
-                    with request.urlopen(req) as response:
-                        data = response.read().decode('latin1').splitlines(True)[1:]
-                        output_file.writelines(data[1:])
-                        output_file.flush()
 
-                except request.HTTPError as ex:
-                    if ex.code != 404:
-                        raise
-    os.rename(destination_path + '.csv', destination_path)
+def months_between(start_date, end_date):
+    if end_date <= start_date:
+        return
+
+    year = start_date.year
+    month = start_date.month
+
+    while (year, month) <= (end_date.year, end_date.month):
+        yield datetime(year, month, 1)
+        if month >= 12:
+            month = 1
+            year += 1
+        else:
+            month += 1
+
+
+def download_data_for_station(station_id, start, end):
+    destination_path = os.path.join(
+        climate_directory, '{}.csv'.format(station_id))
+    records: dict[datetime, list[str]] = {}
+    try:
+        with open(destination_path, 'r', encoding='utf-8') as input_file:
+            latest = None
+            reader = csv.reader(input_file)
+            for line in reader:
+                date = datetime.strptime(line[4], '%Y-%m-%d')
+                if latest is None or date > latest:
+                    latest = date
+                records[date] = line
+            if latest is not None and latest > start:
+                start = latest + timedelta(days=1)
+            if start >= end:
+                return
+    except OSError:
+        pass
+
+    has_new_data = False
+    HEADERS = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    for poll_date in months_between(start, end):
+        url = 'https://dd.weather.gc.ca/climate/observations/daily/csv/QC/climate_daily_QC_{}_{}-{:02d}_P1D.csv'.format(
+            station_id, poll_date.year, poll_date.month)
+        req = request.Request(url, headers=HEADERS)
+        try:
+            with request.urlopen(req) as response:
+                reader = csv.reader(response.read().decode('latin1').splitlines())
+                next(reader, None)
+                for line in reader:
+                    date = datetime.strptime(line[4], '%Y-%m-%d')
+                    if date not in records:
+                        records[date] = line
+                        has_new_data = True
+        except request.HTTPError as ex:
+            if ex.code != 404:
+                raise
+
+    if has_new_data:
+        records = { key: records[key] for key in sorted(records.keys()) }
+        with open(destination_path, 'w', encoding='utf-8', newline='') as output_file:
+            writer = csv.writer(output_file)
+            writer.writerows(records.values())
+
 
 if __name__ == '__main__':
     cities = []
@@ -58,23 +98,25 @@ if __name__ == '__main__':
             if not dfyr or not dlyr or int(dlyr) < utils.MIN_YEAR:
                 continue
 
-            name = next((x[1] for x in cities if raw_name.lower().startswith(x[0])), '')
+            name = next(
+                (x[1] for x in cities if raw_name.lower().startswith(x[0])), '')
             stations[clim_id] = {
                 'name': name,
                 'loc': [float(lng), float(lat)],
-                'start': max(int(dfyr), utils.MIN_YEAR),
-                'end': int(dlyr)
+                'start': datetime(max(int(dfyr), utils.MIN_YEAR), 1, 1),
+                'end': min(datetime(int(dlyr), 12, 31), datetime.now())
             }
 
-    script_path = os.path.join(utils.current_directory,
-                            'fetch_climate_data_station.py')
+    script_path = os.path.join(
+        utils.current_directory, 'fetch_climate_data_station.py')
 
     with multiprocessing.Pool(processes=8) as pool:
         inputs = ((k, v['start'], v['end']) for k, v in stations.items())
-        pool.starmap(download_data_for_station, inputs)        
+        pool.starmap(download_data_for_station, inputs)
 
     with open(os.path.join(utils.source_directory, 'heat_waves.csv'), 'w', encoding='utf-8') as output_file:
-        output_file.write('Nom,Longitude,Latitude,Date de départ,Durée en jours\n')
+        output_file.write(
+            'Nom,Longitude,Latitude,Date de départ,Durée en jours\n')
         for station_id, station in stations.items():
             with open(os.path.join(climate_directory, '{}.csv'.format(station_id)), 'r', encoding='utf-8') as input_file:
                 reader = csv.reader(input_file)
