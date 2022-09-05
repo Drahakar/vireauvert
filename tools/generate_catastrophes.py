@@ -166,18 +166,17 @@ def parse_heat_waves(path, catastrophes):
             nom,station_id,lng,lat,raw_date,duration = line
             date = datetime.strptime(raw_date, '%Y-%m-%d')
             severity = Severity(min(Severity.Extreme.value, int(duration) - 2))
-            if severity >= Severity.Important:
-                heat_wave = {
-                        "id": '{}_{}'.format(station_id, date.strftime('%Y%m%d')),
-                        "location": [float(lng), float(lat)],
-                        "type": CatastropheType.HeatWave,
-                        "date": date.date(),
-                        "severity": severity,
-                        'loc_approx': True
-                    }
-                if nom:
-                    heat_wave['city'] = nom
-                catastrophes.append(heat_wave)
+            heat_wave = {
+                    "id": '{}_{}'.format(station_id, date.strftime('%Y%m%d')),
+                    "location": [float(lng), float(lat)],
+                    "type": CatastropheType.HeatWave,
+                    "date": date.date(),
+                    "severity": severity,
+                    'loc_approx': True
+                }
+            if nom:
+                heat_wave['city'] = nom
+            catastrophes.append(heat_wave)
 
 catastrophes = []
 
