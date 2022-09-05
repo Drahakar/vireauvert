@@ -114,9 +114,9 @@ if __name__ == '__main__':
         inputs = ((k, v['start'], v['end']) for k, v in stations.items())
         pool.starmap(download_data_for_station, inputs)
 
-    with open(os.path.join(utils.source_directory, 'heat_waves.csv'), 'w', encoding='utf-8') as output_file:
-        output_file.write(
-            'Nom,Longitude,Latitude,Date de départ,Durée en jours\n')
+    with open(os.path.join(utils.source_directory, 'heat_waves.csv'), 'w', encoding='utf-8', newline='') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(['Nom','Longitude','Latitude','Date de départ','Durée en jours'])
         for station_id, station in stations.items():
             with open(os.path.join(climate_directory, '{}.csv'.format(station_id)), 'r', encoding='utf-8') as input_file:
                 reader = csv.reader(input_file)
@@ -139,8 +139,7 @@ if __name__ == '__main__':
 
                 if abs(last_reading[0].toordinal() - reading[0].toordinal()) > 1 or reading[1] < 30:
                     if heat_wave_length >= 3 and heat_wave_start is not None:
-                        output_file.write('"{}",{},{},{},"{}",{}\n'.format(
-                            station['name'], station_id, station['loc'][0], station['loc'][1], heat_wave_start.strftime('%Y-%m-%d'), heat_wave_length))
+                        writer.writerow([station['name'], station_id, station['loc'][0], station['loc'][1], heat_wave_start.strftime('%Y-%m-%d'), heat_wave_length])
                     heat_wave_length = 0
                 else:
                     if heat_wave_length == 0:
@@ -148,5 +147,4 @@ if __name__ == '__main__':
                     heat_wave_length += 1
 
             if heat_wave_length >= 3 and heat_wave_start is not None:
-                output_file.write('"{}",{},{},{},"{}",{}\n'.format(
-                    station['name'], station_id, station['loc'][0], station['loc'][1], heat_wave_start.strftime('%Y-%m-%d'), heat_wave_length))
+                writer.writerow([station['name'], station_id, station['loc'][0], station['loc'][1], heat_wave_start.strftime('%Y-%m-%d'), heat_wave_length])
