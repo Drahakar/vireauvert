@@ -51,7 +51,7 @@ for prop, file_names in stat_files.items():
                 for_region = for_year.setdefault(str(region), {})
                 for_region[prop] = value
 
-ref_year = result[1990]
+ref_year = result[utils.MIN_YEAR]
 
 all_stats = {}
 first_above_1_5 = {}

@@ -1,0 +1,1 @@
+Pour remplir ce répertoire, exécutez fetch_climate_data.py et préparez vous à attendre un petit bout.

@@ -13,30 +13,9 @@ import geojson
 from shapely import geometry
 import shapefile
 
-MIN_YEAR = 1990
-
 locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
-def load_map() -> dict[int, geometry.base.BaseGeometry]:
-    with open(path.join(utils.destination_directory, 'carte_electorale.json'), 'r', encoding='utf-8') as input_file:
-        map = geojson.load(input_file)
-
-    districts = {}
-    for feature in map['features']:
-        shape = geometry.shape(feature['geometry'])
-        id = feature['properties']['id']
-        districts[id] = shape
-    return districts
-
-def contains_point(geo: geometry.base.BaseGeometry, pt: geometry.Point) -> bool:
-    if isinstance(geo, geometry.GeometryCollection):
-        for sub in geo.geoms:
-            if contains_point(sub, pt):
-                return True
-        return False    
-    return geo.contains(pt)
-
-district_shapes = load_map()
+district_shapes = utils.load_map()
 
 class Severity(IntEnum):
     Unknown = 0
@@ -52,7 +31,8 @@ class CatastropheType(Enum):
     Tornado = "TORNADO"
     FreezingRain = "FREEZING_RAIN"
     WinterStorm = "WINTER_STORM"
-    StormWinds = "STORM_WINDS"
+    StormWinds = "STORM_WINDS",
+    HeatWave = "HEAT_WAVE"
 
 event_types = {
     "inondation": {"type": CatastropheType.Flood, "min_severity": Severity.Important},
@@ -111,7 +91,7 @@ def parse_old_file(path, catastrophes):
     for feature in event_collection['features']:
         properties = feature['properties']
         date = datetime.strptime(properties['date_observation'], '%Y/%m/%d %H:%M:%S')
-        if date.year >= MIN_YEAR:
+        if date.year >= utils.MIN_YEAR:
             event = event_types.get(properties['type'].lower())
             if event:
                 severity = parse_old_severity(properties['severite'].upper())
@@ -155,7 +135,7 @@ def parse_shp(path, catastrophes):
     reader = shapefile.Reader(path)
     for shape in reader.shapeRecords(['ANNEE', 'DATE_DEBUT', 'LATITUDE', 'LONGITUDE', 'CLE', 'SUP_HA']):
         record = shape.record
-        if record.ANNEE >= MIN_YEAR:
+        if record.ANNEE >= utils.MIN_YEAR:
             severity = Severity.Unknown
             match record.SUP_HA:
                 case ha if ha < 100:
@@ -178,13 +158,33 @@ def parse_shp(path, catastrophes):
                 }
                 catastrophes.append(fire)
 
-    
+def parse_heat_waves(path, catastrophes):
+     with open(path, 'r', encoding='utf-8') as input_file:
+        reader = csv.reader(input_file)
+        next(reader, None)
+        for line in reader:
+            nom,station_id,lng,lat,raw_date,duration = line
+            date = datetime.strptime(raw_date, '%Y-%m-%d')
+            severity = Severity(min(Severity.Extreme.value, int(duration) - 2))
+            heat_wave = {
+                    "id": '{}_{}'.format(station_id, date.strftime('%Y%m%d')),
+                    "location": [float(lng), float(lat)],
+                    "type": CatastropheType.HeatWave,
+                    "date": date.date(),
+                    "severity": severity,
+                    'loc_approx': True
+                }
+            if nom:
+                heat_wave['city'] = nom
+            catastrophes.append(heat_wave)
+
 catastrophes = []
 
 parse_old_file(path.join(utils.source_directory, 'catastrophes_pre2020.json'), catastrophes)
 parse_new_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes)
 
 parse_shp(path.join(utils.source_directory, 'Feux_pt_ori', 'FEUX_PT_ORI_1972_2021.shp'), catastrophes)
+parse_heat_waves(path.join(utils.source_directory, 'heat_waves.csv'), catastrophes)
 
 catastrophes.sort(key=lambda x: x['date'])
 
@@ -204,7 +204,7 @@ for catastrophe in catastrophes:
     
     pt = geometry.Point(obj['location'])
     for id, shape in district_shapes.items():
-        if contains_point(shape, pt):
+        if utils.contains_point(shape, pt):
             obj['district'] = id
             break
     
