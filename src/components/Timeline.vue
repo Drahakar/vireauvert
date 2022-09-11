@@ -14,14 +14,21 @@
                     :tooltip="'always'" 
                     :data="years" 
                     :marks="marks" 
-                    :adsorb="false" 
-                    :tooltipStyle="{top: '-52px'}" >
+                    :adsorb="false" >
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
                     </template>
                     <template v-slot:step="{ active }">
                         <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                    </template>
+                    <template v-slot:tooltip="{ value }">
+                        <div class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show">
+                            <div class="tooltip-line"></div>
+                            <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top">
+                                <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
+                            </div>
+                        </div>
                     </template>
                 </vue-slider>
             </div>
@@ -93,7 +100,9 @@ export default defineComponent({
                         display: false
                     },
                     y: {
-                        display: false
+                        ticks: {
+                            display: false
+                        }
                     }
                 },
                 plugins: {
@@ -157,6 +166,22 @@ export default defineComponent({
     top:-32px;
 }
 
+.vue-slider .tooltip-line {
+    height: 71px;
+    width: 1px;
+    border-width: 1px;
+    border-style: dashed;
+    display: block;
+    top: 44px;
+    margin: auto;
+}
+
+.vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top{
+    top: -42px; 
+    padding: 2px 10px; 
+    border-radius: 14px
+}
+
 .vue-slider .vue-slider-process.prevision-indicator {    
     background: repeating-linear-gradient(to right, #ffffff, #ffffff 5px, transparent 2px, transparent 10px );
 }
@@ -180,7 +205,8 @@ export default defineComponent({
     }
 
     .vue-slider {
-        margin: 0px 5px;
+        margin-left: 8px;
+        margin-right: 5px;
     }
 }
 
@@ -211,5 +237,9 @@ export default defineComponent({
 .vue-slider .vue-slider-rail,
 .vue-slider .vue-slider-process {
     background-color: transparent;
+}
+
+.vue-slider-dot-tooltip-inner-top::after {
+    display:none;
 }
 </style>
