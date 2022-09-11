@@ -15,7 +15,7 @@
                     :data="years" 
                     :marks="marks" 
                     :adsorb="false" 
-                    :tooltipStyle="{top: '-52px'}" >
+                    :tooltipStyle="{top: '-52px', padding: '2px 10px', 'border-radius': '14px'}" >
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
@@ -211,5 +211,9 @@ export default defineComponent({
 .vue-slider .vue-slider-rail,
 .vue-slider .vue-slider-process {
     background-color: transparent;
+}
+
+.vue-slider-dot-tooltip-inner-top::after {
+    display:none;
 }
 </style>
