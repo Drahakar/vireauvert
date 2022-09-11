@@ -1,53 +1,53 @@
-/* color palette from <https://github.com/vuejs/theme> */
+/* app style variables */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+  /* Note: naming based on Figma design comments */
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
+  /* neutral colors */
+  --clr-blanc: #fbfbf8;
+  --clr-gris-tres-pale: #cdccc2;  /* "gris pale" for borders */
+  --clr-gris-pale: #b9b7a9;  /* "gris pale" for text */
+  --clr-gris-moyen: #74746f;
+  --clr-gris-mi-fonce: #4b4b4a;
+  --clr-gris-fonce: #353535;
 
-  --vt-c-indigo: #2c3e50;
+  /* accent colors */
+  --clr-beige: #f4f3e7;
+  --clr-orange: #ff6a0e;
+  --clr-alerte: #ff3b3b;
+  --clr-lichen: #a59e20;
 
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+  /* TODO: other thermometer colors */
+  --clr-chaud: #c9655e;
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  /* TODO: catastrophes colors */
+
+  /* Size variants: from smallest to biggest */
+  --sz-50: 6px;
+  --sz-100: 8px;
+  --sz-200: 9px;
+  --sz-300: 10px;
+  --sz-400: 12px;
+  --sz-600: 16px;
+  --sz-800: 26px;
+
+  /* Font weight variants */
+  --fw-regular: 500;
+
+  /* Font families */
+  --ff-primary: 'Noto Sans', sans-serif;  /* TODO: Matter instead? */
 }
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
+  --color-background: var(--clr-blanc);
+  --color-background-accent: var(--clr-beige);
 
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
+  --color-border: var(--clr-gris-tres-pale);
 
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  --color-text: var(--clr-gris-mi-fonce);
+  --color-heading: var(--clr-gris-fonce);
 
-  --section-gap: 160px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
+  --size-map-zoom-control: 32px;
 }
 
 *,
@@ -56,7 +56,6 @@
   box-sizing: border-box;
   margin: 0;
   position: relative;
-  font-weight: normal;
 }
 
 body {
@@ -66,10 +65,21 @@ body {
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 15px;
+  font-family: var(--ff-primary);
+  font-weight: var(--fw-regular);
+  font-size: var(--sz-400);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove button default styling */
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

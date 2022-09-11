@@ -3,7 +3,6 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <Thermometre :statistics="selectedStatistics" :district="district"></Thermometre>
     </div>
 </template>
 
@@ -15,7 +14,7 @@ import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
-import Thermometre from "./Thermometre.vue";
+import Thermometer from "./Thermometer.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
 import { Composer, useI18n } from "vue-i18n";
 import { useMapStore } from "@/stores/map";
@@ -171,7 +170,7 @@ export default defineComponent({
                 zoom: this.zoom,
                 minZoom: MIN_ZOOM + this.zoomLimitOffset,
                 maxZoom: MAX_ZOOM + this.zoomLimitOffset,
-                zoomControl: true
+                zoomControl: true,
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -188,10 +187,6 @@ export default defineComponent({
             map.addEventListener('zoomend', () => {
                 this.$emit('zoomChanged', map.getZoom());
             });
-
-            L.control.scale({
-                imperial: false
-            }).addTo(map);
 
             this.map = map;
             const bounds = this.mapLayer.getBounds();
@@ -228,7 +223,7 @@ export default defineComponent({
             }
         }
     },
-    components: { Thermometre }
+    components: { Thermometer }
 });
 
 interface MapIcons {
@@ -278,5 +273,44 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 
 .catastrophe-popup .leaflet-popup-content .list-group-flush {
     border-radius: 6px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in,
+.leaflet-touch .leaflet-control-zoom-out {
+    font-family: var(--ff-primary);
+    font-weight: var(--fw-regular);
+    font-size: var(--sz-800);
+    /* IFCHANGE: change CatastropheToggle */
+    width: var(--size-map-zoom-control) !important;
+    height: var(--size-map-zoom-control) !important;
+}
+
+.leaflet-left .leaflet-control {
+    /* IFCHANGE: change CatastropheToggle */
+    margin-left: var(--sz-100);
+    margin-top: var(--sz-100);
+}
+
+.leaflet-bar a {
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+.leaflet-touch .leaflet-bar a:first-child,
+.leaflet-touch .leaflet-bar {
+    /* IFCHANGE: change CatastropheToggle */
+    border-top-left-radius: var(--sz-400);
+    border-top-right-radius: var(--sz-400);
+}
+
+.leaflet-touch .leaflet-bar a:last-child,
+.leaflet-touch .leaflet-bar {
+    border-bottom-left-radius: var(--sz-400);
+    border-bottom-right-radius: var(--sz-400);
+}
+
+.leaflet-touch .leaflet-bar {
+    border-color: var(--color-border);
+    border-width: 1px;
 }
 </style>
