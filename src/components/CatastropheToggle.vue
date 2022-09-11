@@ -42,6 +42,8 @@ header {
     background-color: var(--color-background);
     width: 100%;
     height: var(--size-map-zoom-control);
+    /* re-enable pointer-events, parent overlay disables them */
+    pointer-events: auto;
 }
 
 .total-count {

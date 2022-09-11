@@ -196,16 +196,20 @@ Sentry.init({
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    pointer-events: none;
 }
 
 .catastrophe-toggle {
 }
 
 .region-search {
+    pointer-events: auto;
     --vs-selected-color: var(--color-text);
     --vs-border-radius: var(--sz-400);
     --vs-border-color: var(--color-border);
     --vs-dropdown-max-height: 400%;
+    /* space for the map attribution */
+    margin-bottom: var(--sz-400);
 }
 
 .statistics {

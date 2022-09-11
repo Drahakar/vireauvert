@@ -171,7 +171,6 @@ export default defineComponent({
                 minZoom: MIN_ZOOM + this.zoomLimitOffset,
                 maxZoom: MAX_ZOOM + this.zoomLimitOffset,
                 zoomControl: true,
-                attributionControl: false,
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -194,6 +193,7 @@ export default defineComponent({
             if (bounds.isValid()) {
                 this.map.setMaxBounds(bounds.pad(0.05));
             }
+            this.map.attributionControl.setPrefix('');
 
             if (this.mapWrapper) {
                 this.mapResizeObserver.observe(this.mapWrapper);
