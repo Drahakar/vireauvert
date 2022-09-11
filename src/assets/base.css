@@ -21,12 +21,14 @@
 
   /* TODO: catastrophes colors */
 
-  /* Size variants: 100 smallest to 900 biggest */
+  /* Size variants: from smallest to biggest */
+  --sz-50: 6px;
   --sz-100: 8px;
   --sz-200: 9px;
   --sz-300: 10px;
   --sz-400: 12px;
   --sz-600: 16px;
+  --sz-800: 26px;
 
   /* Font weight variants */
   --fw-regular: 500;
@@ -40,10 +42,12 @@
   --color-background: var(--clr-blanc);
   --color-background-accent: var(--clr-beige);
 
-  --color-border: var(--clr-gris-pale);
+  --color-border: var(--clr-gris-tres-pale);
 
   --color-text: var(--clr-gris-mi-fonce);
   --color-heading: var(--clr-gris-fonce);
+
+  --size-map-zoom-control: 32px;
 }
 
 *,
@@ -67,4 +71,15 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove button default styling */
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
