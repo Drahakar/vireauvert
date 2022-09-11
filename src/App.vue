@@ -101,7 +101,6 @@ Sentry.init({
 
 <template>
     <div class="main">
-        <!-- TODO: use real components -->
         <Header></Header>
 
         <section class="content-container">
