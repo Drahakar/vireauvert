@@ -5,15 +5,42 @@ import { defineComponent, reactive, ref } from "vue";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
-import { DEFAULT_USER_STATE } from "./models/user";
-import MobileApp from "./MobileApp.vue";
-import DesktopApp from "./DesktopApp.vue";
+import { Catastrophe } from "./models/catastrophes";
+import { DEFAULT_USER_STATE, UserState } from "./models/user";
+import CatastropheToggle from "./components/CatastropheToggle.vue";
+import Header from "./components/Header.vue";
+import MapView from "./components/MapView.vue";
+import RegionSearch from "./components/RegionSearch.vue";
+import Timeline from "./components/Timeline.vue";
 import { useMapStore } from "./stores/map";
 
 export default defineComponent({
     components: {
-        MobileApp,
-        DesktopApp
+        CatastropheToggle,
+        Header,
+        MapView,
+        RegionSearch,
+        Timeline,
+    },
+    computed: {
+        catastrophes(): List<Catastrophe> {
+            return this.catastropheStore.findCatastrophes(
+                this.state.year, this.state.district, this.state.catastrophe)
+        },
+    },
+    methods: {
+        selectDistrict(id: number) {
+            this.state.district = id;
+        },
+        selectYear(year: number) {
+            this.state.year = year;
+        },
+        mapMoved(location: [number, number]) {
+            this.state.location = location;
+        },
+        mapZoomed(zoom: number) {
+            this.state.zoom = zoom;
+        },
     },
     setup() {
         const candidateStore = useCandidateStore();
@@ -75,10 +102,9 @@ Sentry.init({
                 <div class="map">
                     Map (+ inputs)
                 </div>
-                <div class="statistics">
-                    <h1 class="header">Température / année</h1>
-                    <div class="graph">TODO: graph</div>
-                </div>
+                <Timeline class="timeline" :year="state.year"
+                    @year-selected="selectYear"
+                    :district="state.district"></Timeline>
             </div>
             <div class="secondary-content content-section">
                 <div class="thermometer">
@@ -148,20 +174,13 @@ header {
     padding: var(--sz-400) var(--sz-200);
 }
 
-.statistics {
-    background-color: var(--clr-beige);
-    border-radius: var(--sz-600);
-    padding: var(--sz-400) var(--sz-200);
-}
-
-.statistics .header {
+.timeline {
     color: var(--color-heading);
     font-weight: 500;
     font-size: var(--sz-400);
-}
-
-.graph {
-    min-height: 70px;  /* TODO: remove */
+    background-color: var(--color-background-accent);
+    border-radius: var(--sz-600);
+    padding: var(--sz-200);
 }
 
 .thermometer {
