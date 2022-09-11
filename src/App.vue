@@ -11,7 +11,6 @@ import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
 import Header from "./components/Header.vue";
-import LoadingSpinner from "./components/LoadingSpinner.vue";
 import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Thermometer from './components/Thermometer.vue';
@@ -23,7 +22,6 @@ export default defineComponent({
         CallToAction,
         CatastropheToggle,
         Header,
-        LoadingSpinner,
         MapView,
         RegionSearch,
         Thermometer,
@@ -139,7 +137,8 @@ Sentry.init({
         <!-- TODO: desktop layout, ideally no split components -->
 
         <div v-if="!loadingCompleted" class="loading-overlay">
-            <LoadingSpinner role="status"></LoadingSpinner>
+            <!-- TODO: add spinner, e.g. with https://loading.io/css/ -->
+            <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
             <p class="loading-message" v-t="'loading'"></p>
         </div>
     </div>

@@ -20,7 +20,7 @@ div {
     border-radius: var(--sz-400);
     font-size: var(--sz-400);
     color: var(--clr-blanc);
-    background-color: var(--color-accent);
+    background-color: var(--clr-orange);
     padding: 1px var(--sz-50) 2px var(--sz-50);
 }
 </style>
