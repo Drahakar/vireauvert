@@ -6,14 +6,14 @@ import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { DEFAULT_USER_STATE } from "./models/user";
-import MobileApp from "./MobileApp.vue";
-import DesktopApp from "./DesktopApp.vue";
+import CallToAction from './components/CallToAction.vue';
+import Thermometer from './components/Thermometer.vue';
 import { useMapStore } from "./stores/map";
 
 export default defineComponent({
     components: {
-        MobileApp,
-        DesktopApp
+        CallToAction,
+        Thermometer,
     },
     setup() {
         const candidateStore = useCandidateStore();
@@ -46,10 +46,16 @@ export default defineComponent({
 
         return {
             state: reactive(DEFAULT_USER_STATE),
+            statisticStore,
             loadingCompleted,
             isDesktop
         };
-    }
+    },
+    computed: {
+        selectedStatistics() {
+            return this.statisticStore.findStatistics(this.year, this.district);
+        }
+    },
 });
 
 Sentry.init({
@@ -81,9 +87,9 @@ Sentry.init({
                 </div>
             </div>
             <div class="secondary-content content-section">
-                <div class="thermometer">
-                </div>
-                <button class="call-to-action">Contactez vos candidats</button>
+                <Thermometer :statistics="selectedStatistics"
+                    :district="state.district"></Thermometer>
+                <CallToAction></CallToAction>
             </div>
         </section>
 
@@ -162,27 +168,6 @@ header {
 
 .graph {
     min-height: 70px;  /* TODO: remove */
-}
-
-.thermometer {
-    width: 12px;  /* TODO: remove */
-    min-height: 300px;  /* TODO: remove */
-    border-radius: 16px;  /* TODO: remove */
-    border-style: solid;
-    border-width: 2px;
-    border-color: var(--clr-chaud);
-}
-
-.call-to-action {
-    font-size: var(--sz-400);
-    color: var(--clr-blanc);
-    background-color: var(--clr-orange);
-    border-radius: var(--sz-600);
-    width: min-content;
-    border: none;
-    cursor: pointer;
-    padding: var(--sz-300);
-    /* TODO: style on hover? */
 }
 
 .loading-overlay {

@@ -3,7 +3,7 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <Thermometre :statistics="selectedStatistics" :district="district"></Thermometre>
+        <Thermometer :statistics="selectedStatistics" :district="district"></Thermometer>
     </div>
 </template>
 
@@ -15,7 +15,7 @@ import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
-import Thermometre from "./Thermometre.vue";
+import Thermometer from "./Thermometer.vue";
 import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
 import { Composer, useI18n } from "vue-i18n";
 import { useMapStore } from "@/stores/map";
@@ -228,7 +228,7 @@ export default defineComponent({
             }
         }
     },
-    components: { Thermometre }
+    components: { Thermometer }
 });
 
 interface MapIcons {
