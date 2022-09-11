@@ -15,7 +15,7 @@ export default defineComponent({
 a {
     font-size: var(--sz-400);
     color: var(--clr-blanc);
-    background-color: var(--clr-orange);
+    background-color: var(--color-accent);
     border-radius: var(--sz-600);
     width: min-content;
     border: none;
