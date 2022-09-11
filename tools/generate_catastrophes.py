@@ -17,12 +17,14 @@ locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
 district_shapes = utils.load_map()
 
+
 class Severity(IntEnum):
     Unknown = 0
     Minor = 1
     Moderate = 2
     Important = 3
     Extreme = 4
+
 
 class CatastropheType(Enum):
     Flood = "FLOOD"
@@ -34,6 +36,7 @@ class CatastropheType(Enum):
     StormWinds = "STORM_WINDS",
     HeatWave = "HEAT_WAVE"
 
+
 event_types = {
     "inondation": {"type": CatastropheType.Flood, "min_severity": Severity.Important},
     "tornade": {"type": CatastropheType.Tornado, "min_severity": Severity.Minor},
@@ -44,9 +47,11 @@ event_types = {
     "tempête hivernale": {"type": CatastropheType.WinterStorm, "min_severity": Severity.Extreme},
     "vent de tempête": {"type": CatastropheType.StormWinds, "min_severity": Severity.Important},
     "vent violent": {"type": CatastropheType.StormWinds, "min_severity": Severity.Important},
+    "vague de chaleur": {"type": CatastropheType.HeatWave, "min_severity": Severity.Important}
 }
 
 severity_pattern = re.compile(r'menace (\w+)', re.I)
+
 
 def parse_old_severity(description):
     if description == 'EXTRAORDINAIRE' or description == 'EXTRÊME':
@@ -59,6 +64,7 @@ def parse_old_severity(description):
         return Severity.Minor
     return Severity.Unknown
 
+
 def parse_new_severity(description):
     match = severity_pattern.search(description)
     if match:
@@ -66,14 +72,16 @@ def parse_new_severity(description):
         return parse_old_severity(menace)
     return Severity.Unknown
 
+
 def parse_new_line(line):
-    code_alea,alea,code_municipalite,municipalite,_,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
+    code_alea, alea, code_municipalite, municipalite, _, _, severite, date_signalement, date_debut, _, _, _, coord_x, coord_y = line
     event = event_types.get(alea.lower())
-        
+
     if event:
         severity = parse_new_severity(severite)
         if severity >= event['min_severity']:
-            date = datetime.strptime(date_debut if date_debut else date_signalement, '%Y-%m-%d')
+            date = datetime.strptime(
+                date_debut if date_debut else date_signalement, '%Y-%m-%d')
             return {
                 "id": "{}{}{}".format(code_alea, code_municipalite, date.date().strftime('%Y%m%d')),
                 "location": [float(coord_y), float(coord_x)],
@@ -84,13 +92,15 @@ def parse_new_line(line):
             }
     return None
 
+
 def parse_old_file(path, catastrophes):
     with open(path, 'r', encoding='utf-8') as input_file:
         event_collection = geojson.load(input_file)
 
     for feature in event_collection['features']:
         properties = feature['properties']
-        date = datetime.strptime(properties['date_observation'], '%Y/%m/%d %H:%M:%S')
+        date = datetime.strptime(
+            properties['date_observation'], '%Y/%m/%d %H:%M:%S')
         if date.year >= utils.MIN_YEAR:
             event = event_types.get(properties['type'].lower())
             if event:
@@ -108,18 +118,20 @@ def parse_old_file(path, catastrophes):
                     }
                     catastrophes.append(catastrophe)
 
+
 def parse_new_file(path, catastrophes):
     with open(path, 'r', encoding='utf-8') as input_file:
         reader = csv.reader(input_file)
         next(reader, None)
         for line in reader:
-            code_alea,alea,code_municipalite,municipalite,precision_localisation,_,severite,date_signalement,date_debut,_,_,_,coord_x,coord_y = line
+            code_alea, alea, code_municipalite, municipalite, precision_localisation, _, severite, date_signalement, date_debut, _, _, _, coord_x, coord_y = line
             event = event_types.get(alea.lower())
-                
+
             if event:
                 severity = parse_new_severity(severite)
                 if severity >= event['min_severity']:
-                    date = datetime.strptime(date_debut if date_debut else date_signalement, '%Y-%m-%d')
+                    date = datetime.strptime(
+                        date_debut if date_debut else date_signalement, '%Y-%m-%d')
                     catastrophe = {
                         "id": "{}{}{}".format(code_alea, code_municipalite, date.date().strftime('%Y%m%d')),
                         "location": [float(coord_x), float(coord_y)],
@@ -131,7 +143,9 @@ def parse_new_file(path, catastrophes):
                     }
                     catastrophes.append(catastrophe)
 
+
 def parse_shp(path, catastrophes):
+    forest_fire_type = event_types['feu de forêt']
     reader = shapefile.Reader(path)
     for shape in reader.shapeRecords(['ANNEE', 'DATE_DEBUT', 'LATITUDE', 'LONGITUDE', 'CLE', 'SUP_HA']):
         record = shape.record
@@ -146,8 +160,8 @@ def parse_shp(path, catastrophes):
                     severity = Severity.Important
                 case ha if ha >= 10000:
                     severity = Severity.Extreme
-            
-            if severity >= Severity.Important:
+
+            if severity >= forest_fire_type['min_severity']:
                 fire = {
                     "id": str(int(record.CLE)),
                     "location": [record.LONGITUDE, record.LATITUDE],
@@ -158,15 +172,18 @@ def parse_shp(path, catastrophes):
                 }
                 catastrophes.append(fire)
 
+
 def parse_heat_waves(path, catastrophes):
-     with open(path, 'r', encoding='utf-8') as input_file:
+    heat_wave_type = event_types['vague de chaleur']
+    with open(path, 'r', encoding='utf-8') as input_file:
         reader = csv.reader(input_file)
         next(reader, None)
         for line in reader:
-            nom,station_id,lng,lat,raw_date,duration = line
+            nom, station_id, lng, lat, raw_date, duration = line
             date = datetime.strptime(raw_date, '%Y-%m-%d')
-            severity = Severity(min(Severity.Extreme.value, int(duration) - 2))
-            heat_wave = {
+            severity = Severity(max(Severity.Minor.value, min(Severity.Extreme.value, int(duration) - 3)))
+            if severity >= heat_wave_type['min_severity']:
+                heat_wave = {
                     "id": '{}_{}'.format(station_id, date.strftime('%Y%m%d')),
                     "location": [float(lng), float(lat)],
                     "type": CatastropheType.HeatWave,
@@ -174,14 +191,17 @@ def parse_heat_waves(path, catastrophes):
                     "severity": severity,
                     'loc_approx': True
                 }
-            if nom:
-                heat_wave['city'] = nom
-            catastrophes.append(heat_wave)
+                if nom:
+                    heat_wave['city'] = nom
+                catastrophes.append(heat_wave)
+
 
 catastrophes = []
 
-parse_old_file(path.join(utils.source_directory, 'catastrophes_pre2020.json'), catastrophes)
-parse_new_file(path.join(utils.source_directory, 'catastrophes_post2020.csv'), catastrophes)
+parse_old_file(path.join(utils.source_directory,
+               'catastrophes_pre2020.json'), catastrophes)
+parse_new_file(path.join(utils.source_directory,
+               'catastrophes_post2020.csv'), catastrophes)
 
 parse_shp(path.join(utils.source_directory, 'Feux_pt_ori', 'FEUX_PT_ORI_1972_2021.shp'), catastrophes)
 parse_heat_waves(path.join(utils.source_directory, 'heat_waves.csv'), catastrophes)
@@ -201,13 +221,13 @@ for catastrophe in catastrophes:
     }
     if 'city' in catastrophe:
         obj['city'] = catastrophe['city']
-    
+
     pt = geometry.Point(obj['location'])
     for id, shape in district_shapes.items():
         if utils.contains_point(shape, pt):
             obj['district'] = id
             break
-    
+
     result.setdefault(str(catastrophe['date'].year), []).append(obj)
 
 with open(os.path.join(utils.destination_directory, 'catastrophes.json'), 'w', encoding='utf-8') as output_file:
