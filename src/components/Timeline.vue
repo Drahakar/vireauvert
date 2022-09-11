@@ -1,37 +1,37 @@
 <template>
-    <div class="timeline row">
-        <div id="slidertitle" class="col-md-2" v-t="'research_year'"></div>
-        <div class="col-md-10">
-            <div id="timelinegraph">
-                <Line
-                    :chart-data="chartData"
-                    :height="100"
-                    :chart-options="chartOptions"/>
-            </div>
-            <div id="slidercontainer">
-                <vue-slider 
-                    v-model="selectedYear" 
-                    :tooltip="'always'" 
-                    :data="years" 
-                    :marks="marks" 
-                    :adsorb="false" >
-                    <template v-slot:label="{value}">
-                        <div class="markline"></div>
-                        <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
-                    </template>
-                    <template v-slot:step="{ active }">
-                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
-                    </template>
-                    <template v-slot:tooltip="{ value }">
-                        <div class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show">
-                            <div class="tooltip-line"></div>
-                            <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top">
-                                <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
-                            </div>
+    <div class="timeline">
+        <div id="slidertitle" v-t="'research_year'"></div>
+        <div id="timelinegraph">
+            <!-- set width to 0 to let it auto-size it with given height. -->
+            <Line
+                :chart-data="chartData"
+                :height="70"
+                :width="0"
+                :chart-options="chartOptions"/>
+        </div>
+        <div id="slidercontainer">
+            <vue-slider
+                v-model="selectedYear"
+                :tooltip="'always'"
+                :data="years"
+                :marks="marks"
+                :adsorb="false" >
+                <template v-slot:label="{value}">
+                    <div class="markline"></div>
+                    <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
+                </template>
+                <template v-slot:step="{ active }">
+                    <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                </template>
+                <template v-slot:tooltip="{ value }">
+                    <div class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show">
+                        <div class="tooltip-line"></div>
+                        <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top">
+                            <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
                         </div>
-                    </template>
-                </vue-slider>
-            </div>
+                    </div>
+                </template>
+            </vue-slider>
         </div>
     </div>
 </template>
@@ -109,7 +109,9 @@ export default defineComponent({
                     legend: {
                         display: false
                     }
-                }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
             }   
         }
     },
@@ -143,7 +145,6 @@ export default defineComponent({
 
 <style scoped>
 .timeline {
-    padding: 30px;
 }
 
 #slidertitle {
@@ -159,7 +160,8 @@ export default defineComponent({
 }
 
 #slidercontainer {
-    top: -15px;
+    margin-top: -15px;
+    margin-bottom: var(--sz-100);
 }
 
 .vue-slider-mark-label.custom-label.event-count {
@@ -229,6 +231,7 @@ export default defineComponent({
     .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label,
     .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step{
         display:block;
+        margin-top: 0;
     }
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
-    <div class="header">
-        <a href="https://www.vireauvert.org/" target="_blank">
-            <img class="logo" src="/VAV_2022.png">
-        </a>
-    </div>
+    <header>
+        <!-- TODO: proper logo -->
+        <p>terre os</p>
+        <!-- TODO: proper logo -->
+        <p>Éqt*x(*)</p>
+    </header>
 </template>
 
 <script lang="ts">
@@ -15,16 +16,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.header {
-    height: 100%;
-    width: 100%;
+header {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    font-size: 24px;  /* TODO: remove, use logos instead */
 }
 
-.logo {
-    max-height: 100%;
-}
 
 </style>

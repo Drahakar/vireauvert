@@ -11,7 +11,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
 })
 </script>
-<style scope>
+<style scoped>
 a {
     font-size: var(--sz-400);
     color: var(--clr-blanc);
