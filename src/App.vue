@@ -12,6 +12,7 @@ import CatastropheToggle from "./components/CatastropheToggle.vue";
 import Header from "./components/Header.vue";
 import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
+import Timeline from "./components/Timeline.vue";
 import { useMapStore } from "./stores/map";
 
 export default defineComponent({
@@ -20,6 +21,7 @@ export default defineComponent({
         Header,
         MapView,
         RegionSearch,
+        Timeline,
     },
     computed: {
         catastrophes(): List<Catastrophe> {
@@ -113,10 +115,9 @@ Sentry.init({
                             @district-selected="selectDistrict"></RegionSearch>
                     </div>
                 </div>
-                <div class="statistics">
-                    <h1 class="header">Température / année</h1>
-                    <div class="graph">TODO: graph</div>
-                </div>
+                <Timeline class="timeline" :year="state.year"
+                    @year-selected="selectYear"
+                    :district="state.district"></Timeline>
             </div>
             <div class="secondary-content content-section">
                 <div class="thermometer">
@@ -212,20 +213,13 @@ Sentry.init({
     margin-bottom: var(--sz-400);
 }
 
-.statistics {
-    background-color: var(--color-background-accent);
-    border-radius: var(--sz-600);
-    padding: var(--sz-400) var(--sz-200);
-}
-
-.statistics .header {
+.timeline {
     color: var(--color-heading);
     font-weight: var(--fw-regular);
     font-size: var(--sz-400);
-}
-
-.graph {
-    min-height: 70px;  /* TODO: remove */
+    background-color: var(--color-background-accent);
+    border-radius: var(--sz-600);
+    padding: var(--sz-200);
 }
 
 .thermometer {
