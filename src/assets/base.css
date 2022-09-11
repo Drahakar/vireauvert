@@ -20,14 +20,21 @@
   --clr-chaud: #c9655e;
 
   /* TODO: catastrophes colors */
+  --clr-flood: #00C2CB;
+  --clr-forest-fire: #EC772E;
+  --clr-violent-storm: #E9C900;
+  --clr-tornado: #A6A6A6;
+  --clr-heat-wave: #DD3535;
 
   /* Size variants: from smallest to biggest */
+  --sz-30: 4px;
   --sz-50: 6px;
   --sz-100: 8px;
   --sz-200: 9px;
   --sz-300: 10px;
   --sz-400: 12px;
   --sz-600: 16px;
+  --sz-700: 24px;
   --sz-800: 26px;
 
   /* Font weight variants */
@@ -41,6 +48,8 @@
 :root {
   --color-background: var(--clr-blanc);
   --color-background-accent: var(--clr-beige);
+
+  --color-accent: var(--clr-orange);
 
   --color-border: var(--clr-gris-tres-pale);
 
@@ -64,7 +73,7 @@ body {
   color: var(--color-text);
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
-  line-height: 1.6;
+  line-height: 1.0;
   font-family: var(--ff-primary);
   font-weight: var(--fw-regular);
   font-size: var(--sz-400);
