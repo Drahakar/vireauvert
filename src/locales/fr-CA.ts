@@ -126,7 +126,7 @@ export default {
     party_acro_QS: "QS",
 
     facebook: "Page Facebook",
-    call_to_action: "Écrivez à vos candidat(e)s pour leur faire part de vos préoccupations environnementales",
+    call_to_action: "Contactez vos candidat(e)s",
 
     // Statistics
 

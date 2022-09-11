@@ -20,7 +20,7 @@ import { getGradientColourIndex, temperatureGradient, colourToHex, gradientScale
 import { RegionStatistics } from '@/models/yearly_data';
 import { defineComponent, PropType, ref, watch } from 'vue';
 
-const STEP_HEIGHT = 8;
+const STEP_HEIGHT = 3;
 
 export default defineComponent({
     props: {
@@ -76,11 +76,6 @@ function getIndex(stats: RegionStatistics) {
 
 <style scoped>
 #gradient {
-    position: absolute;
-    z-index: 400;
-    right: 16px;
-    top: 16px;
-    max-height: calc(100% - 48px);
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -111,7 +106,7 @@ function getIndex(stats: RegionStatistics) {
 
 .step {
     position: relative;
-    height: 8px;
+    height: 3px;
     width: 3ch;
     margin-right: calc(1ch + 4px);
 }

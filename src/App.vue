@@ -8,26 +8,24 @@ import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { Catastrophe } from "./models/catastrophes";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
+import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
 import Header from "./components/Header.vue";
 import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
+import Thermometer from './components/Thermometer.vue';
 import Timeline from "./components/Timeline.vue";
 import { useMapStore } from "./stores/map";
 
 export default defineComponent({
     components: {
+        CallToAction,
         CatastropheToggle,
         Header,
         MapView,
         RegionSearch,
+        Thermometer,
         Timeline,
-    },
-    computed: {
-        catastrophes(): List<Catastrophe> {
-            return this.catastropheStore.findCatastrophes(
-                this.state.year, this.state.district, this.state.catastrophe)
-        },
     },
     methods: {
         selectDistrict(id: number) {
@@ -75,11 +73,22 @@ export default defineComponent({
 
         return {
             state: reactive(DEFAULT_USER_STATE),
+            statisticStore,
             catastropheStore,
             loadingCompleted,
             isDesktop
         };
-    }
+    },
+    computed: {
+        selectedStatistics() {
+            return this.statisticStore.findStatistics(this.state.year,
+                this.state.district);
+        },
+        catastrophes(): List<Catastrophe> {
+            return this.catastropheStore.findCatastrophes(
+                this.state.year, this.state.district, this.state.catastrophe)
+        },
+    },
 });
 
 Sentry.init({
@@ -120,9 +129,9 @@ Sentry.init({
                     :district="state.district"></Timeline>
             </div>
             <div class="secondary-content content-section">
-                <div class="thermometer">
-                </div>
-                <button class="call-to-action">Contactez vos candidats</button>
+                <Thermometer :statistics="selectedStatistics"
+                    :district="state.district"></Thermometer>
+                <CallToAction></CallToAction>
             </div>
         </section>
 
@@ -220,25 +229,6 @@ Sentry.init({
     background-color: var(--color-background-accent);
     border-radius: var(--sz-600);
     padding: var(--sz-200);
-}
-
-.thermometer {
-    width: 12px;  /* TODO: remove */
-    min-height: 300px;  /* TODO: remove */
-    border-radius: 16px;  /* TODO: remove */
-    border-style: solid;
-    border-width: 2px;
-    border-color: var(--clr-chaud);
-}
-
-.call-to-action {
-    font-size: var(--sz-400);
-    color: var(--clr-blanc);
-    background-color: var(--clr-orange);
-    border-radius: var(--sz-600);
-    width: min-content;
-    padding: var(--sz-300);
-    /* TODO: style on hover? */
 }
 
 .loading-overlay {
