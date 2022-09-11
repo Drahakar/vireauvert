@@ -3,7 +3,7 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <Thermometre id="thermo" :statistics="selectedStatistics" :district="district"></Thermometre>
+        <Thermometre :statistics="selectedStatistics" :district="district"></Thermometre>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { defineComponent, PropType, ref, watch } from "vue";
-import { Catastrophe } from "@/models/catastrophes";
+import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
@@ -90,7 +90,9 @@ export default defineComponent({
             interactive: false,
             style: {
                 fillColor: "#000000",
-                opacity: 0.5
+                color: '#000000',
+                opacity: 0.4,
+                fillOpacity: 0.4
             }
         });
         watch(() => mapStore.mask, data => {
@@ -236,13 +238,13 @@ interface MapIcons {
 
 function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Composer) {
     const missing = new Set<string>(icons.index.keys());
-    for (const catastrophe of catastrophes) {
-        if (!icons.index.has(catastrophe.id)) {
-            const marker = createMapMarker(catastrophe, i18n);
-            icons.index.set(catastrophe.id, marker);
+    for (const group of groupCatastrophes(catastrophes)) {
+        if (!icons.index.has(group.id)) {
+            const marker = createMapMarker(group, i18n);
+            icons.index.set(group.id, marker);
             marker.addTo(icons.layer);
         }
-        missing.delete(catastrophe.id);
+        missing.delete(group.id);
     }
     for (const id of missing) {
         const marker = icons.index.get(id);
@@ -263,36 +265,18 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 #wrapper {
     position: relative;
 }
-
-#thermo {
-    position: absolute;
-    z-index: 400;
-    right: 16px;
-    top: 16px;
-    max-height: calc(100% - 48px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(127, 127, 127, 0.7) rgba(255, 255, 255, 0.7);
-
-}
-
-#thermo::-webkit-scrollbar {
-    width: 4px;
-}
-
-#thermo::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-#thermo::-webkit-scrollbar-thumb {
-    background-color: rgba(127, 127, 127, 0.7);
-    border-radius: 4px;
-}
 </style>
 <style>
 .leaflet-control-container {
     width: 100%;
     height: 100%;
+}
+
+.catastrophe-popup .leaflet-popup-content {
+    margin: 0;
+}
+
+.catastrophe-popup .leaflet-popup-content .list-group-flush {
+    border-radius: 6px;
 }
 </style>

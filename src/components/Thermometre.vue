@@ -1,17 +1,15 @@
 <template>
-    <div>
-        <div id="gradient">
-            <div class="label">°C</div>
-            <div id="step-offset">
-                <div class="step" v-for="colour of gradientSteps" :style="{ backgroundColor: colourToHex(colour) }">
-                </div>
-                <div v-for="marking of markings" class="marking text-nowrap text-end"
-                    :style="{ bottom: `calc(0.2em + ${marking.position * 8}px)` }">
-                    {{ $n(marking.temp, 'compact_delta') }}
-                </div>
-                <div class="selected"
-                    :style="{ bottom: index ? `${index * 8}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
-                </div>
+    <div id="gradient" ref="gradientElem">
+        <div class="label">°C</div>
+        <div id="step-offset">
+            <div class="step" v-for="colour of gradientSteps" :style="{ backgroundColor: colourToHex(colour) }">
+            </div>
+            <div v-for="marking of markings" class="marking text-nowrap text-end"
+                :style="{ bottom: `calc(0.2em + ${marking.position * stepHeight}px)` }">
+                {{  $n(marking.temp, 'compact_delta')  }}
+            </div>
+            <div class="selected"
+                :style="{ bottom: index ? `${index * stepHeight}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
             </div>
         </div>
     </div>
@@ -20,7 +18,9 @@
 <script lang="ts">
 import { getGradientColourIndex, temperatureGradient, colourToHex, gradientScale, minTemp } from '@/utils/colours';
 import { RegionStatistics } from '@/models/yearly_data';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref, watch } from 'vue';
+
+const STEP_HEIGHT = 8;
 
 export default defineComponent({
     props: {
@@ -40,19 +40,64 @@ export default defineComponent({
                 temp: x + minTemp
             }
         });
-        return { gradientSteps: temperatureGradient, markings, colourToHex };
+        return {
+            gradientSteps: temperatureGradient,
+            markings,
+            colourToHex,
+            stepHeight: STEP_HEIGHT
+        };
+    },
+    setup(props) {
+        const gradientElem = ref<HTMLDivElement | null>(null);
+        watch(() => props.statistics, stats => {
+            if (gradientElem.value) {
+                const index = getIndex(stats);
+                if (index !== undefined) {
+                    const arrowAt = (temperatureGradient.length - index - 1) * STEP_HEIGHT;
+                    gradientElem.value.scrollTo({
+                        top: arrowAt
+                    });
+                }
+            }
+        });
+        return { gradientElem };
     },
     computed: {
         index() {
-            return this.statistics.temp_delta != undefined ? getGradientColourIndex(this.statistics.temp_delta) : undefined;
+            return getIndex(this.statistics);
         },
     }
-})
+});
+
+function getIndex(stats: RegionStatistics) {
+    return stats.temp_delta != undefined ? getGradientColourIndex(stats.temp_delta) : undefined;
+}
 </script>
 
 <style scoped>
 #gradient {
-    min-height: 0;
+    position: absolute;
+    z-index: 400;
+    right: 16px;
+    top: 16px;
+    max-height: calc(100% - 48px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(127, 127, 127, 0.7) rgba(255, 255, 255, 0.7);
+}
+
+#gradient::-webkit-scrollbar {
+    width: 4px;
+}
+
+#gradient::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+#gradient::-webkit-scrollbar-thumb {
+    background-color: rgba(127, 127, 127, 0.7);
+    border-radius: 4px;
 }
 
 #step-offset {

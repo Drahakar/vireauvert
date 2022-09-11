@@ -131,7 +131,7 @@ export default defineComponent({
 }
 
 .timeline {
-    height: 96px;
+    height: 145px;
 }
 
 .mobile-layout .timeline {

@@ -84,7 +84,7 @@ export default defineComponent({
                 :catastrophes="catastrophes" @district-selected="selectDistrict" :location="userState.location"
                 @location-changed="mapMoved" :zoom="userState.zoom" @zoom-changed="mapZoomed"></MapView>
         </div>
-        <div class="row">
+        <div class="row timeline-container">
             <Timeline class="timeline" :year="userState.year" @year-selected="selectYear" :district="userState.district"></Timeline>
         </div>
     </div>
@@ -92,12 +92,12 @@ export default defineComponent({
 
 <style scoped>
 .header {
-    height: 128px;
+    height: 79px;
 }
 
 .map-view {
     min-height: 400px;
-    height: calc(100vh - 96px);
+    height: calc(100vh - 300px);
 }
 
 .legend {
@@ -105,10 +105,10 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
     padding: 10px;
-    max-height: calc(100vh - 96px);
+    max-height: calc(100vh - 300px);
 }
 
-.timeline {
-    height: 96px;
+.timeline-container {
+    height: 300px;
 }
 </style>

@@ -32,6 +32,7 @@ export const numberFormats = {
 export const datetimeFormats = {
     event_date: {
         day: '2-digit',
-        month: 'long'
+        month: 'long',
+        timeZone: 'UTC'
     }
 } as IntlDateTimeFormats;

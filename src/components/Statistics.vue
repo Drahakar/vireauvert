@@ -13,8 +13,7 @@
         <h5 class="card-header">
             <a data-bs-toggle="collapse" href="#body-statistics" aria-expanded="true" aria-controls="body-statistics"
                 id="heading-statistics" class="d-block">
-                <i class="bi bi-chevron-up float-start"></i>
-                {{ $t('statistics') }}
+                <i class="bi bi-chevron-up float-start"></i><span v-t="'statistics'"></span>
             </a>
         </h5>
         <ul id="body-statistics" class="list-group list-group-flush collapse show" aria-labelledby="heading-statistics">

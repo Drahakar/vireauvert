@@ -1,6 +1,6 @@
 import L from "leaflet";
 
-import { Catastrophe, CatastropheType, getIconUrl } from "@/models/catastrophes";
+import { Catastrophe, CatastropheGroup, CatastropheType, getIconUrl } from "@/models/catastrophes";
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours, parseColour } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
@@ -52,12 +52,44 @@ function generateIcons(): Map<CatastropheType, L.Icon> {
 
 export const mapIcons = generateIcons();
 
-export function createMapMarker(catastrophe: Catastrophe, i18n: Composer) {
-    const title = i18n.t('catastrophe_with_severity', { catastrophe });
-    const marker = L.marker(catastrophe.location, {
+function createMarkerPopup(group: CatastropheGroup, i18n: Composer) {
+    const list = document.createElement('ul');
+    list.classList.add('list-group', 'list-group-flush');
+    for (const instance of group.instances) {
+        const catastrophe: Catastrophe = {
+            ...group,
+            ...instance
+        }
+        
+        const time = document.createElement('time');
+        time.dateTime = catastrophe.date.toISOString();
+        time.innerText = i18n.d(catastrophe.date, 'event_date');
+
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+        listItem.append(time, ': ', i18n.t('catastrophe_with_severity', { catastrophe }));
+
+        list.append(listItem);
+    }
+    const popup = L.popup({
+        closeButton: false,
+        closeOnClick: true,
+        className: 'catastrophe-popup'
+    });
+    popup.setContent(list);
+    return popup;
+}
+
+export function createMapMarker(group: CatastropheGroup, i18n: Composer) {
+    const title = i18n.t('catastrophe_group', { group });
+    const marker = L.marker(group.location, {
         title: title,
-        icon: mapIcons.get(catastrophe.type)
+        icon: mapIcons.get(group.type),
+        opacity: 1,
+        alt: i18n.t(`catastrophe_${group.type}`, group.instances.size)
     });
     marker.bindTooltip(title);
+    const popup = createMarkerPopup(group, i18n);
+    marker.bindPopup(popup);
     return marker;
 }

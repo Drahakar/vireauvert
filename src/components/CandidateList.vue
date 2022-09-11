@@ -5,8 +5,8 @@
             <a data-bs-toggle="collapse" href="#body-candidates" :aria-expanded="collapse ? 'true': 'false'" aria-controls="body-candidates"
                 id="heading-candidates" class= "d-block" :class="[{'collapsed': !collapse}]">
                 <i class="bi bi-chevron-up float-start"></i>
-                <template v-if="district">{{ $t('candidates') }}</template>
-                <template v-else>{{ $t('party_leaders') }}</template>
+                <template v-if="district"><span v-t="'candidates'"></span></template>
+                <template v-else ><span v-t="'party_leaders'"></span></template>
             </a>
         </h5>
         <ul id="body-candidates" class="list-group list-group-flush collapse" :class="[{'show': collapse}]" ref="candidates">
