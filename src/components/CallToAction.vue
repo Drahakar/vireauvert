@@ -20,7 +20,7 @@ a {
     width: min-content;
     border: none;
     cursor: pointer;
-    padding: var(--sz-300);
+    padding: var(--sz-100);
     text-align: center;
     text-decoration: none;
     /* TODO: style on hover? */

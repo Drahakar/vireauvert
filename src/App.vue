@@ -27,12 +27,6 @@ export default defineComponent({
         Thermometer,
         Timeline,
     },
-    computed: {
-        catastrophes(): List<Catastrophe> {
-            return this.catastropheStore.findCatastrophes(
-                this.state.year, this.state.district, this.state.catastrophe)
-        },
-    },
     methods: {
         selectDistrict(id: number) {
             this.state.district = id;
@@ -87,8 +81,13 @@ export default defineComponent({
     },
     computed: {
         selectedStatistics() {
-            return this.statisticStore.findStatistics(this.year, this.district);
-        }
+            return this.statisticStore.findStatistics(this.state.year,
+                this.state.district);
+        },
+        catastrophes(): List<Catastrophe> {
+            return this.catastropheStore.findCatastrophes(
+                this.state.year, this.state.district, this.state.catastrophe)
+        },
     },
 });
 
