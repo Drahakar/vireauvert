@@ -33,7 +33,7 @@ class CatastropheType(Enum):
     Tornado = "TORNADO"
     FreezingRain = "FREEZING_RAIN"
     WinterStorm = "WINTER_STORM"
-    StormWinds = "STORM_WINDS",
+    StormWinds = "STORM_WINDS"
     HeatWave = "HEAT_WAVE"
 
 
