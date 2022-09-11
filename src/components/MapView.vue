@@ -3,7 +3,6 @@
         <keep-alive>
             <div class="map" ref="mapElement"></div>
         </keep-alive>
-        <Thermometre :statistics="selectedStatistics" :district="district"></Thermometre>
     </div>
 </template>
 
@@ -171,7 +170,8 @@ export default defineComponent({
                 zoom: this.zoom,
                 minZoom: MIN_ZOOM + this.zoomLimitOffset,
                 maxZoom: MAX_ZOOM + this.zoomLimitOffset,
-                zoomControl: true
+                zoomControl: true,
+                attributionControl: false,
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -189,16 +189,11 @@ export default defineComponent({
                 this.$emit('zoomChanged', map.getZoom());
             });
 
-            L.control.scale({
-                imperial: false
-            }).addTo(map);
-
             this.map = map;
             const bounds = this.mapLayer.getBounds();
             if (bounds.isValid()) {
                 this.map.setMaxBounds(bounds.pad(0.05));
             }
-            this.map.attributionControl.setPrefix('');
 
             if (this.mapWrapper) {
                 this.mapResizeObserver.observe(this.mapWrapper);
@@ -278,5 +273,44 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 
 .catastrophe-popup .leaflet-popup-content .list-group-flush {
     border-radius: 6px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in,
+.leaflet-touch .leaflet-control-zoom-out {
+    font-family: var(--ff-primary);
+    font-weight: var(--fw-regular);
+    font-size: var(--sz-800);
+    /* IFCHANGE: change CatastropheToggle */
+    width: var(--size-map-zoom-control) !important;
+    height: var(--size-map-zoom-control) !important;
+}
+
+.leaflet-left .leaflet-control {
+    /* IFCHANGE: change CatastropheToggle */
+    margin-left: var(--sz-100);
+    margin-top: var(--sz-100);
+}
+
+.leaflet-bar a {
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+.leaflet-touch .leaflet-bar a:first-child,
+.leaflet-touch .leaflet-bar {
+    /* IFCHANGE: change CatastropheToggle */
+    border-top-left-radius: var(--sz-400);
+    border-top-right-radius: var(--sz-400);
+}
+
+.leaflet-touch .leaflet-bar a:last-child,
+.leaflet-touch .leaflet-bar {
+    border-bottom-left-radius: var(--sz-400);
+    border-bottom-right-radius: var(--sz-400);
+}
+
+.leaflet-touch .leaflet-bar {
+    border-color: var(--color-border);
+    border-width: 1px;
 }
 </style>
