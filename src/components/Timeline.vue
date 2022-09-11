@@ -1,20 +1,30 @@
 <template>
     <div class="timeline row">
         <div id="slidertitle" class="col-md-2" v-t="'research_year'"></div>
-        <div id="slidercontainer" class="col-md-10">
-            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false" :rail-style="temperatureGradientStyle">
-                <template v-slot:label="{value}">
-                <div class="markline"></div>
-                    <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
-                </template>
-                <template v-slot:process="{ style}">
-                    <div class="vue-slider-process" :style="[style]"></div>
-                    <div class="vue-slider-process prevision-indicator" :style="[style, modeledYearsStyle]"></div>
-                </template>
-                <template v-slot:step="{value}">
-                    <div :class="['catastrophe-dot', catastropheCountSizeClass(value)]"></div>
-                </template>
-            </vue-slider>
+        <div class="col-md-10">
+            <div id="timelinegraph">
+                <Line
+                    :chart-data="chartData"
+                    :height="100"
+                    :chart-options="chartOptions"/>
+            </div>
+            <div id="slidercontainer">
+                <vue-slider 
+                    v-model="selectedYear" 
+                    :tooltip="'always'" 
+                    :data="years" 
+                    :marks="marks" 
+                    :adsorb="false" 
+                    :tooltipStyle="{top: '-52px'}" >
+                    <template v-slot:label="{value}">
+                        <div class="markline"></div>
+                        <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
+                    </template>
+                    <template v-slot:step="{ active }">
+                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                    </template>
+                </vue-slider>
+            </div>
         </div>
     </div>
 </template>
@@ -27,20 +37,15 @@ import { TIMELINE_YEARS,BEGIN_MODELED_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { CatastropheFilter } from '@/models/catastrophes';
-import { temperatureGradient, getGradientColourIndex,colourToHex } from '@/utils/colours';
+import { Line } from 'vue-chartjs'
+import CandidateList from './CandidateList.vue';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ChartOptions} from 'chart.js'
 
- function generateTemperatureGradient(statisticStore: ReturnType<typeof useStatisticStore>, district: number): String[] {
-        const yearRatio = (1 / TIMELINE_YEARS.length * 100);
-        const temperatureDeltas: (number|undefined)[] = TIMELINE_YEARS.map(year => statisticStore.findStatistics(year, district).temp_delta);
-      
-        return temperatureDeltas.map((tempDelta: number|undefined, index: number) => {
-            const colour = temperatureGradient[getGradientColourIndex(tempDelta ?? 0)];
-            return `${colourToHex(colour)} ${yearRatio * index}%`;
-        });
-    }
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement)
+
 
 export default defineComponent({
-    components: { VueSlider },
+    components: { VueSlider, CandidateList, Line },
     emits: ['yearSelected'],
     props: {
         isMobile: {
@@ -81,16 +86,31 @@ export default defineComponent({
             modeledYearsStyle: [
                 'left:' + (ratio * 100) +'%', 
                 'width:' + ((1 - ratio) * 100) + '%'
-            ]   
+            ],
+            chartOptions: {
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        display: false
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }   
         }
     },
     computed: {
-        temperatureGradientStyle() {
-            const gradient = generateTemperatureGradient(this.statisticStore, this.district).join(",")
+        chartData() {
             return {
-                '--background-process': `linear-gradient(to right, ${gradient})`
-            }
-        },
+                labels: TIMELINE_YEARS,
+                datasets: [{data:TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0)}]
+            };
+        }
     },
     methods: {
         catastrophesCountByYears(year: number): Number {
@@ -129,6 +149,10 @@ export default defineComponent({
     opacity: 1
 }
 
+#slidercontainer {
+    top: -15px;
+}
+
 .vue-slider-mark-label.custom-label.event-count {
     top:-32px;
 }
@@ -136,40 +160,18 @@ export default defineComponent({
 .vue-slider .vue-slider-process.prevision-indicator {    
     background: repeating-linear-gradient(to right, #ffffff, #ffffff 5px, transparent 2px, transparent 10px );
 }
-.vue-slider .vue-slider-mark .vue-slider-mark-label{
+.vue-slider .vue-slider-mark .vue-slider-mark-label,
+.vue-slider .vue-slider-mark .vue-slider-mark-step{
     display:none;
 }
 
-.vue-slider .catastrophe-dot {
-    display:inline-block;
-    top: -10px;
-    border: 5px solid #d36767;
-    border-radius: 5px;
-    left:-2px;
-    z-index:8;
-    width:100%;
-    height:100%;
-
+.vue-slider .vue-slider-mark .vue-slider-mark-step {
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.vue-slider .catastrophe-dot.catastrophe-size-none {
-    display:none;
-}
-
-.vue-slider .catastrophe-dot.catastrophe-size-medium {
-    border: 8px solid #d36767;
-    border-radius: 8px;
-    top: -8px;
-    left: -6px
-}
-
-
-.vue-slider .catastrophe-dot.catastrophe-size-large {
-    border: 10px solid #d36767;
-    border-radius: 10px;
-    top: -8px;
-    left: -8px;
-}
 
 
 @media screen and (max-width: 768px) {
@@ -177,41 +179,8 @@ export default defineComponent({
         padding:30px 15px;
     }
 
-    .vue-slider .catastrophe-dot {
-        display:inline-block;
-        top: -13px;
-        border: 3px solid #d36767;
-        border-radius: 3px;
-        left:-2px;
-        z-index:8;
-        width:100%;
-        height:100%;
-    }
-    .vue-slider .catastrophe-dot.catastrophe-size-medium {
-        border: 4px solid #d36767;
-        border-radius: 4px;
-        top: -12px;
-        left: -6px
-    }
-
-
-    .vue-slider .catastrophe-dot.catastrophe-size-large {
-        border: 5px solid #d36767;
-        border-radius: 5px;
-        top: -11px;
-        left: -6px;
-    }
-
-    .vue-slider .vue-slider-mark:last-of-type .markline {
-        border-left: .5px solid;
-        height: 10px;
-        border-color: #ccc;
-        width: 1px;
-        top: -14px;
-    }
-
-     .vue-slider .vue-slider-mark:last-of-type .custom-label.vue-slider-mark-label {
-        top: -45px;
+    .vue-slider {
+        margin: 0px 5px;
     }
 }
 
@@ -219,6 +188,7 @@ export default defineComponent({
 
 @media screen and (min-width: 768px) {
     .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-step,
     .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
     .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label{
         display:block;
@@ -227,17 +197,18 @@ export default defineComponent({
 
 @media screen and (max-width: 768px) {
     .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-step,
     .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label{
+    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
+    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step{
         display:block;
     }
 }
 </style>
 
 <style>
-.vue-slider .vue-slider-rail {
-    background: var(--background-process);
-}
+.vue-slider .vue-slider-rail,
 .vue-slider .vue-slider-process {
     background-color: transparent;
 }

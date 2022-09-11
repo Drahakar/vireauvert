@@ -146,5 +146,5 @@ export default {
     province_of_quebec: "Province de Québec",
 
     // Timeline
-    research_year: "Année de recherche",
+    research_year: "Température / année",
 };
