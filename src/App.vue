@@ -202,14 +202,16 @@ Sentry.init({
     width: 100%;
     /* Note: must be this high to be over the overleaf z-index. */
     z-index: 1000;
-    padding: var(--sz-200) var(--sz-200);
+    padding: var(--sz-100) var(--sz-100);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     pointer-events: none;
+    gap: var(--sz-50);
 }
 
 .catastrophe-toggle {
+    overflow-y: hidden;
 }
 
 .region-search {

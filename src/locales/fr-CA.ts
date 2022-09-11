@@ -104,6 +104,9 @@ export default {
 
     no_future_catastrophes: "Les évênements extrêmes ne sont disponibles que pour les années passées",
 
+    // Catastrophe toggling
+    toggle_checkbox_name_prefix: "Affichage pour ",
+
     // Parties and candidates
 
     party_leaders: "Chef(fe)s de parti",
