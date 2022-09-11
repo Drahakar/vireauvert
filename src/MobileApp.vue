@@ -123,7 +123,7 @@ export default defineComponent({
 }
 
 .map-view {
-    min-height: 400px;
+    min-height: 425px;
 }
 
 .search {

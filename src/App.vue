@@ -61,22 +61,131 @@ Sentry.init({
 </script>
 
 <template>
-    <div id="main" class="container-fluid">
-        <DesktopApp v-if="isDesktop" :userState="state"></DesktopApp>
-        <MobileApp v-else :userState="state"></MobileApp>
-        <div id="loading-overlay" v-if="!loadingCompleted">
+    <div class="main">
+        <!-- TODO: use real components -->
+        <header>
+            <!-- TODO: proper logo -->
+            <p>terre os</p>
+            <!-- TODO: proper logo -->
+            <p>Éqt*x(*)</p>
+        </header>
+
+        <section class="content-container">
+            <div class="primary-content content-section">
+                <div class="map">
+                    Map (+ inputs)
+                </div>
+                <div class="statistics">
+                    <h1 class="header">Température / année</h1>
+                    <div class="graph">TODO: graph</div>
+                </div>
+            </div>
+            <div class="secondary-content content-section">
+                <div class="thermometer">
+                </div>
+                <button class="call-to-action">Contactez vos candidats</button>
+            </div>
+        </section>
+
+        <!-- TODO: desktop layout, ideally no split components -->
+
+        <div v-if="!loadingCompleted" class="loading-overlay">
+            <!-- TODO: add spinner, e.g. with https://loading.io/css/ -->
             <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
-            <h3 class="mt-2">Chargement des données...</h3>
+            <p class="loading-message">Chargement des données...</p>
         </div>
     </div>
 </template>
 
 <style scoped>
-#main {
-    height: 100vh;
+.main {
+    min-height: 100vh;
+    padding: var(--sz-100);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-100);
 }
 
-#loading-overlay {
+header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;  /* TODO: remove, use logos instead */
+}
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: var(--sz-100);
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sz-100);
+}
+
+.primary-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.secondary-content {
+    align-items: center;
+}
+
+.map {
+    background-color: green;  /* TODO: remove */
+    color: white;  /* TODO: remove */
+    min-height: 200px;
+    min-width: 100px;
+    flex-grow: 1;
+    border-radius: var(--sz-600);
+    padding: var(--sz-400) var(--sz-200);
+}
+
+.statistics {
+    background-color: var(--clr-beige);
+    border-radius: var(--sz-600);
+    padding: var(--sz-400) var(--sz-200);
+}
+
+.statistics .header {
+    color: var(--color-heading);
+    font-weight: 500;
+    font-size: var(--sz-400);
+}
+
+.graph {
+    min-height: 70px;  /* TODO: remove */
+}
+
+.thermometer {
+    width: 12px;  /* TODO: remove */
+    min-height: 300px;  /* TODO: remove */
+    border-radius: 16px;  /* TODO: remove */
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--clr-chaud);
+}
+
+.call-to-action {
+    font-size: var(--sz-400);
+    color: var(--clr-blanc);
+    background-color: var(--clr-orange);
+    border-radius: var(--sz-600);
+    width: min-content;
+    border: none;
+    cursor: pointer;
+    padding: var(--sz-300);
+    /* TODO: style on hover? */
+}
+
+.loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -89,18 +198,8 @@ Sentry.init({
     justify-content: center;
     align-items: center;
 }
-</style>
 
-<style>
-/* global */
-.tab-panel {
-    padding-top: 10px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.tab-panel>* {
-    margin-top: 10px;
+.loading-message {
+    font-size: var(--sz-600);
 }
 </style>
