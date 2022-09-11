@@ -1,5 +1,6 @@
 <script lang="ts">
 import * as Sentry from "@sentry/vue";
+import { List } from 'immutable';
 import { BrowserTracing } from "@sentry/tracing";
 import { defineComponent, reactive, ref } from "vue";
 import { useCandidateStore } from "./stores/candidates";
@@ -7,19 +8,11 @@ import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { Catastrophe } from "./models/catastrophes";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
-import CatastropheToggle from "./components/CatastropheToggle.vue";
-import Header from "./components/Header.vue";
-import MapView from "./components/MapView.vue";
-import RegionSearch from "./components/RegionSearch.vue";
 import Timeline from "./components/Timeline.vue";
 import { useMapStore } from "./stores/map";
 
 export default defineComponent({
     components: {
-        CatastropheToggle,
-        Header,
-        MapView,
-        RegionSearch,
         Timeline,
     },
     computed: {
@@ -73,6 +66,7 @@ export default defineComponent({
 
         return {
             state: reactive(DEFAULT_USER_STATE),
+            catastropheStore,
             loadingCompleted,
             isDesktop
         };
