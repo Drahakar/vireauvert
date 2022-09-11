@@ -42,6 +42,8 @@
   --color-background: var(--clr-blanc);
   --color-background-accent: var(--clr-beige);
 
+  --color-accent: var(--clr-orange);
+
   --color-border: var(--clr-gris-tres-pale);
 
   --color-text: var(--clr-gris-mi-fonce);
