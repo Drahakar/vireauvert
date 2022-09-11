@@ -89,10 +89,10 @@ Sentry.init({
 
         <!-- TODO: desktop layout, ideally no split components -->
 
-        <div v-if="!loadingCompleted" class="loading-overlay">
+        <div v-if="loadingCompleted" class="loading-overlay">
             <!-- TODO: add spinner, e.g. with https://loading.io/css/ -->
             <div class="spinner-border" role="status" style="width: 5rem; height: 5rem;"></div>
-            <p class="loading-message">Chargement des données...</p>
+            <p class="loading-message" v-t="'loading'"></p>
         </div>
     </div>
 </template>
