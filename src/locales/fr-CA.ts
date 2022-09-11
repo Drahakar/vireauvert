@@ -12,6 +12,9 @@ export default {
     at_location: "à {location}",
     count_by_year: "{count} en {year}",
 
+    // Loading overlay
+    loading: "Chargement des données...",
+
     // Catastrophes
 
     catastrophes: "Événement extrême | Événements extrêmes",
