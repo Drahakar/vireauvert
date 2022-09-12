@@ -171,7 +171,7 @@ export default defineComponent({
 }
 
 #slidercontainer {
-    margin-top: -15px;
+    margin-top: -27px;
     margin-bottom: var(--sz-100);
 }
 
