@@ -29,11 +29,13 @@
 </template>
 
 <script lang="ts">
-import { Catastrophe, CatastropheFilter, CatastropheType } from '@/models/catastrophes';
+import { Set } from 'immutable';
+import { allCatastrophesFilter, Catastrophe, CatastropheType } from '@/models/catastrophes';
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { defineComponent, ref } from 'vue';
 
+type SingleCatastropheFilter = CatastropheType | '';
 
 export default defineComponent({
     emits: ['onRequestCatastropheFocus', 'onFilterCatastrophes'],
@@ -50,7 +52,7 @@ export default defineComponent({
     setup() {
         const catastropheTypes = Object.values(CatastropheType);
         const catastropheStore = useCatastropheStore();
-        const catastropheType = ref<CatastropheFilter>('');
+        const catastropheType = ref<SingleCatastropheFilter>('');
 
         return {
             catastropheTypes,
@@ -60,8 +62,11 @@ export default defineComponent({
     },
     computed: {
         catastrophes() {
+            const filter = this.catastropheType ?
+                Set([this.catastropheType])
+                : allCatastrophesFilter();
             return this.catastropheStore.findCatastrophes(
-                this.year, this.district, this.catastropheType);
+                this.year, this.district, filter);
         },
         areCatastrophesAvailable() {
             return this.year <= CURRENT_YEAR;
