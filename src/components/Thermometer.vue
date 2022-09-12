@@ -84,6 +84,13 @@ export default defineComponent({
     bottom: 0;
     height: calc(var(--notch-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
     background-color: var(--clr-thermometer-mercury);
+    transition: height 0.15s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mercury {
+        transition: none;
+    }
 }
 
 .notch {
