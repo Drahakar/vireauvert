@@ -45,8 +45,9 @@ import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { CatastropheFilter } from '@/models/catastrophes';
 import { Line } from 'vue-chartjs'
+import { getRelativePosition } from 'chart.js/helpers';
 import CandidateList from './CandidateList.vue';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ChartOptions} from 'chart.js'
+import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext} from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement)
 
@@ -95,6 +96,11 @@ export default defineComponent({
                 'width:' + ((1 - ratio) * 100) + '%'
             ],
             chartOptions: {
+                onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
+                    const canvasPosition = getRelativePosition(e, chart)
+                    const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);  
+                    this.$emit('yearSelected', TIMELINE_YEARS[yearId??0]);
+                },
                 scales: {
                     x: {
                         display: false
@@ -108,6 +114,12 @@ export default defineComponent({
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    filler: {
+                        propagate: true
+                    },
+                    tooltip: {
+                        enabled: false
                     }
                 },
                 responsive: true,
