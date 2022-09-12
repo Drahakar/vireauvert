@@ -1,10 +1,8 @@
 <template>
-    <!-- TODO: use real data -->
     <div class="wrapper" :class="{expanded: expanded}">
         <section class="container">
             <!-- Header row -->
-            <!-- TODO: dynamic total count -->
-            <PillBadge class="total-count pill" :value="213"></PillBadge>
+            <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
             <!-- TODO: dynamic truncation of text -->
             <div class="title grid-col-span-2"><span>Év. extrêmes</span></div>
             <!-- TODO: hover styling -->
@@ -19,6 +17,7 @@
                 <img class="catastrophe-icon" :src="toggle.iconPath">
                 <div class="catastrophe-name"><span>{{toggle.name}}</span></div>
                 <Checkbox :name="$t('toggle_checkbox_name_prefix') + toggle.name"
+                    @change="e => toggle.onChange(e.target.checked)"
                     :checked="toggle.checked"></Checkbox>
             </template>
         </section>
@@ -27,11 +26,79 @@
 
 <script lang="ts">
 
-import { defineComponent } from 'vue';
+import { List, Set } from "immutable";
+import { defineComponent, PropType } from 'vue';
+import type { CatastropheFilter } from "@/models/catastrophes";
+import { FILTER_ALL_CATASTROPHES, Catastrophe, CatastropheType } from "@/models/catastrophes";
 import Checkbox from './Checkbox.vue';
 import PillBadge from './PillBadge.vue';
 
+// If new catastrophe types are added, this must be changed:
+const TOGGLES = [
+    {
+        type: CatastropheType.Flood,
+        iconPath: '/icons/flood_w.png',
+        pillClass: 'catastrophe-flood',
+    },
+    {
+        type: CatastropheType.ForestFire,
+        iconPath: '/icons/forest_fire_w.png',
+        pillClass: 'catastrophe-forest-fire',
+    },
+    {
+        type: CatastropheType.ViolentStorm,
+        iconPath: '/icons/violent_storm_w.png',
+        pillClass: 'catastrophe-violent-storm',
+    },
+    {
+        type: CatastropheType.Tornado,
+        iconPath: '/icons/tornado_w.png',
+        pillClass: 'catastrophe-tornado',
+    },
+    {
+        type: CatastropheType.HeatWave,
+        iconPath: '/icons/heat_wave_w.png',
+        pillClass: 'catastrophe-heat-wave',
+    },
+    {
+        type: CatastropheType.FreezingRain,
+        iconPath: '/icons/freezing_rain_w.png',
+        pillClass: 'catastrophe-freezing-rain',
+    },
+    {
+        type: CatastropheType.StormWinds,
+        iconPath: '/icons/storm_winds_w.png',
+        pillClass: 'catastrophe-storm-winds',
+    },
+];
+
+type OnChangeFn = (checked: Boolean) => void;
+
+type Toggle = {
+    count: number,
+    iconPath: string,
+    pillClass: string,
+    name: string,
+    checked: boolean,
+    onChange: OnChangeFn,
+}
+
 export default defineComponent({
+    emits: ['update:filter'],
+    props: {
+        filter: {
+            type: Object as PropType<CatastropheFilter>,
+            required: true,
+        },
+        allCatastrophes: {  // Note: *not* the type-filtered ones.
+            type: Object as PropType<List<Catastrophe>>,
+            required: true,
+        },
+        currentCatastrophesCount: {
+            type: Number,
+            required: true,
+        },
+    },
     components: {
         Checkbox,
         PillBadge
@@ -42,30 +109,43 @@ export default defineComponent({
         };
     },
     computed: {
-        catastropheToggles() {
-            // TODO: this should be done based on a prop.
-            // TODO: put reminder to update this in model enum
-            return [
-                // TODO: keep track of checked state internally
-                // TODO: use localized names
-                {count: 213, iconPath: '/icons/attention.png',
-                 pillClass: 'catastrophe-all', name: 'Tous', checked: true},
-                {count: 37, iconPath: '/icons/flood_w.png',
-                 pillClass: 'catastrophe-flood', name: 'Innondations',
-                 checked: true},
-                {count: 24, iconPath: '/icons/forest_fire_w.png',
-                 pillClass: 'catastrophe-forest-fire', name: 'Feux de forêt',
-                 checked: false},
-                {count: 0, iconPath: '/icons/violent_storm_w.png',
-                 pillClass: 'catastrophe-violent-storm', name: 'Orages violents',
-                 checked: true},
-                {count: 8, iconPath: '/icons/tornado_w.png',
-                 pillClass: 'catastrophe-tornado', name: 'Tornades',
-                 checked: true},
-                {count: 144, iconPath: '/icons/heat_wave_w.png',
-                 pillClass: 'catastrophe-heat-wave', name: 'Vagues de chaleur',
-                 checked: true},
-            ]
+        catastropheToggles(): List<Toggle> {
+            const allCatastrophes = {
+                count: this.allCatastrophes.size,
+                iconPath: '/icons/attention.png',
+                pillClass: 'catastrophe-all',
+                name: this.$t('all_catastrophes'),
+                checked: this.filter.equals(FILTER_ALL_CATASTROPHES),
+                onChange: this.onFilterAllChange,
+            };
+            const counts = this.allCatastrophes.countBy(c => c.type);
+            const toggles = TOGGLES.map(toggle => ({
+                count: counts.get(toggle.type, 0),
+                iconPath: toggle.iconPath,
+                pillClass: toggle.pillClass,
+                name: this.$t(`catastrophe_${toggle.type}`, 2),
+                checked: this.filter.includes(toggle.type),
+                onChange: (checked: boolean) => this.onFilterChange(checked, toggle.type),
+            }));
+            return List([allCatastrophes].concat(toggles));
+        },
+    },
+    methods: {
+        onFilterAllChange(enable: Boolean) {
+            // When the 'All' option is checked, it either clears all filters or
+            // enables them all.
+            if (enable) {
+                this.$emit('update:filter', FILTER_ALL_CATASTROPHES);
+            } else {
+                this.$emit('update:filter', Set());
+            }
+        },
+        onFilterChange(enable: Boolean, type: CatastropheType) {
+            if (enable) {
+                this.$emit('update:filter', this.filter.add(type));
+            } else {
+                this.$emit('update:filter', this.filter.delete(type));
+            }
         },
     },
 })
@@ -115,7 +195,7 @@ export default defineComponent({
 }
 
 .expanded .container {
-    height: 100%;
+    max-height: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -174,5 +254,11 @@ button img {
 }
 .catastrophe-heat-wave {
     background-color: var(--clr-heat-wave);
+}
+.catastrophe-freezing-rain {
+    background-color: var(--clr-freezing-rain);
+}
+.catastrophe-storm-winds {
+    background-color: var(--clr-storm-winds);
 }
 </style>

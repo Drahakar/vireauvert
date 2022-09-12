@@ -1,5 +1,5 @@
 <script lang="ts">
-import { List } from 'immutable';
+import { List, Set } from 'immutable';
 import CandidateList from "./components/CandidateList.vue";
 import CatastropheList from "./components/CatastropheList.vue";
 import Header from "./components/Header.vue";
@@ -8,7 +8,7 @@ import RegionSearch from "./components/RegionSearch.vue";
 import Statistics from "./components/Statistics.vue";
 import Timeline from "./components/Timeline.vue";
 import { defineComponent, PropType, ref } from "vue";
-import { Catastrophe, CatastropheFilter } from "./models/catastrophes";
+import { Catastrophe, CatastropheType } from "./models/catastrophes";
 import { CURRENT_YEAR } from "./models/constants";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import { useCatastropheStore } from "./stores/catastrophes";
@@ -46,8 +46,8 @@ export default defineComponent({
         selectYear(year: number) {
             this.userState.year = year;
         },
-        selectCatastropheType(catastropheType: CatastropheFilter) {
-            this.userState.catastrophe = catastropheType;
+        selectCatastropheType(catastropheType: CatastropheType) {
+            this.userState.catastropheFilter = Set([catastropheType]);
         },
         mapMoved(location: [number, number]) {
             this.userState.location = location;
@@ -62,7 +62,8 @@ export default defineComponent({
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.userState.year, this.userState.district, this.userState.catastrophe)
+                this.userState.year, this.userState.district,
+                this.userState.catastropheFilter)
         }
     }
 });

@@ -45,7 +45,7 @@ import 'vue-slider-component/theme/default.css'
 import { TIMELINE_YEARS,BEGIN_MODELED_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
-import { CatastropheFilter } from '@/models/catastrophes';
+import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
 import { Line } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import CandidateList from './CandidateList.vue';
@@ -67,8 +67,7 @@ export default defineComponent({
             default: 0
         },
         catastropheFilter: {
-            type: String as PropType<CatastropheFilter>,
-            default: ''
+            type: Object as PropType<CatastropheFilter>,
         },
         district: {
             type: Number,
@@ -158,7 +157,8 @@ export default defineComponent({
     },
     methods: {
         catastrophesCountByYears(year: number): Number {
-            return this.catastropheStore.findCatastrophes(year, this.district, this.catastropheFilter).size;
+            return this.catastropheStore.findCatastrophes(year, this.district,
+                this.catastropheFilter ?? FILTER_ALL_CATASTROPHES).size;
         },
         catastropheCountSizeClass(year: number): String {
             const catastropheCount = this.catastrophesCountByYears(year);

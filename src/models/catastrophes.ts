@@ -1,4 +1,4 @@
-import { List } from "immutable";
+import { List, Set } from "immutable";
 
 export enum CatastropheType {
     Flood = "FLOOD",
@@ -6,12 +6,14 @@ export enum CatastropheType {
     ViolentStorm = "VIOLENT_STORM",
     Tornado = "TORNADO",
     FreezingRain = "FREEZING_RAIN",
-    WinterStorm = "WINTER_STORM",
     StormWinds = "STORM_WINDS",
-    HeatWave = "HEAT_WAVE"
+    HeatWave = "HEAT_WAVE",
+    // IFCHANGE: Add support to CatastropheToggle
 }
 
-export type CatastropheFilter = CatastropheType | '';
+export type CatastropheFilter = Set<CatastropheType>;
+
+export const FILTER_ALL_CATASTROPHES = Set(Object.values(CatastropheType));
 
 export interface CatastropheLocation {
     lat: number;

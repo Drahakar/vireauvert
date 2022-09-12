@@ -106,6 +106,7 @@ export default {
 
     // Catastrophe toggling
     toggle_checkbox_name_prefix: "Affichage pour ",
+    all_catastrophes: "Tous",
 
     // Parties and candidates
 

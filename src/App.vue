@@ -6,7 +6,7 @@ import { defineComponent, reactive, ref, PropType } from "vue";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
-import { Catastrophe } from "./models/catastrophes";
+import { FILTER_ALL_CATASTROPHES, Catastrophe } from "./models/catastrophes";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
@@ -88,7 +88,11 @@ export default defineComponent({
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.state.year, this.state.district, this.state.catastrophe)
+                this.state.year, this.state.district, this.state.catastropheFilter)
+        },
+        allCatastrophes(): List<Catastrophe> {
+            return this.catastropheStore.findCatastrophes(
+                this.state.year, this.state.district, FILTER_ALL_CATASTROPHES)
         },
     },
 });
@@ -116,8 +120,10 @@ Sentry.init({
                         :zoom="state.zoom" @zoom-changed="mapZoomed"
                         :zoom-limit-offset="-1"></MapView>
                     <div class="map-overlay">
-                        <CatastropheToggle
-                            class="catastrophe-toggle"></CatastropheToggle>
+                        <CatastropheToggle class="catastrophe-toggle"
+                            v-model:filter="state.catastropheFilter"
+                            :allCatastrophes="allCatastrophes"
+                            :currentCatastrophesCount="catastrophes.size"></CatastropheToggle>
                         <!-- TODO: change icon style -->
                         <!-- TODO: change to pop above? -->
                         <RegionSearch class="region-search"

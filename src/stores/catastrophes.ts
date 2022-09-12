@@ -10,14 +10,12 @@ export const useCatastropheStore = defineStore('catastropheStore', {
         };
     },
     getters: {
-        findCatastrophes: state => (year: number, district = 0, typeFilter: CatastropheFilter = '') => {
+        findCatastrophes: state => (year: number, district = 0, filter: CatastropheFilter) => {
             let catastrophes = state.catastrophes.get(year) ?? List();
             if (district) {
                 catastrophes = catastrophes.filter(x => x.district === district);
             }
-            if (typeFilter) {
-                catastrophes = catastrophes.filter(x => x.type === typeFilter);
-            }
+            catastrophes = catastrophes.filter(x => filter.includes(x.type));
             return catastrophes;
         }
     },

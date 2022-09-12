@@ -20,13 +20,14 @@ export function parseYearlyStatistics(doc: YearlyStatisticsDocument): YearlyStat
     return Map(Object.entries(doc).map(([region, stats]) => [parseInt(region), stats]));
 }
 
-export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, district: number, type: CatastropheFilter): List<Catastrophe> {
-    if (district === 0 && type === '') {
+export function filterCatastrophesByRegion(catastropes: List<Catastrophe>, district: number,
+    filter: CatastropheFilter): List<Catastrophe> {
+    if (district === 0) {
         return catastropes;
     }
 
     return catastropes.filter(x => {
-        if (type && x.type !== type) {
+        if (!filter.includes(x.type)) {
             return false;
         }
         return district === 0 || district === x.district;

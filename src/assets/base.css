@@ -19,12 +19,14 @@
   /* TODO: other thermometer colors */
   --clr-chaud: #c9655e;
 
-  /* TODO: catastrophes colors */
   --clr-flood: #00C2CB;
   --clr-forest-fire: #EC772E;
   --clr-violent-storm: #E9C900;
   --clr-tornado: #A6A6A6;
   --clr-heat-wave: #DD3535;
+  --clr-freezing-rain: #004AAD;
+  --clr-storm-winds: #5271FF;
+
 
   /* Size variants: from smallest to biggest */
   --sz-30: 4px;
