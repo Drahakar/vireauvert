@@ -1,26 +1,32 @@
 <template>
-    <div id="gradient" ref="gradientElem">
-        <div class="label">°C</div>
-        <div id="step-offset">
-            <div class="step" v-for="colour of gradientSteps" :style="{ backgroundColor: colourToHex(colour) }">
-            </div>
-            <div v-for="marking of markings" class="marking text-nowrap text-end"
-                :style="{ bottom: `calc(0.2em + ${marking.position * stepHeight}px)` }">
-                {{  $n(marking.temp, 'compact_delta')  }}
-            </div>
-            <div class="selected"
-                :style="{ bottom: index ? `${index * stepHeight}px` : '0px', visibility: index !== undefined ? 'visible' : 'hidden' }">
-            </div>
+    <div class="thermometer" :style="{'--num-notches': numNotches}">
+        <div class="stem">
+            <div class="mercury" :style="{'--notch-value': notchValue}"></div>
         </div>
+        <!-- TODO: proper formatting of delta temp -->
+        <span v-for="notchNum in numNotches" class="notch"
+            :style="{'--notch-idx': notchNum - 1}">
+            {{minNotch + notchNum - 1}}
+        </span>
+
+        <div class="bulb">
+            <p class="bulb-text">˚C</p>
+        </div>
+
+        <!-- TODO: emojis -->
+        <!-- TODO: show current value -->
+        <!-- TODO: show 1990 -->
     </div>
 </template>
 
 <script lang="ts">
-import { getGradientColourIndex, temperatureGradient, colourToHex, gradientScale, minTemp } from '@/utils/colours';
-import { RegionStatistics } from '@/models/yearly_data';
-import { defineComponent, PropType, ref, watch } from 'vue';
 
-const STEP_HEIGHT = 3;
+import { defineComponent, PropType } from 'vue';
+import { RegionStatistics } from '@/models/yearly_data';
+
+const MIN_NOTCH = -1;
+const MAX_NOTCH = 7;
+const NUM_NOTCHES = MAX_NOTCH - MIN_NOTCH + 1;
 
 export default defineComponent({
     props: {
@@ -34,117 +40,106 @@ export default defineComponent({
         }
     },
     data() {
-        const markings = Array.from(Array(Math.ceil(temperatureGradient.length * gradientScale)).keys()).map(x => {
-            return {
-                position: Math.floor(x / gradientScale),
-                temp: x + minTemp
-            }
-        });
         return {
-            gradientSteps: temperatureGradient,
-            markings,
-            colourToHex,
-            stepHeight: STEP_HEIGHT
+            numNotches: NUM_NOTCHES,
+            minNotch: MIN_NOTCH,
         };
     },
-    setup(props) {
-        const gradientElem = ref<HTMLDivElement | null>(null);
-        watch(() => props.statistics, stats => {
-            if (gradientElem.value) {
-                const index = getIndex(stats);
-                if (index !== undefined) {
-                    const arrowAt = (temperatureGradient.length - index - 1) * STEP_HEIGHT;
-                    gradientElem.value.scrollTo({
-                        top: arrowAt
-                    });
-                }
-            }
-        });
-        return { gradientElem };
-    },
     computed: {
-        index() {
-            return getIndex(this.statistics);
-        },
-    }
-});
-
-function getIndex(stats: RegionStatistics) {
-    return stats.temp_delta != undefined ? getGradientColourIndex(stats.temp_delta) : undefined;
-}
+        notchValue(): number {
+            // Return a float that maps to what notch index the current value
+            // would map to, allowing to be in-between notches.
+            const delta = this.statistics.temp_delta ?? 0;
+            return delta - MIN_NOTCH;
+        }
+    },
+})
 </script>
 
 <style scoped>
-#gradient {
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(127, 127, 127, 0.7) rgba(255, 255, 255, 0.7);
-}
-
-#gradient::-webkit-scrollbar {
-    width: 4px;
-}
-
-#gradient::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-#gradient::-webkit-scrollbar-thumb {
-    background-color: rgba(127, 127, 127, 0.7);
-    border-radius: 4px;
-}
-
-#step-offset {
+.thermometer {
+    --sz-stem-width: var(--sz-300);
+    --sz-stem-border: 2px;
+    /* the lowest notch is this much % into the stem height */
+    --notch-offset: 10%;
+    /* the highest notch is this much % higher than notch-offset */
+    --notch-height: 89%;
+    height: 100%;
     position: relative;
-    margin-left: 4px;
-    padding: 5px;
-    display: flex;
-    flex-direction: column-reverse;
-    background-color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 16px;  /* space for the bulb */
 }
 
-.step {
+.stem {
+    width: calc(var(--sz-stem-width) + var(--sz-stem-border) * 2);
     position: relative;
-    height: 3px;
-    width: 3ch;
-    margin-right: calc(1ch + 4px);
+    height: 100%;
+    border: var(--sz-stem-border) solid var(--clr-thermometer-border);
+    border-radius: var(--sz-600);
+    overflow: hidden;
 }
 
-.marking {
-    text-align: center;
-    font-size: small;
+.mercury {
+    width: var(--sz-stem-width);
     position: absolute;
-    width: 100%;
-    height: 14px;
-    right: 2px;
-    line-height: 1em;
-    font-weight: bold;
+    bottom: 0;
+    height: calc(var(--notch-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
+    background-color: var(--clr-thermometer-mercury);
+    transition: height 0.15s ease;
 }
 
-.step+.step {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+@media (prefers-reduced-motion: reduce) {
+    .mercury {
+        transition: none;
+    }
 }
 
-.label {
-    font-weight: bold;
-    padding-bottom: 4px;
-    text-align: center;
-    height: 24px;
-    margin-left: 4px;
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-.selected {
+.notch {
+    --sz-notch-width: var(--sz-400);
+    --sz-notch-gap: var(--sz-30);
+    width: var(--sz-notch-width);
     position: absolute;
-    z-index: 1;
-    left: -4px;
-    width: 0;
-    height: 0;
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
+    bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
+    left: calc(0px - var(--sz-notch-width));
+    padding-right: var(--sz-notch-gap);
+    font-size: var(--sz-200);
+    color: var(--clr-gris-pale);
+    text-align: right;
+}
 
-    border-left: 6px solid black;
-    margin-bottom: 3px;
+.notch::after {
+    content: '';
+    background-color: var(--color-background);
+    margin-left: calc(100% + var(--sz-notch-gap));
+    margin-top: -100%;
+    width: 2px;
+    height: 2px;
+    display: block;
+}
+
+.bulb {
+    position: absolute;
+    background-color: var(--clr-thermometer-mercury);
+    width: 32px;
+    height: 32px;
+    left: calc(50% - 16px);
+    bottom: -16px;
+    border-radius: 50%;
+    border: var(--sz-stem-border) solid var(--clr-thermometer-border);
+}
+
+.bulb::before {
+    content: '';
+    display: block;
+    width: var(--sz-stem-width);
+    height: 5px;
+    background-color: var(--clr-thermometer-mercury);
+    top: calc(0px - var(--sz-stem-border));
+    left: calc(50% - var(--sz-stem-width) / 2);
+}
+
+.bulb-text {
+    text-align: center;
+    font-size: var(--sz-600);
+    color: var(--clr-blanc);
 }
 </style>
