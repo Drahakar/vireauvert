@@ -49,7 +49,8 @@ export default defineComponent({
         notchValue(): number {
             // Return a float that maps to what notch index the current value
             // would map to, allowing to be in-between notches.
-            return this.statistics.temp_delta - MIN_NOTCH;
+            const delta = this.statistics.temp_delta ?? 0;
+            return delta - MIN_NOTCH;
         }
     },
 })
