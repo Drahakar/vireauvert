@@ -29,7 +29,7 @@
 import { List, Set } from "immutable";
 import { defineComponent, PropType } from 'vue';
 import type { CatastropheFilter } from "@/models/catastrophes";
-import { allCatastrophesFilter, Catastrophe, CatastropheType } from "@/models/catastrophes";
+import { FILTER_ALL_CATASTROPHES, Catastrophe, CatastropheType } from "@/models/catastrophes";
 import Checkbox from './Checkbox.vue';
 import PillBadge from './PillBadge.vue';
 
@@ -70,7 +70,6 @@ const TOGGLES = [
         iconPath: '/icons/storm_winds_w.png',
         pillClass: 'catastrophe-storm-winds',
     },
-    // Note: WinterStorm not included, we don't display them currently.
 ];
 
 type OnChangeFn = (checked: Boolean) => void;
@@ -111,28 +110,24 @@ export default defineComponent({
     },
     computed: {
         catastropheToggles(): List<Toggle> {
-            var toggles: Toggle[] = [];
-            toggles.push({
+            const allCatastrophes = {
                 count: this.allCatastrophes.size,
                 iconPath: '/icons/attention.png',
                 pillClass: 'catastrophe-all',
                 name: this.$t('all_catastrophes'),
-                checked: this.filter.equals(allCatastrophesFilter()),
+                checked: this.filter.equals(FILTER_ALL_CATASTROPHES),
                 onChange: this.onFilterAllChange,
-            });
-            for (const toggle of TOGGLES) {
-                const count = this.allCatastrophes.filter(
-                    c => c.type == toggle.type).size;
-                toggles.push({
-                    count: count,
-                    iconPath: toggle.iconPath,
-                    pillClass: toggle.pillClass,
-                    name: this.$t(`catastrophe_${toggle.type}`, 2),
-                    checked: this.filter.includes(toggle.type),
-                    onChange: e => this.onFilterChange(e, toggle.type),
-                });
-            }
-            return List(toggles);
+            };
+            const counts = this.allCatastrophes.countBy(c => c.type);
+            const toggles = TOGGLES.map(toggle => ({
+                count: counts.get(toggle.type, 0),
+                iconPath: toggle.iconPath,
+                pillClass: toggle.pillClass,
+                name: this.$t(`catastrophe_${toggle.type}`, 2),
+                checked: this.filter.includes(toggle.type),
+                onChange: (checked: boolean) => this.onFilterChange(checked, toggle.type),
+            }));
+            return List([allCatastrophes].concat(toggles));
         },
     },
     methods: {
@@ -140,7 +135,7 @@ export default defineComponent({
             // When the 'All' option is checked, it either clears all filters or
             // enables them all.
             if (enable) {
-                this.$emit('update:filter', allCatastrophesFilter());
+                this.$emit('update:filter', FILTER_ALL_CATASTROPHES);
             } else {
                 this.$emit('update:filter', Set());
             }

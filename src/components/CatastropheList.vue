@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { Set } from 'immutable';
-import { allCatastrophesFilter, Catastrophe, CatastropheType } from '@/models/catastrophes';
+import { FILTER_ALL_CATASTROPHES, Catastrophe, CatastropheType } from '@/models/catastrophes';
 import { CURRENT_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { defineComponent, ref } from 'vue';
@@ -62,9 +62,7 @@ export default defineComponent({
     },
     computed: {
         catastrophes() {
-            const filter = this.catastropheType ?
-                Set([this.catastropheType])
-                : allCatastrophesFilter();
+            const filter = this.catastropheType ? Set([this.catastropheType]) : FILTER_ALL_CATASTROPHES;
             return this.catastropheStore.findCatastrophes(
                 this.year, this.district, filter);
         },

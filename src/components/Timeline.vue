@@ -43,7 +43,7 @@ import 'vue-slider-component/theme/default.css'
 import { TIMELINE_YEARS,BEGIN_MODELED_YEAR } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
-import { allCatastrophesFilter, CatastropheFilter } from '@/models/catastrophes';
+import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
 import { Line } from 'vue-chartjs'
 import CandidateList from './CandidateList.vue';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ChartOptions} from 'chart.js'
@@ -125,7 +125,7 @@ export default defineComponent({
     methods: {
         catastrophesCountByYears(year: number): Number {
             return this.catastropheStore.findCatastrophes(year, this.district,
-                this.catastropheFilter ?? allCatastrophesFilter()).size;
+                this.catastropheFilter ?? FILTER_ALL_CATASTROPHES).size;
         },
         catastropheCountSizeClass(year: number): String {
             const catastropheCount = this.catastrophesCountByYears(year);

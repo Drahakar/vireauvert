@@ -6,7 +6,7 @@ import { defineComponent, reactive, ref, PropType } from "vue";
 import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
-import { allCatastrophesFilter, Catastrophe } from "./models/catastrophes";
+import { FILTER_ALL_CATASTROPHES, Catastrophe } from "./models/catastrophes";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
@@ -92,7 +92,7 @@ export default defineComponent({
         },
         allCatastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.state.year, this.state.district, allCatastrophesFilter())
+                this.state.year, this.state.district, FILTER_ALL_CATASTROPHES)
         },
     },
 });

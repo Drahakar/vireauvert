@@ -6,13 +6,14 @@ export enum CatastropheType {
     ViolentStorm = "VIOLENT_STORM",
     Tornado = "TORNADO",
     FreezingRain = "FREEZING_RAIN",
-    WinterStorm = "WINTER_STORM",
     StormWinds = "STORM_WINDS",
     HeatWave = "HEAT_WAVE",
     // IFCHANGE: Add support to CatastropheToggle
 }
 
 export type CatastropheFilter = Set<CatastropheType>;
+
+export const FILTER_ALL_CATASTROPHES = Set(Object.values(CatastropheType));
 
 export interface CatastropheLocation {
     lat: number;
@@ -47,10 +48,6 @@ export interface CatastropheDocument {
     severity: Severity;
     district: number;
     loc_approx: boolean;
-}
-
-export function allCatastrophesFilter(): CatastropheFilter {
-    return Set(Object.values(CatastropheType));
 }
 
 export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
