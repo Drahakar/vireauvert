@@ -199,12 +199,12 @@ export default defineComponent({
 }
 
 .vue-slider .tooltip-line {
-    height: 71px;
+    height: 60px;
     width: 1px;
     border-width: 1px;
     border-style: dashed;
     display: block;
-    top: 44px;
+    top: 39px;
     margin: auto;
 }
 
