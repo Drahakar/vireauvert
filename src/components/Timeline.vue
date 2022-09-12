@@ -49,9 +49,9 @@ import { CatastropheFilter } from '@/models/catastrophes';
 import { Line } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import CandidateList from './CandidateList.vue';
-import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext} from 'chart.js'
+import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler} from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
 
 export default defineComponent({
@@ -133,7 +133,26 @@ export default defineComponent({
         chartData() {
             return {
                 labels: TIMELINE_YEARS,
-                datasets: [{data:TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0)}]
+                datasets: [
+                    {
+                        data:TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0),
+                        fill: true,
+                        borderWidth: 0,
+                        pointRadius:0,
+                        backgroundColor: (ctx: ScriptableContext<'line'>) => {
+                            const canvas = ctx.chart.ctx;
+                            const gradient = canvas.createLinearGradient(0,0,0,90);
+
+                            //TODO: mettre le bon gradiant et les bonnes couleurs
+                            gradient.addColorStop(0, 'red');
+                            gradient.addColorStop(0.25, 'orange');
+                            gradient.addColorStop(0.6, 'lightblue');
+                            
+
+                            return gradient;
+                        },
+                    }
+                ]
             };
         }
     },
@@ -180,12 +199,12 @@ export default defineComponent({
 }
 
 .vue-slider .tooltip-line {
-    height: 71px;
+    height: 60px;
     width: 1px;
     border-width: 1px;
     border-style: dashed;
     display: block;
-    top: 44px;
+    top: 39px;
     margin: auto;
 }
 
