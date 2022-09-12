@@ -15,9 +15,7 @@ export const useCatastropheStore = defineStore('catastropheStore', {
             if (district) {
                 catastrophes = catastrophes.filter(x => x.district === district);
             }
-            if (filter) {
-                catastrophes = catastrophes.filter(x => filter.includes(x.type));
-            }
+            catastrophes = catastrophes.filter(x => filter.includes(x.type));
             return catastrophes;
         }
     },
