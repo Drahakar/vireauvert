@@ -16,8 +16,8 @@
   --clr-alerte: #ff3b3b;
   --clr-lichen: #a59e20;
 
-  /* TODO: other thermometer colors */
-  --clr-chaud: #c9655e;
+  --clr-thermometer-mercury: #c9655e;
+  --clr-thermometer-border: #a7544e;
 
   --clr-flood: #00C2CB;
   --clr-forest-fire: #EC772E;
