@@ -8,6 +8,8 @@
                 :height="70"
                 :width="0"
                 :chart-options="chartOptions"/>
+            <!-- Apparently it's not possible not to display the Y axis label not rotated https://github.com/chartjs/Chart.js/issues/8345 -->
+            <span class="graph-unit">C</span>
         </div>
         <div id="slidercontainer">
             <vue-slider
@@ -103,7 +105,7 @@ export default defineComponent({
                 },
                 scales: {
                     x: {
-                        display: false
+                        display: false,
                     },
                     y: {
                         ticks: {
@@ -156,9 +158,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.timeline {
-}
-
 #slidertitle {
     font-weight: bold;
     font-size: 1.2em;
@@ -245,6 +244,11 @@ export default defineComponent({
         display:block;
         margin-top: 0;
     }
+}
+
+.graph-unit {
+    left: -7px;
+    top: -17px;
 }
 </style>
 
