@@ -9,11 +9,12 @@
             </div>
         </div>
 
-        <!-- TODO: proper formatting of delta temp -->
-        <span v-for="notchNum in numNotches" class="notch"
-            :style="{'--notch-idx': notchNum - 1}">
-            {{minNotch + notchNum - 1}}
-        </span>
+        <template v-for="notchNum in numNotches">
+            <span v-if="(notchNum - 1) % notchSteps == 0" class="notch"
+                :style="{'--notch-idx': notchNum - 1}">
+                {{$n(minNotch + notchNum - 1, 'integer')}}
+            </span>
+        </template>
 
         <!-- TODO: emojis -->
         <!-- TODO: show current value -->
@@ -26,15 +27,16 @@
 import { defineComponent, PropType } from 'vue';
 import { RegionStatistics } from '@/models/yearly_data';
 
-const MIN_NOTCH = -1;
-const MAX_NOTCH = 7;
+const MIN_NOTCH = -6;
+const MAX_NOTCH = 10;
+const NOTCH_STEPS = 2;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = MAX_NOTCH - MIN_NOTCH + 1;
 
 export default defineComponent({
     props: {
         statistics: {
             type: Object as PropType<RegionStatistics>,
-            default: {}
+            required: true,
         },
         district: {
             type: Number,
@@ -45,14 +47,14 @@ export default defineComponent({
         return {
             numNotches: NUM_NOTCHES,
             minNotch: MIN_NOTCH,
+            notchSteps: NOTCH_STEPS,
         };
     },
     computed: {
         notchValue(): number {
             // Return a float that maps to what notch index the current value
             // would map to, allowing to be in-between notches.
-            const delta = this.statistics.temp_delta ?? 0;
-            return delta - MIN_NOTCH;
+            return this.statistics.avg_temp - MIN_NOTCH;
         }
     },
 })
