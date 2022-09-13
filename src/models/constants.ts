@@ -1,4 +1,5 @@
-export const MIN_CONTINUOUS_YEAR = 1990;
+export const REFERENCE_YEAR = 1990;  // For delta temperatures
+export const MIN_CONTINUOUS_YEAR = REFERENCE_YEAR;
 export const MAX_CONTINUOUS_YEAR = 2035;
 export const FUTURE_SCENARIO_YEAR1 = 2050;
 export const FUTURE_SCENARIO_YEAR2 = 2100;
