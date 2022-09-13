@@ -10,7 +10,7 @@
         </span>
 
         <div class="bulb">
-            <p class="bulb-text">˚C</p>
+            <p class="bulb-text">°C</p>
         </div>
 
         <!-- TODO: emojis -->
