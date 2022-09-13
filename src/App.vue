@@ -207,6 +207,7 @@ Sentry.init({
     flex-direction: column;
     justify-content: start;
     gap: var(--sz-30);
+    position: relative;
 }
 
 .call-to-action {
@@ -215,16 +216,23 @@ Sentry.init({
 
 .catastrophe-toggle {
     min-height: 0;  /* undo min-height: auto from being a flex child */
-    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 2;  /* show above search box */
 }
 
 .region-search {
     pointer-events: auto;
-    margin-left: calc(var(--sz-100) + var(--size-map-zoom-control));
+    --sz-margin-left: calc(var(--sz-100) + var(--size-map-zoom-control));
+    margin-left: var(--sz-margin-left);
     --vs-selected-color: var(--color-text);
     --vs-border-radius: var(--sz-400);
     --vs-border-color: var(--color-border);
     --vs-dropdown-max-height: 600%;
+    position: absolute;
+    top: calc(var(--size-map-zoom-control) + var(--sz-30));
+    width: calc(100% - var(--sz-margin-left));
 }
 
 .timeline {
