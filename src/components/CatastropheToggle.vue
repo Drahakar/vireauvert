@@ -191,6 +191,8 @@ export default defineComponent({
     justify-items: center;
     /* re-enable pointer-events, parent overlay disables them */
     pointer-events: auto;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
