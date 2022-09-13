@@ -1,17 +1,19 @@
 <template>
-    <div class="thermometer" :style="{'--num-notches': numNotches}">
-        <div class="stem">
-            <div class="mercury" :style="{'--notch-value': notchValue}"></div>
+    <div class="wrapper" :style="{'--num-notches': numNotches}">
+        <div class="thermometer">
+            <div class="stem">
+                <div class="mercury" :style="{'--notch-value': notchValue}"></div>
+            </div>
+            <div class="bulb">
+                <p class="bulb-text">°C</p>
+            </div>
         </div>
+
         <!-- TODO: proper formatting of delta temp -->
         <span v-for="notchNum in numNotches" class="notch"
             :style="{'--notch-idx': notchNum - 1}">
             {{minNotch + notchNum - 1}}
         </span>
-
-        <div class="bulb">
-            <p class="bulb-text">°C</p>
-        </div>
 
         <!-- TODO: emojis -->
         <!-- TODO: show current value -->
@@ -57,16 +59,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.thermometer {
+.wrapper {
     --sz-stem-width: var(--sz-300);
     --sz-stem-border: 2px;
     /* the lowest notch is this much % into the stem height */
     --notch-offset: 10%;
     /* the highest notch is this much % higher than notch-offset */
-    --notch-height: 89%;
+    --notch-height: 85%;
+    --sz-bulb: 32px;
     height: 100%;
     position: relative;
-    margin-bottom: 16px;  /* space for the bulb */
+    margin-bottom: calc(var(--sz-bulb) / 2);  /* space for the bulb */
+}
+
+.thermometer {
+    height: 100%;
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
 }
 
 .stem {
@@ -74,6 +82,7 @@ export default defineComponent({
     position: relative;
     height: 100%;
     border: var(--sz-stem-border) solid var(--clr-thermometer-border);
+    background-color: var(--clr-thermometer-background);
     border-radius: var(--sz-600);
     overflow: hidden;
 }
@@ -98,31 +107,22 @@ export default defineComponent({
     --sz-notch-gap: var(--sz-30);
     width: var(--sz-notch-width);
     position: absolute;
+    transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
     left: calc(0px - var(--sz-notch-width));
     padding-right: var(--sz-notch-gap);
     font-size: var(--sz-200);
-    color: var(--clr-gris-pale);
+    color: var(--clr-blanc);
     text-align: right;
-}
-
-.notch::after {
-    content: '';
-    background-color: var(--color-background);
-    margin-left: calc(100% + var(--sz-notch-gap));
-    margin-top: -100%;
-    width: 2px;
-    height: 2px;
-    display: block;
 }
 
 .bulb {
     position: absolute;
     background-color: var(--clr-thermometer-mercury);
-    width: 32px;
-    height: 32px;
-    left: calc(50% - 16px);
-    bottom: -16px;
+    width: var(--sz-bulb);
+    height: var(--sz-bulb);
+    left: calc(50% - var(--sz-bulb) / 2);
+    bottom: calc(0px - var(--sz-bulb) / 2);
     border-radius: 50%;
     border: var(--sz-stem-border) solid var(--clr-thermometer-border);
 }
@@ -131,9 +131,9 @@ export default defineComponent({
     content: '';
     display: block;
     width: var(--sz-stem-width);
-    height: 5px;
+    height: 6px;
     background-color: var(--clr-thermometer-mercury);
-    top: calc(0px - var(--sz-stem-border));
+    top: -3px;
     left: calc(50% - var(--sz-stem-width) / 2);
 }
 
