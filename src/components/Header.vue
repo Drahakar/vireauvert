@@ -18,6 +18,7 @@ export default defineComponent({
 <style scoped>
 header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     font-size: 24px;  /* TODO: remove, use logos instead */
 }
