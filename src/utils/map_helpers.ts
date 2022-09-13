@@ -63,8 +63,14 @@ function createMarkerPopup(group: CatastropheGroup, i18n: Composer) {
     list.classList.add('list-group', 'list-group-flush');
     for (const instance of group.instances) {
         const catastrophe: Catastrophe = {
-            ...group,
-            ...instance
+            id: instance.id,
+            city: group.city,
+            date: instance.date,
+            district: group.district,
+            loc_approx: group.loc_approx,
+            location: group.location,
+            severity: instance.severity,
+            type: group.type
         }
 
         const time = document.createElement('time');
