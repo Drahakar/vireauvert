@@ -54,7 +54,8 @@ export default defineComponent({
         notchValue(): number {
             // Return a float that maps to what notch index the current value
             // would map to, allowing to be in-between notches.
-            return this.statistics.avg_temp - MIN_NOTCH;
+            const avg_temp = this.statistics.avg_temp ?? 0;
+            return avg_temp - MIN_NOTCH;
         }
     },
 })
