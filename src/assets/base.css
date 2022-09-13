@@ -17,7 +17,8 @@
   --clr-lichen: #a59e20;
 
   --clr-thermometer-mercury: #c9655e;
-  --clr-thermometer-border: #a7544e;
+  --clr-thermometer-background: var(--clr-beige);
+  --clr-thermometer-border: var(--clr-blanc);
 
   --clr-flood: #00C2CB;
   --clr-forest-fire: #EC772E;
