@@ -214,7 +214,8 @@ Sentry.init({
 }
 
 .catastrophe-toggle {
-    overflow-y: auto;
+    min-height: 0;  /* undo min-height: auto from being a flex child */
+    max-height: 100%;
 }
 
 .region-search {
