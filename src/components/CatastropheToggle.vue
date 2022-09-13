@@ -169,11 +169,11 @@ export default defineComponent({
     padding-left: calc(var(--sz-100) + var(--size-map-zoom-control));
     transition: padding-left var(--expand-transition);
     transition: width var(--expand-transition);
-    height: 100%;
 }
 
 .expanded.wrapper {
     padding-left: 0;
+    flex: 1;
 }
 
 .container {
@@ -191,11 +191,6 @@ export default defineComponent({
     justify-items: center;
     /* re-enable pointer-events, parent overlay disables them */
     pointer-events: auto;
-    overflow-y: scroll;
-}
-
-.expanded .container {
-    max-height: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -107,40 +107,39 @@ Sentry.init({
 
 <template>
     <div class="main">
-        <Header></Header>
-
-        <section class="content-container">
-            <div class="primary-content content-section">
-                <div class="map-container">
-                    <!-- TODO: start fully zoomed out? -->
-                    <MapView class="map" :district="state.district"
-                        :year="state.year" :catastrophes="catastrophes"
-                        @district-selected="selectDistrict"
-                        :location="state.location" @location-changed="mapMoved"
-                        :zoom="state.zoom" @zoom-changed="mapZoomed"
-                        :zoom-limit-offset="-1"></MapView>
-                    <div class="map-overlay">
+        <!-- TODO: start fully zoomed out? -->
+        <MapView class="map" :district="state.district"
+            :year="state.year" :catastrophes="catastrophes"
+            @district-selected="selectDistrict"
+            :location="state.location" @location-changed="mapMoved"
+            :zoom="state.zoom" @zoom-changed="mapZoomed"
+            :zoom-limit-offset="-1"></MapView>
+        <div class="map-overlay">
+            <div class="container">
+                <section class="primary-content content-section">
+                    <div class="filter-inputs">
                         <CatastropheToggle class="catastrophe-toggle"
                             v-model:filter="state.catastropheFilter"
                             :allCatastrophes="allCatastrophes"
                             :currentCatastrophesCount="catastrophes.size"></CatastropheToggle>
                         <!-- TODO: change icon style -->
-                        <!-- TODO: change to pop above? -->
+                        <!-- TODO: draw catastrophe toggle over this -->
                         <RegionSearch class="region-search"
                             :district="state.district"
                             @district-selected="selectDistrict"></RegionSearch>
                     </div>
-                </div>
-                <Timeline class="timeline" :year="state.year"
-                    @year-selected="selectYear"
-                    :district="state.district"></Timeline>
+                    <Timeline class="timeline" :year="state.year"
+                        @year-selected="selectYear"
+                        :district="state.district"></Timeline>
+                </section>
+                <section class="secondary-content content-section">
+                    <CallToAction class="call-to-action"></CallToAction>
+                    <Thermometer :statistics="selectedStatistics"
+                        :district="state.district"></Thermometer>
+                    <Header></Header>
+                </section>
             </div>
-            <div class="secondary-content content-section">
-                <Thermometer :statistics="selectedStatistics"
-                    :district="state.district"></Thermometer>
-                <CallToAction></CallToAction>
-            </div>
-        </section>
+        </div>
     </div>
 
     <!-- TODO: desktop layout, ideally no split components -->
@@ -153,19 +152,17 @@ Sentry.init({
 
 <style scoped>
 .main {
-    min-height: 100vh;
-    padding: var(--sz-100);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sz-100);
+    width: 100%;
+    height: 100%;
 }
 
-.content-container {
+.container {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    flex-grow: 1;
     gap: var(--sz-100);
+    justify-content: space-between;
 }
 
 .content-section {
@@ -176,28 +173,13 @@ Sentry.init({
 }
 
 .primary-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
 
 .secondary-content {
     align-items: center;
-}
-
-.map-container {
-    min-height: 200px;
-    min-width: 100px;
-    flex-grow: 1;
-    position: relative;
-}
-
-.map {
-    width: 100%;
-    height: 100%;
-    border-radius: var(--sz-600);
-    overflow: hidden;
+    padding-bottom: var(--sz-400);  /* space for OpenStreetMap attribution */
 }
 
 .map-overlay {
@@ -216,21 +198,36 @@ Sentry.init({
     gap: var(--sz-50);
 }
 
+.filter-inputs {
+    flex: 1;
+    width: 100%;
+    min-height: 0;  /* don't expand to children content -- undo auto min-height */
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: var(--sz-30);
+}
+
+.call-to-action {
+    pointer-events: auto;
+}
+
 .catastrophe-toggle {
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 .region-search {
     pointer-events: auto;
+    margin-left: calc(var(--sz-100) + var(--size-map-zoom-control));
     --vs-selected-color: var(--color-text);
     --vs-border-radius: var(--sz-400);
     --vs-border-color: var(--color-border);
-    --vs-dropdown-max-height: 400%;
-    /* space for the map attribution */
-    margin-bottom: var(--sz-400);
+    --vs-dropdown-max-height: 600%;
 }
 
 .timeline {
+    pointer-events: auto;
     color: var(--color-heading);
     font-weight: var(--fw-regular);
     font-size: var(--sz-400);
