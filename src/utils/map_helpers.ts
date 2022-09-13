@@ -30,10 +30,7 @@ export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta
     if (tempDelta) {
         let colour = temperatureGradient[getGradientColourIndex(tempDelta)];
         colour = multiplyColours(colour, [1, 0, 0], 0.9);
-        style = {
-            ...style,
-            fillColor: colourToHex(colour)
-        };
+        style.fillColor = colourToHex(colour);
     }
     layer.setStyle(style);
 
