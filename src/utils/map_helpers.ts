@@ -13,14 +13,14 @@ export interface DistrictLayer {
 
 const unselectedStyle: L.PathOptions = {
     fillColor: '#cccccc',
-    color: '#fbfbfb',
+    color: 'var(--clr-blanc)',
     opacity: 0.9,
     fillOpacity: 0.5,
     weight: 1.5
 };
 const selectedStyle: L.PathOptions = {
     ...unselectedStyle,
-    color: '#ff6a0e',
+    color: 'var(--clr-orange)',
     fillOpacity: 0.7,
     weight: 2
 };

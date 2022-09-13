@@ -89,7 +89,7 @@ export default defineComponent({
             interactive: false,
             style: {
                 fillColor: "#000000",
-                color: '#333333',
+                color: 'var(--clr-gris-fonce)',
                 opacity: 0.6,
                 fillOpacity: 0.4,
                 weight: 2
