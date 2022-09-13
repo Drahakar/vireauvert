@@ -13,14 +13,14 @@ export interface DistrictLayer {
 
 const unselectedStyle: L.PathOptions = {
     fillColor: '#cccccc',
-    color: '#333333',
-    opacity: 0.8,
+    color: '#fbfbfb',
+    opacity: 0.9,
     fillOpacity: 0.5,
-    weight: 1
+    weight: 1.5
 };
 const selectedStyle: L.PathOptions = {
     ...unselectedStyle,
-    opacity: 1,
+    color: '#ff6a0e',
     fillOpacity: 0.7,
     weight: 2
 };
@@ -36,6 +36,12 @@ export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta
         };
     }
     layer.setStyle(style);
+
+    if (selected) {
+        layer.bringToFront();
+    } else {
+        layer.bringToBack();
+    }
 }
 
 function generateIcons(): Map<CatastropheType, L.Icon> {
@@ -60,7 +66,7 @@ function createMarkerPopup(group: CatastropheGroup, i18n: Composer) {
             ...group,
             ...instance
         }
-        
+
         const time = document.createElement('time');
         time.dateTime = catastrophe.date.toISOString();
         time.innerText = i18n.d(catastrophe.date, 'event_date');

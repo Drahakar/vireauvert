@@ -89,9 +89,10 @@ export default defineComponent({
             interactive: false,
             style: {
                 fillColor: "#000000",
-                color: '#000000',
-                opacity: 0.4,
-                fillOpacity: 0.4
+                color: '#333333',
+                opacity: 0.6,
+                fillOpacity: 0.4,
+                weight: 2
             }
         });
         watch(() => mapStore.mask, data => {
