@@ -141,13 +141,13 @@ Sentry.init({
                 <CallToAction></CallToAction>
             </div>
         </section>
+    </div>
 
-        <!-- TODO: desktop layout, ideally no split components -->
+    <!-- TODO: desktop layout, ideally no split components -->
 
-        <div v-if="!loadingCompleted" class="loading-overlay">
-            <LoadingSpinner role="status"></LoadingSpinner>
-            <p class="loading-message" v-t="'loading'"></p>
-        </div>
+    <div v-if="!loadingCompleted" class="loading-overlay">
+        <LoadingSpinner role="status"></LoadingSpinner>
+        <p class="loading-message" v-t="'loading'"></p>
     </div>
 </template>
 

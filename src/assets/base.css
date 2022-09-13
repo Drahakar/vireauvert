@@ -43,7 +43,7 @@
   --fw-regular: 500;
 
   /* Font families */
-  --ff-primary: 'Noto Sans', sans-serif;  /* TODO: Matter instead? */
+  --ff-primary: 'Matter';
 }
 
 /* semantic color variables for this project */

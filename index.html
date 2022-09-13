@@ -3,11 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vire Au Vert</title>
+    <style> 
+      /* Use inline style to trigger font load early
+         https://web.dev/font-best-practices/
+       */
+      @font-face {
+        font-family: "Matter";
+        src: url("/Matter-Medium-LatinExtended.woff2") format("woff2"),
+          url("/Matter-Medium-LatinExtended.woff") format("woff");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+      body {
+        font-family: "Matter";  /* trigger font load */
+      }
+    </style>
   </head>
 
   <!-- Google tag (gtag.js) -->
