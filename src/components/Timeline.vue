@@ -325,7 +325,6 @@ export default defineComponent({
     .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-step,
     .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
     .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label,
     .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step{
         display:block;
         margin-top: 0;
