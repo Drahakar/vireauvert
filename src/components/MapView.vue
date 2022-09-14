@@ -15,7 +15,7 @@ import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { useStatisticStore } from "@/stores/statistics";
 import Thermometer from "./Thermometer.vue";
-import { createMapMarker, DistrictLayer, setMapLayerColour } from "@/utils/map_helpers";
+import { createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } from "@/utils/map_helpers";
 import { Composer, useI18n } from "vue-i18n";
 import { useMapStore } from "@/stores/map";
 
@@ -186,7 +186,9 @@ export default defineComponent({
                 this.$emit('locationChanged', map.getCenter());
             });
             map.addEventListener('zoomend', () => {
-                this.$emit('zoomChanged', map.getZoom());
+                const zoom = map.getZoom();
+                setGlobalIconSize(zoom / (map.getMaxZoom() - map.getMinZoom()));
+                this.$emit('zoomChanged', zoom);
             });
 
             this.map = map;

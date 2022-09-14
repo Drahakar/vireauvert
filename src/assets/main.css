@@ -1,20 +1,41 @@
 @import "./base.css";
+:root {
+  --icon-size: 48px;
+}
 
 #app {
   width: 100%;
   height: 100%;
 }
 
-.card-header .bi {
-  transition: .3s transform ease-in-out;
-  margin-right: 5px;
+.map-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-top: calc(var(--icon-size) / -2);
+  margin-left: calc(var(--icon-size) / -2);
+  background-size: var(--icon-size) var(--icon-size);
 }
-
-.card-header .collapsed .bi {
-  transform: rotate(180deg);
+.map-icon.flood {
+  background-image: url('/icons/flood_b.png');
 }
-
-.card-header a[data-bs-toggle="collapse"] {
-  all: unset;
-  /* remove styling on toggling hyperlink */
+.map-icon.forest_fire {
+  background-image: url('/icons/forest_fire_b.png');
+}
+.map-icon.freezing_rain {
+  background-image: url('/icons/freezing_rain_b.png');
+}
+.map-icon.heat_wave {
+  background-image: url('/icons/heat_wave_b.png');
+}
+.map-icon.storm_winds {
+  background-image: url('/icons/storm_winds_b.png');
+}
+.map-icon.tornado {
+  background-image: url('/icons/tornado_b.png');
+}
+.map-icon.violent_storm {
+  background-image: url('/icons/violent_storm_b.png');
+}
+.map-icon.winter_storm {
+  background-image: url('/icons/winter_storm_b.png');
 }

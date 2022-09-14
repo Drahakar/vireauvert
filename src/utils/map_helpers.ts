@@ -1,6 +1,6 @@
 import L from "leaflet";
 
-import { Catastrophe, CatastropheGroup, CatastropheType, getIconUrl } from "@/models/catastrophes";
+import { CatastropheGroup, CatastropheType } from "@/models/catastrophes";
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
@@ -41,12 +41,12 @@ export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta
     }
 }
 
-function generateIcons(): Map<CatastropheType, L.Icon> {
-    const icons = new Map<CatastropheType, L.Icon>();
+function generateIcons(): Map<CatastropheType, L.DivIcon> {
+    const icons = new Map<CatastropheType, L.DivIcon>();
     for (const value of Object.values(CatastropheType)) {
-        const icon = L.icon({
-            iconUrl: getIconUrl(value),
-            iconSize: [48, 48]
+        const icon = L.divIcon({
+            className: `map-icon ${value.toLowerCase()}`,
+            iconSize: null as any
         });
         icons.set(value, icon);
     }
@@ -62,4 +62,11 @@ export function createMapMarker(group: CatastropheGroup, i18n: Composer) {
     });
     marker.bindTooltip(() => i18n.t('catastrophe_group', { group }));
     return marker;
+}
+
+export function setGlobalIconSize(ratio: number) {
+    const root: HTMLElement | null = document.querySelector(':root');
+    if (root) {
+        root.style.setProperty('--icon-size', `${(ratio * 48).toFixed(0)}px`);
+    }
 }
