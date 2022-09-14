@@ -3,7 +3,7 @@
         <template v-for="notchNum in numNotches">
             <span v-if="(notchNum - 1) % notchSteps == 0" class="notch"
                 :style="{'--notch-idx': notchNum - 1}">
-                {{$n(startNotch + notchNum - 1, 'integer')}}
+                {{$n(startNotch + notchNum - 1, 'compact_delta')}}
             </span>
         </template>
 
@@ -191,9 +191,9 @@ export default defineComponent({
 }
 
 .notch {
-    --sz-notch-width: var(--sz-400);
+    --sz-notch-width: var(--sz-600);
     --sz-notch-gap: var(--sz-30);
-    width: var(--sz-notch-width);
+    min-width: var(--sz-notch-width);
     position: absolute;
     transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
