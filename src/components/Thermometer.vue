@@ -101,8 +101,7 @@ export default defineComponent({
         emojiPath(): string {
             if (this.currentValue < this.referenceValue) {
                 return '/icons/Emoji1.png';
-            } else if (this.currentValue < this.referenceValue + 1.5) {
-                // TODO fix above to use constants
+            } else if (this.currentValue < this.dangerValue) {
                 return '/icons/Emoji2.png';
             } else {
                 return '/icons/Emoji3.png';
@@ -299,6 +298,5 @@ img {
     margin-left: var(--sz-stem-width);
     margin-bottom: var(--sz-400);
     filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
-    transition: bottom var(--mercury-transition);
 }
 </style>
