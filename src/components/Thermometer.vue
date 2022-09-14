@@ -15,15 +15,17 @@
                 <p class="bulb-text">°C</p>
             </div>
 
-            <div class="danger-value pill tracked-danger track-bottom">
-                <span>{{$n(dangerValue, 'temperature_delta_no_unit')}}</span>
-            </div>
-
             <div class="reference-value pill tracked-reference track-bottom">
                 <span>{{$n(referenceValueDisplayed, 'temperature_no_unit')}}°</span>
                 <span>{{referenceYear}}</span>
             </div>
         </div>
+
+        <div class="danger-value pill tracked-danger track-bottom">
+            <span>{{$n(dangerValue, 'temperature_delta_no_unit')}}</span>
+            <div class="line"></div>
+        </div>
+
 
         <div class="current-value pill tracked-current track-bottom">
             <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
@@ -264,7 +266,7 @@ export default defineComponent({
 
 .danger-value {
     font-size: var(--sz-300);
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    min-width: 80px;
 }
 
 .danger-value > span {
@@ -272,7 +274,14 @@ export default defineComponent({
     text-shadow:
        -1px -1px 0 var(--clr-alerte),
         1px -1px 0 var(--clr-alerte),
-        -1px 1px 0 var(--clr-alerte),
-         1px 1px 0 var(--clr-alerte);
+       -1px  1px 0 var(--clr-alerte),
+        1px  1px 0 var(--clr-alerte),
+        0px  0px 2px rgba(0, 0, 0, 0.5);
+}
+
+.danger-value .line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--clr-alerte);
 }
 </style>
