@@ -19,7 +19,7 @@ import { createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } 
 import { Composer, useI18n } from "vue-i18n";
 import { useMapStore } from "@/stores/map";
 
-const MIN_ZOOM = 5;
+const MIN_ZOOM = 6;
 const MAX_ZOOM = 15;
 
 export default defineComponent({
@@ -172,6 +172,8 @@ export default defineComponent({
                 minZoom: MIN_ZOOM + this.zoomLimitOffset,
                 maxZoom: MAX_ZOOM + this.zoomLimitOffset,
                 zoomControl: true,
+                bounceAtZoomLimits: false,
+                maxBoundsViscosity: 1
             });
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -194,7 +196,7 @@ export default defineComponent({
             this.map = map;
             const bounds = this.mapLayer.getBounds();
             if (bounds.isValid()) {
-                this.map.setMaxBounds(bounds.pad(0.05));
+                this.map.setMaxBounds(bounds.pad(0.1));
             }
             this.map.attributionControl.setPrefix('');
 
