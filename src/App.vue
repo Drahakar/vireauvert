@@ -121,28 +121,30 @@ Sentry.init({
             :zoom-limit-offset="-1"></MapView>
         <div class="map-overlay">
             <div class="container">
-                <section class="primary-content content-section">
-                    <div class="filter-inputs">
-                        <CatastropheToggle class="catastrophe-toggle"
-                            v-model:filter="state.catastropheFilter"
-                            :allCatastrophes="allCatastrophes"
-                            :currentCatastrophesCount="catastrophes.size"></CatastropheToggle>
-                        <!-- TODO: change icon style -->
-                        <RegionSearch class="region-search"
-                            :district="state.district"
-                            @district-selected="selectDistrict"></RegionSearch>
-                    </div>
-                    <Timeline class="timeline" :year="state.year"
-                        @year-selected="selectYear"
-                        :district="state.district"></Timeline>
-                </section>
-                <section class="secondary-content content-section">
-                    <CallToAction class="call-to-action"></CallToAction>
-                    <Thermometer :statistics="selectedStatistics"
-                        :reference-statistics="referenceYearStatistics"
-                        :year="state.year"></Thermometer>
-                    <Header></Header>
-                </section>
+                <div class="content-container">
+                    <section class="primary-content content-section">
+                        <div class="filter-inputs">
+                            <!-- TODO: change icon style -->
+                            <RegionSearch class="region-search"
+                                :district="state.district"
+                                @district-selected="selectDistrict"></RegionSearch>
+                            <CatastropheToggle class="catastrophe-toggle"
+                                v-model:filter="state.catastropheFilter"
+                                :allCatastrophes="allCatastrophes"
+                                :currentCatastrophesCount="catastrophes.size"></CatastropheToggle>
+                        </div>
+                        <Timeline class="timeline" :year="state.year"
+                            @year-selected="selectYear"
+                            :district="state.district"></Timeline>
+                    </section>
+                    <section class="secondary-content content-section">
+                        <Thermometer :statistics="selectedStatistics"
+                            :reference-statistics="referenceYearStatistics"
+                            :year="state.year"></Thermometer>
+                        <CallToAction class="call-to-action"></CallToAction>
+                    </section>
+                </div>
+                <Header class="header"></Header>
             </div>
         </div>
     </div>
@@ -165,6 +167,14 @@ Sentry.init({
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content-container {
+    display: flex;
+    min-height: 0;  /* undo min-height: auto from being a flex child */
+    height: 100%;
     flex-direction: row;
     gap: var(--sz-100);
     justify-content: space-between;
@@ -183,8 +193,15 @@ Sentry.init({
 }
 
 .secondary-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sz-800);
     align-items: center;
-    padding-bottom: var(--sz-400);  /* space for OpenStreetMap attribution */
+}
+
+.header {
+    padding-right: 110px;
 }
 
 .map-overlay {
@@ -195,7 +212,7 @@ Sentry.init({
     width: 100%;
     /* Note: must be this high to be over the overleaf z-index. */
     z-index: 1000;
-    padding: var(--sz-100) var(--sz-100);
+    padding: var(--size-map-padding) var(--sz-100);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -211,8 +228,7 @@ Sentry.init({
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: var(--sz-30);
-    position: relative;
+    gap: var(--size-map-controls-gap);
 }
 
 .call-to-action {
@@ -223,21 +239,15 @@ Sentry.init({
     min-height: 0;  /* undo min-height: auto from being a flex child */
     height: 100%;
     width: 100%;
-    position: absolute;
-    z-index: 2;  /* show above search box */
 }
 
 .region-search {
     pointer-events: auto;
     --sz-margin-left: calc(var(--sz-100) + var(--size-map-zoom-control));
-    margin-left: var(--sz-margin-left);
     --vs-selected-color: var(--color-text);
     --vs-border-radius: var(--sz-400);
     --vs-border-color: var(--color-border);
-    --vs-dropdown-max-height: 600%;
-    position: absolute;
-    top: calc(var(--size-map-zoom-control) + var(--sz-30));
-    width: calc(100% - var(--sz-margin-left));
+    --vs-dropdown-max-height: 750%;
 }
 
 .timeline {

@@ -60,6 +60,8 @@
   --color-heading: var(--clr-gris-fonce);
 
   --size-map-zoom-control: 32px;
+  --size-map-controls-gap: var(--sz-30);
+  --size-map-padding: var(--sz-100);
 }
 
 *,

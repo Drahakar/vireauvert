@@ -3,8 +3,7 @@
         <section class="container">
             <!-- Header row -->
             <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
-            <!-- TODO: dynamic truncation of text -->
-            <div class="title grid-col-span-2"><span>Év. extrêmes</span></div>
+            <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
             <!-- TODO: hover styling -->
             <button v-if="expanded" @click="expanded = false"><img src="/icons/x.svg"></button>
             <button v-else @click="expanded = true"><img src="/icons/settings.svg"></button>
@@ -166,13 +165,11 @@ export default defineComponent({
 
 .wrapper {
     --expand-transition: 0.5s ease;
-    padding-left: calc(var(--sz-100) + var(--size-map-zoom-control));
     transition: padding-left var(--expand-transition);
     transition: width var(--expand-transition);
 }
 
 .expanded.wrapper {
-    padding-left: 0;
     flex: 1;
 }
 
