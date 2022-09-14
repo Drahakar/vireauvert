@@ -261,4 +261,18 @@ export default defineComponent({
     background-color: var(--clr-thermometer-mercury);
     font-size: var(--sz-200);
 }
+
+.danger-value {
+    font-size: var(--sz-300);
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
+.danger-value > span {
+    color: var(--clr-blanc);
+    text-shadow:
+       -1px -1px 0 var(--clr-alerte),
+        1px -1px 0 var(--clr-alerte),
+        -1px 1px 0 var(--clr-alerte),
+         1px 1px 0 var(--clr-alerte);
+}
 </style>
