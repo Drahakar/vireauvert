@@ -32,7 +32,7 @@
 
 <script lang="ts">
 
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, CSSProperties, PropType } from 'vue';
 import { REFERENCE_YEAR } from "@/models/constants";
 import { RegionStatistics } from '@/models/yearly_data';
 
@@ -73,7 +73,7 @@ export default defineComponent({
         referenceValue(): number {
             return this.referenceStatistics.avg_temp ?? 0;
         },
-        cssVars(): Object {
+        cssVars(): CSSProperties {
             // CSS variables that are expected to be set based on current state.
             return {
                 '--num-notches': this.numNotches,
