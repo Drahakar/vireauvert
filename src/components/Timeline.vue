@@ -203,7 +203,7 @@ export default defineComponent({
 }
 
 .vue-slider .tooltip-line {
-    height: 60px;
+    height: 40px;
     width: 1px;
     border-width: 1px;
     border-style: dashed;
@@ -217,7 +217,7 @@ export default defineComponent({
 }
 
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top{
-    top: -22px; 
+    top: -11px; 
     padding: 2px 10px; 
     border-radius: 14px
 }
@@ -284,8 +284,8 @@ export default defineComponent({
 }
 
 .vue-slider-dot {
-    width: 24px !important;
-    height: 24px !important;
+    width: 32px !important;
+    height: 32px !important;
 }
 
 .vue-slider-dot-tooltip-inner-top::after {
