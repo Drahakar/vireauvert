@@ -35,7 +35,7 @@ function translateSeverity(severity: Severity, feminine: boolean, plural = false
     if (feminine && !result.endsWith('e')) {
         result += 'e';
     }
-    if(plural && !result.endsWith('s')) {
+    if (plural && !result.endsWith('s')) {
         result += 's';
     }
     return result;
@@ -85,6 +85,11 @@ export default {
         const group = named('group') as CatastropheGroup;
 
         const parts = [];
+
+        if (group.city) {
+            parts.push(`${group.city}:`);
+        }
+
         if (group.instances.size > 1) {
             parts.push(group.instances.size.toString(), catastrophes[group.type][1].toLocaleLowerCase('fr-CA'));
         } else {
