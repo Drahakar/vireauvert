@@ -26,12 +26,7 @@
             <div class="line"></div>
         </div>
 
-        <img class="track-bottom" src="/icons/Emoji1.png"
-            :style="{'--tracked-value': valueToNotchIndex(0.5)}">
-        <img class="track-bottom" src="/icons/Emoji2.png"
-            :style="{'--tracked-value': valueToNotchIndex(2)}">
-        <img class="track-bottom" src="/icons/Emoji3.png"
-            :style="{'--tracked-value': valueToNotchIndex(3.5)}">
+        <img class="tracked-current track-bottom" :src="emojiPath">
 
         <div class="current-value pill tracked-current track-bottom">
             <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
@@ -102,6 +97,16 @@ export default defineComponent({
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
                 '--danger-value': this.valueToNotchIndex(this.dangerValue),
             };
+        },
+        emojiPath(): string {
+            if (this.currentValue < this.referenceValue) {
+                return '/icons/Emoji1.png';
+            } else if (this.currentValue < this.referenceValue + 1.5) {
+                // TODO fix above to use constants
+                return '/icons/Emoji2.png';
+            } else {
+                return '/icons/Emoji3.png';
+            }
         }
     },
     methods: {
@@ -292,6 +297,8 @@ export default defineComponent({
 img {
     position: absolute;
     margin-left: var(--sz-stem-width);
+    margin-bottom: var(--sz-400);
     filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    transition: bottom var(--mercury-transition);
 }
 </style>
