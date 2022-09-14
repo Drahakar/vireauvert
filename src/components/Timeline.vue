@@ -17,7 +17,8 @@
                 :tooltip="'always'"
                 :data="years"
                 :marks="marks"
-                :adsorb="false" >
+                :adsorb="false"
+                :dotSize="32">
                 <template v-slot:label="{value}">
                     <div class="markline"></div>
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
@@ -34,7 +35,7 @@
                     </div>
                 </template>
                 <template v-slot:dot>
-                    <div class="triangle"></div><div class="triangle inner"></div>
+                    <TimelineArrow></TimelineArrow>
                 </template>
             </vue-slider>
         </div>
@@ -52,13 +53,14 @@ import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophe
 import { Line } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import CandidateList from './CandidateList.vue';
+import TimelineArrow from './TimelineArrow.vue';
 import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler} from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
 
 export default defineComponent({
-    components: { VueSlider, CandidateList, Line },
+    components: { VueSlider, CandidateList, Line, TimelineArrow },
     emits: ['yearSelected'],
     props: {
         isMobile: {
@@ -202,7 +204,7 @@ export default defineComponent({
 }
 
 .vue-slider .tooltip-line {
-    height: 60px;
+    height: 40px;
     width: 1px;
     border-width: 1px;
     border-style: dashed;
@@ -216,7 +218,7 @@ export default defineComponent({
 }
 
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top{
-    top: -22px; 
+    top: -11px; 
     padding: 2px 10px; 
     border-radius: 14px
 }
@@ -235,67 +237,6 @@ export default defineComponent({
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.5);
 }
-
-.triangle {
-	position: relative;
-	background-color: var(--clr-orange);
-	text-align: left;
-}
-
-.triangle.inner {
-    background-color: var(--clr-blanc);
-    z-index:2;
-}
-
-.triangle:before,
-.triangle:after {
-	content: '';
-	position: absolute;
-	background-color: inherit;
-}
-
-.triangle,
-.triangle:before,
-.triangle:after {
-	width:  1.5em;
-	height: 1.5em;
-	border-top-right-radius: 60%;
-}
-
-.inner.triangle,
-.inner.triangle:before,
-.inner.triangle:after {
-	width:  0.9em;
-	height: 0.9em;
-	border-top-right-radius: 30%;
-}
-
-.triangle {
-	transform: rotate(-60deg) skewX(-30deg) scale(1,.866) translate(-23%);
-}
-
-.inner.triangle {
-	transform: rotate(-60deg) skewX(-30deg) scale(1,.866) translate(57%, -40%);;
-    z-index: inherit;
-}
-.triangle:before {
-	transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0%,-50%);
-}
-.inner.triangle:before {
-    z-index: inherit;
-    transform: rotate(-135deg) skewX(-45deg) scale(1.4,.707) translate(-3%,-55%);
-}
-
-.triangle:after {
-	transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%, 0%);
-}
-
-.inner.triangle:after {
-    z-index: inherit;
-    transform: rotate(135deg) skewY(-45deg) scale(.707,1.45) translate(56%, -6%);
-}
-
-
 
 
 @media screen and (max-width: 768px) {
