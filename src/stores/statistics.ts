@@ -4,6 +4,17 @@ import { defineStore } from "pinia";
 import { parseYearlyStatistics, RegionStatistics, YearlyStatistics, YearlyStatisticsDocument } from "@/models/yearly_data";
 import { findRegionByDistrict } from "@/models/regions";
 
+export function getStatisticsForRegion(stats: YearlyStatistics, district: number) {
+    let statistics = stats.get(district); // first off, search by district
+    if (statistics === undefined) {
+        const region = findRegionByDistrict(district); // no stats for district, fall back to searching by region
+        if (region) {
+            statistics = stats.get(region.id);
+        }
+    }
+    return statistics ?? {};
+}
+
 export const useStatisticStore = defineStore('statisticStore', {
     state: () => {
         return {
@@ -15,16 +26,12 @@ export const useStatisticStore = defineStore('statisticStore', {
         findStatistics: state => (year: number, district: number): RegionStatistics => {
             const byYear = state.statistics.get(year);
             if (byYear) {
-                let statistics = byYear.get(district); // first off, search by district
-                if (statistics === undefined) {
-                    const region = findRegionByDistrict(district); // no stats for district, fall back to searching by region
-                    if (region) {
-                        statistics = byYear.get(region.id);
-                    }
-                }
-                return statistics ?? {};
+                return getStatisticsForRegion(byYear, district);
             }
             return {};
+        },
+        findStatisticsByYear: state => (year: number) => {
+            return state.statistics.get(year);
         },
         getYearOverTarget: state => (district: number): number | undefined => {
             let year = state.temperatureTargetYearPerRegion.get(district);

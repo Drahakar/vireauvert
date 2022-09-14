@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import data from './admin_regions.json';
 
 export interface AdminRegion {
@@ -9,6 +9,8 @@ export interface AdminRegion {
 
 export const allRegions = List(data as AdminRegion[]);
 
+const districtToRegion = Map(allRegions.flatMap(r => r.districts.map(d => [d, r])));
+
 export function findRegionByDistrict(id: number) {
-    return allRegions.find(x => x.districts.some(y => y === id));
+    return districtToRegion.get(id);
 }

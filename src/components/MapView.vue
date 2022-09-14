@@ -13,11 +13,12 @@ import { defineComponent, PropType, ref, watch } from "vue";
 import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
-import { useStatisticStore } from "@/stores/statistics";
+import { getStatisticsForRegion, useStatisticStore } from "@/stores/statistics";
 import Thermometer from "./Thermometer.vue";
 import { createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } from "@/utils/map_helpers";
 import { Composer, useI18n } from "vue-i18n";
 import { useMapStore } from "@/stores/map";
+import { YearlyStatistics } from "@/models/yearly_data";
 
 const MIN_ZOOM = 6;
 const MAX_ZOOM = 15;
@@ -54,12 +55,17 @@ export default defineComponent({
         const statisticStore = useStatisticStore();
         const mapStore = useMapStore();
 
-        const map = ref<L.Map | null>(null);
-        const updateColour = (district: DistrictLayer) => {
-            const statistics = statisticStore.findStatistics(props.year, district.feature.properties.id);
-            setMapLayerColour(district.layer, district.feature.properties.id === props.district, statistics.temp_delta);
+        const updateAllColours = (allStats: YearlyStatistics | undefined) => {
+            if (allStats) {
+                for (const district of districtLayers.values()) {
+                    const id = district.feature.properties.id;
+                    const stats = getStatisticsForRegion(allStats, id);
+                    setMapLayerColour(district.layer, id === props.district, stats.temp_delta);
+                }
+            }
         };
 
+        const map = ref<L.Map | null>(null);
         const districtLayers = new Map<string, DistrictLayer>();
         const mapLayer = L.geoJSON(mapStore.districts, {
             onEachFeature: (feature, layer) => {
@@ -71,7 +77,7 @@ export default defineComponent({
                     emit("districtSelected", newId);
                 });
                 layer.bindTooltip(properties.name);
-                updateColour(district);
+                setMapLayerColour(district.layer, district.feature.properties.id === props.district, undefined)
             }
         });
         watch(() => mapStore.districts, data => {
@@ -82,6 +88,8 @@ export default defineComponent({
                 if (map.value && bounds.isValid()) {
                     map.value.setMaxBounds(bounds.pad(0.05));
                 }
+                const allStats = statisticStore.findStatisticsByYear(props.year);
+                updateAllColours(allStats);
             }
         });
 
@@ -105,11 +113,13 @@ export default defineComponent({
         watch(() => props.district, (newId, oldId) => {
             const oldLayer = districtLayers.get(oldId.toString());
             if (oldLayer) {
-                updateColour(oldLayer);
+                const stats = statisticStore.findStatistics(props.year, oldLayer.feature.properties.id);
+                setMapLayerColour(oldLayer.layer, false, stats.temp_delta);
             }
             const newLayer = districtLayers.get(newId.toString());
             if (newLayer) {
-                updateColour(newLayer);
+                const stats = statisticStore.findStatistics(props.year, newLayer.feature.properties.id);
+                setMapLayerColour(newLayer.layer, true, stats.temp_delta);
                 if (map.value) {
                     map.value.fitBounds(newLayer.layer.getBounds(), {
                         animate: true
@@ -117,18 +127,17 @@ export default defineComponent({
                 }
             }
         });
-        watch(() => props.year, () => {
-            for (const district of districtLayers.values()) {
-                updateColour(district);
-            }
+
+        watch(() => props.year, year => {
+            const allStats = statisticStore.findStatisticsByYear(year);
+            updateAllColours(allStats);
         });
-        watch(() => statisticStore.statistics, stats => {
-            if (stats.has(props.year)) {
-                for (const district of districtLayers.values()) {
-                    updateColour(district);
-                }
-            }
+
+        watch(() => statisticStore.statistics, storedStats => {
+            const allStats = storedStats.get(props.year);
+            updateAllColours(allStats);
         });
+
         const icons: MapIcons = {
             layer: L.layerGroup(),
             index: new Map<string, L.Marker>()
