@@ -9,6 +9,11 @@
             </div>
         </div>
 
+        <div class="current-value" :style="{'--notch-value': notchValue}">
+            <span>{{$n(currentValue, 'temperature_no_unit')}}</span>
+            <span>{{year}}</span>
+        </div>
+
         <template v-for="notchNum in numNotches">
             <span v-if="(notchNum - 1) % notchSteps == 0" class="notch"
                 :style="{'--notch-idx': notchNum - 1}">
@@ -17,7 +22,6 @@
         </template>
 
         <!-- TODO: emojis -->
-        <!-- TODO: show current value -->
         <!-- TODO: show 1990 -->
     </div>
 </template>
@@ -38,9 +42,10 @@ export default defineComponent({
             type: Object as PropType<RegionStatistics>,
             required: true,
         },
-        district: {
+        year: {
             type: Number,
-            default: 0
+            required: true,
+
         }
     },
     data() {
@@ -54,9 +59,11 @@ export default defineComponent({
         notchValue(): number {
             // Return a float that maps to what notch index the current value
             // would map to, allowing to be in-between notches.
-            const avg_temp = this.statistics.avg_temp ?? 0;
-            return avg_temp - MIN_NOTCH;
-        }
+            return this.currentValue - MIN_NOTCH;
+        },
+        currentValue(): number {
+            return this.statistics.avg_temp ?? 0;
+        },
     },
 })
 </script>
@@ -70,6 +77,8 @@ export default defineComponent({
     /* the highest notch is this much % higher than notch-offset */
     --notch-height: 85%;
     --sz-bulb: 32px;
+    --mercury-transition: 0.15s ease;
+    --notch-z-index: 1;
     height: 100%;
     position: relative;
     margin-bottom: calc(var(--sz-bulb) / 2);  /* space for the bulb */
@@ -78,6 +87,9 @@ export default defineComponent({
 .thermometer {
     height: 100%;
     filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
 }
 
 .stem {
@@ -96,11 +108,14 @@ export default defineComponent({
     bottom: 0;
     height: calc(var(--notch-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
     background-color: var(--clr-thermometer-mercury);
-    transition: height 0.15s ease;
+    transition: height var(--mercury-transition);
 }
 
 @media (prefers-reduced-motion: reduce) {
     .mercury {
+        transition: none;
+    }
+    .current-value {
         transition: none;
     }
 }
@@ -112,11 +127,12 @@ export default defineComponent({
     position: absolute;
     transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
-    left: calc(0px - var(--sz-notch-width));
+    left: calc(50% - var(--sz-notch-width) - var(--sz-stem-width) / 2 - var(--sz-stem-border));
     padding-right: var(--sz-notch-gap);
     font-size: var(--sz-200);
     color: var(--clr-blanc);
     text-align: right;
+    z-index: var(--notch-z-index);
 }
 
 .bulb {
@@ -144,5 +160,26 @@ export default defineComponent({
     text-align: center;
     font-size: var(--sz-600);
     color: var(--clr-blanc);
+}
+
+.current-value {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--sz-50);
+    min-width: 70px;
+    padding: 1px var(--sz-30) 2px var(--sz-30);
+    bottom: calc(var(--notch-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
+    transition: bottom var(--mercury-transition);
+    width: max-content;
+    color: var(--clr-blanc);
+    background-color: var(--color-accent);
+    border: 2px solid var(--clr-blanc);
+    border-radius: var(--sz-600);
+    z-index: calc(var(--notch-z-index) + 1);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 </style>

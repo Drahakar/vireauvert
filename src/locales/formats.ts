@@ -7,6 +7,10 @@ export const numberFormats = {
         minimumFractionDigits: 1,
         maximumFractionDigits: 1,
     },
+    temperature_no_unit: {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+    },
     temperature_delta: {
         style: 'unit',
         unit: 'celsius',
