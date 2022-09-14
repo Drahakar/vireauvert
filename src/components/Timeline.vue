@@ -157,8 +157,8 @@ export default defineComponent({
 
                             //TODO: mettre le bon gradiant et les bonnes couleurs
                             gradient.addColorStop(0, 'red');
-                            gradient.addColorStop(0.25, 'orange');
-                            gradient.addColorStop(0.6, 'lightblue');
+                            gradient.addColorStop(0.4, 'orange');
+                            gradient.addColorStop(0.9, 'lightblue');
                             
 
                             return gradient;
