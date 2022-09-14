@@ -237,67 +237,6 @@ export default defineComponent({
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.triangle {
-	position: relative;
-	background-color: var(--clr-orange);
-	text-align: left;
-}
-
-.triangle.inner {
-    background-color: var(--clr-blanc);
-    z-index:2;
-}
-
-.triangle:before,
-.triangle:after {
-	content: '';
-	position: absolute;
-	background-color: inherit;
-}
-
-.triangle,
-.triangle:before,
-.triangle:after {
-	width:  1.5em;
-	height: 1.5em;
-	border-top-right-radius: 60%;
-}
-
-.inner.triangle,
-.inner.triangle:before,
-.inner.triangle:after {
-	width:  0.9em;
-	height: 0.9em;
-	border-top-right-radius: 30%;
-}
-
-.triangle {
-	transform: rotate(-60deg) skewX(-30deg) scale(1,.866) translate(-23%);
-}
-
-.inner.triangle {
-	transform: rotate(-60deg) skewX(-30deg) scale(1,.866) translate(57%, -40%);;
-    z-index: inherit;
-}
-.triangle:before {
-	transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0%,-50%);
-}
-.inner.triangle:before {
-    z-index: inherit;
-    transform: rotate(-135deg) skewX(-45deg) scale(1.4,.707) translate(-3%,-55%);
-}
-
-.triangle:after {
-	transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%, 0%);
-}
-
-.inner.triangle:after {
-    z-index: inherit;
-    transform: rotate(135deg) skewY(-45deg) scale(.707,1.45) translate(56%, -6%);
-}
-
-
-
 
 @media screen and (max-width: 768px) {
     .timeline {
