@@ -63,10 +63,6 @@ export function parseCatatrophe(doc: CatastropheDocument): Catastrophe {
     };
 }
 
-export function getIconUrl(type: CatastropheType) {
-    return `/icons/${type.toLowerCase()}_b.png`
-}
-
 export interface CatastropheGroup {
     id: string;
     location: CatastropheLocation;
