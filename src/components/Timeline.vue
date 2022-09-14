@@ -111,6 +111,7 @@ export default defineComponent({
                         display: false,
                     },
                     y: {
+                        min:0,
                         grid: {
                             tickLength: 5,
                             tickWidth: 1,
