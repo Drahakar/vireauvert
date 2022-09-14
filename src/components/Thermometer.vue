@@ -9,7 +9,10 @@
 
         <div class="thermometer">
             <div class="stem">
-                <div class="mercury tracked-current track-height"></div>
+                <!-- Note: last ones gets drawn on top of previous ones. -->
+                <div class="mercury mercury-danger tracked-current track-height"></div>
+                <div class="mercury mercury-risky tracked-max-risky track-height"></div>
+                <div class="mercury mercury-reference tracked-max-reference track-height"></div>
             </div>
             <div class="bulb">
                 <p class="bulb-text">°C</p>
@@ -21,8 +24,8 @@
             </div>
         </div>
 
-        <div class="danger-value pill tracked-danger track-bottom">
-            <span>{{$n(dangerValue, 'temperature_delta_no_unit')}}</span>
+        <div class="risky-value pill tracked-risky track-bottom">
+            <span>{{$n(riskyValue, 'temperature_delta_no_unit')}}</span>
             <div class="line"></div>
         </div>
 
@@ -51,7 +54,7 @@ const END_NOTCH = 7;
 const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
 
-const DANGER_DELTA = 1.5;  // Show different visuals for ref temperature + this.
+const RISKY_DELTA = 1.5;  // Show different visuals for ref temperature + this.
 
 
 export default defineComponent({
@@ -79,8 +82,8 @@ export default defineComponent({
         };
     },
     computed: {
-        dangerValue(): number {
-            return this.referenceValue + DANGER_DELTA;
+        riskyValue(): number {
+            return this.referenceValue + RISKY_DELTA;
         },
         currentValue(): number {
             return this.statistics.temp_delta ?? 0;
@@ -100,7 +103,7 @@ export default defineComponent({
                 '--num-notches': this.numNotches,
                 '--current-value': this.valueToNotchIndex(this.currentValue),
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
-                '--danger-value': this.valueToNotchIndex(this.dangerValue),
+                '--risky-value': this.valueToNotchIndex(this.riskyValue),
             };
         }
     },
@@ -125,9 +128,19 @@ export default defineComponent({
     --tracked-value: var(--reference-value);
 }
 
-.tracked-danger {
-    /* Use this class to track the 'danger' value on the thermometer */
-    --tracked-value: var(--danger-value);
+.tracked-risky {
+    /* Use this class to track the 'risky' value on the thermometer */
+    --tracked-value: var(--risky-value);
+}
+
+.tracked-max-risky {
+    /* Will follow current up to 'risky', but not past that */
+    --tracked-value: min(var(--current-value), var(--risky-value));
+}
+
+.tracked-max-reference {
+    /* Will follow current up to 'reference', but not past that */
+    --tracked-value: min(var(--current-value), var(--reference-value));
 }
 
 .track-height, .track-bottom {
@@ -193,7 +206,18 @@ export default defineComponent({
     width: var(--sz-stem-width);
     position: absolute;
     bottom: 0;
+}
+
+.mercury-reference {
     background-color: var(--clr-thermometer-mercury);
+}
+
+.mercury-risky {
+    background-color: var(--clr-jaune);
+}
+
+.mercury-danger {
+    background-color: var(--clr-alerte);
 }
 
 .notch {
@@ -268,12 +292,12 @@ export default defineComponent({
     font-size: var(--sz-200);
 }
 
-.danger-value {
+.risky-value {
     font-size: var(--sz-300);
     min-width: 80px;
 }
 
-.danger-value > span {
+.risky-value > span {
     color: var(--clr-blanc);
     text-shadow:
        -1px -1px 0 var(--clr-alerte),
@@ -283,7 +307,7 @@ export default defineComponent({
         0px  0px 2px rgba(0, 0, 0, 0.5);
 }
 
-.danger-value .line {
+.risky-value .line {
     width: 100%;
     height: 2px;
     background-color: var(--clr-alerte);
