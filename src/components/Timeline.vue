@@ -34,7 +34,7 @@
                     </div>
                 </template>
                 <template v-slot:dot>
-                    <div class="triangle"></div><div class="triangle inner"></div>
+                    <TimelineArrow></TimelineArrow>
                 </template>
             </vue-slider>
         </div>
@@ -52,13 +52,14 @@ import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophe
 import { Line } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import CandidateList from './CandidateList.vue';
+import TimelineArrow from './TimelineArrow.vue';
 import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler} from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
 
 export default defineComponent({
-    components: { VueSlider, CandidateList, Line },
+    components: { VueSlider, CandidateList, Line, TimelineArrow },
     emits: ['yearSelected'],
     props: {
         isMobile: {
@@ -341,6 +342,11 @@ export default defineComponent({
 .vue-slider .vue-slider-rail,
 .vue-slider .vue-slider-process {
     background-color: transparent;
+}
+
+.vue-slider-dot {
+    width: 24px !important;
+    height: 24px !important;
 }
 
 .vue-slider-dot-tooltip-inner-top::after {
