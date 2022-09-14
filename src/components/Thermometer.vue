@@ -26,13 +26,17 @@
             <div class="line"></div>
         </div>
 
+        <img class="track-bottom" src="/icons/Emoji1.png"
+            :style="{'--tracked-value': valueToNotchIndex(0.5)}">
+        <img class="track-bottom" src="/icons/Emoji2.png"
+            :style="{'--tracked-value': valueToNotchIndex(2)}">
+        <img class="track-bottom" src="/icons/Emoji3.png"
+            :style="{'--tracked-value': valueToNotchIndex(3.5)}">
 
         <div class="current-value pill tracked-current track-bottom">
             <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
             <span>{{year}}</span>
         </div>
-
-        <!-- TODO: emojis -->
     </div>
 </template>
 
@@ -283,5 +287,11 @@ export default defineComponent({
     width: 100%;
     height: 2px;
     background-color: var(--clr-alerte);
+}
+
+img {
+    position: absolute;
+    margin-left: var(--sz-stem-width);
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
 }
 </style>
