@@ -7,6 +7,7 @@ import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { FILTER_ALL_CATASTROPHES, Catastrophe } from "./models/catastrophes";
+import { REFERENCE_YEAR } from "./models/constants";
 import { DEFAULT_USER_STATE, UserState } from "./models/user";
 import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
@@ -86,6 +87,10 @@ export default defineComponent({
             return this.statisticStore.findStatistics(this.state.year,
                 this.state.district);
         },
+        referenceYearStatistics() {
+            return this.statisticStore.findStatistics(REFERENCE_YEAR,
+                this.state.district);
+        },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
                 this.state.year, this.state.district, this.state.catastropheFilter)
@@ -123,7 +128,6 @@ Sentry.init({
                             :allCatastrophes="allCatastrophes"
                             :currentCatastrophesCount="catastrophes.size"></CatastropheToggle>
                         <!-- TODO: change icon style -->
-                        <!-- TODO: draw catastrophe toggle over this -->
                         <RegionSearch class="region-search"
                             :district="state.district"
                             @district-selected="selectDistrict"></RegionSearch>
@@ -135,6 +139,7 @@ Sentry.init({
                 <section class="secondary-content content-section">
                     <CallToAction class="call-to-action"></CallToAction>
                     <Thermometer :statistics="selectedStatistics"
+                        :reference-statistics="referenceYearStatistics"
                         :year="state.year"></Thermometer>
                     <Header></Header>
                 </section>
