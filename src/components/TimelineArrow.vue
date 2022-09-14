@@ -17,5 +17,6 @@ export default defineComponent({
 svg {
     width: 100%;
     height: 100%;
+    filter: drop-shadow(0px 2px 4px rgba(75, 75, 74, 0.25));
 }
 </style>
