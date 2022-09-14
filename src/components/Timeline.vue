@@ -208,8 +208,12 @@ export default defineComponent({
     margin: auto;
 }
 
+.vue-slider-dot-tooltip-text, .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top {
+    background-color: var(--clr-orange);
+}
+
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top{
-    top: -42px; 
+    top: -22px; 
     padding: 2px 10px; 
     border-radius: 14px
 }
@@ -231,6 +235,7 @@ export default defineComponent({
 
 
 
+
 @media screen and (max-width: 768px) {
     .timeline {
         padding:30px 15px;
@@ -238,7 +243,7 @@ export default defineComponent({
 
     .vue-slider {
         margin-left: 8px;
-        margin-right: 5px;
+        margin-right: 0px;
     }
 }
 
