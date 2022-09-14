@@ -15,6 +15,10 @@
                 <p class="bulb-text">°C</p>
             </div>
 
+            <div class="danger-value pill tracked-danger track-bottom">
+                <span>{{$n(dangerValue, 'temperature_delta_no_unit')}}</span>
+            </div>
+
             <div class="reference-value pill tracked-reference track-bottom">
                 <span>{{$n(referenceValueDisplayed, 'temperature_no_unit')}}°</span>
                 <span>{{referenceYear}}</span>
@@ -40,6 +44,8 @@ const START_NOTCH = -1;
 const END_NOTCH = 7;
 const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
+
+const DANGER_DELTA = 1.5;  // Show different visuals for ref temperature + this.
 
 
 export default defineComponent({
@@ -67,6 +73,9 @@ export default defineComponent({
         };
     },
     computed: {
+        dangerValue(): number {
+            return this.referenceValue + DANGER_DELTA;
+        },
         currentValue(): number {
             return this.statistics.temp_delta ?? 0;
         },
@@ -85,6 +94,7 @@ export default defineComponent({
                 '--num-notches': this.numNotches,
                 '--current-value': this.valueToNotchIndex(this.currentValue),
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
+                '--danger-value': this.valueToNotchIndex(this.dangerValue),
             };
         }
     },
@@ -109,6 +119,11 @@ export default defineComponent({
     --tracked-value: var(--reference-value);
 }
 
+.tracked-danger {
+    /* Use this class to track the 'danger' value on the thermometer */
+    --tracked-value: var(--danger-value);
+}
+
 .track-height, .track-bottom {
     /* value to assign to e.g. height or bottom to match the --tracked-value */
     --tracked-point: clamp(
@@ -119,10 +134,18 @@ export default defineComponent({
 
 .track-height {
     height: var(--tracked-point);
+    transition: height var(--mercury-transition);
 }
 
 .track-bottom {
     bottom: var(--tracked-point);
+    transition: bottom var(--mercury-transition);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .track-height, .track-bottom {
+        transition: none;
+    }
 }
 
 .wrapper {
@@ -165,16 +188,6 @@ export default defineComponent({
     position: absolute;
     bottom: 0;
     background-color: var(--clr-thermometer-mercury);
-    transition: height var(--mercury-transition);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .mercury {
-        transition: none;
-    }
-    .pill {
-        transition: none;
-    }
 }
 
 .notch {
@@ -230,7 +243,6 @@ export default defineComponent({
     align-items: center;
     line-height: 1.5;
     gap: var(--sz-50);
-    transition: bottom var(--mercury-transition);
     color: var(--clr-blanc);
     border-radius: var(--sz-600);
 }

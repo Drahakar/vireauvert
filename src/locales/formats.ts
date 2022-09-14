@@ -11,6 +11,11 @@ export const numberFormats = {
         minimumFractionDigits: 1,
         maximumFractionDigits: 1,
     },
+    temperature_delta_no_unit: {
+        signDisplay: 'exceptZero',
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+    },
     temperature_delta: {
         style: 'unit',
         unit: 'celsius',
