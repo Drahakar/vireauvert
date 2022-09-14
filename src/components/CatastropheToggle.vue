@@ -1,12 +1,12 @@
 <template>
-    <div class="wrapper" :class="{expanded: expanded}">
+    <div class="wrapper" :class="{expanded: expanded}" @click="expanded = true">
         <section class="container">
             <!-- Header row -->
             <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
             <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
             <!-- TODO: hover styling -->
-            <button v-if="expanded" @click="expanded = false"><img src="/icons/x.svg"></button>
-            <button v-else @click="expanded = true"><img src="/icons/settings.svg"></button>
+            <button v-if="expanded" @click.stop="expanded = false"><img src="/icons/x.svg"></button>
+            <button v-else><img src="/icons/settings.svg"></button>
 
             <template v-if="expanded" v-for="(toggle, index) in catastropheToggles">
                 <div v-if="index > 0" class="separator grid-col-span-row"></div>
