@@ -1,23 +1,27 @@
 <template>
-    <div class="wrapper" :class="{expanded: expanded}" @click="expanded = true">
+    <div class="wrapper" :class="{expanded: expanded}">
         <section class="container">
             <!-- Header row -->
-            <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
-            <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
-            <!-- TODO: hover styling -->
-            <button v-if="expanded" @click.stop="expanded = false"><img src="/icons/x.svg"></button>
-            <button v-else><img src="/icons/settings.svg"></button>
+            <header class="row" @click="expanded = !expanded">
+                <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
+                <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
+                <!-- TODO: hover styling -->
+                <button v-if="expanded"><img src="/icons/x.svg"></button>
+                <button v-else><img src="/icons/settings.svg"></button>
+            </header>
 
             <template v-if="expanded" v-for="(toggle, index) in catastropheToggles">
-                <div v-if="index > 0" class="separator grid-col-span-row"></div>
-                <PillBadge class="pill"
-                    :class="[{invisible: toggle.count == 0}, toggle.pillClass]"
-                    :value="toggle.count"></PillBadge>
-                <img class="catastrophe-icon" :src="toggle.iconPath">
-                <div class="catastrophe-name"><span>{{toggle.name}}</span></div>
-                <Checkbox :name="$t('toggle_checkbox_name_prefix') + toggle.name"
-                    @change="e => toggle.onChange(e.target.checked)"
-                    :checked="toggle.checked"></Checkbox>
+                <div v-if="index > 0" class="separator"></div>
+                <div class="row">
+                    <PillBadge class="pill"
+                        :class="[{invisible: toggle.count == 0}, toggle.pillClass]"
+                        :value="toggle.count"></PillBadge>
+                    <img class="catastrophe-icon" :src="toggle.iconPath">
+                    <div class="catastrophe-name"><span>{{toggle.name}}</span></div>
+                    <Checkbox :name="$t('toggle_checkbox_name_prefix') + toggle.name"
+                        @change="e => toggle.onChange(e.target.checked)"
+                        :checked="toggle.checked"></Checkbox>
+                </div>
             </template>
         </section>
     </div>
@@ -151,51 +155,33 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.grid-col-span-2 {
-    grid-column: span 2;
-}
-
-.grid-col-span-row {
-    grid-column: 1 / -1;
+.row {
+    min-height: var(--size-map-zoom-control);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sz-30);
 }
 
 .invisible {
     visibility: hidden;
 }
 
-.wrapper {
-    --expand-transition: 0.5s ease;
-    transition: padding-left var(--expand-transition);
-    transition: width var(--expand-transition);
-}
-
-.expanded.wrapper {
-    flex: 1;
-}
-
 .container {
     border-radius: var(--sz-400);
     border: 1px solid var(--color-border);
     background-color: var(--color-background);
-    transition: height var(--expand-transition);
-    display: grid;
     padding: 0 var(--sz-100);
     column-gap: var(--sz-30);
-    row-gap: 2px;
-    /* columns: count icon name checkbox */
-    grid-template-columns: auto auto 1fr auto;
-    align-items: center;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2px;
     /* re-enable pointer-events, parent overlay disables them */
     pointer-events: auto;
     overflow-y: auto;
     max-height: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .wrapper, .container {
-        transition: none;
-    }
 }
 
 .total-count {
@@ -203,16 +189,13 @@ export default defineComponent({
 }
 
 .title, .catastrophe-name {
-    width: 100%;
+    flex: 1;
     letter-spacing: -0.3px;
-    min-height: var(--size-map-zoom-control);
-    display: grid;
-    align-items: center;
 }
 
 .separator {
     width: 100%;
-    height: 1px;
+    min-height: 1px;
     background-color: var(--clr-beige);
     border-radius: var(--sz-600);
 }
@@ -228,7 +211,7 @@ button img {
 }
 
 .catastrophe-icon {
-    width: var(--sz-700);
+    max-width: var(--sz-700);
 }
 
 .catastrophe-all {
