@@ -9,19 +9,19 @@
 
         <div class="thermometer">
             <div class="stem">
-                <div class="mercury"></div>
+                <div class="mercury tracked-current track-height"></div>
             </div>
             <div class="bulb">
                 <p class="bulb-text">°C</p>
             </div>
 
-            <div class="reference-value pill">
+            <div class="reference-value pill tracked-reference track-bottom">
                 <span>{{$n(referenceValue, 'temperature_no_unit')}}</span>
                 <span>{{referenceYear}}</span>
             </div>
         </div>
 
-        <div class="current-value pill">
+        <div class="current-value pill tracked-current track-bottom">
             <span>{{$n(currentValue, 'temperature_no_unit')}}</span>
             <span>{{year}}</span>
         </div>
@@ -77,7 +77,7 @@ export default defineComponent({
             // CSS variables that are expected to be set based on current state.
             return {
                 '--num-notches': this.numNotches,
-                '--notch-value': this.valueToNotchIndex(this.currentValue),
+                '--current-value': this.valueToNotchIndex(this.currentValue),
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
             };
         }
@@ -93,6 +93,32 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.tracked-current {
+    /* Use this class to track the current value on the thermometer */
+    --tracked-value: var(--current-value);
+}
+
+.tracked-reference {
+    /* Use this class to track the reference value on the thermometer */
+    --tracked-value: var(--reference-value);
+}
+
+.track-height, .track-bottom {
+    /* value to assign to e.g. height or bottom to match the --tracked-value */
+    --tracked-point: clamp(
+        var(--notch-min),
+        var(--tracked-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset),
+        var(--notch-max));
+}
+
+.track-height {
+    height: var(--tracked-point);
+}
+
+.track-bottom {
+    bottom: var(--tracked-point);
+}
+
 .wrapper {
     --sz-stem-width: var(--sz-300);
     --sz-stem-border: 2px;
@@ -132,9 +158,6 @@ export default defineComponent({
     width: var(--sz-stem-width);
     position: absolute;
     bottom: 0;
-    height: clamp(var(--notch-min),
-                  var(--notch-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset),
-                  var(--notch-max));
     background-color: var(--clr-thermometer-mercury);
     transition: height var(--mercury-transition);
 }
@@ -208,9 +231,6 @@ export default defineComponent({
 
 .current-value {
     min-width: 70px;
-    bottom: clamp(var(--notch-min),
-                  var(--notch-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset),
-                  var(--notch-max));
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
     font-size: var(--sz-400);
@@ -222,8 +242,5 @@ export default defineComponent({
     min-width: 60px;
     background-color: var(--clr-thermometer-mercury);
     font-size: var(--sz-200);
-    bottom: clamp(var(--notch-min),
-                  var(--reference-value) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset),
-                  var(--notch-max));
 }
 </style>
