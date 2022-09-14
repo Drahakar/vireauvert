@@ -190,6 +190,7 @@ Sentry.init({
 .primary-content {
     width: 100%;
     height: 100%;
+    min-width: 0;  /* undo min-width: auto from being a flex child */
 }
 
 .secondary-content {
@@ -201,7 +202,7 @@ Sentry.init({
 }
 
 .header {
-    padding-right: 110px;
+    padding-right: 110px;  /* space for OpenStreetMap attribution */
 }
 
 .map-overlay {
