@@ -291,7 +291,10 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 .leaflet-left .leaflet-control {
     /* IFCHANGE: change CatastropheToggle */
     margin-left: var(--sz-100);
-    margin-top: var(--sz-100);
+    /* IFCHANGE: change App */
+    /* 2x controls + 2x gaps between other controls and this one, + extra
+       pixels due to 4x 1px borders on the way. */
+    margin-top: calc(var(--size-map-padding) + var(--size-map-zoom-control) * 2 + var(--size-map-controls-gap) * 2 + 4px);
 }
 
 .leaflet-bar a {
