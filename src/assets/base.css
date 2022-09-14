@@ -72,9 +72,13 @@
   position: relative;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  height: 100vh;
+  height: 100%;
   color: var(--color-text);
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
