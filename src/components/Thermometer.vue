@@ -105,7 +105,6 @@ export default defineComponent({
     --notch-min: var(--sz-bulb) / 2;
     --notch-max: 100%;
     --mercury-transition: 0.15s ease;
-    --notch-z-index: 1;
     height: 100%;
     position: relative;
     margin-bottom: calc(var(--sz-bulb) / 2);  /* space for the bulb */
@@ -161,7 +160,6 @@ export default defineComponent({
     font-size: var(--sz-200);
     color: var(--clr-blanc);
     text-align: right;
-    z-index: var(--notch-z-index);
 }
 
 .bulb {
@@ -216,7 +214,7 @@ export default defineComponent({
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
     font-size: var(--sz-400);
-    z-index: calc(var(--notch-z-index) + 1);
+    z-index: 1;  /* show above notches */
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
