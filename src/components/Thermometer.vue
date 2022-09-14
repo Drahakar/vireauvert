@@ -16,13 +16,13 @@
             </div>
 
             <div class="reference-value pill tracked-reference track-bottom">
-                <span>{{$n(referenceValue, 'temperature_no_unit')}}</span>
+                <span>{{$n(referenceValueDisplayed, 'temperature_no_unit')}}°</span>
                 <span>{{referenceYear}}</span>
             </div>
         </div>
 
         <div class="current-value pill tracked-current track-bottom">
-            <span>{{$n(currentValue, 'temperature_no_unit')}}</span>
+            <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
             <span>{{year}}</span>
         </div>
 
@@ -36,9 +36,9 @@ import { defineComponent, CSSProperties, PropType } from 'vue';
 import { REFERENCE_YEAR } from "@/models/constants";
 import { RegionStatistics } from '@/models/yearly_data';
 
-const START_NOTCH = -6;
-const END_NOTCH = 10;
-const NOTCH_STEPS = 2;  // Only display a notch every NOTCH_STEPS notches
+const START_NOTCH = -1;
+const END_NOTCH = 7;
+const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
 
 
@@ -68,9 +68,15 @@ export default defineComponent({
     },
     computed: {
         currentValue(): number {
+            return this.statistics.temp_delta ?? 0;
+        },
+        currentValueDisplayed(): number {
             return this.statistics.avg_temp ?? 0;
         },
         referenceValue(): number {
+            return this.referenceStatistics.temp_delta ?? 0;
+        },
+        referenceValueDisplayed(): number {
             return this.referenceStatistics.avg_temp ?? 0;
         },
         cssVars(): CSSProperties {
