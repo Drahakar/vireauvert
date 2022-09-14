@@ -3,7 +3,7 @@
         <template v-for="notchNum in numNotches">
             <span v-if="(notchNum - 1) % notchSteps == 0" class="notch"
                 :style="{'--notch-idx': notchNum - 1}">
-                {{$n(startNotch + notchNum - 1, 'integer')}}
+                {{$n(startNotch + notchNum - 1, 'compact_delta')}}
             </span>
         </template>
 
@@ -20,6 +20,12 @@
                 <span>{{referenceYear}}</span>
             </div>
         </div>
+
+        <div class="danger-value pill tracked-danger track-bottom">
+            <span>{{$n(dangerValue, 'temperature_delta_no_unit')}}</span>
+            <div class="line"></div>
+        </div>
+
 
         <div class="current-value pill tracked-current track-bottom">
             <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
@@ -40,6 +46,8 @@ const START_NOTCH = -1;
 const END_NOTCH = 7;
 const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
+
+const DANGER_DELTA = 1.5;  // Show different visuals for ref temperature + this.
 
 
 export default defineComponent({
@@ -67,6 +75,9 @@ export default defineComponent({
         };
     },
     computed: {
+        dangerValue(): number {
+            return this.referenceValue + DANGER_DELTA;
+        },
         currentValue(): number {
             return this.statistics.temp_delta ?? 0;
         },
@@ -85,6 +96,7 @@ export default defineComponent({
                 '--num-notches': this.numNotches,
                 '--current-value': this.valueToNotchIndex(this.currentValue),
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
+                '--danger-value': this.valueToNotchIndex(this.dangerValue),
             };
         }
     },
@@ -109,6 +121,11 @@ export default defineComponent({
     --tracked-value: var(--reference-value);
 }
 
+.tracked-danger {
+    /* Use this class to track the 'danger' value on the thermometer */
+    --tracked-value: var(--danger-value);
+}
+
 .track-height, .track-bottom {
     /* value to assign to e.g. height or bottom to match the --tracked-value */
     --tracked-point: clamp(
@@ -119,10 +136,18 @@ export default defineComponent({
 
 .track-height {
     height: var(--tracked-point);
+    transition: height var(--mercury-transition);
 }
 
 .track-bottom {
     bottom: var(--tracked-point);
+    transition: bottom var(--mercury-transition);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .track-height, .track-bottom {
+        transition: none;
+    }
 }
 
 .wrapper {
@@ -165,22 +190,12 @@ export default defineComponent({
     position: absolute;
     bottom: 0;
     background-color: var(--clr-thermometer-mercury);
-    transition: height var(--mercury-transition);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .mercury {
-        transition: none;
-    }
-    .pill {
-        transition: none;
-    }
 }
 
 .notch {
-    --sz-notch-width: var(--sz-400);
+    --sz-notch-width: var(--sz-600);
     --sz-notch-gap: var(--sz-30);
-    width: var(--sz-notch-width);
+    min-width: var(--sz-notch-width);
     position: absolute;
     transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
@@ -230,7 +245,6 @@ export default defineComponent({
     align-items: center;
     line-height: 1.5;
     gap: var(--sz-50);
-    transition: bottom var(--mercury-transition);
     color: var(--clr-blanc);
     border-radius: var(--sz-600);
 }
@@ -248,5 +262,26 @@ export default defineComponent({
     min-width: 60px;
     background-color: var(--clr-thermometer-mercury);
     font-size: var(--sz-200);
+}
+
+.danger-value {
+    font-size: var(--sz-300);
+    min-width: 80px;
+}
+
+.danger-value > span {
+    color: var(--clr-blanc);
+    text-shadow:
+       -1px -1px 0 var(--clr-alerte),
+        1px -1px 0 var(--clr-alerte),
+       -1px  1px 0 var(--clr-alerte),
+        1px  1px 0 var(--clr-alerte),
+        0px  0px 2px rgba(0, 0, 0, 0.5);
+}
+
+.danger-value .line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--clr-alerte);
 }
 </style>
