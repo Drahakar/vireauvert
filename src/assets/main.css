@@ -1,4 +1,7 @@
 @import "./base.css";
+:root {
+  --icon-size: 48px;
+}
 
 #app {
   width: 100%;
@@ -6,11 +9,11 @@
 }
 
 .map-icon {
-  width: 48px;
-  height: 48px;
-  margin-top: -24px;
-  margin-left: -24px;
-  background-size: 48px 48px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-top: calc(var(--icon-size) / -2);
+  margin-left: calc(var(--icon-size) / -2);
+  background-size: var(--icon-size) var(--icon-size);
 }
 .map-icon.flood {
   background-image: url('/icons/flood_b.png');

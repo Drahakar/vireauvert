@@ -63,3 +63,10 @@ export function createMapMarker(group: CatastropheGroup, i18n: Composer) {
     marker.bindTooltip(() => i18n.t('catastrophe_group', { group }));
     return marker;
 }
+
+export function setGlobalIconSize(ratio: number) {
+    const root: HTMLElement | null = document.querySelector(':root');
+    if (root) {
+        root.style.setProperty('--icon-size', `${(ratio * 48).toFixed(0)}px`);
+    }
+}
