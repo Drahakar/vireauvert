@@ -67,19 +67,11 @@ export default defineComponent({
             }
         });
 
-        // TODO: still needed?
-        const query = window.matchMedia('(min-width: 768px)');
-        const isDesktop = ref<boolean>(query.matches);
-        query.addEventListener('change', query => {
-            isDesktop.value = query.matches;
-        });
-
         return {
             state: reactive(DEFAULT_USER_STATE),
             statisticStore,
             catastropheStore,
             loadingCompleted,
-            isDesktop
         };
     },
     computed: {
