@@ -212,6 +212,7 @@ button img {
 
 .catastrophe-icon {
     max-width: var(--sz-700);
+    min-width: var(--sz-700);
 }
 
 .catastrophe-all {
