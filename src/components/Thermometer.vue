@@ -19,8 +19,8 @@
             </div>
 
             <div class="reference-value pill tracked-reference track-bottom">
-                <span>{{$n(referenceValueDisplayed, 'temperature_no_unit')}}°</span>
                 <span>{{referenceYear}}</span>
+                <span>{{$n(referenceValueDisplayed, 'temperature_no_unit')}}°</span>
             </div>
         </div>
 
@@ -29,11 +29,9 @@
             <div class="line"></div>
         </div>
 
-        <img class="tracked-current track-bottom" :src="emojiPath">
-
         <div class="current-value pill tracked-current track-bottom">
+            <img :src="emojiPath">
             <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
-            <span>{{year}}</span>
         </div>
     </div>
 </template>
@@ -62,11 +60,6 @@ export default defineComponent({
             type: Object as PropType<RegionStatistics>,
             required: true,
         },
-        year: {
-            type: Number,
-            required: true,
-
-        }
     },
     data() {
         return {
@@ -275,14 +268,14 @@ export default defineComponent({
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    line-height: 1.5;
+    line-height: 1.3;
     gap: var(--sz-50);
     color: var(--clr-blanc);
     border-radius: var(--sz-600);
 }
 
 .current-value {
-    min-width: 70px;
+    min-width: 60px;
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
     font-size: var(--sz-400);
@@ -290,8 +283,13 @@ export default defineComponent({
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
+.current-value span {
+    flex: 1;
+    text-align: right;
+}
+
 .reference-value {
-    min-width: 60px;
+    min-width: 55px;
     background-color: var(--clr-thermometer-mercury);
     font-size: var(--sz-200);
 }
@@ -318,9 +316,9 @@ export default defineComponent({
 }
 
 img {
+    left: 0;
+    transform: translateX(-50%);
+    min-width: 32px;
     position: absolute;
-    margin-left: var(--sz-stem-width);
-    margin-bottom: var(--sz-400);
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
 }
 </style>

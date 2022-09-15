@@ -139,8 +139,7 @@ Sentry.init({
                     </section>
                     <section class="secondary-content content-section">
                         <Thermometer :statistics="selectedStatistics"
-                            :reference-statistics="referenceYearStatistics"
-                            :year="state.year"></Thermometer>
+                            :reference-statistics="referenceYearStatistics"></Thermometer>
                         <CallToAction class="call-to-action"></CallToAction>
                     </section>
                 </div>
