@@ -286,7 +286,7 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 }
 
 .catastrophe-popup .leaflet-popup-content .list-group-flush {
-    border-radius: 6px;
+    border-radius: var(--border-radius);
 }
 
 .leaflet-touch .leaflet-control-zoom-in,
@@ -316,14 +316,14 @@ function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Co
 .leaflet-touch .leaflet-bar a:first-child,
 .leaflet-touch .leaflet-bar {
     /* IFCHANGE: change CatastropheToggle */
-    border-top-left-radius: var(--sz-400);
-    border-top-right-radius: var(--sz-400);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 }
 
 .leaflet-touch .leaflet-bar a:last-child,
 .leaflet-touch .leaflet-bar {
-    border-bottom-left-radius: var(--sz-400);
-    border-bottom-right-radius: var(--sz-400);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
 }
 
 .leaflet-touch .leaflet-bar {

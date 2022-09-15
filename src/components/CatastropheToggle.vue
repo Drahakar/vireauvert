@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper" :class="{expanded: expanded}">
         <section class="container">
-            <!-- Header row -->
             <header class="row" @click="expanded = !expanded">
                 <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
                 <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
@@ -169,7 +168,7 @@ export default defineComponent({
 }
 
 .container {
-    border-radius: var(--sz-400);
+    border-radius: var(--border-radius);
     border: 1px solid var(--color-border);
     background-color: var(--color-background);
     padding: 0 var(--sz-100);
@@ -197,7 +196,7 @@ export default defineComponent({
     width: 100%;
     min-height: 1px;
     background-color: var(--clr-beige);
-    border-radius: var(--sz-600);
+    border-radius: var(--border-radius);
 }
 
 button img {
@@ -207,7 +206,7 @@ button img {
 }
 
 .pill {
-    min-width: 34px;
+    min-width: calc(var(--default-font-size) * 3.5);
 }
 
 .catastrophe-icon {

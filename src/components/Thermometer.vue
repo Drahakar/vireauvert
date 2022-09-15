@@ -171,7 +171,7 @@ export default defineComponent({
     --notch-offset: 10%;
     /* the highest notch is this much % higher than notch-offset */
     --notch-height: 85%;
-    --sz-bulb: 32px;
+    --sz-bulb: var(--sz-900);
     /* limit values where we start clamping */
     --notch-min: var(--sz-bulb) / 2;
     --notch-max: 100%;
@@ -195,7 +195,7 @@ export default defineComponent({
     height: 100%;
     border: var(--sz-stem-border) solid var(--clr-thermometer-border);
     background-color: var(--clr-thermometer-background);
-    border-radius: var(--sz-600);
+    border-radius: var(--border-radius);
     overflow: hidden;
 }
 
@@ -271,7 +271,7 @@ export default defineComponent({
     line-height: 1.3;
     gap: var(--sz-50);
     color: var(--clr-blanc);
-    border-radius: var(--sz-600);
+    border-radius: var(--border-radius);
 }
 
 .current-value {
@@ -318,7 +318,7 @@ export default defineComponent({
 img {
     left: 0;
     transform: translateX(-50%);
-    min-width: 32px;
+    min-width: var(--sz-900);
     position: absolute;
 }
 </style>

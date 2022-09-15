@@ -40,12 +40,58 @@
   --sz-600: 16px;
   --sz-700: 24px;
   --sz-800: 26px;
+  --sz-900: 32px;
 
   /* Font weight variants */
   --fw-regular: 500;
 
   /* Font families */
   --ff-primary: 'Matter';
+}
+
+@media only screen and (min-width: 600px) {
+  :root {
+    --sz-30: 6px;
+    --sz-50: 8px;
+    --sz-100: 10px;
+    --sz-200: 11px;
+    --sz-300: 12px;
+    --sz-400: 14px;
+    --sz-600: 18px;
+    --sz-700: 26px;
+    --sz-800: 28px;
+    --sz-900: 34px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  :root {
+    --sz-30: 10px;
+    --sz-50: 12px;
+    --sz-100: 14px;
+    --sz-200: 15px;
+    --sz-300: 16px;
+    --sz-400: 18px;
+    --sz-600: 22px;
+    --sz-700: 30px;
+    --sz-800: 32px;
+    --sz-900: 38px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  :root {
+    --sz-30: 14px;
+    --sz-50: 16px;
+    --sz-100: 18px;
+    --sz-200: 19px;
+    --sz-300: 20px;
+    --sz-400: 22px;
+    --sz-600: 26px;
+    --sz-700: 34px;
+    --sz-800: 36px;
+    --sz-900: 42px;
+  }
 }
 
 /* semantic color variables for this project */
@@ -60,7 +106,11 @@
   --color-text: var(--clr-gris-mi-fonce);
   --color-heading: var(--clr-gris-fonce);
 
-  --size-map-zoom-control: 32px;
+  --default-font-size: var(--sz-400);
+
+  --border-radius: 12px;
+
+  --size-map-zoom-control: var(--sz-900);
   --size-map-controls-gap: var(--sz-30);
   --size-map-padding: var(--sz-100);
 }
@@ -86,7 +136,7 @@ body {
   line-height: 1.1;
   font-family: var(--ff-primary);
   font-weight: var(--fw-regular);
-  font-size: var(--sz-400);
+  font-size: var(--default-font-size);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

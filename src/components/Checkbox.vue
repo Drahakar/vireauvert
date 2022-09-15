@@ -17,7 +17,7 @@ input[type="checkbox"] {
     background-color: var(--color-background-accent);
     width: var(--sz-700);
     height: var(--sz-700);
-    border-radius: var(--sz-100);
+    border-radius: 8px;
     box-shadow: 0px var(--sz-30) var(--sz-30)
         rgba(255, 255, 255, 0.04),
         inset 0px -1px 0px rgba(255, 255, 255, 0.66),
@@ -32,7 +32,10 @@ input[type="checkbox"]::before {
     width: var(--sz-700);
     height: var(--sz-700);
     transform-origin: bottom left;
-    background: url("/icons/check.svg")
+    background-image: url("/icons/check.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 input[type="checkbox"]:checked::before {

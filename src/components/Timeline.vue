@@ -227,7 +227,7 @@ export default defineComponent({
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top{
     top: -11px; 
     padding: 2px 10px; 
-    border-radius: 14px
+    border-radius: var(--border-radius);
 }
 
 .vue-slider .vue-slider-process.prevision-indicator {    
