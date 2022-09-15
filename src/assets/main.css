@@ -1,7 +1,7 @@
 @import "./base.css";
 
 :root {
-  --icon-size: 48px;
+  --icon-size: 27px;
 }
 
 #app {
