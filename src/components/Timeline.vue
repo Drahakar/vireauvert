@@ -52,7 +52,6 @@ import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
 import { Line } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
-import CandidateList from './CandidateList.vue';
 import TimelineArrow from './TimelineArrow.vue';
 import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler} from 'chart.js'
 
@@ -60,7 +59,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 
 
 export default defineComponent({
-    components: { VueSlider, CandidateList, Line, TimelineArrow },
+    components: { VueSlider, Line, TimelineArrow },
     emits: ['yearSelected'],
     props: {
         isMobile: {
