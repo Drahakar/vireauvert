@@ -1,8 +1,6 @@
 <template>
     <header>
-        <!-- TODO: proper logo -->
         <p>Éqt*x(*)</p>
-        <!-- TODO: proper logo -->
         <p>terre os</p>
     </header>
 </template>
@@ -20,8 +18,8 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 18px;  /* TODO: remove, use logos instead */
-    color: var(--clr-blanc);  /* TODO: logo */
+    font-size: 18px;
+    color: var(--clr-blanc);
 }
 
 

@@ -104,7 +104,6 @@ Sentry.init({
 
 <template>
     <div class="main">
-        <!-- TODO: start fully zoomed out? -->
         <MapView class="map" :district="state.district"
             :year="state.year" :catastrophes="catastrophes"
             @district-selected="selectDistrict"
@@ -116,7 +115,6 @@ Sentry.init({
                 <div class="content-container">
                     <section class="primary-content content-section">
                         <div class="filter-inputs">
-                            <!-- TODO: change icon style -->
                             <RegionSearch class="region-search"
                                 :district="state.district"
                                 @district-selected="selectDistrict"></RegionSearch>
@@ -139,8 +137,6 @@ Sentry.init({
             </div>
         </div>
     </div>
-
-    <!-- TODO: desktop layout, ideally no split components -->
 
     <div v-if="!loadingCompleted" class="loading-overlay">
         <LoadingSpinner role="status"></LoadingSpinner>

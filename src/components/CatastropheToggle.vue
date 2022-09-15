@@ -5,7 +5,6 @@
             <header class="row" @click="expanded = !expanded">
                 <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
                 <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
-                <!-- TODO: hover styling -->
                 <button v-if="expanded"><img src="/icons/x.svg"></button>
                 <button v-else><img src="/icons/settings.svg"></button>
             </header>
