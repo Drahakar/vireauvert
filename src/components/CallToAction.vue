@@ -23,6 +23,5 @@ a {
     padding: var(--sz-400) var(--sz-100);
     text-align: center;
     text-decoration: none;
-    /* TODO: style on hover? */
 }
 </style>
