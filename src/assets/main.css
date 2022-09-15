@@ -1,4 +1,5 @@
 @import "./base.css";
+
 :root {
   --icon-size: 48px;
 }
@@ -15,27 +16,62 @@
   margin-left: calc(var(--icon-size) / -2);
   background-size: var(--icon-size) var(--icon-size);
 }
-.map-icon.flood {
+
+.catastrophe-icon-unknown {
+  background-image: url('/icons/attention.png');
+}
+.catastrophe-icon-flood {
   background-image: url('/icons/flood_b.png');
 }
-.map-icon.forest_fire {
+
+.catastrophe-icon-forest_fire {
   background-image: url('/icons/forest_fire_b.png');
 }
-.map-icon.freezing_rain {
+
+.catastrophe-icon-freezing_rain {
   background-image: url('/icons/freezing_rain_b.png');
 }
-.map-icon.heat_wave {
+
+.catastrophe-icon-heat_wave {
   background-image: url('/icons/heat_wave_b.png');
 }
-.map-icon.storm_winds {
+
+.catastrophe-icon-storm_winds {
   background-image: url('/icons/storm_winds_b.png');
 }
-.map-icon.tornado {
+
+.catastrophe-icon-tornado {
   background-image: url('/icons/tornado_b.png');
 }
-.map-icon.violent_storm {
+
+.catastrophe-icon-violent_storm {
   background-image: url('/icons/violent_storm_b.png');
 }
-.map-icon.winter_storm {
+
+.catastrophe-icon-winter_storm {
   background-image: url('/icons/winter_storm_b.png');
+}
+
+.catastrophe-popup {  
+  color: var(--clr-gris-fonce);
+  font-family: var(--ff-primary);
+  font-weight: var(--fw-regular);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.1;
+}
+.catastrophe-popup .leaflet-popup-content-wrapper {
+  overflow: hidden;
+}
+
+.catastrophe-popup .leaflet-popup-content {
+  background-color: var(--clr-beige);
+  color: var(--clr-gris-fonce);
+}
+
+.catastrophe-popup .leaflet-popup-close-button {
+  margin-top: var(--sz-50);
+  margin-right: var(--sz-30);
+  font-size: var(--sz-600) !important;
 }

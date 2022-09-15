@@ -4,7 +4,8 @@ import { CatastropheGroup, CatastropheType } from "@/models/catastrophes";
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
-import { Composer } from "vue-i18n";
+import CatastropheDetails from "@/components/CatastropheDetails.vue";
+import { AppContext, h, render } from "vue";
 
 export interface DistrictLayer {
     feature: Feature<Geometry, DistrictProperties>;
@@ -45,7 +46,7 @@ function generateIcons(): Map<CatastropheType, L.DivIcon> {
     const icons = new Map<CatastropheType, L.DivIcon>();
     for (const value of Object.values(CatastropheType)) {
         const icon = L.divIcon({
-            className: `map-icon ${value.toLowerCase()}`,
+            className: `map-icon catastrophe-icon-${value.toLowerCase()}`,
             iconSize: null as any
         });
         icons.set(value, icon);
@@ -55,12 +56,24 @@ function generateIcons(): Map<CatastropheType, L.DivIcon> {
 
 export const mapIcons = generateIcons();
 
-export function createMapMarker(group: CatastropheGroup, i18n: Composer) {
+export function createMapMarker(group: CatastropheGroup, appContext: AppContext) {
     const marker = L.marker(group.location, {
         icon: mapIcons.get(group.type),
         opacity: 1
     });
-    marker.bindTooltip(() => i18n.t('catastrophe_group', { group }));
+    const popup = L.popup({
+        className: 'catastrophe-popup',
+        minWidth: 500,
+        maxHeight: 400,
+    });
+    popup.setContent(() => {
+        const div = document.createElement('div');
+        const details = h(CatastropheDetails, { group });
+        details.appContext = appContext;
+        render(details, div);
+        return div;
+    });
+    marker.bindPopup(popup);
     return marker;
 }
 
