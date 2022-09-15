@@ -69,9 +69,3 @@
   background-color: var(--clr-beige);
   color: var(--clr-gris-fonce);
 }
-
-.catastrophe-popup .leaflet-popup-close-button {
-  margin-top: var(--sz-50);
-  margin-right: var(--sz-30);
-  font-size: var(--sz-600) !important;
-}

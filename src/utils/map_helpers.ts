@@ -1,4 +1,4 @@
-import L from "leaflet";
+import L, { DivOverlay } from "leaflet";
 
 import { CatastropheGroup, CatastropheType } from "@/models/catastrophes";
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours } from "./colours";
@@ -63,6 +63,7 @@ export function createMapMarker(group: CatastropheGroup, appContext: AppContext)
     });
     const popup = L.popup({
         className: 'catastrophe-popup',
+        closeButton: false,
         minWidth: 500,
         maxHeight: 400,
     });
