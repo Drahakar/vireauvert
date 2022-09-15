@@ -104,7 +104,7 @@ export default defineComponent({
         emojiPath(): string {
             if (this.currentValue < this.referenceValue) {
                 return '/icons/Emoji1.png';
-            } else if (this.currentValue < this.dangerValue) {
+            } else if (this.currentValue < this.riskyValue) {
                 return '/icons/Emoji2.png';
             } else {
                 return '/icons/Emoji3.png';
