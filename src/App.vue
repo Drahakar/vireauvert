@@ -235,9 +235,10 @@ Sentry.init({
 
 .region-search {
     pointer-events: auto;
+    --vs-font-size: var(--default-font-size);
     --sz-margin-left: calc(var(--sz-100) + var(--size-map-zoom-control));
     --vs-selected-color: var(--color-text);
-    --vs-border-radius: var(--sz-400);
+    --vs-border-radius: var(--border-radius);
     --vs-border-color: var(--color-border);
     --vs-dropdown-max-height: 750%;
 }
@@ -248,7 +249,7 @@ Sentry.init({
     font-weight: var(--fw-regular);
     font-size: var(--sz-400);
     background-color: var(--color-background-accent);
-    border-radius: var(--sz-600);
+    border-radius: var(--border-radius);
     padding: var(--sz-200);
 }
 

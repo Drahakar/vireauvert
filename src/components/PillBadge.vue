@@ -17,7 +17,7 @@ export default defineComponent({
 <style scoped>
 div {
     display: inline;
-    border-radius: var(--sz-400);
+    border-radius: var(--border-radius);
     font-size: var(--sz-400);
     color: var(--clr-blanc);
     background-color: var(--color-accent);

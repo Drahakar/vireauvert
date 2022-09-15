@@ -16,7 +16,7 @@ a {
     font-size: var(--sz-400);
     color: var(--clr-blanc);
     background-color: var(--color-accent);
-    border-radius: var(--sz-600);
+    border-radius: var(--border-radius);
     width: min-content;
     border: none;
     cursor: pointer;
