@@ -112,8 +112,16 @@ export default defineComponent({
                         display: false,
                     },
                     y: {
+                        grid: {
+                            tickLength: 5,
+                            tickWidth: 1,
+                            drawBorder: false,
+                            drawOnChartArea: false,
+                            tickColor: "#a59e20",
+                        },
                         ticks: {
-                            display: false
+                            display: false,
+                            stepSize: 1.5
                         }
                     }
                 },
