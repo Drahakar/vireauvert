@@ -138,6 +138,7 @@ body {
   font-weight: var(--fw-regular);
   font-size: var(--default-font-size);
   text-rendering: optimizeLegibility;
+  letter-spacing: -0.3px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

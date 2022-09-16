@@ -3,7 +3,8 @@
         <section class="container">
             <header class="row" @click="expanded = !expanded">
                 <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
-                <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
+                <img class="catastrophe-icon" src="/icons/Attention.png">
+                <div class="title"><span>Événements extrêmes</span></div>
                 <button v-if="expanded"><img src="/icons/x.svg"></button>
                 <button v-else><img src="/icons/settings.svg"></button>
             </header>
@@ -205,7 +206,9 @@ button img {
 }
 
 .pill {
-    min-width: calc(var(--default-font-size) * 3.5);
+    /* Note: value hand-picked such that at each visual breakpoint, this is
+       still enough to hold at least 3 digits (with padding). */
+    min-width: calc(var(--default-font-size) * 2.5);
 }
 
 .catastrophe-icon {
