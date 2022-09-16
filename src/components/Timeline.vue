@@ -238,11 +238,16 @@ export default defineComponent({
     display:none;
 }
 
+.vue-slider .vue-slider-mark .vue-slider-mark-label {
+    margin-top:5px;
+}
+
 .vue-slider .vue-slider-mark .vue-slider-mark-step {
-    width: 120%;
-    height: 120%;
+    width: 200%;
+    height: 200%;
+    top:-2px;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--clr-gris-mi-fonce);
 }
 
 
@@ -263,7 +268,9 @@ export default defineComponent({
     .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-label,
     .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-step,
     .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label{
+    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
+    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label,
+    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step{
         display:block;
     }
 }
@@ -275,7 +282,6 @@ export default defineComponent({
     .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
     .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step{
         display:block;
-        margin-top: 0;
     }
 }
 
@@ -288,7 +294,7 @@ export default defineComponent({
 <style>
 .vue-slider .vue-slider-rail,
 .vue-slider .vue-slider-process {
-    background-color: transparent;
+    background-color: var( --clr-gris-pale);
 }
 
 .vue-slider-dot-tooltip-inner-top::after {
