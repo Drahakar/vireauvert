@@ -318,7 +318,8 @@ export default defineComponent({
 img {
     left: 0;
     transform: translateX(-50%);
-    min-width: var(--sz-900);
+    min-width: var(--sz-400);
+    max-width: var(--sz-800);
     position: absolute;
 }
 </style>
