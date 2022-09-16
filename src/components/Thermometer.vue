@@ -263,7 +263,7 @@ export default defineComponent({
     left: 50%;
     transform: translate(-50%, 50%);
     width: max-content;
-    padding: 1px var(--sz-30) 1px var(--sz-30);
+    padding: 1px 4px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -275,7 +275,7 @@ export default defineComponent({
 }
 
 .current-value {
-    min-width: 60px;
+    min-width: calc(var(--sz-900) * 2);
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
     font-size: var(--sz-400);
@@ -318,8 +318,8 @@ export default defineComponent({
 img {
     left: 0;
     transform: translateX(-50%);
-    min-width: var(--sz-400);
-    max-width: var(--sz-800);
+    width: var(--sz-900);
+    height: var(--sz-900);
     position: absolute;
 }
 </style>
