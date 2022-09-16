@@ -8,7 +8,7 @@ import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { FILTER_ALL_CATASTROPHES, Catastrophe } from "./models/catastrophes";
 import { REFERENCE_YEAR } from "./models/constants";
-import { DEFAULT_USER_STATE, UserState } from "./models/user";
+import { DEFAULT_USER_STATE } from "./models/user";
 import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
 import Header from "./components/Header.vue";
