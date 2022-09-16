@@ -9,7 +9,7 @@
 <script lang="ts">
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
-import { AppContext, defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
@@ -19,9 +19,7 @@ import { createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } 
 import { useMapStore } from "@/stores/map";
 import { YearlyStatistics } from "@/models/yearly_data";
 import { getAppContext } from "@/main";
-
-const MIN_ZOOM = 6;
-const MAX_ZOOM = 15;
+import { MAX_ZOOM, MIN_ZOOM } from "@/models/user";
 
 export default defineComponent({
     emits: ["districtSelected", 'locationChanged', 'zoomChanged'],
@@ -45,10 +43,6 @@ export default defineComponent({
         zoom: {
             type: Number,
             default: MIN_ZOOM
-        },
-        zoomLimitOffset: {
-            type: Number,
-            default: 0
         }
     },
     setup(props, { emit }) {
@@ -84,9 +78,8 @@ export default defineComponent({
             mapLayer.clearLayers();
             if (data) {
                 mapLayer.addData(data);
-                const bounds = mapLayer.getBounds();
-                if (map.value && bounds.isValid()) {
-                    map.value.setMaxBounds(bounds.pad(0.05));
+                if (map.value) {
+                    updateMapBounds(map.value as L.Map, mapLayer);
                 }
                 const allStats = statisticStore.findStatisticsByYear(props.year);
                 updateAllColours(allStats);
@@ -177,8 +170,8 @@ export default defineComponent({
             const map = new L.Map(this.mapElement, {
                 center: this.location,
                 zoom: this.zoom,
-                minZoom: MIN_ZOOM + this.zoomLimitOffset,
-                maxZoom: MAX_ZOOM + this.zoomLimitOffset,
+                minZoom: MIN_ZOOM,
+                maxZoom: MAX_ZOOM,
                 zoomControl: true,
                 bounceAtZoomLimits: false,
                 maxBoundsViscosity: 1
@@ -202,10 +195,7 @@ export default defineComponent({
             });
 
             this.map = map;
-            const bounds = this.mapLayer.getBounds();
-            if (bounds.isValid()) {
-                this.map.setMaxBounds(bounds.pad(0.1));
-            }
+            updateMapBounds(map, this.mapLayer);
             this.map.attributionControl.setPrefix('');
 
             if (this.mapWrapper) {
@@ -263,6 +253,12 @@ function refreshIcons(icons: MapIcons, map: L.Map | null, catastrophes: List<Cat
     }
 }
 
+function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
+    const bounds = mapLayer.getBounds();
+    if (bounds.isValid()) {
+        map.setMaxBounds(bounds.pad(0.5));
+    }
+}
 </script>
 
 <style scoped>
