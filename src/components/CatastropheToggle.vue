@@ -188,7 +188,6 @@ export default defineComponent({
 
 .title, .catastrophe-name {
     flex: 1;
-    letter-spacing: -0.3px;
 }
 
 .separator {
