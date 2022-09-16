@@ -30,3 +30,7 @@ const app = createApp(App);
 app.use(pinia);
 app.use(i18n);
 app.mount('#app')
+
+export function getAppContext() {
+    return app._context;
+}

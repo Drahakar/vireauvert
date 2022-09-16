@@ -43,5 +43,10 @@ export const datetimeFormats = {
         day: '2-digit',
         month: 'long',
         timeZone: 'UTC'
+    },    
+    event_date_short: {
+        day: '2-digit',
+        month: 'short',
+        timeZone: 'UTC'
     }
 } as IntlDateTimeFormats;

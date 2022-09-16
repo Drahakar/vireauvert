@@ -9,16 +9,16 @@
 <script lang="ts">
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
-import { defineComponent, PropType, ref, watch } from "vue";
+import { AppContext, defineComponent, PropType, ref, watch } from "vue";
 import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { getStatisticsForRegion, useStatisticStore } from "@/stores/statistics";
 import Thermometer from "./Thermometer.vue";
 import { createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } from "@/utils/map_helpers";
-import { Composer, useI18n } from "vue-i18n";
 import { useMapStore } from "@/stores/map";
 import { YearlyStatistics } from "@/models/yearly_data";
+import { getAppContext } from "@/main";
 
 const MIN_ZOOM = 6;
 const MAX_ZOOM = 15;
@@ -142,9 +142,9 @@ export default defineComponent({
             layer: L.layerGroup(),
             index: new Map<string, L.Marker>()
         };
-        const i18n = useI18n();
+
         watch(() => props.catastrophes, catastrophes => {
-            refreshIcons(icons, catastrophes, i18n);
+            refreshIcons(icons, map.value as L.Map | null, catastrophes);
         });
 
         const mapResizeObserver = new ResizeObserver(entries => {
@@ -164,7 +164,6 @@ export default defineComponent({
             statisticStore,
             mapWrapper: ref<HTMLDivElement | null>(null),
             mapResizeObserver: mapResizeObserver,
-            i18n,
             districtLayers
         };
     },
@@ -190,7 +189,7 @@ export default defineComponent({
             this.maskLayer.addTo(map);
             this.mapLayer.addTo(map);
 
-            refreshIcons(this.icons, this.catastrophes, this.i18n);
+            refreshIcons(this.icons, map, this.catastrophes);
             this.icons.layer.addTo(map);
 
             map.addEventListener('moveend', () => {
@@ -228,15 +227,6 @@ export default defineComponent({
             this.mapResizeObserver.unobserve(this.mapWrapper);
         }
     },
-    methods: {
-        focusCatastrophe(catastrophe: Catastrophe) {
-            if (this.map) {
-                this.map.panTo(catastrophe.location, {
-                    animate: true
-                });
-            }
-        }
-    },
     components: { Thermometer }
 });
 
@@ -245,11 +235,20 @@ interface MapIcons {
     index: Map<string, L.Marker>;
 }
 
-function refreshIcons(icons: MapIcons, catastrophes: List<Catastrophe>, i18n: Composer) {
+function refreshIcons(icons: MapIcons, map: L.Map | null, catastrophes: List<Catastrophe>) {
     const missing = new Set<string>(icons.index.keys());
     for (const group of groupCatastrophes(catastrophes)) {
         if (!icons.index.has(group.id)) {
-            const marker = createMapMarker(group, i18n);
+            const marker = createMapMarker(group, getAppContext());
+
+            if (map) {
+                marker.addEventListener('click', () => {
+                    map.panTo(group.location, {
+                        animate: true
+                    });
+                });
+            }
+
             icons.index.set(group.id, marker);
             marker.addTo(icons.layer);
         }

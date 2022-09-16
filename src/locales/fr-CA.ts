@@ -83,6 +83,9 @@ export default {
 
     catastrophe_group: ({ named }: MessageContext) => {
         const group = named('group') as CatastropheGroup;
+        if (group.type === CatastropheType.Unknown) {
+            return '';
+        }
 
         const parts = [];
 

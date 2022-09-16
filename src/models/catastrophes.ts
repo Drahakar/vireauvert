@@ -8,6 +8,7 @@ export enum CatastropheType {
     FreezingRain = "FREEZING_RAIN",
     StormWinds = "STORM_WINDS",
     HeatWave = "HEAT_WAVE",
+    Unknown = "UNKNOWN"
     // IFCHANGE: Add support to CatastropheToggle
 }
 
@@ -70,26 +71,33 @@ export interface CatastropheGroup {
     type: CatastropheType;
     district: number;
     loc_approx: boolean;
-    instances: List<{
-        id: string;
-        date: Date;
-        severity: Severity;
-    }>;
+    instances: List<Catastrophe>;
+}
+
+function mergeTypes(catastrophes: List<Catastrophe>) {
+    const first = catastrophes.get(0)!.type;
+    for (let i = 1; i < catastrophes.size; ++i) {
+        if(catastrophes.get(i)!.type !== first) {
+            return CatastropheType.Unknown;
+        }
+    }
+    return first;
 }
 
 export function groupCatastrophes(catastrophes: List<Catastrophe>) {
     return catastrophes
-        .groupBy(x => `${x.type}/${x.location.lat.toFixed(4)}/${x.location.lng.toFixed(4)}`)
+        .groupBy(x => `${x.location.lat.toFixed(4)}/${x.location.lng.toFixed(4)}`)
         .map((x, k) => {
-            const first = x.first()!;
+            const instances = x.toList();
+            const first = instances.get(0)!;
             const group: CatastropheGroup = {
                 id: k,
+                type: mergeTypes(instances),
                 location: first.location,
-                type: first.type,
                 city: first.city,
                 district: first.district,
                 loc_approx: x.some(x => x.loc_approx),
-                instances: x.toList()
+                instances
             };
             return group;
         }).toList();
