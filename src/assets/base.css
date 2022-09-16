@@ -117,7 +117,7 @@
 
   --default-font-size: var(--sz-400);
 
-  --border-radius: 12px;
+  --border-radius: 16px;
 
   --size-map-zoom-control: var(--sz-900);
   --size-map-controls-gap: var(--sz-30);
