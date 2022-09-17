@@ -21,7 +21,7 @@ div {
     font-size: var(--sz-400);
     color: var(--clr-blanc);
     background-color: var(--color-accent);
-    padding: 1px 0 2px 0;
+    padding: 1px var(--sz-30) 2px var(--sz-30);
     width: min-content;
     text-align: center;
 }

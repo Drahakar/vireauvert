@@ -206,9 +206,8 @@ button img {
 }
 
 .pill {
-    /* Note: value hand-picked such that at each visual breakpoint, this is
-       still enough to hold at least 3 digits (with padding). */
-    min-width: calc(var(--default-font-size) * 2.5);
+    box-sixing: content-box;
+    min-width: 3ch;
 }
 
 .catastrophe-icon {
