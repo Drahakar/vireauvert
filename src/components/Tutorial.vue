@@ -8,6 +8,12 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+    props: {
+        ready: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             options: {
@@ -36,10 +42,13 @@ export default defineComponent({
             ],
         };
     },
-    mounted() {
-        // TODO: only show if we have an unset cookie to spare returning people?
-        this.$tours['tutorial'].start();
-    },
+    watch: {
+        ready: function(isReady, wasReady) {
+            if (!wasReady && isReady) {
+                this.$tours['tutorial'].start();
+            }
+        },
+    }
 });
 </script>
 

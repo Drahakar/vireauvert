@@ -69,7 +69,6 @@ export default defineComponent({
         ]);
         storeLoads.then(promises => {
             loadingCompleted.value = true;
-            // TODO: start tutorial then
             for (const promise of promises) {
                 if (promise.status === 'rejected') {
                     Sentry.captureException(promise.reason);
@@ -154,7 +153,7 @@ Sentry.init({
         <p class="loading-message" v-t="'loading'"></p>
     </div>
 
-    <Tutorial></Tutorial>
+    <Tutorial :ready="loadingCompleted"></Tutorial>
 </template>
 
 <style scoped>
