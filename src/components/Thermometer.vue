@@ -1,11 +1,13 @@
 <template>
     <div class="wrapper" :style="cssVars">
-        <template v-for="notchNum in numNotches">
-            <span v-if="(notchNum - 1) % notchSteps == 0" class="notch"
-                :style="{'--notch-idx': notchNum - 1}">
-                {{$n(startNotch + notchNum - 1, 'compact_delta')}}
-            </span>
-        </template>
+        <div class="notches-container">
+            <template v-for="notchNum in numNotches">
+                <span v-if="(notchNum - 1) % notchSteps == 0" class="notch"
+                    :style="{'--notch-idx': notchNum - 1}">
+                    {{$n(startNotch + notchNum - 1, 'compact_delta')}}
+                </span>
+            </template>
+        </div>
 
         <div class="thermometer">
             <div class="stem">
@@ -229,6 +231,12 @@ export default defineComponent({
     font-size: var(--sz-200);
     color: var(--clr-blanc);
     text-align: right;
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+}
+
+.notches-container {
+    position: absolute;
+    min-height: 100%;
 }
 
 .bulb {
