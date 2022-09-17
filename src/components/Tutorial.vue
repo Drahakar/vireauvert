@@ -23,19 +23,18 @@ export default defineComponent({
                     buttonStop: this.$t('tutorial_finish'),
                 },
             },
-            // TODO: localize
             steps: [
                 {
                     target: '[data-tutorial-step="temperature"]',
-                    content: 'Hello!',
+                    content: this.$t('tutorial_temperature'),
                 },
                 {
                     target: '[data-tutorial-step="year-selector"]',
-                    content: 'World!'
+                    content: this.$t('tutorial_year'),
                 },
                 {
                     target: '[data-tutorial-step="catastrophes-count"]',
-                    content: 'Hi!'
+                    content: this.$t('tutorial_catastrophes'),
                 },
             ],
         };

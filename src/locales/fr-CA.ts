@@ -180,4 +180,7 @@ export default {
     tutorial_next: "Suivant",
     tutorial_prev: "Précédent",
     tutorial_finish: "Terminer",
+    tutorial_temperature: "Voici la température pour l'année et la région sélectionnée. Notez les changements par rapport à la température en 1990.",
+    tutorial_year: "Vous pouvez changer l'année en cours pour explorer les données historiques et les projections futures.",
+    tutorial_catastrophes: "Voici la quantité d'événements extrêmes pour l'année en cours. Pour contrôler les filtres, appuyez ici.",
 };
