@@ -1,5 +1,4 @@
 <template>
-    <!-- TODO: customize style -->
     <v-tour name="tutorial" :steps="steps" :options="options"></v-tour>
 </template>
 
@@ -53,4 +52,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.v-tour >>> .v-step {
+    background-color: var(--clr-gris-mi-fonce);
+    color: var(--clr-blanc);
+    border-radius: var(--border-radius);
+}
+
+.v-tour >>> .v-step__button {
+    color: var(--clr-blanc);
+    border: 1px solid var(--clr-blanc);
+    border-radius: var(--border-radius);
+    font-size: var(--sz-400);
+}
 </style>
