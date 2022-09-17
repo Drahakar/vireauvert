@@ -295,8 +295,7 @@ function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
 }
 
 .leaflet-left .leaflet-control {
-    /* IFCHANGE: change CatastropheToggle */
-    margin-left: var(--sz-100);
+    margin-left: var(--size-map-padding);
     /* IFCHANGE: change App */
     /* 2x controls + 2x gaps between other controls and this one, + extra
        pixels due to 4x 1px borders on the way. */
