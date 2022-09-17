@@ -1,7 +1,7 @@
 <template>
     <header>
-        <p>Éqt*x(*)</p>
-        <p>terre os</p>
+        <button @click="about">Éqt*x(*)</button>
+        <button @click="about">terre os</button>
     </header>
 </template>
 
@@ -10,7 +10,13 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-})
+    emits: ['about-requested'],
+    methods: {
+        about() {
+            this.$emit('about-requested');
+        }
+    }
+});
 </script>
 
 <style scoped>
@@ -21,6 +27,7 @@ header {
     font-size: 18px;
     color: var(--clr-blanc);
 }
-
-
+button {
+    pointer-events: auto;
+}
 </style>

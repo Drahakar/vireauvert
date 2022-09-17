@@ -18,17 +18,24 @@ import RegionSearch from "./components/RegionSearch.vue";
 import Thermometer from './components/Thermometer.vue';
 import Timeline from "./components/Timeline.vue";
 import { useMapStore } from "./stores/map";
+import About from "./components/About.vue";
 
 export default defineComponent({
     components: {
-        CallToAction,
-        CatastropheToggle,
-        Header,
-        LoadingSpinner,
-        MapView,
-        RegionSearch,
-        Thermometer,
-        Timeline,
+    CallToAction,
+    CatastropheToggle,
+    Header,
+    LoadingSpinner,
+    MapView,
+    RegionSearch,
+    Thermometer,
+    Timeline,
+    About
+},
+    data() {
+        return {
+            showAbout: false
+        };
     },
     methods: {
         selectDistrict(id: number) {
@@ -133,9 +140,10 @@ Sentry.init({
                         <CallToAction class="call-to-action"></CallToAction>
                     </section>
                 </div>
-                <Header class="header"></Header>
+                <Header class="header" @about-requested="showAbout = true"></Header>
             </div>
         </div>
+        <About :show-modal="showAbout" @modal-closed="showAbout = false"></About>
     </div>
 
     <div v-if="!loadingCompleted" class="loading-overlay">
