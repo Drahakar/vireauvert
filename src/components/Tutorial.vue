@@ -16,13 +16,12 @@ export default defineComponent({
     data() {
         return {
             options: {
-                // TODO: localize
                 labels: {
-                    buttonSkip: 'Skip tour',
-                    buttonPrevious: 'Previous',
-                    buttonNext: 'Next',
-                    buttonStop: 'Finish',
-                }
+                    buttonSkip: this.$t('tutorial_skip'),
+                    buttonPrevious: this.$t('tutorial_prev'),
+                    buttonNext: this.$t('tutorial_next'),
+                    buttonStop: this.$t('tutorial_finish'),
+                },
             },
             // TODO: localize
             steps: [
@@ -56,6 +55,7 @@ export default defineComponent({
     background-color: var(--clr-gris-mi-fonce);
     color: var(--clr-blanc);
     border-radius: var(--border-radius);
+    max-width: calc(var(--sz-900) * 10);
 }
 
 .v-tour >>> .v-step__button {
