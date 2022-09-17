@@ -27,7 +27,8 @@
                 </template>
                 <template v-slot:tooltip="{ value }">
                     <div class="tooltip-line"></div>
-                    <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top">
+                    <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                        data-tutorial-step="year-selector">
                         <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
                     </div>
                 </template>

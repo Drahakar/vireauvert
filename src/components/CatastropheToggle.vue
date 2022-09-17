@@ -2,7 +2,8 @@
     <div class="wrapper" :class="{expanded: expanded}">
         <section class="container">
             <header class="row" @click="expanded = !expanded">
-                <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
+                <PillBadge class="total-count pill" :value="currentCatastrophesCount"
+                    data-tutorial-step="catastrophes-count"></PillBadge>
                 <img class="catastrophe-icon" src="/icons/attention-red.png">
                 <div class="title"><span>Événements extrêmes</span></div>
                 <button v-if="expanded"><img src="/icons/x.svg"></button>
