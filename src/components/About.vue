@@ -73,7 +73,7 @@ export default defineComponent({
 }
 
 #modal {
-    width: 50%;
+    width: var(--modal-width);
     background-color: var(--clr-beige);
     overflow: hidden;
     border-radius: var(--border-radius);
