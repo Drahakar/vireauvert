@@ -31,7 +31,8 @@
             <div class="line"></div>
         </div>
 
-        <div class="current-value pill tracked-current track-bottom">
+        <div class="current-value pill tracked-current track-bottom"
+            data-tutorial-step="temperature">
             <img :src="emojiPath">
             <span>{{$n(currentValueDisplayed, 'temperature')}}</span>
         </div>

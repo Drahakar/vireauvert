@@ -17,21 +17,23 @@ import MapView from "./components/MapView.vue";
 import RegionSearch from "./components/RegionSearch.vue";
 import Thermometer from './components/Thermometer.vue';
 import Timeline from "./components/Timeline.vue";
+import Tutorial from "./components/Tutorial.vue";
 import { useMapStore } from "./stores/map";
 import About from "./components/About.vue";
 
 export default defineComponent({
     components: {
-    CallToAction,
-    CatastropheToggle,
-    Header,
-    LoadingSpinner,
-    MapView,
-    RegionSearch,
-    Thermometer,
-    Timeline,
-    About
-},
+        About,
+        CallToAction,
+        CatastropheToggle,
+        Header,
+        LoadingSpinner,
+        MapView,
+        RegionSearch,
+        Thermometer,
+        Timeline,
+        Tutorial,
+    },
     data() {
         return {
             showAbout: false
@@ -67,6 +69,7 @@ export default defineComponent({
         ]);
         storeLoads.then(promises => {
             loadingCompleted.value = true;
+            // TODO: start tutorial then
             for (const promise of promises) {
                 if (promise.status === 'rejected') {
                     Sentry.captureException(promise.reason);
@@ -150,6 +153,8 @@ Sentry.init({
         <LoadingSpinner role="status"></LoadingSpinner>
         <p class="loading-message" v-t="'loading'"></p>
     </div>
+
+    <Tutorial></Tutorial>
 </template>
 
 <style scoped>
