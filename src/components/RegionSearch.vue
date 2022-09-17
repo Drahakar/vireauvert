@@ -41,3 +41,11 @@ export default defineComponent({
     }
 })
 </script>
+
+<style>  /* global */
+.v-select .vs__selected-options {
+    flex-wrap: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+}
+</style>
