@@ -3,7 +3,7 @@
         <section class="container">
             <header class="row" @click="expanded = !expanded">
                 <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
-                <img class="catastrophe-icon" src="/icons/Attention.png">
+                <img class="catastrophe-icon" src="/icons/attention-highlight.png">
                 <div class="title"><span>Événements extrêmes</span></div>
                 <button v-if="expanded"><img src="/icons/x.svg"></button>
                 <button v-else><img src="/icons/settings.svg"></button>
