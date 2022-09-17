@@ -3,6 +3,16 @@ import axios from "axios";
 import { List, Map } from "immutable";
 import { defineStore } from "pinia";
 
+function filterCatastrophe(catastrophe: Catastrophe, district: number, filter: CatastropheFilter) {
+    if (district && catastrophe.district !== district) {
+        return false;
+    }
+    if (!filter.includes(catastrophe.type)) {
+        return false;
+    }
+    return true;
+}
+
 export const useCatastropheStore = defineStore('catastropheStore', {
     state: () => {
         return {
@@ -10,14 +20,20 @@ export const useCatastropheStore = defineStore('catastropheStore', {
         };
     },
     getters: {
-        findCatastrophes: state => (year: number, district = 0, filter: CatastropheFilter) => {
-            let catastrophes = state.catastrophes.get(year) ?? List();
-            if (district) {
-                catastrophes = catastrophes.filter(x => x.district === district);
+        findCatastrophes: state => (year: number, district: number, filter: CatastropheFilter): List<Catastrophe> => {
+            const catastrophes = state.catastrophes.get(year);
+            if (catastrophes) {
+                return catastrophes.filter(x => filterCatastrophe(x, district, filter));
             }
-            catastrophes = catastrophes.filter(x => filter.includes(x.type));
-            return catastrophes;
-        }
+            return List();
+        },
+        countCatastrophes: state => (year: number, district: number, filter: CatastropheFilter): number => {
+            const catastrophes = state.catastrophes.get(year);
+            if (catastrophes) {
+                return catastrophes.count(x => filterCatastrophe(x, district, filter));
+            }
+            return 0;
+        },
     },
     actions: {
         async loadCatastrophes() {
