@@ -59,6 +59,11 @@ export default defineComponent({
             }
         };
 
+        const icons: MapIcons = {
+            layer: L.layerGroup(),
+            index: new Map<string, L.Marker>()
+        };
+
         const map = ref<L.Map | null>(null);
         const districtLayers = new Map<string, DistrictLayer>();
         const mapLayer = L.geoJSON(mapStore.districts, {
@@ -67,6 +72,12 @@ export default defineComponent({
                 const district: DistrictLayer = { feature, layer: layer as L.GeoJSON };
                 districtLayers.set(properties.id.toString(), { feature, layer: layer as L.GeoJSON });
                 layer.addEventListener("click", () => {
+                    for (const marker of icons.index.values()) {
+                        if (marker.isPopupOpen()) {
+                            marker.closePopup();
+                            return;
+                        }
+                    }
                     const newId = props.district !== properties.id ? properties.id : 0;
                     emit("districtSelected", newId);
                 });
@@ -131,11 +142,6 @@ export default defineComponent({
             updateAllColours(allStats);
         });
 
-        const icons: MapIcons = {
-            layer: L.layerGroup(),
-            index: new Map<string, L.Marker>()
-        };
-
         watch(() => props.catastrophes, catastrophes => {
             refreshIcons(icons, map.value as L.Map | null, catastrophes);
         });
@@ -185,6 +191,14 @@ export default defineComponent({
             refreshIcons(this.icons, map, this.catastrophes);
             this.icons.layer.addTo(map);
 
+            map.addEventListener('click', ev => {
+                for (const marker of this.icons.index.values()) {
+                    if (marker.isPopupOpen()) {
+                        marker.closePopup();
+                        ev.originalEvent.stopPropagation();
+                    }
+                }
+            });
             map.addEventListener('moveend', () => {
                 this.$emit('locationChanged', map.getCenter());
             });
