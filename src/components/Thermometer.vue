@@ -180,6 +180,7 @@ export default defineComponent({
     --mercury-transition: 0.15s ease;
     height: 100%;
     position: relative;
+    top:  var(--sz-200);
     margin-bottom: calc(var(--sz-bulb) / 2);  /* space for the bulb */
 }
 

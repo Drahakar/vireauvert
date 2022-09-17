@@ -222,6 +222,7 @@ Sentry.init({
     min-height: 0;  /* don't expand to children content -- undo auto min-height */
     max-height: 100%;
     max-width: 600px;
+    padding-right: var(--sz-50);
     display: flex;
     flex-direction: column;
     justify-content: start;
