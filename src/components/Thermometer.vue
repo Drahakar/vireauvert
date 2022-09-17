@@ -22,7 +22,7 @@
 
             <div class="reference-value pill tracked-reference track-bottom">
                 <span>{{referenceYear}}</span>
-                <span>{{$n(referenceValueDisplayed, 'temperature_no_unit')}}°</span>
+                <span>{{$n(referenceValueDisplayed, 'temperature')}}</span>
             </div>
         </div>
 
@@ -33,7 +33,7 @@
 
         <div class="current-value pill tracked-current track-bottom">
             <img :src="emojiPath">
-            <span>{{$n(currentValueDisplayed, 'temperature_no_unit')}}°</span>
+            <span>{{$n(currentValueDisplayed, 'temperature')}}</span>
         </div>
     </div>
 </template>
