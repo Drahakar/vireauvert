@@ -17,8 +17,7 @@
                 :tooltip="'always'"
                 :data="years"
                 :marks="marks"
-                :adsorb="false"
-                :options="sliderOptions">
+                :adsorb="false">
                 <template v-slot:label="{value}">
                     <div class="markline"></div>
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
@@ -196,7 +195,7 @@ export default defineComponent({
     -webkit-appearance: none;
     background: #ffffff;
     outline: none;
-    opacity: 1
+    opacity: 1;
 }
 
 #slidercontainer {
@@ -213,7 +212,6 @@ export default defineComponent({
     width: 1px;
     border-width: 1px;
     border-style: dashed;
-    top: 0;
     display: block;
     margin: auto;
     z-index: var(--tooltip-line-z-index);

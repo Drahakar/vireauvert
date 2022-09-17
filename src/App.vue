@@ -247,7 +247,7 @@ Sentry.init({
     font-size: var(--sz-400);
     background-color: var(--color-background-accent);
     border-radius: var(--border-radius);
-    padding: var(--sz-200);
+    padding: var(--sz-200) var(--timeline-horizontal-padding);
     max-width: 1280px;
 }
 

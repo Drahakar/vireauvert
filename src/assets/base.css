@@ -42,6 +42,9 @@
   --sz-800: 26px;
   --sz-900: 32px;
 
+  /* Sizes that change at certain breakpoints */
+  --timeline-horizontal-padding: var(--sz-200);
+
   /* Font weight variants */
   --fw-regular: 500;
 
@@ -61,6 +64,8 @@
     --sz-700: 26px;
     --sz-800: 28px;
     --sz-900: 34px;
+
+    --timeline-horizontal-padding: var(--sz-600);
   }
 }
 
@@ -91,6 +96,8 @@
     --sz-700: 34px;
     --sz-800: 36px;
     --sz-900: 48px;
+
+    --timeline-horizontal-padding: var(--sz-700);
   }
 }
 
