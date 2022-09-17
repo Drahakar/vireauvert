@@ -17,8 +17,7 @@
                 :tooltip="'always'"
                 :data="years"
                 :marks="marks"
-                :adsorb="false"
-                :dotSize="32">
+                :adsorb="false">
                 <template v-slot:label="{value}">
                     <div class="markline"></div>
                     <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
@@ -27,15 +26,13 @@
                     <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
                 </template>
                 <template v-slot:tooltip="{ value }">
-                    <div class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show">
-                        <div class="tooltip-line"></div>
-                        <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top">
-                            <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
-                        </div>
+                    <div class="tooltip-line"></div>
+                    <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top">
+                        <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
                     </div>
                 </template>
                 <template v-slot:dot>
-                    <TimelineArrow></TimelineArrow>
+                    <TimelineArrow class="slider-arrow"></TimelineArrow>
                 </template>
             </vue-slider>
         </div>
@@ -137,8 +134,8 @@ export default defineComponent({
                 },
                 responsive: true,
                 maintainAspectRatio: false,
-            }   
-        }
+            },
+        };
     },
     computed: {
         chartData() {
@@ -190,15 +187,15 @@ export default defineComponent({
 
 <style scoped>
 #slidertitle {
-    font-weight: bold;
-    font-size: 1.2em;
+    font-size: var(--sz-400);
+    margin-bottom: var(--sz-30);
 }
 
 #slidercontainer input {
     -webkit-appearance: none;
     background: #ffffff;
     outline: none;
-    opacity: 1
+    opacity: 1;
 }
 
 #slidercontainer {
@@ -211,13 +208,13 @@ export default defineComponent({
 }
 
 .vue-slider .tooltip-line {
-    height: 40px;
+    height: var(--tooltip-line-height);
     width: 1px;
     border-width: 1px;
     border-style: dashed;
     display: block;
-    top: 39px;
     margin: auto;
+    z-index: var(--tooltip-line-z-index);
 }
 
 .vue-slider-dot-tooltip-text, .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top {
@@ -225,7 +222,6 @@ export default defineComponent({
 }
 
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top{
-    top: -11px; 
     padding: 2px 10px; 
     border-radius: var(--border-radius);
 }
@@ -239,7 +235,8 @@ export default defineComponent({
 }
 
 .vue-slider .vue-slider-mark .vue-slider-mark-label {
-    margin-top:5px;
+    margin-top: var(--sz-30);
+    font-size: var(--sz-300);
 }
 
 .vue-slider .vue-slider-mark .vue-slider-mark-step {
@@ -261,8 +258,6 @@ export default defineComponent({
         margin-right: 0px;
     }
 }
-
-
 
 @media screen and (min-width: 768px) {
     .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-label,
@@ -292,6 +287,13 @@ export default defineComponent({
 </style>
 
 <style>
+.vue-slider {
+    --slider-dot-size: var(--sz-900);
+    --tooltip-line-height: var(--sz-900);
+    --tooltip-line-gap: var(--sz);
+    --tooltip-line-z-index: 0;
+}
+
 .vue-slider .vue-slider-rail,
 .vue-slider .vue-slider-process {
     background-color: var( --clr-gris-pale);
@@ -299,5 +301,27 @@ export default defineComponent({
 
 .vue-slider-dot-tooltip-inner-top::after {
     display:none;
+}
+
+.vue-slider-dot-tooltip {
+    top: calc(100% - var(--slider-dot-size) / 3);
+}
+
+.vue-slider-dot-tooltip-inner {
+    top: calc(0px - var(--tooltip-line-height));
+    font-size: var(--sz-400);
+    transform: translateY(-100%);
+}
+
+.vue-slider-dot {
+    /* Note: must use !important here to undo the direct 'style' that is applied
+       to vue-slider-dot, while still having responsive CSS-var based dims. */
+    width: var(--slider-dot-size) !important;
+    height: var(--slider-dot-size) !important;
+}
+
+.slider-arrow {
+    position: absolute;
+    z-index: calc(var(--tooltip-line-z-index) + 1);
 }
 </style>

@@ -298,16 +298,6 @@ function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
     border-radius: var(--border-radius);
 }
 
-.leaflet-touch .leaflet-control-zoom-in,
-.leaflet-touch .leaflet-control-zoom-out {
-    font-family: var(--ff-primary);
-    font-weight: var(--fw-regular);
-    font-size: var(--sz-800);
-    /* IFCHANGE: change CatastropheToggle */
-    width: var(--size-map-zoom-control) !important;
-    height: var(--size-map-zoom-control) !important;
-}
-
 .leaflet-left .leaflet-control {
     margin-left: var(--size-map-padding);
     /* IFCHANGE: change App */
@@ -337,5 +327,17 @@ function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
 .leaflet-touch .leaflet-bar {
     border-color: var(--color-border);
     border-width: 1px;
+}
+
+.leaflet-touch .leaflet-bar a {
+    font-size: var(--sz-800);
+    line-height: var(--sz-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ff-primary);
+    font-weight: var(--fw-regular);
+    width: var(--size-map-zoom-control);
+    height: var(--size-map-zoom-control);
 }
 </style>
