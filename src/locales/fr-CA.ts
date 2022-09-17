@@ -164,4 +164,14 @@ export default {
 
     // Timeline
     research_year: "Température / année",
+
+    // About
+    made_with_love: "Le logiciel terreOS a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
+    data_source: "Les données utilisées dans ce logiciel proviennent du {0}, du {1} ainsi que du {2}.",
+    ouranos: "consortium Ouranos",
+    url_ouranos: "https://www.ouranos.ca/",
+    qc_govt: "Gouvernement du Québec",
+    url_qc_govt: "https://donneesquebec.ca/",
+    can_govt: "Gouvernement du Canada",
+    url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html"
 };
