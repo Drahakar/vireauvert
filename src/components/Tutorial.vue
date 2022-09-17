@@ -1,5 +1,5 @@
 <template>
-    <v-tour name="tutorial" :steps="steps" :options="options"></v-tour>
+    <v-tour name="tutorial" :steps="steps" :options="options" :callbacks="callbacks"></v-tour>
 </template>
 
 <script lang="ts">
@@ -41,12 +41,22 @@ export default defineComponent({
                     content: this.$t('tutorial_catastrophes'),
                 },
             ],
+            callbacks: { 
+                onSkip: () => {
+                    localStorage.setItem('tutorial_completed', 'true');
+                },
+                onFinish: () => {
+                    localStorage.setItem('tutorial_completed', 'true');
+                }
+            }
         };
     },
     watch: {
-        ready: function(isReady, wasReady) {
+        ready: function (isReady, wasReady) {
             if (!wasReady && isReady) {
-                this.$tours['tutorial'].start();
+                if (!localStorage.getItem('tutorial_completed')) {
+                    this.$tours['tutorial'].start();
+                }
             }
         },
     }
