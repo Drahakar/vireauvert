@@ -66,6 +66,7 @@ export function createMapMarker(group: CatastropheGroup, appContext: AppContext)
         closeButton: false,
         minWidth: 500,
         maxHeight: 400,
+        closeOnClick: false
     });
     popup.setContent(() => {
         const div = document.createElement('div');
