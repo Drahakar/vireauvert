@@ -31,6 +31,10 @@ export default defineComponent({
                 {
                     target: '[data-tutorial-step="year-selector"]',
                     content: this.$t('tutorial_year'),
+                    params: {
+                        // Important, otherwise this pushes the height past 100%
+                        placement: "top",
+                    },
                 },
                 {
                     target: '[data-tutorial-step="catastrophes-count"]',
