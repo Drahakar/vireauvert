@@ -18,7 +18,7 @@
 }
 
 .catastrophe-icon-unknown {
-  background-image: url('/icons/attention.png');
+  background-image: url('/icons/attention-red.png');
 }
 .catastrophe-icon-flood {
   background-image: url('/icons/flood_b.png');
