@@ -3,7 +3,8 @@
         <section class="container">
             <header class="row" @click="expanded = !expanded">
                 <PillBadge class="total-count pill" :value="currentCatastrophesCount"></PillBadge>
-                <div class="title grid-col-span-2"><span>Événements extrêmes</span></div>
+                <img class="catastrophe-icon" src="/icons/attention-highlight.png">
+                <div class="title"><span>Événements extrêmes</span></div>
                 <button v-if="expanded"><img src="/icons/x.svg"></button>
                 <button v-else><img src="/icons/settings.svg"></button>
             </header>
@@ -204,7 +205,8 @@ button img {
 }
 
 .pill {
-    min-width: calc(var(--default-font-size) * 3.5);
+    box-sixing: content-box;
+    min-width: 3ch;
 }
 
 .catastrophe-icon {
