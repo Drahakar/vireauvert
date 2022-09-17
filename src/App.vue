@@ -200,7 +200,7 @@ Sentry.init({
     width: 100%;
     /* Note: must be this high to be over the overleaf z-index. */
     z-index: 1000;
-    padding: var(--size-map-padding) var(--sz-100);
+    padding: var(--size-map-padding);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -213,6 +213,7 @@ Sentry.init({
     width: 100%;
     min-height: 0;  /* don't expand to children content -- undo auto min-height */
     max-height: 100%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -247,6 +248,7 @@ Sentry.init({
     background-color: var(--color-background-accent);
     border-radius: var(--border-radius);
     padding: var(--sz-200);
+    max-width: 1280px;
 }
 
 .loading-overlay {
