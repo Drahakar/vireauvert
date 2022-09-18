@@ -34,9 +34,9 @@
                 </template>
                 <template #actions>
                     <div class="v-step__buttons">
-                        <!-- TODO: style when isFirst/isLast -->
                         <button @click.prevent="tour.previousStep"
                             class="v-step__button v-step__button-previous"
+                            :data-disabled="tour.isFirst"
                             :aria-label="$t('tutorial_prev')">
                         </button>
                         <span class="step-status">
@@ -45,6 +45,7 @@
                         </span>
                         <button @click.prevent="tour.nextStep"
                             class="v-step__button v-step__button-next"
+                            :data-disabled="tour.isLast"
                             :aria-label="$t('tutorial_next')">
                         </button>
                     </div>
@@ -191,5 +192,9 @@ header .title {
 .step-status {
     color: var(--clr-gris-pale);
     font-size: var(--sz-300);
+}
+
+.v-step__button[data-disabled="true"] {
+    opacity: 0.2;
 }
 </style>
