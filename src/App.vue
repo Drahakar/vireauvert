@@ -135,6 +135,7 @@ Sentry.init({
                         <Timeline class="timeline" :year="state.year"
                             @year-selected="selectYear"
                             :district="state.district"></Timeline>
+                        <Header class="header" @about-requested="showAbout = true"></Header>
                     </section>
                     <section class="secondary-content content-section">
                         <Thermometer :statistics="selectedStatistics"
@@ -142,7 +143,6 @@ Sentry.init({
                         <CallToAction class="call-to-action"></CallToAction>
                     </section>
                 </div>
-                <Header class="header" @about-requested="showAbout = true"></Header>
             </div>
         </div>
         <About :show-modal="showAbout" @modal-closed="showAbout = false"></About>
@@ -183,7 +183,6 @@ Sentry.init({
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: var(--sz-100);
 }
 
 .primary-content {
@@ -198,10 +197,8 @@ Sentry.init({
     justify-content: space-between;
     gap: var(--sz-800);
     align-items: center;
-}
-
-.header {
-    padding-right: 110px;  /* space for OpenStreetMap attribution */
+    padding-bottom: var(--sz-800);
+    min-width: 100px;
 }
 
 .map-overlay {
@@ -213,6 +210,7 @@ Sentry.init({
     /* Note: must be this high to be over the overleaf z-index. */
     z-index: 1000;
     padding: var(--size-map-padding);
+    padding-bottom: 1px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -261,7 +259,6 @@ Sentry.init({
     background-color: var(--color-background-accent);
     border-radius: var(--border-radius);
     padding: var(--sz-200) var(--timeline-horizontal-padding);
-    max-width: 1280px;
 }
 
 .loading-overlay {
