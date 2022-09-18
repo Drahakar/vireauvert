@@ -20,6 +20,8 @@ import Timeline from "./components/Timeline.vue";
 import Tutorial from "./components/Tutorial.vue";
 import { useMapStore } from "./stores/map";
 import About from "./components/About.vue";
+import { useHighlightStore } from "./stores/highlights";
+import { Highlight } from "./models/highlights";
 
 export default defineComponent({
     components: {
@@ -58,6 +60,7 @@ export default defineComponent({
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
         const mapStore = useMapStore();
+        const highlightStore = useHighlightStore();
 
         const loadingCompleted = ref<boolean>(false);
 
@@ -65,6 +68,7 @@ export default defineComponent({
             candidateStore.loadCandidates(),
             catastropheStore.loadCatastrophes(),
             statisticStore.loadStatistics(),
+            highlightStore.loadHighlights(),
             mapStore.loadMap()
         ]);
         storeLoads.then(promises => {
@@ -80,6 +84,7 @@ export default defineComponent({
             state: reactive(DEFAULT_USER_STATE),
             statisticStore,
             catastropheStore,
+            highlightStore,
             loadingCompleted,
         };
     },
@@ -95,6 +100,9 @@ export default defineComponent({
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
                 this.state.year, this.state.district, this.state.catastropheFilter)
+        },
+        highlights(): List<Highlight> {
+            return this.highlightStore.findHighlights(this.state.year)
         },
         allCatastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
@@ -114,7 +122,7 @@ Sentry.init({
 <template>
     <div class="main">
         <MapView class="map" :district="state.district"
-            :year="state.year" :catastrophes="catastrophes"
+            :year="state.year" :catastrophes="catastrophes" :highlights="highlights"
             @district-selected="selectDistrict"
             :location="state.location" @location-changed="mapMoved"
             :zoom="state.zoom" @zoom-changed="mapZoomed"

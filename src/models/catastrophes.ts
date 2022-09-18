@@ -21,11 +21,14 @@ export interface CatastropheLocation {
     lng: number
 }
 
-export interface Catastrophe {
+export interface MapObject {
     id: string;
     location: CatastropheLocation;
-    city: string;
     type: CatastropheType;
+}
+
+export interface Catastrophe extends MapObject {
+    city: string;
     date: Date;
     severity: Severity;
     district: number;
