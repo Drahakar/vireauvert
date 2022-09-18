@@ -1,5 +1,55 @@
 <template>
-    <v-tour name="tutorial" :steps="steps" :options="options" :callbacks="callbacks"></v-tour>
+    <v-tour name="tutorial" :steps="steps" :options="options"
+        :callbacks="callbacks"
+        v-slot="tour">
+        <transition name="fade">
+            <v-step
+                v-if="tour.steps[tour.currentStep]"
+                :step="tour.steps[tour.currentStep]"
+                :key="tour.currentStep"
+                :previous-step="tour.previousStep"
+                :next-step="tour.nextStep"
+                :stop="tour.stop"
+                :skip="tour.skip"
+                :is-first="tour.isFirst"
+                :is-last="tour.isLast"
+                :labels="tour.labels"
+                :enabled-buttons="tour.enabledButtons"
+                :debug="tour.debug">
+                <!-- TODO style the ones below -->
+                <template #header="header">
+                    <header>
+                        <!-- TODO localize -->
+                        <span class="title">Tour guidé</span>
+                        <button @click.prevent="tour.stop"
+                            class="v-step__button v-step__button-stop">
+                            {{ tour.labels.buttonStop }}
+                        </button>
+                    </header>
+                </template>
+                <template #content>
+                    <div class="v-step__content">
+                        <div v-html="tour.steps[tour.currentStep].content"></div>
+                    </div>
+                </template>
+                <template #actions>
+                    <div class="v-step__buttons">
+                        <!-- TODO: style when isFirst/isLast -->
+                        <button @click.prevent="tour.previousStep"
+                            class="v-step__button v-step__button-previous">
+                            <!-- TODO: use icon -->
+                            {{ tour.labels.buttonPrevious }}
+                        </button>
+                        <button @click.prevent="tour.nextStep"
+                            class="v-step__button v-step__button-next">
+                            <!-- TODO: use icon -->
+                            {{ tour.labels.buttonNext }}
+                        </button>
+                    </div>
+                </template>
+            </v-step>
+        </transition>
+    </v-tour>
 </template>
 
 <script lang="ts">
@@ -16,11 +66,13 @@ export default defineComponent({
     data() {
         return {
             options: {
+                enabledButtons: {
+                    buttonSkip: false,
+                },
                 labels: {
-                    buttonSkip: this.$t('tutorial_skip'),
                     buttonPrevious: this.$t('tutorial_prev'),
                     buttonNext: this.$t('tutorial_next'),
-                    buttonStop: this.$t('tutorial_finish'),
+                    buttonStop: this.$t('tutorial_stop'),
                 },
             },
             steps: [
@@ -71,10 +123,16 @@ export default defineComponent({
     max-width: calc(var(--sz-900) * 10);
 }
 
-.v-tour :deep(.v-step__button) {
+.v-tour .v-step__button {
     color: var(--clr-blanc);
     border: 1px solid var(--clr-blanc);
     border-radius: var(--border-radius);
     font-size: var(--sz-400);
+
+    /* TODO: app styling instead of these v3-step defaults */
+    height: 1.8rem;
+    line-height: 1rem;
+    padding: 0.35rem 0.4rem;
+    margin: 0 0.2rem;
 }
 </style>
