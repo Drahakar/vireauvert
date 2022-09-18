@@ -19,8 +19,7 @@
                 <!-- TODO style the ones below -->
                 <template #header="header">
                     <header>
-                        <!-- TODO localize -->
-                        <span class="title">Tour guidé</span>
+                        <span class="title" v-t="'tutorial_title'"></span>
                         <button @click.prevent="tour.stop"
                             class="v-step__button v-step__button-stop">
                             {{ tour.labels.buttonStop }}
@@ -29,6 +28,7 @@
                 </template>
                 <template #content>
                     <div class="v-step__content">
+                        <!-- TODO: styling of some words -->
                         <div v-html="tour.steps[tour.currentStep].content"></div>
                     </div>
                 </template>
@@ -40,6 +40,10 @@
                             <!-- TODO: use icon -->
                             {{ tour.labels.buttonPrevious }}
                         </button>
+                        <span class="step-status">
+                            {{ $t('tutorial_step_msg',
+                               [tour.currentStep + 1, tour.steps.length]) }}
+                        </span>
                         <button @click.prevent="tour.nextStep"
                             class="v-step__button v-step__button-next">
                             <!-- TODO: use icon -->
