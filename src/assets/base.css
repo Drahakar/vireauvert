@@ -45,6 +45,7 @@
   /* Sizes that change at certain breakpoints */
   --timeline-horizontal-padding: var(--sz-200);
   --modal-width: 75%;
+  --tutorial-width: calc(var(--sz-700) * 9);
 
   /* Font weight variants */
   --fw-regular: 500;
@@ -68,6 +69,7 @@
 
     --timeline-horizontal-padding: var(--sz-600);
     --modal-width: 50%;
+    --tutorial-width: calc(var(--sz-700) * 13);
   }
 }
 

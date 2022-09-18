@@ -16,7 +16,7 @@
                 :labels="tour.labels"
                 :enabled-buttons="tour.enabledButtons"
                 :debug="tour.debug">
-                <!-- TODO style the ones below -->
+                <!-- TODO: hover styling -->
                 <template #header="header">
                     <header>
                         <span class="title" v-t="'tutorial_title'"></span>
@@ -36,18 +36,16 @@
                     <div class="v-step__buttons">
                         <!-- TODO: style when isFirst/isLast -->
                         <button @click.prevent="tour.previousStep"
-                            class="v-step__button v-step__button-previous">
-                            <!-- TODO: use icon -->
-                            {{ tour.labels.buttonPrevious }}
+                            class="v-step__button v-step__button-previous"
+                            :aria-label="$t('tutorial_prev')">
                         </button>
                         <span class="step-status">
                             {{ $t('tutorial_step_msg',
                                [tour.currentStep + 1, tour.steps.length]) }}
                         </span>
                         <button @click.prevent="tour.nextStep"
-                            class="v-step__button v-step__button-next">
-                            <!-- TODO: use icon -->
-                            {{ tour.labels.buttonNext }}
+                            class="v-step__button v-step__button-next"
+                            :aria-label="$t('tutorial_next')">
                         </button>
                     </div>
                 </template>
@@ -129,7 +127,7 @@ export default defineComponent({
     background-color: var(--color-background-accent);
     color: var(--clr-gris-moyen);
     border-radius: var(--border-radius);
-    max-width: calc(var(--sz-700) * 9);
+    max-width: var(--tutorial-width);
     font-size: var(--sz-300);
     box-shadow: 0px 4px 4px rgba(53, 53, 53, 0.25);
 }
@@ -155,6 +153,10 @@ header .title {
     background-color: var(--header-background-color);
 }
 
+.v-step__content {
+    padding: var(--sz-100);
+}
+
 .v-step__buttons {
     padding: var(--sz-30);
     display: flex;
@@ -163,23 +165,27 @@ header .title {
     align-items: center;
 }
 
-.v-step__content {
-    padding: var(--sz-100);
-}
-
-.v-step__button {
+.v-step__button-stop {
     font-size: var(--sz-300);
     color: var(--clr-blanc);
     background-color: var(--clr-gris-pale);
-    border: 1px solid var(--clr-blanc);
     border-radius: var(--border-radius);
-    font-size: var(--sz-400);
+    padding: var(--sz-50) var(--sz-100);
+}
 
-    /* TODO: app styling instead of these v3-step defaults */
-    height: 1.8rem;
-    line-height: 1rem;
-    padding: 0.35rem 0.4rem;
-    margin: 0 0.2rem;
+.v-step__buttons .v-step__button {
+    background-size: 100%;
+    width: var(--sz-700);
+    height: var(--sz-700);
+}
+
+.v-step__button-previous {
+    background-image: url("/icons/right-arrow.png");
+    transform: scaleX(-1);
+}
+
+.v-step__button-next {
+    background-image: url("/icons/right-arrow.png");
 }
 
 .step-status {
