@@ -23,6 +23,12 @@
                         <a v-t="'qc_govt'" :href="$t('url_qc_govt')" target="_blank"></a>
                         <a v-t="'can_govt'" :href="$t('url_can_govt')" target="_blank"></a>
                     </i18n-t>
+                    <div id="detailed-data">
+                        <div v-t="'detailed_sources'"></div>
+                        <ul>
+                            <li v-for="source of sources"><a :href="source" target="_blank">{{ source }}</a></li>
+                        </ul>
+                    </div>
                     <div id="version-info">
                         <div>2022</div>
                         <div>v1.0</div>
@@ -45,6 +51,17 @@ export default defineComponent({
             default: false
         }
     },
+    data() {
+        return {
+            sources: [
+                'https://www.donneesquebec.ca/recherche/dataset/evenements-de-securite-civile',
+                'https://www.donneesquebec.ca/recherche/dataset/observations-terrain-historiques-devenements-archives',
+                'https://www.donneesquebec.ca/recherche/dataset/feux-de-foret',
+                'https://changements-climatiques.canada.ca/donnees-climatiques/',
+                // TODO: Ouranos stuff
+            ]
+        }
+    },
     methods: {
         closeModal() {
             this.$emit('modal-closed');
@@ -64,7 +81,7 @@ export default defineComponent({
     z-index: 10000;
 }
 
-#modal-wrapper {    
+#modal-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +132,7 @@ export default defineComponent({
 }
 
 #modal-header h1 {
-    text-align: center;    
+    text-align: center;
 }
 
 #modal-content {
@@ -124,6 +141,8 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .lighter {
@@ -143,5 +162,25 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     color: var(--clr-gris-pale);
+}
+
+#detailed-data {
+    font-size: var(--sz-200);
+    color: var( --clr-gris-moyen);
+    width: 100%;
+}
+
+#detailed-data ul {
+    padding: 0;
+    font-size: var(--sz-100);
+    padding: var(--sz-600);
+    padding-top: 0;
+}
+
+#detailed-data li {
+    list-style: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

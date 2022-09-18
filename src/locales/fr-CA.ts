@@ -174,6 +174,7 @@ export default {
     url_qc_govt: "https://donneesquebec.ca/",
     can_govt: "Gouvernement du Canada",
     url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html",
+    detailed_sources: "Sources",
 
     // Tutorial
     tutorial_skip: "Ignorer le tour",
