@@ -1,17 +1,1 @@
-[
-    {
-        "id": "crise_du_verglas",
-        "year": 1998,
-        "location": {
-            "lat": 45.591722,
-            "lng": -73.015819
-        },
-        "type": "FREEZING_RAIN",
-        "title": {
-            "fr-CA": "Crise du verglas"
-        },
-        "body": {
-            "fr-CA": "Durée de **5 jours**\n**15 000** militaires solicités\n**100 000** personnes évacuées\nCoûts de **1 600 M$**\n\n[Radio-Canada](https://ici.radio-canada.ca/nouvelle/1076279/crise-verglas-montreal-quebec-vingt-ans-electricite-froid-hydro-crise-catastrophe-naturelle)\n[L'Encyclopédie Canadienne](https://www.thecanadianencyclopedia.ca/fr/article/la-crise-du-verglas-1998)"
-        }
-    }
-]
+[{"id": "crise_du_verglas", "year": 1998, "location": {"lat": 45.59, "lng": -73.02}, "locale": "fr-CA", "type": "FREEZING_RAIN", "title": "Crise du verglas", "body": "Dur\u00e9e de **5 jours**\n**15 000** militaires solicit\u00e9s\n**100 000** personnes \u00e9vacu\u00e9es\nCo\u00fbts de **1 600 M$**\n\n[Radio-Canada](https://ici.radio-canada.ca/nouvelle/1076279/crise-verglas-montreal-quebec-vingt-ans-electricite-froid-hydro-crise-catastrophe-naturelle)\n[L'Encyclop\u00e9die Canadienne](https://www.thecanadianencyclopedia.ca/fr/article/la-crise-du-verglas-1998)"}]

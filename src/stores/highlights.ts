@@ -1,6 +1,6 @@
 import { Highlight } from "@/models/highlights";
 import axios from "axios";
-import { List, Map } from "immutable";
+import { List } from "immutable";
 import { defineStore } from "pinia";
 
 export const useHighlightStore = defineStore('highlightStore', {
@@ -10,8 +10,8 @@ export const useHighlightStore = defineStore('highlightStore', {
         };
     },
     getters: {
-        findHighlights: state => (year: number) => {
-            return state.highlights.filter(x => x.year === year);
+        findHighlights: state => (year: number, locale: string) => {
+            return state.highlights.filter(x => x.year === year && locale === locale);
         }
     },
     actions: {

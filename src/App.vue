@@ -22,6 +22,7 @@ import { useMapStore } from "./stores/map";
 import About from "./components/About.vue";
 import { useHighlightStore } from "./stores/highlights";
 import { Highlight } from "./models/highlights";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
     components: {
@@ -82,6 +83,7 @@ export default defineComponent({
 
         return {
             state: reactive(DEFAULT_USER_STATE),
+            i18n: useI18n(),
             statisticStore,
             catastropheStore,
             highlightStore,
@@ -99,14 +101,14 @@ export default defineComponent({
         },
         catastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.state.year, this.state.district, this.state.catastropheFilter)
+                this.state.year, this.state.district, this.state.catastropheFilter);
         },
         highlights(): List<Highlight> {
-            return this.highlightStore.findHighlights(this.state.year)
+            return this.highlightStore.findHighlights(this.state.year, this.i18n.locale.value);
         },
         allCatastrophes(): List<Catastrophe> {
             return this.catastropheStore.findCatastrophes(
-                this.state.year, this.state.district, FILTER_ALL_CATASTROPHES)
+                this.state.year, this.state.district, FILTER_ALL_CATASTROPHES);
         },
     },
 });

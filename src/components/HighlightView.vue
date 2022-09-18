@@ -1,7 +1,7 @@
 <template>
     <div id="header">
         <div class="icon" :class="[`catastrophe-icon-${highlight.type.toLowerCase()}`]"></div>
-        <div class="title">{{ title }}</div>
+        <div class="title">{{ highlight.title }}</div>
     </div>
     <div id="body-content" v-html="body"></div>
 </template>
@@ -9,17 +9,17 @@
 <script lang="ts">
 import { CatastropheType } from '@/models/catastrophes';
 import { Highlight } from '@/models/highlights';
-import { defineComponent, PropType } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { defineComponent, h, PropType } from 'vue';
 import { marked, Renderer } from 'marked';
 
 const DUMMY_HIGHLIGHT: Highlight = {
     id: '',
     year: 0,
+    locale: 'fr-CA',
     type: CatastropheType.Unknown,
     location: { lat: 0, lng: 0 },
-    title: {},
-    body: {},
+    title: '',
+    body: '',
 };
 
 const renderer = new Renderer();
@@ -35,18 +35,10 @@ export default defineComponent({
             default: DUMMY_HIGHLIGHT
         }
     },
-    setup() {
-        const i18n = useI18n();
-        return { i18n };
-    },
     computed: {
-        title() {
-            return this.highlight.title[this.i18n.locale.value] ?? '';
-        },
         body() {
-            const body = this.highlight.body[this.i18n.locale.value];
-            if (body) {
-                return marked(body, { breaks: true, renderer });
+            if (this.highlight.body) {
+                return marked(this.highlight.body, { breaks: true, renderer });
             }
             return '';
         }
@@ -82,16 +74,16 @@ export default defineComponent({
     line-height: 1.5em;
 }
 
-#body-content ::v-deep p {
+#body-content :deep(p) {
     margin: 0;
     margin-top: var(--sz-30);
 }
 
-#body-content ::v-deep a {
+#body-content :deep(a) {
     color: var(--clr-orange);
 }
 
-#body-content ::v-deep a:hover {
+#body-content :deep(a:hover) {
     color: var(--clr-gris-pale);
 }
 </style>
