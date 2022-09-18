@@ -3,19 +3,17 @@
         <div id="modal-wrapper">
             <div id="modal" @click="ev => ev.stopPropagation()">
                 <div id="modal-header">
-                    <img src="/Logo_terreOS_About.png" alt="terreOS">
-                    <div id="close-button-wrapper">
-                        <a id="close-button" @click="closeModal">
-                            <img src="/Button/Close.png" alt="✕">
-                        </a>
-                    </div>
+                    <img class="logo" src="/Logo_terreOS_About.png" alt="terreOS">
+                    <a id="close-button" @click="closeModal">
+                        <img src="/Button/Close.png" alt="✕">
+                    </a>
                 </div>
                 <div id="modal-content">
                     <a href="https://equiterre.org/" target="_blank">
-                        <img src="/Logo_EQT_About.png" alt="Équiterre"></a>
+                        <img class="logo" src="/Logo_EQT_About.png" alt="Équiterre"></a>
                     <div class="lighter">✕</div>
                     <a href="https://www.bleuetdesign.com/" target="_blank">
-                        <img src="/Logo_Bleuet_About.png" alt="bleut.design">
+                        <img class="logo" src="/Logo_Bleuet_About.png" alt="bleut.design">
                     </a>
                     <div class="progs">
                         <div><a href="https://twitter.com/Drahakar" target="_blank">Andy Emond</a></div>
@@ -118,28 +116,28 @@ img {
     font-size: var(--sz-600);
 }
 
-#close-button-wrapper {
+#close-button {
+    display: block;
+    cursor: pointer;
     position: absolute;
     top: 0;
-    right: var(--sz-30);
+    right: 0;
     height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-#close-button {
-    cursor: pointer;
+    padding: 4px;
 }
 
 #modal-header {
-    padding: var(--sz-30);
+    padding: 2px;
     background-color: var(--clr-blanc);
     display: flex;
     justify-content: center;
+    height: var(--sz-900);
 }
 
 #modal-header img {
-    max-height: var(--sz-900);
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 #modal-content {

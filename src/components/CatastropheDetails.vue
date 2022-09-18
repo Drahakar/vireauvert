@@ -1,5 +1,5 @@
 <template>
-    <h1>{{ group.city ? group.city : `${group.location.lat.toFixed(2)}, ${group.location.lng.toFixed(2)}` }}</h1>
+    <div class="header">{{ group.city ? group.city : `${group.location.lat.toFixed(2)}, ${group.location.lng.toFixed(2)}` }}</div>
     <ul id="catastrophe-list">
         <li v-for="instance of group.instances">
             <div class="icon" :class="[`catastrophe-icon-${instance.type.toLowerCase()}`]"></div>
@@ -34,13 +34,14 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-h1 {
-    font-size: var(--sz-600);
+.header {
+    font-size: var(--sz-400);
     background-color: var(--clr-blanc);
-    padding-top: var(--sz-30);
-    padding-bottom: var(--sz-30);
+    height: var(--sz-900);
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
+    display: flex;
+    align-items: center;
 }
 
 time {
@@ -55,11 +56,12 @@ time {
 
 #catastrophe-list li {
     list-style: none;
+    color: var(--clr-gris-moyen);
     display: flex;
     align-items: center;
     gap: var(--sz-30);
     margin-top: var(--sz-30);
-    font-size: var(--sz-400);
+    font-size: var(--sz-200);
 }
 
 .icon {
