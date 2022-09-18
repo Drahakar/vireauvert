@@ -17,7 +17,6 @@ locale.setlocale(locale.LC_ALL, 'fr-CA.UTF-8')
 
 district_shapes = utils.load_map()
 
-
 class Severity(IntEnum):
     Unknown = 0
     Minor = 1
@@ -208,6 +207,9 @@ parse_heat_waves(path.join(utils.source_directory, 'heat_waves.csv'), catastroph
 
 catastrophes.sort(key=lambda x: x['date'])
 
+with open(path.join(utils.destination_directory, '..', '..', 'src', 'models', 'districts.json'), 'r', encoding='utf-8') as input_file:
+    all_districts: dict = json.load(input_file)
+
 result = {}
 for catastrophe in catastrophes:
     obj = {
@@ -219,14 +221,16 @@ for catastrophe in catastrophes:
         'district': 0,
         'loc_approx': catastrophe['loc_approx']
     }
+
+    district_id = utils.find_district(district_shapes, obj['location'])
+    if district_id is not None:
+        obj['district'] = district_id
     if 'city' in catastrophe:
         obj['city'] = catastrophe['city']
-
-    pt = geometry.Point(obj['location'])
-    for id, shape in district_shapes.items():
-        if utils.contains_point(shape, pt):
-            obj['district'] = id
-            break
+    elif district_id is not None:
+        district_name = all_districts.get(str(district_id))
+        if district_name:
+            obj['city'] = district_name
 
     result.setdefault(str(catastrophe['date'].year), []).append(obj)
 
