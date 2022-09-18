@@ -36,10 +36,7 @@
             <div class="item" v-for="value of Object.values(TimelineMode)">
                 <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value" @change="mode = value" :class="value">
                 <label :for="`radio-${value}`">
-                    <span>
-                        <!-- TODO: real icon -->
-                        {{ value[0] }}
-                    </span>
+                    <img :src="`/Button/${value}.png`" :alt="value">
                 </label>
             </div>
         </div>
@@ -62,8 +59,8 @@ import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, Ba
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
 enum TimelineMode {
-    Temperature = "temp",
-    CatastropheCount = "cata"
+    Temperature = "Temperature",
+    CatastropheCount = "Catastrophe"
 }
 
 export default defineComponent({
@@ -343,36 +340,28 @@ export default defineComponent({
     right: 4px;
     top:  4px;
     background-color: var(--clr-gris-fonce);
-    border-radius: calc(var(--sz-700) / 2);
-    display: flex;
-    gap: 2px;
-    padding: 2px;
-}
-
-#mode-container .item {
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
-    justify-items: center;
-}
-
-#mode-container label {
-    color: var(--clr-lichen);
-    cursor: pointer;
-    width: var(--sz-700);
-    height: var(--sz-700);
-    border-radius: calc(var(--sz-700) / 2);
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 4px;
+    padding: 4px;
 }
 
 #mode-container input {    
   display: none;
 }
 
-#mode-container input:checked+label {
-    background-color: var(--clr-orange);
-    color: var(--clr-blanc);
+#mode-container label {
+    display: block;
+    width: var(--sz-700);
+    height: var(--sz-700);
+    cursor: pointer;
 }
+
+#mode-container img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 </style>
