@@ -28,3 +28,9 @@ def contains_point(geo: geometry.base.BaseGeometry, pt: geometry.Point) -> bool:
         return False    
     return geo.contains(pt)
 
+def find_district(district_shapes, location):
+    pt = geometry.Point(location)
+    for id, shape in district_shapes.items():
+        if contains_point(shape, pt):
+            return id
+    return None
