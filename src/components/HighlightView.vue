@@ -1,7 +1,7 @@
 <template>
     <div id="header">
         <div class="icon" :class="[`catastrophe-icon-${highlight.type.toLowerCase()}`]"></div>
-        <div class="title">{{ highlight.title }}</div>
+        <div class="title">{{ highlight.title ? highlight.title : $t(`catastrophe_${highlight.type}`) }}</div>
     </div>
     <div id="body-content" v-html="body"></div>
 </template>
@@ -53,7 +53,7 @@ export default defineComponent({
     padding-right: var(--sz-50);
     display: flex;
     align-items: center;
-    gap: var(--sz-30);
+    gap: 4px;
 }
 
 .icon {

@@ -22,9 +22,10 @@ for name in os.listdir(root_path):
                 },
                 'locale': file.metadata['locale'],
                 'type': file.metadata['type'],
-                'title': file.metadata['title'],
                 'body': file.content
             }
+            if 'title' in file.metadata:
+                highlight['title'] = file.metadata['title']
             highlights.append(highlight)
 
 with open(os.path.join(utils.destination_directory, 'highlights.json'), 'w', encoding='utf-8') as output_file:
