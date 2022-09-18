@@ -18,38 +18,38 @@
 }
 
 .catastrophe-icon-unknown {
-  background-image: url('/icons/attention-red.png');
+  background-image: url('/icons/attention-highlight.png');
 }
 .catastrophe-icon-flood {
-  background-image: url('/icons/flood_b.png');
+  background-image: url('/icons/flood.png');
 }
 
 .catastrophe-icon-forest_fire {
-  background-image: url('/icons/forest_fire_b.png');
+  background-image: url('/icons/forest_fire.png');
 }
 
 .catastrophe-icon-freezing_rain {
-  background-image: url('/icons/freezing_rain_b.png');
+  background-image: url('/icons/freezing_rain.png');
 }
 
 .catastrophe-icon-heat_wave {
-  background-image: url('/icons/heat_wave_b.png');
+  background-image: url('/icons/heat_wave.png');
 }
 
 .catastrophe-icon-storm_winds {
-  background-image: url('/icons/storm_winds_b.png');
+  background-image: url('/icons/storm_winds.png');
 }
 
 .catastrophe-icon-tornado {
-  background-image: url('/icons/tornado_b.png');
+  background-image: url('/icons/tornado.png');
 }
 
 .catastrophe-icon-violent_storm {
-  background-image: url('/icons/violent_storm_b.png');
+  background-image: url('/icons/violent_storm.png');
 }
 
 .catastrophe-icon-winter_storm {
-  background-image: url('/icons/winter_storm_b.png');
+  background-image: url('/icons/winter_storm.png');
 }
 
 .catastrophe-popup {  
