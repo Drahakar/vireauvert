@@ -28,13 +28,10 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 18px;
-    color: var(--clr-blanc);
 }
 
 button {
     pointer-events: auto;
-    max-height: var(--sz-800);
 }
 
 img {

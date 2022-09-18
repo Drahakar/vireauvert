@@ -241,6 +241,10 @@ Sentry.init({
     width: 100%;
 }
 
+.header {
+    height: var(--sz-800);
+}
+
 .region-search {
     pointer-events: auto;
     --vs-font-size: var(--default-font-size);
