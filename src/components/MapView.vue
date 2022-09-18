@@ -182,6 +182,7 @@ export default defineComponent({
                 bounceAtZoomLimits: false,
                 maxBoundsViscosity: 1
             });
+            map.getRenderer(map as any).options.padding = 0.5;
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
