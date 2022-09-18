@@ -83,6 +83,9 @@ export default defineComponent({
                 {
                     target: '[data-tutorial-step="temperature"]',
                     content: this.$t('tutorial_temperature'),
+                    params: {
+                        placement: "left",
+                    },
                 },
                 {
                     target: '[data-tutorial-step="year-selector"]',
@@ -121,14 +124,53 @@ export default defineComponent({
 
 <style scoped>
 .v-tour :deep(.v-step) {
-    background-color: var(--clr-gris-mi-fonce);
-    color: var(--clr-blanc);
+    --header-background-color: var(--color-background);
+    padding: 0;
+    background-color: var(--color-background-accent);
+    color: var(--clr-gris-moyen);
     border-radius: var(--border-radius);
-    max-width: calc(var(--sz-900) * 10);
+    max-width: calc(var(--sz-700) * 9);
+    font-size: var(--sz-300);
+    box-shadow: 0px 4px 4px rgba(53, 53, 53, 0.25);
 }
 
-.v-tour .v-step__button {
+header {
+    background-color: var(--header-background-color);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    color: var(--color-text);
+    font-size: var(--sz-400);
+    padding: var(--sz-30);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .title {
+    margin-left: var(--sz-100);
+}
+
+.v-step[data-popper-placement="bottom"] :deep(.v-step__arrow) {
+    /* arrow is next to header then -- must match background-color. */
+    background-color: var(--header-background-color);
+}
+
+.v-step__buttons {
+    padding: var(--sz-30);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.v-step__content {
+    padding: var(--sz-100);
+}
+
+.v-step__button {
+    font-size: var(--sz-300);
     color: var(--clr-blanc);
+    background-color: var(--clr-gris-pale);
     border: 1px solid var(--clr-blanc);
     border-radius: var(--border-radius);
     font-size: var(--sz-400);
@@ -138,5 +180,10 @@ export default defineComponent({
     line-height: 1rem;
     padding: 0.35rem 0.4rem;
     margin: 0 0.2rem;
+}
+
+.step-status {
+    color: var(--clr-gris-pale);
+    font-size: var(--sz-300);
 }
 </style>
