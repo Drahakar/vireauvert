@@ -3,15 +3,20 @@
         <div id="modal-wrapper">
             <div id="modal" @click="ev => ev.stopPropagation()">
                 <div id="modal-header">
-                    <h1>terreOS</h1>
+                    <img src="/Logo_terreOS_About.png" alt="terreOS">
                     <div id="close-button-wrapper">
-                        <button id="close-button" @click="closeModal">✕</button>
+                        <a id="close-button" @click="closeModal">
+                            <img src="/Button/Close.png" alt="✕">
+                        </a>
                     </div>
                 </div>
                 <div id="modal-content">
-                    <h1>Équiterre</h1>
+                    <a href="https://equiterre.org/" target="_blank">
+                        <img src="/Logo_EQT_About.png" alt="Équiterre"></a>
                     <div class="lighter">✕</div>
-                    <h1>bleuet.design</h1>
+                    <a href="https://www.bleuetdesign.com/" target="_blank">
+                        <img src="/Logo_Bleuet_About.png" alt="bleut.design">
+                    </a>
                     <div class="progs">
                         <div><a href="https://twitter.com/Drahakar" target="_blank">Andy Emond</a></div>
                         <div><a href="https://twitter.com/edemartel" target="_blank">Etienne de Martel</a></div>
@@ -71,6 +76,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+img {
+    display: block;
+}
+
 #modal-container {
     position: fixed;
     left: 0;
@@ -95,6 +104,9 @@ export default defineComponent({
     overflow: hidden;
     border-radius: var(--border-radius);
     box-shadow: 0 3px var(--sz-30) rgba(0, 0, 0, 0.4);
+    max-height: 90%;
+    display: flex;
+    flex-direction: column;
 }
 
 .progs {
@@ -116,23 +128,18 @@ export default defineComponent({
 }
 
 #close-button {
-    background-color: var(--clr-orange);
-    color: var(--clr-blanc);
-    width: var(--sz-700);
-    height: var(--sz-700);
-    border-radius: calc(var(--sz-700) / 2);
-    font-weight: bold;
-    font-size: var(--sz-300);
-    text-align: center;
+    cursor: pointer;
 }
 
 #modal-header {
     padding: var(--sz-30);
     background-color: var(--clr-blanc);
+    display: flex;
+    justify-content: center;
 }
 
-#modal-header h1 {
-    text-align: center;
+#modal-header img {
+    max-height: var(--sz-900);
 }
 
 #modal-content {
@@ -143,6 +150,10 @@ export default defineComponent({
     text-align: center;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+#modal-content img {
+    max-height: var(--sz-900);
 }
 
 .lighter {
@@ -166,7 +177,7 @@ export default defineComponent({
 
 #detailed-data {
     font-size: var(--sz-200);
-    color: var( --clr-gris-moyen);
+    color: var(--clr-gris-moyen);
     width: 100%;
 }
 

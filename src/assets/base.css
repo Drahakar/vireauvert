@@ -150,6 +150,7 @@ body {
   letter-spacing: -0.3px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 /* Remove button default styling */

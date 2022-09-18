@@ -1,7 +1,11 @@
 <template>
     <header>
-        <button @click="about">Éqt*x(*)</button>
-        <button @click="about">terre os</button>
+        <button @click="about">
+            <img src="/Logo_EQT-Bleuet_Map.png" alt="Éqt*x(*)">
+        </button>
+        <button @click="about">
+            <img src="/Logo_terreOS_Map.png" alt="terreOS">
+        </button>
     </header>
 </template>
 
@@ -27,7 +31,15 @@ header {
     font-size: 18px;
     color: var(--clr-blanc);
 }
+
 button {
     pointer-events: auto;
+    max-height: var(--sz-800);
+}
+
+img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>

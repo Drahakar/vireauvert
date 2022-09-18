@@ -4,7 +4,7 @@
             <header class="row" @click="expanded = !expanded">
                 <PillBadge class="total-count pill" :value="currentCatastrophesCount"
                     data-tutorial-step="catastrophes-count"></PillBadge>
-                <img class="catastrophe-icon" src="/icons/attention-red.png">
+                <img class="catastrophe-icon" src="/icons/attention-highlight.png">
                 <div class="title"><span>Événements extrêmes</span></div>
                 <button v-if="expanded"><img src="/icons/x.svg"></button>
                 <button v-else><img src="/icons/settings.svg"></button>
@@ -40,37 +40,37 @@ import PillBadge from './PillBadge.vue';
 const TOGGLES = [
     {
         type: CatastropheType.Flood,
-        iconPath: '/icons/flood_w.png',
+        iconPath: '/icons/flood.png',
         pillClass: 'catastrophe-flood',
     },
     {
         type: CatastropheType.ForestFire,
-        iconPath: '/icons/forest_fire_w.png',
+        iconPath: '/icons/forest_fire.png',
         pillClass: 'catastrophe-forest-fire',
     },
     {
         type: CatastropheType.ViolentStorm,
-        iconPath: '/icons/violent_storm_w.png',
+        iconPath: '/icons/violent_storm.png',
         pillClass: 'catastrophe-violent-storm',
     },
     {
         type: CatastropheType.Tornado,
-        iconPath: '/icons/tornado_w.png',
+        iconPath: '/icons/tornado.png',
         pillClass: 'catastrophe-tornado',
     },
     {
         type: CatastropheType.HeatWave,
-        iconPath: '/icons/heat_wave_w.png',
+        iconPath: '/icons/heat_wave.png',
         pillClass: 'catastrophe-heat-wave',
     },
     {
         type: CatastropheType.FreezingRain,
-        iconPath: '/icons/freezing_rain_w.png',
+        iconPath: '/icons/freezing_rain.png',
         pillClass: 'catastrophe-freezing-rain',
     },
     {
         type: CatastropheType.StormWinds,
-        iconPath: '/icons/storm_winds_w.png',
+        iconPath: '/icons/storm_winds.png',
         pillClass: 'catastrophe-storm-winds',
     },
 ];
