@@ -164,7 +164,8 @@ export default {
     province_of_quebec: "Province de Québec",
 
     // Timeline
-    research_year: "Température / année",
+    timeline_mode_Temperature: "Température par année",
+    timeline_mode_Catastrophes: "Événements extrêmes par année",
 
     // About
     made_with_love: "Le logiciel terreOS a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
