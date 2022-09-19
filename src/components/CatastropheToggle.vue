@@ -12,9 +12,9 @@
 
             <template v-if="expanded" v-for="(toggle, index) in catastropheToggles">
                 <div v-if="index > 0" class="separator"></div>
-                <div class="row">
+                <div class="row" :class="toggle.class">
                     <PillBadge class="pill"
-                        :class="[{invisible: toggle.count == 0}, toggle.pillClass]"
+                        :class="{invisible: toggle.count == 0}"
                         :value="toggle.count"></PillBadge>
                     <img class="catastrophe-icon" :src="toggle.iconPath">
                     <div class="catastrophe-name"><span>{{toggle.name}}</span></div>
@@ -41,37 +41,37 @@ const TOGGLES = [
     {
         type: CatastropheType.Flood,
         iconPath: '/icons/flood.png',
-        pillClass: 'catastrophe-flood',
+        class: 'catastrophe-flood',
     },
     {
         type: CatastropheType.ForestFire,
         iconPath: '/icons/forest_fire.png',
-        pillClass: 'catastrophe-forest-fire',
+        class: 'catastrophe-forest-fire',
     },
     {
         type: CatastropheType.ViolentStorm,
         iconPath: '/icons/violent_storm.png',
-        pillClass: 'catastrophe-violent-storm',
+        class: 'catastrophe-violent-storm',
     },
     {
         type: CatastropheType.Tornado,
         iconPath: '/icons/tornado.png',
-        pillClass: 'catastrophe-tornado',
+        class: 'catastrophe-tornado',
     },
     {
         type: CatastropheType.HeatWave,
         iconPath: '/icons/heat_wave.png',
-        pillClass: 'catastrophe-heat-wave',
+        class: 'catastrophe-heat-wave',
     },
     {
         type: CatastropheType.FreezingRain,
         iconPath: '/icons/freezing_rain.png',
-        pillClass: 'catastrophe-freezing-rain',
+        class: 'catastrophe-freezing-rain',
     },
     {
         type: CatastropheType.StormWinds,
         iconPath: '/icons/storm_winds.png',
-        pillClass: 'catastrophe-storm-winds',
+        class: 'catastrophe-storm-winds',
     },
 ];
 
@@ -80,7 +80,7 @@ type OnChangeFn = (checked: Boolean) => void;
 type Toggle = {
     count: number,
     iconPath: string,
-    pillClass: string,
+    class: string,
     name: string,
     checked: boolean,
     onChange: OnChangeFn,
@@ -116,7 +116,7 @@ export default defineComponent({
             const allCatastrophes = {
                 count: this.allCatastrophes.size,
                 iconPath: '/icons/all-catastrophes.png',
-                pillClass: 'catastrophe-all',
+                class: 'catastrophe-all',
                 name: this.$t('all_catastrophes'),
                 checked: this.filter.equals(FILTER_ALL_CATASTROPHES),
                 onChange: this.onFilterAllChange,
@@ -125,7 +125,7 @@ export default defineComponent({
             const toggles = TOGGLES.map(toggle => ({
                 count: counts.get(toggle.type, 0),
                 iconPath: toggle.iconPath,
-                pillClass: toggle.pillClass,
+                class: toggle.class,
                 name: this.$t(`catastrophe_${toggle.type}`, 2),
                 checked: this.filter.includes(toggle.type),
                 onChange: (checked: boolean) => this.onFilterChange(checked, toggle.type),
@@ -212,32 +212,37 @@ button img {
 }
 
 .catastrophe-icon {
-    max-width: var(--sz-700);
-    min-width: var(--sz-700);
+    width: var(--sz-700);
+    height: var(--sz-700);
 }
 
-.catastrophe-all {
+.catastrophe-all .catastrophe-icon {
+    width: auto;
+
+}
+
+.catastrophe-all .pill {
     background-color: var(--clr-alerte);
 }
-.catastrophe-flood {
+.catastrophe-flood .pill {
     background-color: var(--clr-flood);
 }
-.catastrophe-forest-fire {
+.catastrophe-forest-fire .pill {
     background-color: var(--clr-forest-fire);
 }
-.catastrophe-violent-storm {
+.catastrophe-violent-storm .pill {
     background-color: var(--clr-violent-storm);
 }
-.catastrophe-tornado {
+.catastrophe-tornado .pill {
     background-color: var(--clr-tornado);
 }
-.catastrophe-heat-wave {
+.catastrophe-heat-wave .pill {
     background-color: var(--clr-heat-wave);
 }
-.catastrophe-freezing-rain {
+.catastrophe-freezing-rain .pill {
     background-color: var(--clr-freezing-rain);
 }
-.catastrophe-storm-winds {
+.catastrophe-storm-winds .pill {
     background-color: var(--clr-storm-winds);
 }
 </style>
