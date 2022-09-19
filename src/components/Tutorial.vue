@@ -26,10 +26,8 @@
                     </header>
                 </template>
                 <template #content>
-                    <div class="v-step__content">
-                        <!-- TODO: styling of some words -->
-                        <div v-html="tour.steps[tour.currentStep].content"></div>
-                    </div>
+                    <div class="v-step__content"
+                        v-html="tour.steps[tour.currentStep].content"></div>
                 </template>
                 <template #actions>
                     <div class="v-step__buttons">
@@ -80,14 +78,14 @@ export default defineComponent({
             steps: [
                 {
                     target: '[data-tutorial-step="temperature"]',
-                    content: this.$t('tutorial_temperature'),
+                    content: this.$t('tutorial_temperature_html'),
                     params: {
                         placement: "left",
                     },
                 },
                 {
                     target: '[data-tutorial-step="year-selector"]',
-                    content: this.$t('tutorial_year'),
+                    content: this.$t('tutorial_year_html'),
                     params: {
                         // Important, otherwise this pushes the height past 100%
                         placement: "top",
@@ -95,7 +93,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="catastrophes-count"]',
-                    content: this.$t('tutorial_catastrophes'),
+                    content: this.$t('tutorial_catastrophes_html'),
                 },
             ],
             callbacks: { 
@@ -154,7 +152,15 @@ header .title {
 }
 
 .v-step__content {
-    padding: var(--sz-100);
+    padding: var(--sz-100) var(--sz-600);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-300);
+}
+
+.v-step__content :deep(b) {
+    font-weight: var(--fw-regular);
+    color: var(--color-accent);
 }
 
 .v-step__buttons {
