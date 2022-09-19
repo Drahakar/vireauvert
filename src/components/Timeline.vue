@@ -2,33 +2,35 @@
     <div class="timeline">
         <div id="slidertitle" v-t="`timeline_mode_${mode}`">
         </div>
-        <div id="timelinegraph">
-            <!-- set width to 0 to let it auto-size it with given height. -->
-            <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="90" :width="0"
-                :chart-options="temperatureOptions" />
-            <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="90" :width="0"
-                :chart-options="catastropheOptions" />
-        </div>
-        <div id="slidercontainer" ref="sliderContainer">
-            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
-                <template v-slot:label="{value}">
-                    <div class="markline"></div>
-                    <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
-                </template>
-                <template v-slot:step="{ active }">
-                    <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
-                </template>
-                <template v-slot:tooltip="{ value }">
-                    <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
-                        data-tutorial-step="year-selector">
-                        <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
-                    </div>
-                    <div class="tooltip-line"></div>
-                </template>
-                <template v-slot:dot>
-                    <TimelineArrow class="slider-arrow"></TimelineArrow>
-                </template>
-            </vue-slider>
+        <div class="timeline-container">
+            <div class="timeline-graph">
+                <!-- set width to 0 to let it auto-size it with given height. -->
+                <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="90" :width="0"
+                    :chart-options="temperatureOptions" />
+                <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="90" :width="0"
+                    :chart-options="catastropheOptions" />
+            </div>
+            <div class="slider-container" ref="sliderContainer">
+                <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
+                    <template v-slot:label="{value}">
+                        <div class="markline"></div>
+                        <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
+                    </template>
+                    <template v-slot:step="{ active }">
+                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                    </template>
+                    <template v-slot:tooltip="{ value }">
+                        <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                            data-tutorial-step="year-selector">
+                            <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
+                        </div>
+                        <div class="tooltip-line"></div>
+                    </template>
+                    <template v-slot:dot>
+                        <TimelineArrow class="slider-arrow"></TimelineArrow>
+                    </template>
+                </vue-slider>
+            </div>
         </div>
         <div id="mode-container">
             <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
@@ -235,14 +237,14 @@ export default defineComponent({
     margin-bottom: var(--sz-50);
 }
 
-#slidercontainer input {
+.slider-container input {
     -webkit-appearance: none;
     background: #ffffff;
     outline: none;
     opacity: 1;
 }
 
-#slidercontainer {
+.slider-container {
     margin-bottom: var(--sz-100);
 }
 
@@ -295,6 +297,10 @@ export default defineComponent({
 
 .timeline {
     padding: var(--sz-50) var(--timeline-horizontal-padding);
+}
+
+.timeline-container {
+    margin-left: calc(0px - var(--timeline-horizontal-padding));
 }
 
 @media screen and (min-width: 768px) {
