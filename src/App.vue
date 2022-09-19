@@ -181,6 +181,7 @@ Sentry.init({
 }
 
 .content-container {
+    height: 100%;
     display: flex;
     min-height: 0;  /* undo min-height: auto from being a flex child */
     height: 100%;
@@ -196,8 +197,7 @@ Sentry.init({
 }
 
 .primary-content {
-    width: 100%;
-    height: 100%;
+    flex: 1;
     min-width: 0;  /* undo min-width: auto from being a flex child */
 }
 
@@ -205,7 +205,7 @@ Sentry.init({
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: var(--sz-800);
+    gap: var(--sz-900);
     align-items: center;
     padding-bottom: var(--sz-800);
     min-width: 100px;
