@@ -27,17 +27,27 @@ a:hover {
     transform: scale(1.2);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .a:hover {
-      transition: none;
-  }
-}
-
 img {
     border-radius: 50%;
     width: 100%;
     height: 100%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
         inset 0px 0px 2px rgba(0, 0, 0, 0.5);
+    animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    img {
+        animation: none;
+    }
+    .a:hover {
+        transition: none;
+    }
 }
 </style>
