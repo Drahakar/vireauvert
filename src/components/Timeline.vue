@@ -297,6 +297,7 @@ export default defineComponent({
 }
 
 .timeline-container {
+    /* Undo the timeline component padding to push to the left side */
     margin-left: calc(0px - var(--timeline-horizontal-padding));
 }
 
