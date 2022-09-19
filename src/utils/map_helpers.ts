@@ -72,7 +72,6 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
     });
     const popup = L.popup({
         className: 'catastrophe-popup',
-        closeButton: false,
         closeOnClick: false,
     });
     popup.setContent(() => {

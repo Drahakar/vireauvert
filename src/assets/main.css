@@ -120,3 +120,28 @@
   color: var(--clr-gris-fonce);
   border-radius: var(--popup-border-radius);
 }
+
+.leaflet-container a.leaflet-popup-close-button {
+  width: var(--sz-700);
+  height: var(--sz-700);
+  border-radius: 50%;
+  background-color: var(--clr-gris-pale);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: calc((var(--sz-900) - var(--sz-700)) / 2);
+  margin-top: calc((var(--sz-900) - var(--sz-700)) / 2);
+}
+
+.leaflet-container a.leaflet-popup-close-button span {
+  display: block;
+  font-family: "Matter";
+  color: var( --clr-blanc);
+  font-size: var(--sz-600);
+  line-height: var(--sz-600);
+  width: var(--sz-600);
+  height: var(--sz-600);
+}
+.leaflet-container a.leaflet-popup-close-button:hover span {  
+  color: var(--clr-gris-moyen);
+}
