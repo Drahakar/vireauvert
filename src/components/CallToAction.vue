@@ -20,6 +20,17 @@ a {
     border-radius: 50%;
     width: calc(var(--sz-900) * 2);
     height: calc(var(--sz-900) * 2);
+    transition: transform 0.15s ease;
+}
+
+a:hover {
+    transform: scale(1.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a:hover {
+      transition: none;
+  }
 }
 
 img {
