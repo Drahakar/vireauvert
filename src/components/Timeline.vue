@@ -46,6 +46,7 @@
 
 <script lang="ts">
 import VueSlider from 'vue-slider-component'
+import { Map } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { TIMELINE_YEARS, BEGIN_MODELED_YEAR } from '@/models/constants';
@@ -93,7 +94,13 @@ export default defineComponent({
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
 
-        const baseOptions: ChartOptions = {
+        const sliderContainer = ref<HTMLDivElement | null>(null);
+        const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
+            if (sliderContainer.value) {
+                sliderContainer.value.style.marginLeft = `${axis.width}px`;
+            }
+        };
+        const baseOptions = Map({
             onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
                 const canvasPosition = getRelativePosition(e, chart)
                 const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
@@ -108,63 +115,51 @@ export default defineComponent({
                 },
                 tooltip: {
                     enabled: false
-                }
+                },
+            },
+            layout: {
+            },
+            scales: {
+                x: {
+                    display: false,
+                },
+                y: {
+                    display: true,
+                    afterFit: onAfterFit,
+                    color: '#353535',
+                    grid: {
+                        tickLength: 5,
+                        tickWidth: 1,
+                        drawBorder: false,
+                        drawOnChartArea: true,
+                        tickColor: "#a59e20",
+                    },
+                },
             },
             responsive: true,
             maintainAspectRatio: false,
-        };
+        });
 
-        const sliderContainer = ref<HTMLDivElement | null>(null);
-        const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
-            if (sliderContainer.value) {
-                sliderContainer.value.style.marginLeft = `${axis.width}px`;
-            }
-        };
-
-        const temperatureOptions = { ...baseOptions } as ChartOptions<'line'>;
-        temperatureOptions.scales = {
-            x: {
-                display: false,
-            },
-            y: {
-                grid: {
-                    tickLength: 5,
-                    tickWidth: 1,
-                    drawBorder: false,
-                    drawOnChartArea: true,
-                    tickColor: "#a59e20",
+        const temperatureOptions = baseOptions.mergeDeep(Map({
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 2,
+                        format: numberFormats.temperature_delta_int,
+                    }
                 },
-                afterFit: onAfterFit,
-                ticks: {
-                    display: true,
-                    stepSize: 2,
-                    format: numberFormats.temperature_delta_int,
-                    color: '#353535',
-                }
-            }
-        };
-
-        const catastropheOptions = { ...baseOptions } as ChartOptions<'bar'>;
-        catastropheOptions.scales = {
-            x: {
-                display: false,
             },
-            y: {
-                grid: {
-                    tickLength: 5,
-                    tickWidth: 1,
-                    drawBorder: false,
-                    drawOnChartArea: true,
-                    tickColor: "#a59e20",
+        })).toObject() as ChartOptions<'line'>;
+
+        const catastropheOptions = baseOptions.mergeDeep(Map({
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 100,
+                    }
                 },
-                afterFit: onAfterFit,
-                ticks: {
-                    display: true,
-                    stepSize: 100,
-                    color: '#353535',
-                }
-            }
-        };
+            },
+        })).toObject() as ChartOptions<'bar'>;
 
         return {
             selectedYear,
@@ -174,7 +169,7 @@ export default defineComponent({
             sliderContainer,
             TimelineMode,
             temperatureOptions,
-            catastropheOptions
+            catastropheOptions,
         };
     },
     data() {
