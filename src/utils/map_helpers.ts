@@ -77,6 +77,7 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
     });
     popup.setContent(() => {
         const div = document.createElement('div');
+        div.classList.add('popup-content-container');
         const details = modelFactory();
         details.appContext = appContext;
         render(details, div);

@@ -3,6 +3,7 @@
 :root {
   --icon-size: 27px;
   --big-icon-size: calc(var(--icon-size) * 2);
+  --popup-border-radius: 12px;
 }
 
 #app {
@@ -15,7 +16,7 @@
   height: var(--icon-size);
   margin-top: calc(var(--icon-size) / -2);
   margin-left: calc(var(--icon-size) / -2);
-  background-size: var(--icon-size) var(--icon-size);
+  background-size: var(--icon-size);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -26,7 +27,7 @@
   height: var(--big-icon-size);
   margin-top: calc(var(--big-icon-size) / -2);
   margin-left: calc(var(--big-icon-size) / -2);
-  background-size: var(--big-icon-size) var(--big-icon-size);
+  background-size: var(--big-icon-size);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -107,10 +108,15 @@
   line-height: 1.1;
 }
 .catastrophe-popup .leaflet-popup-content-wrapper {
-  overflow: hidden;
+  background-color: transparent;
+}
+
+.popup-content-container {
+  border-radius: var(--popup-border-radius);
 }
 
 .catastrophe-popup .leaflet-popup-content {
   background-color: var(--clr-beige);
   color: var(--clr-gris-fonce);
+  border-radius: var(--popup-border-radius);
 }
