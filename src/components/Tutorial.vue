@@ -1,7 +1,6 @@
 <template>
     <v-tour name="tutorial" :steps="steps" :options="options"
-        :callbacks="callbacks"
-        v-slot="tour">
+        :callbacks="callbacks" v-slot="tour">
         <transition name="fade">
             <v-step
                 v-if="tour.steps[tour.currentStep]"
@@ -19,7 +18,7 @@
                 <template #header="header">
                     <header>
                         <span class="title" v-t="'tutorial_title'"></span>
-                        <button @click.prevent="tour.stop"
+                        <button @click.prevent="tour.finish"
                             class="v-step__button v-step__button-stop">
                             {{ tour.labels.buttonStop }}
                         </button>
@@ -94,13 +93,13 @@ export default defineComponent({
                 {
                     target: '[data-tutorial-step="catastrophes-count"]',
                     content: this.$t('tutorial_catastrophes_html'),
+                    params: {
+                        placement: "bottom",
+                    },
                 },
             ],
             callbacks: { 
-                onSkip: () => {
-                    localStorage.setItem('tutorial_completed', 'true');
-                },
-                onFinish: () => {
+                onStop: () => {
                     localStorage.setItem('tutorial_completed', 'true');
                 }
             }
