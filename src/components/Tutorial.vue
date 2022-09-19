@@ -128,7 +128,7 @@ export default defineComponent({
     background-color: var(--color-background-accent);
     color: var(--clr-gris-moyen);
     border-radius: var(--border-radius);
-    max-width: var(--tutorial-width);
+    max-width: var(--popup-width);
     font-size: var(--sz-300);
     box-shadow: 0px 4px 4px rgba(53, 53, 53, 0.25);
 }
