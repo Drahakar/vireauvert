@@ -54,6 +54,7 @@ export default {
     // Catastrophes
 
     catastrophes: "Événement extrême | Événements extrêmes",
+    catastrophe_UNKNOWN:  "Événement extrême | Événements extrêmes",
     catastrophe_FLOOD: ({ plural }: MessageContext) => plural(catastrophes.FLOOD),
     catastrophe_FOREST_FIRE: ({ plural }: MessageContext) => plural(catastrophes.FOREST_FIRE),
     catastrophe_VIOLENT_STORM: ({ plural }: MessageContext) => plural(catastrophes.VIOLENT_STORM),

@@ -1,11 +1,13 @@
-import L, { DivOverlay } from "leaflet";
+import L from "leaflet";
 
 import { CatastropheGroup, CatastropheType } from "@/models/catastrophes";
 import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
 import CatastropheDetails from "@/components/CatastropheDetails.vue";
-import { AppContext, h, render } from "vue";
+import { AppContext, h, render, VNode } from "vue";
+import { Highlight } from "@/models/highlights";
+import HighlightView from "@/components/HighlightView.vue";
 
 export interface DistrictLayer {
     feature: Feature<Geometry, DistrictProperties>;
@@ -42,23 +44,30 @@ export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta
     }
 }
 
-function generateIcons(): Map<CatastropheType, L.DivIcon> {
+function generateIcons(baseClassName: string, generateAsInnerDiv: boolean): Map<CatastropheType, L.DivIcon> {
     const icons = new Map<CatastropheType, L.DivIcon>();
     for (const value of Object.values(CatastropheType)) {
-        const icon = L.divIcon({
-            className: `map-icon catastrophe-icon-${value.toLowerCase()}`,
+        const options: L.DivIconOptions = {
             iconSize: null as any
-        });
+        };
+        if (generateAsInnerDiv) {
+            options.className = '';
+            options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}"></div>`;
+        } else {            
+            options.className = `${baseClassName} catastrophe-icon-${value.toLowerCase()}`;
+        }
+        const icon = L.divIcon(options);
         icons.set(value, icon);
     }
     return icons;
 }
 
-export const mapIcons = generateIcons();
+const catastropheIcons = generateIcons('map-icon', false);
+const highlightIcons = generateIcons('big-map-icon', true);
 
-export function createMapMarker(group: CatastropheGroup, appContext: AppContext) {
-    const marker = L.marker(group.location, {
-        icon: mapIcons.get(group.type),
+function createMarkerInternal(location: L.LatLngExpression, type: CatastropheType, iconMap: Map<CatastropheType, L.DivIcon>, zindex: number, appContext: AppContext, modelFactory: () => VNode) {
+    const marker = L.marker(location, {
+        icon: iconMap.get(type),
         opacity: 1
     });
     const popup = L.popup({
@@ -66,17 +75,26 @@ export function createMapMarker(group: CatastropheGroup, appContext: AppContext)
         closeButton: false,
         minWidth: 500,
         maxHeight: 400,
-        closeOnClick: false
+        closeOnClick: false,
     });
     popup.setContent(() => {
         const div = document.createElement('div');
-        const details = h(CatastropheDetails, { group });
+        const details = modelFactory();
         details.appContext = appContext;
         render(details, div);
         return div;
     });
     marker.bindPopup(popup);
+    marker.setZIndexOffset(zindex);
     return marker;
+}
+
+export function createMapMarker(group: CatastropheGroup, appContext: AppContext) {
+    return createMarkerInternal(group.location, group.type, catastropheIcons, 0, appContext, () => h(CatastropheDetails, { group }));
+}
+
+export function createHighlightMarker(highlight: Highlight, appContext: AppContext) {
+    return createMarkerInternal(highlight.location, highlight.type, highlightIcons, 100, appContext, () => h(HighlightView, { highlight }));
 }
 
 export function setGlobalIconSize(ratio: number) {

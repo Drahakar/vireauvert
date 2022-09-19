@@ -9,17 +9,18 @@
 <script lang="ts">
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
-import { defineComponent, PropType, ref, watch } from "vue";
-import { Catastrophe, groupCatastrophes } from "@/models/catastrophes";
+import { AppContext, defineComponent, PropType, ref, watch } from "vue";
+import { Catastrophe, groupCatastrophes, MapObject } from "@/models/catastrophes";
 import { List } from "immutable";
 import { DistrictProperties } from "@/models/map";
 import { getStatisticsForRegion, useStatisticStore } from "@/stores/statistics";
 import Thermometer from "./Thermometer.vue";
-import { createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } from "@/utils/map_helpers";
+import { createHighlightMarker, createMapMarker, DistrictLayer, setGlobalIconSize, setMapLayerColour } from "@/utils/map_helpers";
 import { useMapStore } from "@/stores/map";
 import { YearlyStatistics } from "@/models/yearly_data";
 import { getAppContext } from "@/main";
 import { MAX_ZOOM, MIN_ZOOM } from "@/models/user";
+import { Highlight } from "@/models/highlights";
 
 export default defineComponent({
     emits: ["districtSelected", 'locationChanged', 'zoomChanged'],
@@ -34,6 +35,10 @@ export default defineComponent({
         },
         catastrophes: {
             type: Object as PropType<List<Catastrophe>>,
+            default: List()
+        },
+        highlights: {
+            type: Object as PropType<List<Highlight>>,
             default: List()
         },
         location: {
@@ -59,10 +64,8 @@ export default defineComponent({
             }
         };
 
-        const icons: MapIcons = {
-            layer: L.layerGroup(),
-            index: new Map<string, L.Marker>()
-        };
+        const catastropheIcons = new MapIcons();
+        const highlightIcons = new MapIcons();
 
         const map = ref<L.Map | null>(null);
         const districtLayers = new Map<string, DistrictLayer>();
@@ -72,11 +75,10 @@ export default defineComponent({
                 const district: DistrictLayer = { feature, layer: layer as L.GeoJSON };
                 districtLayers.set(properties.id.toString(), { feature, layer: layer as L.GeoJSON });
                 layer.addEventListener("click", () => {
-                    for (const marker of icons.index.values()) {
-                        if (marker.isPopupOpen()) {
-                            marker.closePopup();
-                            return;
-                        }
+                    const popupMarker = catastropheIcons.getOpenedPopup() ?? highlightIcons.getOpenedPopup();
+                    if (popupMarker) {
+                        popupMarker.closePopup();
+                        return;
                     }
                     const newId = props.district !== properties.id ? properties.id : 0;
                     emit("districtSelected", newId);
@@ -143,7 +145,11 @@ export default defineComponent({
         });
 
         watch(() => props.catastrophes, catastrophes => {
-            refreshIcons(icons, map.value as L.Map | null, catastrophes);
+            catastropheIcons.refreshCatastrophes(map.value as L.Map | null, catastrophes);
+        });
+
+        watch(() => props.highlights, highlights => {
+            highlightIcons.refreshHighlights(map.value as L.Map | null, highlights);
         });
 
         const mapResizeObserver = new ResizeObserver(entries => {
@@ -159,7 +165,8 @@ export default defineComponent({
             map,
             mapLayer,
             maskLayer,
-            icons,
+            catastropheIcons,
+            highlightIcons,
             statisticStore,
             mapWrapper: ref<HTMLDivElement | null>(null),
             mapResizeObserver: mapResizeObserver,
@@ -182,22 +189,24 @@ export default defineComponent({
                 bounceAtZoomLimits: false,
                 maxBoundsViscosity: 1
             });
+            
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
             this.maskLayer.addTo(map);
             this.mapLayer.addTo(map);
 
-            refreshIcons(this.icons, map, this.catastrophes);
-            this.icons.layer.addTo(map);
+            this.catastropheIcons.refreshCatastrophes(map, this.catastrophes);
+            this.highlightIcons.refreshHighlights(map, this.highlights);
+            this.catastropheIcons.layer.addTo(map);
+            this.highlightIcons.layer.addTo(map);
 
             map.addEventListener('click', ev => {
-                for (const marker of this.icons.index.values()) {
-                    if (marker.isPopupOpen()) {
-                        marker.closePopup();
-                        ev.originalEvent.stopPropagation();
-                    }
-                }
+                const marker = this.catastropheIcons.getOpenedPopup() ?? this.highlightIcons.getOpenedPopup();;
+                if(marker) {
+                    marker.closePopup();
+                    ev.originalEvent.stopPropagation();
+                }                
             });
             map.addEventListener('moveend', () => {
                 this.$emit('locationChanged', map.getCenter());
@@ -234,38 +243,60 @@ export default defineComponent({
     components: { Thermometer }
 });
 
-interface MapIcons {
-    layer: L.LayerGroup;
-    index: Map<string, L.Marker>;
-}
 
-function refreshIcons(icons: MapIcons, map: L.Map | null, catastrophes: List<Catastrophe>) {
-    const missing = new Set<string>(icons.index.keys());
-    for (const group of groupCatastrophes(catastrophes)) {
-        if (!icons.index.has(group.id)) {
-            const marker = createMapMarker(group, getAppContext());
+class MapIcons {
+    public layer: L.LayerGroup;
+    public index: Map<string, L.Marker>;
 
-            if (map) {
-                marker.addEventListener('click', () => {
-                    map.panTo(group.location, {
-                        animate: true
-                    });
-                });
+    constructor() {
+        this.layer = L.layerGroup();
+        this.index = new Map<string, L.Marker>();
+    }
+
+    getOpenedPopup() {
+        for (const marker of this.index.values()) {
+            if (marker.isPopupOpen()) {
+                return marker;
             }
-
-            icons.index.set(group.id, marker);
-            marker.addTo(icons.layer);
         }
-        missing.delete(group.id);
+        return null;
     }
-    for (const id of missing) {
-        const marker = icons.index.get(id);
-        if (marker) {
-            icons.index.delete(id);
-            icons.layer.removeLayer(marker);
+
+    refreshCatastrophes(map: L.Map | null, catastrophes: List<Catastrophe>) {
+        this.refreshIcons(map, groupCatastrophes(catastrophes), createMapMarker);
+    }
+
+    refreshHighlights(map: L.Map | null, highlights: List<Highlight>) {
+        this.refreshIcons(map, highlights, createHighlightMarker);
+    }
+
+    refreshIcons<T extends MapObject>(map: L.Map | null, items: List<T>, markerFactory: (item: T, context: AppContext) => L.Marker) {
+        const missing = new Set<string>(this.index.keys());
+        for (const item of items) {
+            if (!this.index.has(item.id)) {
+                const marker = markerFactory(item, getAppContext());
+                if (map) {
+                    marker.addEventListener('click', () => {
+                        map.panTo(item.location, {
+                            animate: true
+                        });
+                    });
+                }
+                this.index.set(item.id, marker);
+                marker.addTo(this.layer);
+            }
+            missing.delete(item.id);
+        }
+        for (const id of missing) {
+            const marker = this.index.get(id);
+            if (marker) {
+                this.index.delete(id);
+                this.layer.removeLayer(marker);
+            }
         }
     }
 }
+
 
 function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
     const bounds = mapLayer.getBounds();

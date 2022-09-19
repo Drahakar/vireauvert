@@ -2,6 +2,7 @@
 
 :root {
   --icon-size: 27px;
+  --big-icon-size: calc(var(--icon-size) * 2);
 }
 
 #app {
@@ -15,6 +16,45 @@
   margin-top: calc(var(--icon-size) / -2);
   margin-left: calc(var(--icon-size) / -2);
   background-size: var(--icon-size) var(--icon-size);
+  opacity: 0.9;
+}
+
+.big-map-icon {
+  width: var(--big-icon-size);
+  height: var(--big-icon-size);
+  margin-top: calc(var(--big-icon-size) / -2);
+  margin-left: calc(var(--big-icon-size) / -2);
+  background-size: var(--big-icon-size) var(--big-icon-size);
+  
+  border: 2px solid white;
+  border-radius:50%;
+
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 1);
+	transform: scale(1);
+	animation: pulse 2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .big-map-icon {
+      animation: none;
+  }
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.90);
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+	}
+
+	50% {
+		transform: scale(1);
+		box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+	}
+
+	100% {
+		transform: scale(0.90);
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+	}
 }
 
 .catastrophe-icon-unknown {
