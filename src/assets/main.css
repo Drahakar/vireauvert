@@ -16,7 +16,9 @@
   margin-top: calc(var(--icon-size) / -2);
   margin-left: calc(var(--icon-size) / -2);
   background-size: var(--icon-size) var(--icon-size);
-  opacity: 0.9;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .big-map-icon {
@@ -25,6 +27,9 @@
   margin-top: calc(var(--big-icon-size) / -2);
   margin-left: calc(var(--big-icon-size) / -2);
   background-size: var(--big-icon-size) var(--big-icon-size);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   
   border: 2px solid white;
   border-radius:50%;
