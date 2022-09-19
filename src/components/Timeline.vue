@@ -60,6 +60,7 @@ import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, Ba
 import { numberFormats } from '@/locales/formats';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
+ChartJS.defaults.font.family = "Matter";
 
 enum TimelineMode {
     Temperature = "Temperature",
