@@ -40,7 +40,7 @@ export default defineComponent({
     height: var(--sz-900);
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
-    border-radius: var(--popup-border-radius);
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
 }

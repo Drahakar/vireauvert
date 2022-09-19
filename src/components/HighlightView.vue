@@ -49,7 +49,7 @@ export default defineComponent({
 #header {
     font-size: var(--sz-400);
     background-color: var(--clr-blanc);
-    border-radius: var(--popup-border-radius);
+    border-radius: var(--border-radius);
     height: var(--sz-900);
     padding-right: var(--sz-50);
     display: flex;

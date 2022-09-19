@@ -3,7 +3,6 @@
 :root {
   --icon-size: 27px;
   --big-icon-size: calc(var(--icon-size) * 2);
-  --popup-border-radius: 12px;
 }
 
 #app {
@@ -109,16 +108,17 @@
 }
 .catastrophe-popup .leaflet-popup-content-wrapper {
   background-color: transparent;
+  border-radius: var(--border-radius);
 }
 
 .popup-content-container {
-  border-radius: var(--popup-border-radius);
+  border-radius: var(--border-radius);
 }
 
 .catastrophe-popup .leaflet-popup-content {
   background-color: var(--clr-beige);
   color: var(--clr-gris-fonce);
-  border-radius: var(--popup-border-radius);
+  border-radius: var(--border-radius);
 }
 
 .leaflet-container a.leaflet-popup-close-button {
