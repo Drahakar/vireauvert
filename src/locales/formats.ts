@@ -19,6 +19,13 @@ export const numberFormats = {
         maximumFractionDigits: 1,
         signDisplay: 'exceptZero'
     },
+    temperature_delta_int: {
+        style: 'unit',
+        unit: 'celsius',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        signDisplay: 'exceptZero'
+    },
     precipitations: {
         useGrouping: false,
         maximumFractionDigits: 0,

@@ -4,14 +4,12 @@
         </div>
         <div id="timelinegraph">
             <!-- set width to 0 to let it auto-size it with given height. -->
-            <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="70" :width="0"
-                :chart-options="chartOptions" />
-            <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="70" :width="0"
-                :chart-options="chartOptions" />
-            <!-- Apparently it's not possible not to display the Y axis label not rotated https://github.com/chartjs/Chart.js/issues/8345 -->
-            <span class="graph-unit">C</span>
+            <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="90" :width="0"
+                :chart-options="temperatureOptions" />
+            <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="90" :width="0"
+                :chart-options="catastropheOptions" />
         </div>
-        <div id="slidercontainer">
+        <div id="slidercontainer" ref="sliderContainer">
             <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
                 <template v-slot:label="{value}">
                     <div class="markline"></div>
@@ -21,11 +19,11 @@
                     <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
                 </template>
                 <template v-slot:tooltip="{ value }">
-                    <div class="tooltip-line"></div>
                     <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                         data-tutorial-step="year-selector">
                         <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
                     </div>
+                    <div class="tooltip-line"></div>
                 </template>
                 <template v-slot:dot>
                     <TimelineArrow class="slider-arrow"></TimelineArrow>
@@ -55,7 +53,8 @@ import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophe
 import { Line, Bar } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import TimelineArrow from './TimelineArrow.vue';
-import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler, ChartData, Color } from 'chart.js'
+import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler, ChartData, Color, ChartOptions, CoreScaleOptions, Scale } from 'chart.js'
+import { numberFormats } from '@/locales/formats';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
@@ -91,12 +90,89 @@ export default defineComponent({
         });
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
+
+        const baseOptions: ChartOptions = {
+            onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
+                const canvasPosition = getRelativePosition(e, chart)
+                const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
+                emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                filler: {
+                    propagate: true
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+        };
+
+        const sliderContainer = ref<HTMLDivElement | null>(null);
+        const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
+            if (sliderContainer.value) {
+                sliderContainer.value.style.marginLeft = `${axis.width}px`;
+            }
+        };
+
+        const temperatureOptions = { ...baseOptions } as ChartOptions<'line'>;
+        temperatureOptions.scales = {
+            x: {
+                display: false,
+            },
+            y: {
+                grid: {
+                    tickLength: 5,
+                    tickWidth: 1,
+                    drawBorder: false,
+                    drawOnChartArea: true,
+                    tickColor: "#a59e20",
+                },
+                afterFit: onAfterFit,
+                ticks: {
+                    display: true,
+                    stepSize: 2,
+                    format: numberFormats.temperature_delta_int,
+                    color: '#353535',
+                }
+            }
+        };
+
+        const catastropheOptions = { ...baseOptions } as ChartOptions<'bar'>;
+        catastropheOptions.scales = {
+            x: {
+                display: false,
+            },
+            y: {
+                grid: {
+                    tickLength: 5,
+                    tickWidth: 1,
+                    drawBorder: false,
+                    drawOnChartArea: true,
+                    tickColor: "#a59e20",
+                },
+                afterFit: onAfterFit,
+                ticks: {
+                    display: true,
+                    stepSize: 100,
+                    color: '#353535',
+                }
+            }
+        };
+
         return {
             selectedYear,
             catastropheStore,
             statisticStore,
             mode: ref(TimelineMode.Temperature),
-            TimelineMode
+            sliderContainer,
+            TimelineMode,
+            temperatureOptions,
+            catastropheOptions
         };
     },
     data() {
@@ -107,45 +183,7 @@ export default defineComponent({
             modeledYearsStyle: [
                 'left:' + (ratio * 100) + '%',
                 'width:' + ((1 - ratio) * 100) + '%'
-            ],
-            chartOptions: {
-                onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
-                    const canvasPosition = getRelativePosition(e, chart)
-                    const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
-                    this.$emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
-                },
-                scales: {
-                    x: {
-                        display: false,
-                    },
-                    y: {
-                        grid: {
-                            tickLength: 5,
-                            tickWidth: 1,
-                            drawBorder: false,
-                            drawOnChartArea: false,
-                            tickColor: "#a59e20",
-                        },
-                        ticks: {
-                            display: false,
-                            stepSize: 1.5
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    filler: {
-                        propagate: true
-                    },
-                    tooltip: {
-                        enabled: false
-                    }
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-            },
+            ]
         };
     },
     computed: {
@@ -164,8 +202,8 @@ export default defineComponent({
 
                             //TODO: mettre le bon gradiant et les bonnes couleurs
                             gradient.addColorStop(0, 'red');
-                            gradient.addColorStop(0.25, 'orange');
-                            gradient.addColorStop(0.6, 'lightblue');
+                            gradient.addColorStop(0.5, 'orange');
+                            gradient.addColorStop(0.8, 'lightblue');
 
                             return gradient;
                         },
@@ -181,7 +219,7 @@ export default defineComponent({
                     {
                         data: TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)),
                         borderWidth: 0,
-                        backgroundColor: '#ff6a0e'
+                        backgroundColor: '#f0ad00'
                     }
                 ]
             };
@@ -194,7 +232,7 @@ export default defineComponent({
 <style scoped>
 #slidertitle {
     font-size: var(--sz-400);
-    margin-bottom: var(--sz-30);
+    margin-bottom: var(--sz-50);
 }
 
 #slidercontainer input {
@@ -205,9 +243,7 @@ export default defineComponent({
 }
 
 #slidercontainer {
-    margin-top: -27px;
     margin-bottom: var(--sz-100);
-    padding-left: 5px;
 }
 
 .vue-slider-mark-label.custom-label.event-count {
@@ -215,7 +251,8 @@ export default defineComponent({
 }
 
 .vue-slider .tooltip-line {
-    height: var(--tooltip-line-height);
+    height: 100%;
+    margin-top: 1px;
     width: 1px;
     border-width: 1px;
     border-style: dashed;
@@ -256,16 +293,8 @@ export default defineComponent({
     background-color: var(--clr-gris-mi-fonce);
 }
 
-
-@media screen and (max-width: 768px) {
-    .timeline {
-        padding: 30px 15px;
-    }
-
-    .vue-slider {
-        margin-left: 8px;
-        margin-right: 0px;
-    }
+.timeline {
+    padding: var(--sz-50) var(--timeline-horizontal-padding);
 }
 
 @media screen and (min-width: 768px) {
@@ -295,52 +324,13 @@ export default defineComponent({
     left: -7px;
     top: -17px;
 }
-</style>
 
-<style>
-.vue-slider {
-    --slider-dot-size: var(--sz-900);
-    --tooltip-line-height: var(--sz-900);
-    --tooltip-line-gap: var(--sz);
-    --tooltip-line-z-index: 0;
-}
-
-.vue-slider .vue-slider-rail,
-.vue-slider .vue-slider-process {
-    background-color: var(--clr-gris-pale);
-}
-
-.vue-slider-dot-tooltip-inner-top::after {
-    display: none;
-}
-
-.vue-slider-dot-tooltip {
-    top: calc(100% - var(--slider-dot-size) / 3);
-}
-
-.vue-slider-dot-tooltip-inner {
-    top: calc(0px - var(--tooltip-line-height));
-    font-size: var(--sz-400);
-    transform: translateY(-100%);
-}
-
-.vue-slider-dot {
-    /* Note: must use !important here to undo the direct 'style' that is applied
-       to vue-slider-dot, while still having responsive CSS-var based dims. */
-    width: var(--slider-dot-size) !important;
-    height: var(--slider-dot-size) !important;
-}
-
-.slider-arrow {
-    position: absolute;
-    z-index: calc(var(--tooltip-line-z-index) + 1);
-}
 
 #mode-container {
     position: absolute;
     right: 4px;
     top: 4px;
-    background-color: var(--clr-gris-fonce);
+    background-color: var(--clr-brun-terreux);
     border-radius: var(--border-radius);
     display: flex;
     align-items: center;
@@ -374,5 +364,46 @@ export default defineComponent({
 #mode-container label.active img {
     filter: brightness(100%);
 }
+</style>
 
+<style>
+.vue-slider {
+    --slider-dot-size: var(--sz-900);
+    --tooltip-line-height: calc(90px - var(--slider-dot-size));
+    --tooltip-line-gap: var(--sz);
+    --tooltip-line-z-index: 0;
+}
+
+.vue-slider .vue-slider-rail,
+.vue-slider .vue-slider-process {
+    background-color: var(--clr-gris-pale);
+}
+
+.vue-slider-dot-tooltip-inner-top::after {
+    display: none;
+}
+
+.vue-slider-dot-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    height: 80px;
+    top: unset !important;
+}
+
+.vue-slider-dot-tooltip-inner {
+    font-size: var(--sz-400);
+}
+
+.vue-slider-dot {
+    /* Note: must use !important here to undo the direct 'style' that is applied
+       to vue-slider-dot, while still having responsive CSS-var based dims. */
+    width: var(--slider-dot-size) !important;
+    height: var(--slider-dot-size) !important;
+}
+
+.slider-arrow {
+    position: absolute;
+    z-index: calc(var(--tooltip-line-z-index) + 1);
+}
 </style>
