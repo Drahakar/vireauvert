@@ -16,6 +16,9 @@
   margin-top: calc(var(--icon-size) / -2);
   margin-left: calc(var(--icon-size) / -2);
   background-size: var(--icon-size) var(--icon-size);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   opacity: 0.9;
 }
 
@@ -25,6 +28,9 @@
   margin-top: calc(var(--big-icon-size) / -2);
   margin-left: calc(var(--big-icon-size) / -2);
   background-size: var(--big-icon-size) var(--big-icon-size);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   
   border: 2px solid white;
   border-radius:50%;
