@@ -16,7 +16,6 @@
                 :labels="tour.labels"
                 :enabled-buttons="tour.enabledButtons"
                 :debug="tour.debug">
-                <!-- TODO: hover styling -->
                 <template #header="header">
                     <header>
                         <span class="title" v-t="'tutorial_title'"></span>
@@ -197,4 +196,9 @@ header .title {
 .v-step__button[data-disabled="true"] {
     opacity: 0.2;
 }
+
+.v-step__button:not([data-disabled="true"]):hover {
+    opacity: 0.8;
+}
+
 </style>
