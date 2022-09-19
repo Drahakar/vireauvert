@@ -98,6 +98,6 @@ export function createHighlightMarker(highlight: Highlight, appContext: AppConte
 export function setGlobalIconSize(ratio: number) {
     const root: HTMLElement | null = document.querySelector(':root');
     if (root) {
-        root.style.setProperty('--icon-size', `${(ratio * 48).toFixed(0)}px`);
+        root.style.setProperty('--icon-size', `${(ratio * 36).toFixed(0)}px`);
     }
 }
