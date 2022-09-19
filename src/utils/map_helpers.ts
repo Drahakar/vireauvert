@@ -71,7 +71,7 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
         opacity: 1
     });
     const popup = L.popup({
-        className: 'catastrophe-popup',
+        className: `catastrophe-popup` ,
         closeOnClick: false,
     });
     popup.setContent(() => {

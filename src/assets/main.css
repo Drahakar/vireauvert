@@ -68,31 +68,24 @@
 .catastrophe-icon-flood {
   background-image: url('/icons/flood.png');
 }
-
 .catastrophe-icon-forest_fire {
   background-image: url('/icons/forest_fire.png');
 }
-
 .catastrophe-icon-freezing_rain {
   background-image: url('/icons/freezing_rain.png');
 }
-
 .catastrophe-icon-heat_wave {
   background-image: url('/icons/heat_wave.png');
 }
-
 .catastrophe-icon-storm_winds {
   background-image: url('/icons/storm_winds.png');
 }
-
 .catastrophe-icon-tornado {
   background-image: url('/icons/tornado.png');
 }
-
 .catastrophe-icon-violent_storm {
   background-image: url('/icons/violent_storm.png');
 }
-
 .catastrophe-icon-winter_storm {
   background-image: url('/icons/winter_storm.png');
 }
@@ -144,4 +137,8 @@
 }
 .leaflet-container a.leaflet-popup-close-button:hover span {  
   color: var(--clr-gris-moyen);
+}
+
+.catastrophe-popup .leaflet-popup-tip {
+  background-color: var(--clr-beige);
 }
