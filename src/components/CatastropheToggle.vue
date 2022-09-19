@@ -115,7 +115,7 @@ export default defineComponent({
         catastropheToggles(): List<Toggle> {
             const allCatastrophes = {
                 count: this.allCatastrophes.size,
-                iconPath: '/icons/attention-highlight.png',
+                iconPath: '/icons/all-catastrophes.png',
                 pillClass: 'catastrophe-all',
                 name: this.$t('all_catastrophes'),
                 checked: this.filter.equals(FILTER_ALL_CATASTROPHES),
