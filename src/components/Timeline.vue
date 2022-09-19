@@ -1,6 +1,6 @@
 <template>
     <div class="timeline">
-        <div id="slidertitle" v-t="mode === TimelineMode.Temperature ? 'temperature_year' : 'catastrophe_count_year'">
+        <div id="slidertitle" v-t="`timeline_mode_${mode}`">
         </div>
         <div id="timelinegraph">
             <!-- set width to 0 to let it auto-size it with given height. -->
@@ -33,10 +33,11 @@
             </vue-slider>
         </div>
         <div id="mode-container">
-            <div class="item" v-for="value of Object.values(TimelineMode)">
-                <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value" @change="mode = value" :class="value">
-                <label :for="`radio-${value}`">
-                    <img :src="`/Button/${value}.png`" :alt="value">
+            <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
+                <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
+                    @change="mode = value" :class="value">
+                <label :for="`radio-${value}`" :class="{active: value === mode}">
+                    <img :src="`/Button/${value}.svg`" :alt="value">
                 </label>
             </div>
         </div>
@@ -60,7 +61,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 
 enum TimelineMode {
     Temperature = "Temperature",
-    CatastropheCount = "Catastrophe"
+    CatastropheCount = "Catastrophes"
 }
 
 export default defineComponent({
@@ -338,7 +339,7 @@ export default defineComponent({
 #mode-container {
     position: absolute;
     right: 4px;
-    top:  4px;
+    top: 4px;
     background-color: var(--clr-gris-fonce);
     border-radius: var(--border-radius);
     display: flex;
@@ -347,8 +348,8 @@ export default defineComponent({
     padding: 4px;
 }
 
-#mode-container input {    
-  display: none;
+#mode-container input {
+    display: none;
 }
 
 #mode-container label {
@@ -356,12 +357,22 @@ export default defineComponent({
     width: var(--sz-700);
     height: var(--sz-700);
     cursor: pointer;
+    border-radius: 50%;
 }
 
-#mode-container img {
+#mode-container label img {
     object-fit: contain;
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    filter: invert(60%) sepia(20%) saturate(1493%) hue-rotate(19deg) brightness(95%) contrast(88%);
+}
+
+#mode-container label.active {
+    background-color: var(--clr-orange);
+}
+
+#mode-container label.active img {
+    filter: brightness(100%);
 }
 
 </style>
