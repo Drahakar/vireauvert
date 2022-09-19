@@ -1,8 +1,6 @@
 <template>
     <div id="wrapper" ref="mapWrapper">
-        <keep-alive>
-            <div class="map" ref="mapElement"></div>
-        </keep-alive>
+        <div class="map" ref="mapElement"></div>
     </div>
 </template>
 
@@ -323,6 +321,7 @@ function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
 
 .catastrophe-popup .leaflet-popup-content {
     margin: 0;
+    min-width: var(--popup-width);
 }
 
 .catastrophe-popup .leaflet-popup-content .list-group-flush {
