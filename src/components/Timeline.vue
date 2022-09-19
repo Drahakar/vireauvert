@@ -12,7 +12,7 @@
             </div>
             <div class="slider-container" ref="sliderContainer">
                 <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years"
-                    :marks="marks" :adsorb="true" drag-on-click="true">
+                    :marks="marks" :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
