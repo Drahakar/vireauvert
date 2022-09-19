@@ -21,13 +21,14 @@
   --clr-thermometer-background: var(--clr-beige);
   --clr-thermometer-border: var(--clr-blanc);
 
-  --clr-flood: #00C2CB;
+  --clr-flood: #00A6CA;
   --clr-forest-fire: #EC772E;
-  --clr-violent-storm: #E9C900;
-  --clr-tornado: #A6A6A6;
-  --clr-heat-wave: #DD3535;
-  --clr-freezing-rain: #004AAD;
-  --clr-storm-winds: #5271FF;
+  --clr-violent-storm: ##D0A200;
+  --clr-tornado: ##8C8278;
+  --clr-heat-wave: #B00C0C;
+  --clr-freezing-rain: #005AAD;
+  --clr-storm-winds: ##5271FF;
+  --clr-ticks: #4E2C1A;
 
 
   /* Size variants: from smallest to biggest */
