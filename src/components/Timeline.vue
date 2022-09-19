@@ -97,12 +97,6 @@ export default defineComponent({
                 const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
                 emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
             },
-            scales: {
-                x: {
-                    display: false,
-                },
-                y: {}
-            },
             plugins: {
                 legend: {
                     display: false
@@ -120,30 +114,55 @@ export default defineComponent({
 
         const sliderContainer = ref<HTMLDivElement | null>(null);
         const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
-            if (axis.axis === 'y' && sliderContainer.value) {
+            if (sliderContainer.value) {
                 sliderContainer.value.style.marginLeft = `${axis.width}px`;
             }
         };
 
         const temperatureOptions = { ...baseOptions } as ChartOptions<'line'>;
-        temperatureOptions.scales!.y = {
-            grid: {
-                tickLength: 5,
-                tickWidth: 1,
-                drawBorder: false,
-                drawOnChartArea: true,
-                tickColor: "#a59e20",
+        temperatureOptions.scales = {
+            x: {
+                display: false,
             },
-            afterFit: onAfterFit,
-            ticks: {
-                display: true,
-                stepSize: 2,
-                format: numberFormats.temperature_delta_int,
-                color: '#353535',
-            },
+            y: {
+                grid: {
+                    tickLength: 5,
+                    tickWidth: 1,
+                    drawBorder: false,
+                    drawOnChartArea: true,
+                    tickColor: "#a59e20",
+                },
+                afterFit: onAfterFit,
+                ticks: {
+                    display: true,
+                    stepSize: 2,
+                    format: numberFormats.temperature_delta_int,
+                    color: '#353535',
+                }
+            }
         };
 
         const catastropheOptions = { ...baseOptions } as ChartOptions<'bar'>;
+        catastropheOptions.scales = {
+            x: {
+                display: false,
+            },
+            y: {
+                grid: {
+                    tickLength: 5,
+                    tickWidth: 1,
+                    drawBorder: false,
+                    drawOnChartArea: true,
+                    tickColor: "#a59e20",
+                },
+                afterFit: onAfterFit,
+                ticks: {
+                    display: true,
+                    stepSize: 100,
+                    color: '#353535',
+                }
+            }
+        };
 
         return {
             selectedYear,
@@ -200,7 +219,7 @@ export default defineComponent({
                     {
                         data: TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)),
                         borderWidth: 0,
-                        backgroundColor: '#ff6a0e'
+                        backgroundColor: '#f0ad00'
                     }
                 ]
             };
