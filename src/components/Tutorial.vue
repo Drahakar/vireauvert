@@ -63,6 +63,7 @@ export default defineComponent({
         },
     },
     data() {
+        const baseParams = { enableScrolling: false };
         return {
             options: {
                 enabledButtons: {
@@ -80,6 +81,7 @@ export default defineComponent({
                     content: this.$t('tutorial_temperature_html'),
                     params: {
                         placement: "left",
+                        ...baseParams,
                     },
                 },
                 {
@@ -88,6 +90,7 @@ export default defineComponent({
                     params: {
                         // Important, otherwise this pushes the height past 100%
                         placement: "top",
+                        ...baseParams,
                     },
                 },
                 {
@@ -95,6 +98,7 @@ export default defineComponent({
                     content: this.$t('tutorial_catastrophes_html'),
                     params: {
                         placement: "bottom",
+                        ...baseParams,
                     },
                 },
             ],
