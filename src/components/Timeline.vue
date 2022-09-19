@@ -358,7 +358,6 @@ export default defineComponent({
     object-fit: contain;
     width: 100%;
     height: 100%;
-    filter: invert(60%) sepia(20%) saturate(1493%) hue-rotate(19deg) brightness(95%) contrast(88%);
 }
 
 #mode-container label.active {
@@ -366,7 +365,7 @@ export default defineComponent({
 }
 
 #mode-container label.active img {
-    filter: brightness(100%);
+    filter: brightness(0) invert(1);
 }
 </style>
 
