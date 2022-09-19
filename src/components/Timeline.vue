@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import VueSlider from 'vue-slider-component'
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { TIMELINE_YEARS, BEGIN_MODELED_YEAR } from '@/models/constants';
@@ -102,7 +102,7 @@ export default defineComponent({
                 sliderContainer.value.style.marginLeft = `${axis.width}px`;
             }
         };
-        const baseOptions = Map({
+        const baseOptions = Map(fromJS({
             onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
                 const canvasPosition = getRelativePosition(e, chart)
                 const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
@@ -140,9 +140,9 @@ export default defineComponent({
             },
             responsive: true,
             maintainAspectRatio: false,
-        });
+        }));
 
-        const temperatureOptions = baseOptions.mergeDeep(Map({
+        const temperatureOptions = baseOptions.mergeDeep(Map(fromJS({
             scales: {
                 y: {
                     ticks: {
@@ -151,9 +151,9 @@ export default defineComponent({
                     }
                 },
             },
-        })).toObject() as ChartOptions<'line'>;
+        }))).toJS() as ChartOptions<'line'>;
 
-        const catastropheOptions = baseOptions.mergeDeep(Map({
+        const catastropheOptions = baseOptions.mergeDeep(Map(fromJS({
             scales: {
                 y: {
                     ticks: {
@@ -161,7 +161,7 @@ export default defineComponent({
                     }
                 },
             },
-        })).toObject() as ChartOptions<'bar'>;
+        }))).toJS() as ChartOptions<'bar'>;
 
         return {
             selectedYear,
