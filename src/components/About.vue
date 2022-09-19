@@ -192,14 +192,15 @@ img {
 }
 
 #detailed-data {
-    font-size: var(--sz-200);
+    font-size: var(--sz-400);
     color: var(--clr-gris-moyen);
     width: 100%;
 }
 
 #detailed-data ul {
     padding: 0;
-    font-size: var(--sz-100);
+    font-size: var(--sz-300);
+    line-height: var(--sz-400);
     padding: var(--sz-600);
     padding-top: 0;
 }
