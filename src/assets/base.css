@@ -47,6 +47,7 @@
   /* Sizes that change at certain breakpoints */
   --timeline-horizontal-padding: var(--sz-200);
   --modal-width: 75%;
+  --tutorial-width: 216px;
 
   /* Font weight variants */
   --fw-regular: 500;
@@ -70,6 +71,7 @@
 
     --timeline-horizontal-padding: var(--sz-600);
     --modal-width: 50%;
+    --tutorial-width: 256px;
   }
 }
 
@@ -85,6 +87,8 @@
     --sz-700: 30px;
     --sz-800: 32px;
     --sz-900: 38px;
+
+    --tutorial-width: 332px;
   }
 }
 
@@ -102,6 +106,7 @@
     --sz-900: 48px;
 
     --timeline-horizontal-padding: var(--sz-700);
+    --tutorial-width: 456px;
   }
 }
 

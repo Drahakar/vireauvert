@@ -15,6 +15,7 @@ const pinia = createPinia();
 const i18n = createI18n({
     legacy: false,
     globalInjection: true,
+    warnHtmlMessage: false,  // used for tutorial per-word styling
     locale: 'fr-CA',
     messages: {
         'fr-CA': frCA
