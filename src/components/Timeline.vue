@@ -335,7 +335,7 @@ export default defineComponent({
     right: 4px;
     top: 4px;
     background-color: var(--clr-brun-terreux);
-    border-radius: var(--border-radius);
+    border-radius: calc((var(--sz-700) / 2));
     display: flex;
     align-items: center;
     gap: 4px;
