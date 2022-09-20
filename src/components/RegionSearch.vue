@@ -48,4 +48,7 @@ export default defineComponent({
     overflow: hidden;
     white-space: nowrap;
 }
+.v-select .vs__dropdown-toggle {
+    height: 100%;
+}
 </style>
