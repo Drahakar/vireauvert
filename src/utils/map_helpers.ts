@@ -77,6 +77,11 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
     });
     popup.setContent(() => {
         const div = document.createElement('div');
+
+        // Workaround for https://github.com/Leaflet/Leaflet/issues/8159
+        // Official Leaflet fix to be released in 1.8.1
+        // Once the fix is in, we can put closeButton above back to true
+        // and remove the following block of code
         const closeButton = document.createElement('a');
         closeButton.classList.add('leaflet-popup-close-button');
         closeButton.href = '#';
