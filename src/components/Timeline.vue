@@ -15,7 +15,10 @@
                     :marks="marks" :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
-                        <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
+                        <div :class="['vue-slider-mark-label', 'custom-label']"
+                            :data-year="value">
+                            {{value}}
+                        </div>
                     </template>
                     <template v-slot:step="{ active }">
                         <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
@@ -238,6 +241,7 @@ export default defineComponent({
         },
         generateMarks(): Marks {
             const marks = {};
+            // Only create mark elements for _some_ of the continuous years.
             CONTINUOUS_YEARS.filter(y => y % 5 == 0).forEach(year => {
                 marks[year] = this.generateMark(year);
             });
@@ -300,6 +304,13 @@ export default defineComponent({
 .vue-slider .vue-slider-mark .vue-slider-mark-label,
 .vue-slider .vue-slider-mark .vue-slider-mark-step {
     display: block;
+}
+
+.vue-slider .vue-slider-mark .vue-slider-mark-label:is(
+    [data-year^='2030'],
+    [data-year^='2050'],
+) {
+    display: none;
 }
 
 .vue-slider .vue-slider-mark .vue-slider-mark-label {
