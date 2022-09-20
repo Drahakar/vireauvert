@@ -71,6 +71,13 @@ enum TimelineMode {
     CatastropheCount = "Catastrophes"
 }
 
+// This many years are added before and between modeled years, to produce some
+// visual padding (e.g. a value of 3 means pretend there are the spacial
+// equivalent of 3 years between years modeled, as width).
+// For graphs, we assume a linear regression of the neighboring real years on
+// the 'padding' years that are added (like the graph line would do).
+const INTERPOLATED_PADDING_YEARS = 3;
+
 export default defineComponent({
     components: { VueSlider, Line, TimelineArrow, Bar },
     emits: ['yearSelected'],
@@ -226,12 +233,23 @@ export default defineComponent({
     methods: { 
         getRenderedYearRatio(year: number): number {
             // For a given year, give the ratio out of the TIMELINE_YEARS where
-            // it should fit (e.g. for 1990-2100, 1990 = 0.0, 2100 = 1.0).
+            // it should fit (e.g. for 1990-2100, 1990 = 0.0, 2100 = 1.0),
+            // taking into account 'padding years' that get added/interpolated.
 
-            // TODO: take into account "interpolated" years, added as padding
-            // before and after modeled years.
-            const index = TIMELINE_YEARS.indexOf(year);
-            return index / (TIMELINE_YEARS.length - 1);
+            // How many years do we have in total, taking into account padding?
+            const totalYears = (CONTINUOUS_YEARS.length +
+                                (INTERPOLATED_PADDING_YEARS + 1)
+                                * MODELED_YEARS.length);
+            const originalIndex = TIMELINE_YEARS.indexOf(year);
+            const startModelingIndex = CONTINUOUS_YEARS.length;
+            // How many continuous years have we passed?
+            const numContinuousYears = Math.min(CONTINUOUS_YEARS.length, originalIndex + 1);
+            // How many modeling years have we passed?
+            const numModelingYears = Math.max(originalIndex - startModelingIndex + 1, 0);
+
+            // What is our current index in the with-padding list of years?
+            const index = numContinuousYears + numModelingYears * (INTERPOLATED_PADDING_YEARS + 1) - 1;
+            return index / (totalYears - 1);
         },
         generateMark(year: number): MarkOption {
             return {
