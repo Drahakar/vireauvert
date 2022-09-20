@@ -80,7 +80,8 @@ export default defineComponent({
 
     font-size: var(--sz-100);
     line-height: 1.5em;
-    letter-spacing: 0;
+
+    color: var(--clr-gris-moyen);
 }
 
 #body-content :deep(p) {
@@ -94,5 +95,10 @@ export default defineComponent({
 
 #body-content :deep(a:hover) {
     color: var(--clr-gris-pale);
+}
+
+#body-content :deep(strong) {
+    font-weight: var(--fw-regular);
+    color: var(--clr-gris-fonce);
 }
 </style>
