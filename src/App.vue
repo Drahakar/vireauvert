@@ -37,11 +37,6 @@ export default defineComponent({
         Timeline,
         Tutorial,
     },
-    data() {
-        return {
-            showAbout: false
-        };
-    },
     methods: {
         selectDistrict(id: number) {
             this.state.district = id;
@@ -88,6 +83,7 @@ export default defineComponent({
             catastropheStore,
             highlightStore,
             loadingCompleted,
+            about: ref<InstanceType<typeof About> | null>(null)
         };
     },
     computed: {
@@ -145,7 +141,7 @@ Sentry.init({
                         <Timeline class="timeline" :year="state.year"
                             @year-selected="selectYear"
                             :district="state.district"></Timeline>
-                        <Header class="header" @about-requested="showAbout = true"></Header>
+                        <Header class="header" @about-requested="about?.open()"></Header>
                     </section>
                     <section class="secondary-content content-section">
                         <Thermometer :statistics="selectedStatistics"
@@ -155,7 +151,7 @@ Sentry.init({
                 </div>
             </div>
         </div>
-        <About :show-modal="showAbout" @modal-closed="showAbout = false"></About>
+        <About ref="about"></About>
     </div>
 
     <div v-if="!loadingCompleted" class="loading-overlay">

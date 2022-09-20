@@ -1,73 +1,72 @@
 <template>
-    <div id="modal-container" :style="{ display: showModal ? 'block' : 'none' }" @click="closeModal">
-        <div id="modal-wrapper">
-            <div id="modal" @click="ev => ev.stopPropagation()">
-                <div id="modal-header">
-                    <img class="logo" src="/Logo_terreOS_About.png" alt="terreOS">
-                    <a id="close-button" @click="closeModal">
-                        <span aria-hidden="true">&#x00d7;</span>
-                    </a>
+    <Modal ref="modal">
+        <template v-slot:title>
+            <div id="header">
+                <img class="logo" src="/Logo_terreOS_About.png" alt="terreOS">
+            </div>
+        </template>
+        <template v-slot:content>
+            <div id="content">
+                <a href="https://equiterre.org/" target="_blank">
+                    <img class="logo" src="/Logo_EQT_About.png" alt="Équiterre"></a>
+                <div class="lighter">✕</div>
+                <a href="https://www.bleuetdesign.com/" target="_blank">
+                    <img class="logo" src="/Logo_Bleuet_About.png" alt="bleut.design">
+                </a>
+                <div class="progs">
+                    <div><a href="https://twitter.com/Drahakar" target="_blank">Andy Emond</a></div>
+                    <div><a href="https://twitter.com/edemartel" target="_blank">Etienne de Martel</a></div>
+                    <div><a href="https://twitter.com/JesseEmond" target="_blank">Jesse Emond</a></div>
                 </div>
-                <div id="modal-content">
-                    <a href="https://equiterre.org/" target="_blank">
-                        <img class="logo" src="/Logo_EQT_About.png" alt="Équiterre"></a>
-                    <div class="lighter">✕</div>
-                    <a href="https://www.bleuetdesign.com/" target="_blank">
-                        <img class="logo" src="/Logo_Bleuet_About.png" alt="bleut.design">
-                    </a>
-                    <div class="progs">
-                        <div><a href="https://twitter.com/Drahakar" target="_blank">Andy Emond</a></div>
-                        <div><a href="https://twitter.com/edemartel" target="_blank">Etienne de Martel</a></div>
-                        <div><a href="https://twitter.com/JesseEmond" target="_blank">Jesse Emond</a></div>
-                    </div>
-                    <div v-t="'made_with_love'" class="desc"></div>
-                    <i18n-t keypath="data_source" tag="div" class="desc">
-                        <a v-t="'ouranos'" :href="$t('url_ouranos')" target="_blank"></a>
-                        <a v-t="'qc_govt'" :href="$t('url_qc_govt')" target="_blank"></a>
-                        <a v-t="'can_govt'" :href="$t('url_can_govt')" target="_blank"></a>
-                    </i18n-t>
-                    <div id="detailed-data">
-                        <div v-t="'detailed_sources'"></div>
-                        <ul>
-                            <li v-for="source of sources"><a :href="source" target="_blank">{{ source }}</a></li>
-                        </ul>
-                    </div>
-                    <div id="version-info">
-                        <div>2022</div>
-                        <div>v1.0</div>
-                    </div>
+                <div v-t="'made_with_love'" class="desc"></div>
+                <i18n-t keypath="data_source" tag="div" class="desc">
+                    <a v-t="'ouranos'" :href="$t('url_ouranos')" target="_blank"></a>
+                    <a v-t="'qc_govt'" :href="$t('url_qc_govt')" target="_blank"></a>
+                    <a v-t="'can_govt'" :href="$t('url_can_govt')" target="_blank"></a>
+                </i18n-t>
+                <div id="detailed-data">
+                    <div v-t="'detailed_sources'"></div>
+                    <ul>
+                        <li v-for="source of sources"><a :href="source" target="_blank">{{ source }}</a></li>
+                    </ul>
+                </div>
+                <div id="version-info">
+                    <div>2022</div>
+                    <div>v1.0</div>
                 </div>
             </div>
-        </div>
-    </div>
+        </template>
+    </Modal>
 </template>
 
 <script lang="ts">
 
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import Modal from './Modal.vue';
 
 export default defineComponent({
-    emits: ['modal-closed'],
-    props: {
-        showModal: {
-            type: Boolean,
-            default: false
-        }
+    components: { Modal },
+    setup() {
+        return {
+            modal: ref<InstanceType<typeof Modal> | null>(null)
+        };
     },
     data() {
         return {
             sources: [
-                'https://www.donneesquebec.ca/recherche/dataset/evenements-de-securite-civile',
-                'https://www.donneesquebec.ca/recherche/dataset/observations-terrain-historiques-devenements-archives',
-                'https://www.donneesquebec.ca/recherche/dataset/feux-de-foret',
-                'https://changements-climatiques.canada.ca/donnees-climatiques/',
+                "https://www.donneesquebec.ca/recherche/dataset/evenements-de-securite-civile",
+                "https://www.donneesquebec.ca/recherche/dataset/observations-terrain-historiques-devenements-archives",
+                "https://www.donneesquebec.ca/recherche/dataset/feux-de-foret",
+                "https://changements-climatiques.canada.ca/donnees-climatiques/",
                 // TODO: Ouranos stuff
             ]
-        }
+        };
     },
     methods: {
-        closeModal() {
-            this.$emit('modal-closed');
+        open() {
+            if (this.modal) {
+                this.modal.openModal();
+            }
         }
     }
 })
@@ -78,33 +77,16 @@ img {
     display: block;
 }
 
-#modal-container {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10000;
-}
-
-#modal-wrapper {
+#header {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
     height: 100%;
 }
 
-#modal {
-    width: var(--modal-width);
-    background-color: var(--clr-beige);
-    overflow: hidden;
-    border-radius: var(--border-radius);
-    box-shadow: 0 3px var(--sz-30) rgba(0, 0, 0, 0.4);
-    max-height: 90%;
-    display: flex;
-    flex-direction: column;
+#header .logo {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .progs {
@@ -116,59 +98,14 @@ img {
     font-size: var(--sz-600);
 }
 
-#close-button {
-    position: absolute;
-    top: calc((var(--sz-900) - var(--sz-700)) / 2);
-    right: calc((var(--sz-900) - var(--sz-700)) / 2);
-    cursor: pointer;
-    width: var(--sz-700);
-    height: var(--sz-700);
-    border-radius: 50%;
-    background-color: var(--clr-gris-pale);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#close-button span {
-  display: block;
-  color: var( --clr-blanc);
-  font-size: var(--sz-600);
-  line-height: var(--sz-600);
-  width: var(--sz-600);
-  height: var(--sz-600);
-  text-align: center;
-}
-
-#close-button:hover span {  
-  color: var(--clr-gris-moyen);
-}
-
-#modal-header {
-    padding: 2px;
-    background-color: var(--clr-blanc);
-    display: flex;
-    justify-content: center;
-    height: var(--sz-900);
-}
-
-#modal-header img {
-    object-fit: contain;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-#modal-content {
-    padding: var(--sz-600);
+#content {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
-#modal-content img {
+#content .logo {
     max-height: var(--sz-900);
 }
 
