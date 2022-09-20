@@ -78,7 +78,7 @@ export default defineComponent({
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
 
-    font-size: var(--sz-100);
+    font-size: var(--sz-300);
     line-height: 1.5em;
 
     color: var(--clr-gris-moyen);
@@ -90,6 +90,7 @@ export default defineComponent({
 }
 
 #body-content :deep(a) {
+    font-size: var(--sz-100);
     color: var(--clr-orange);
 }
 
