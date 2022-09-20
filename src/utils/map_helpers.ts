@@ -53,7 +53,7 @@ function generateIcons(baseClassName: string, generateAsInnerDiv: boolean): Map<
         if (generateAsInnerDiv) {
             options.className = '';
             options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}"></div>`;
-        } else {            
+        } else {
             options.className = `${baseClassName} catastrophe-icon-${value.toLowerCase()}`;
         }
         const icon = L.divIcon(options);
@@ -71,11 +71,29 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
         opacity: 1
     });
     const popup = L.popup({
-        className: `catastrophe-popup` ,
+        className: `catastrophe-popup`,
         closeOnClick: false,
+        closeButton: false
     });
     popup.setContent(() => {
         const div = document.createElement('div');
+
+        // Workaround for https://github.com/Leaflet/Leaflet/issues/8159
+        // Official Leaflet fix to be released in 1.8.1
+        // Once the fix is in, we can put closeButton above back to true
+        // and remove the following block of code
+        const closeButton = document.createElement('a');
+        closeButton.classList.add('leaflet-popup-close-button');
+        closeButton.href = '#';
+        closeButton.setAttribute('role', 'button');
+        closeButton.ariaLabel = 'Close button';
+        closeButton.innerHTML = '<span aria-hidden="true">&#x00d7;</span>';
+        closeButton.addEventListener('click', ev => {
+            marker.closePopup();
+            ev.preventDefault();
+        });
+        div.appendChild(closeButton);
+
         div.classList.add('popup-content-container');
         const details = modelFactory();
         details.appContext = appContext;
