@@ -124,6 +124,8 @@
   align-items: center;
   margin-right: calc((var(--sz-900) - var(--sz-700)) / 2);
   margin-top: calc((var(--sz-900) - var(--sz-700)) / 2);
+  z-index: 1000;
+  cursor: pointer;
 }
 
 .leaflet-container a.leaflet-popup-close-button span {
