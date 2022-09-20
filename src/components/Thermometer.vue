@@ -271,16 +271,20 @@ export default defineComponent({
     position: absolute;
     left: 50%;
     transform: translate(-50%, 50%);
-    width: max-content;
-    padding: 1px 4px;
+    padding: 2px 4px;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    line-height: 1.3;
     gap: var(--sz-50);
     color: var(--clr-blanc);
     border-radius: var(--border-radius);
+    line-height: 100%;
+}
+
+.pill span {
+    display: block;
+    height: 100%;
+    white-space: nowrap;
 }
 
 .current-value {
@@ -298,9 +302,9 @@ export default defineComponent({
 }
 
 .reference-value {
-    min-width: 55px;
     background-color: var(--clr-thermometer-mercury);
     font-size: var(--sz-200);
+    padding: 2px 6px;
 }
 
 .risky-value {

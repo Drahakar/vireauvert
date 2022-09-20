@@ -235,10 +235,6 @@ Sentry.init({
     max-height: 100%;
     max-width: 600px;
     padding-right: var(--sz-50);
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: var(--size-map-controls-gap);
 }
 
 .call-to-action {
@@ -263,6 +259,8 @@ Sentry.init({
     --vs-border-radius: var(--border-radius);
     --vs-border-color: var(--color-border);
     --vs-dropdown-max-height: 750%;
+    height: var(--sz-900);
+    margin-bottom: var(--size-map-controls-gap);
 }
 
 .timeline {
