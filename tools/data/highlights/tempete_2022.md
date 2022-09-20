@@ -1,7 +1,7 @@
 ---
 year: 2022
 location: 46.03, -73.85
-type: STORM_WINDS
+type: VIOLENT_STORM
 title: Orages violents
 locale: fr-CA
 ---
