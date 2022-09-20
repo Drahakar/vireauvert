@@ -40,12 +40,16 @@ export default defineComponent({
     height: var(--sz-900);
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
 }
 
 time {
     white-space: nowrap;
+    height: var(--sz-700);
+    display: flex;
+    align-items: center;
 }
 
 #catastrophe-list {
@@ -65,9 +69,13 @@ time {
 }
 
 .icon {
-    min-width: var(--sz-600);
-    min-height: var(--sz-600);
-    background-size: var(--sz-600) var(--sz-600);
+    width: var(--sz-700);
+    height: var(--sz-700);
+    background-size: var(--sz-700);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    margin-bottom: 4px;
 }
 
 .details {

@@ -5,7 +5,7 @@
                 <div id="modal-header">
                     <img class="logo" src="/Logo_terreOS_About.png" alt="terreOS">
                     <a id="close-button" @click="closeModal">
-                        <img src="/Button/Close.png" alt="✕">
+                        <span aria-hidden="true">&#x00d7;</span>
                     </a>
                 </div>
                 <div id="modal-content">
@@ -117,13 +117,31 @@ img {
 }
 
 #close-button {
-    display: block;
-    cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    padding: 4px;
+    top: calc((var(--sz-900) - var(--sz-700)) / 2);
+    right: calc((var(--sz-900) - var(--sz-700)) / 2);
+    cursor: pointer;
+    width: var(--sz-700);
+    height: var(--sz-700);
+    border-radius: 50%;
+    background-color: var(--clr-gris-pale);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#close-button span {
+  display: block;
+  color: var( --clr-blanc);
+  font-size: var(--sz-600);
+  line-height: var(--sz-600);
+  width: var(--sz-600);
+  height: var(--sz-600);
+  text-align: center;
+}
+
+#close-button:hover span {  
+  color: var(--clr-gris-moyen);
 }
 
 #modal-header {
@@ -174,14 +192,15 @@ img {
 }
 
 #detailed-data {
-    font-size: var(--sz-200);
+    font-size: var(--sz-400);
     color: var(--clr-gris-moyen);
     width: 100%;
 }
 
 #detailed-data ul {
     padding: 0;
-    font-size: var(--sz-100);
+    font-size: var(--sz-300);
+    line-height: var(--sz-400);
     padding: var(--sz-600);
     padding-top: 0;
 }

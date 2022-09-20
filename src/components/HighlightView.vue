@@ -49,20 +49,29 @@ export default defineComponent({
 #header {
     font-size: var(--sz-400);
     background-color: var(--clr-blanc);
+    border-radius: var(--border-radius);
     height: var(--sz-900);
     padding-right: var(--sz-50);
     display: flex;
     align-items: center;
-    gap: 4px;
+}
+
+.title {
+    margin-left: calc(var(--sz-30) / -2);
 }
 
 .icon {
+    position: relative;
     display: block;
     object-fit: contain;
-    min-width: var(--sz-800);
-    min-height: var(--sz-800);
-    background-size: var(--sz-800) var(--sz-800);
-    margin: 4px;
+    width: calc(var(--sz-900) + var(--sz-50));
+    height: calc(var(--sz-900) + var(--sz-50));
+    background-size: calc(var(--sz-900) + var(--sz-50));
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    left: calc(var(--sz-30) * -1);
 }
 
 #body-content {

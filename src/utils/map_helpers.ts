@@ -71,12 +71,12 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
         opacity: 1
     });
     const popup = L.popup({
-        className: 'catastrophe-popup',
-        closeButton: false,
+        className: `catastrophe-popup` ,
         closeOnClick: false,
     });
     popup.setContent(() => {
         const div = document.createElement('div');
+        div.classList.add('popup-content-container');
         const details = modelFactory();
         details.appContext = appContext;
         render(details, div);
