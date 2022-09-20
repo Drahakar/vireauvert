@@ -66,7 +66,7 @@ export default defineComponent({
     object-fit: contain;
     width: calc(var(--sz-900) + var(--sz-50));
     height: calc(var(--sz-900) + var(--sz-50));
-    background-size: calc(var(--sz-900) + var(--sz-50));
+    background-size: cover;
     border-radius: 50%;
     background-repeat: no-repeat;
     background-position: center;
