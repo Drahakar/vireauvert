@@ -186,7 +186,7 @@ Sentry.init({
     min-height: 0;  /* undo min-height: auto from being a flex child */
     height: 100%;
     flex-direction: row;
-    gap: var(--sz-100);
+    gap: var(--app-column-gap);
     justify-content: space-between;
 }
 

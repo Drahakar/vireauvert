@@ -45,6 +45,7 @@
   --sz-900: 32px;
 
   /* Sizes that change at certain breakpoints */
+  --app-column-gap: 0;
   --timeline-horizontal-padding: var(--sz-200);
   --modal-width: 75%;
   --popup-width: 216px;
@@ -69,6 +70,7 @@
     --sz-800: 28px;
     --sz-900: 34px;
 
+    --app-column-gap: var(--sz-100);
     --timeline-horizontal-padding: var(--sz-600);
     --modal-width: 50%;
     --popup-width: 256px;

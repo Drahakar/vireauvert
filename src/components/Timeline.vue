@@ -2,33 +2,36 @@
     <div class="timeline">
         <div id="slidertitle" v-t="`timeline_mode_${mode}`">
         </div>
-        <div id="timelinegraph">
-            <!-- set width to 0 to let it auto-size it with given height. -->
-            <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="90" :width="0"
-                :chart-options="temperatureOptions" />
-            <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="90" :width="0"
-                :chart-options="catastropheOptions" />
-        </div>
-        <div id="slidercontainer" ref="sliderContainer">
-            <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years" :marks="marks" :adsorb="false">
-                <template v-slot:label="{value}">
-                    <div class="markline"></div>
-                    <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
-                </template>
-                <template v-slot:step="{ active }">
-                    <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
-                </template>
-                <template v-slot:tooltip="{ value }">
-                    <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
-                        data-tutorial-step="year-selector">
-                        <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
-                    </div>
-                    <div class="tooltip-line"></div>
-                </template>
-                <template v-slot:dot>
-                    <TimelineArrow class="slider-arrow"></TimelineArrow>
-                </template>
-            </vue-slider>
+        <div class="timeline-container">
+            <div class="timeline-graph">
+                <!-- set width to 0 to let it auto-size it with given height. -->
+                <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="90" :width="0"
+                    :chart-options="temperatureOptions" />
+                <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="90" :width="0"
+                    :chart-options="catastropheOptions" />
+            </div>
+            <div class="slider-container" ref="sliderContainer">
+                <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years"
+                    :marks="marks" :adsorb="true" :drag-on-click="true">
+                    <template v-slot:label="{value}">
+                        <div class="markline"></div>
+                        <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
+                    </template>
+                    <template v-slot:step="{ active }">
+                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                    </template>
+                    <template v-slot:tooltip="{ value }">
+                        <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                            data-tutorial-step="year-selector">
+                            <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
+                        </div>
+                        <div class="tooltip-line"></div>
+                    </template>
+                    <template v-slot:dot>
+                        <TimelineArrow class="slider-arrow"></TimelineArrow>
+                    </template>
+                </vue-slider>
+            </div>
         </div>
         <div id="mode-container">
             <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
@@ -44,6 +47,7 @@
 
 <script lang="ts">
 import VueSlider from 'vue-slider-component'
+import { Map, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { TIMELINE_YEARS, BEGIN_MODELED_YEAR } from '@/models/constants';
@@ -57,6 +61,7 @@ import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, Ba
 import { numberFormats } from '@/locales/formats';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
+ChartJS.defaults.font.family = "Matter";
 
 enum TimelineMode {
     Temperature = "Temperature",
@@ -91,7 +96,13 @@ export default defineComponent({
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
 
-        const baseOptions: ChartOptions = {
+        const sliderContainer = ref<HTMLDivElement | null>(null);
+        const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
+            if (sliderContainer.value) {
+                sliderContainer.value.style.marginLeft = `${axis.width}px`;
+            }
+        };
+        const baseOptions = Map(fromJS({
             onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
                 const canvasPosition = getRelativePosition(e, chart)
                 const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
@@ -106,63 +117,51 @@ export default defineComponent({
                 },
                 tooltip: {
                     enabled: false
-                }
+                },
+            },
+            layout: {
+            },
+            scales: {
+                x: {
+                    display: false,
+                },
+                y: {
+                    display: true,
+                    afterFit: onAfterFit,
+                    color: '#353535',
+                    grid: {
+                        tickLength: 5,
+                        tickWidth: 1,
+                        drawBorder: false,
+                        drawOnChartArea: true,
+                        tickColor: "#a59e20",
+                    },
+                },
             },
             responsive: true,
             maintainAspectRatio: false,
-        };
+        }));
 
-        const sliderContainer = ref<HTMLDivElement | null>(null);
-        const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
-            if (sliderContainer.value) {
-                sliderContainer.value.style.marginLeft = `${axis.width}px`;
-            }
-        };
-
-        const temperatureOptions = { ...baseOptions } as ChartOptions<'line'>;
-        temperatureOptions.scales = {
-            x: {
-                display: false,
-            },
-            y: {
-                grid: {
-                    tickLength: 5,
-                    tickWidth: 1,
-                    drawBorder: false,
-                    drawOnChartArea: true,
-                    tickColor: "#a59e20",
+        const temperatureOptions = baseOptions.mergeDeep(Map(fromJS({
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 2,
+                        format: numberFormats.temperature_delta_int,
+                    }
                 },
-                afterFit: onAfterFit,
-                ticks: {
-                    display: true,
-                    stepSize: 2,
-                    format: numberFormats.temperature_delta_int,
-                    color: '#353535',
-                }
-            }
-        };
-
-        const catastropheOptions = { ...baseOptions } as ChartOptions<'bar'>;
-        catastropheOptions.scales = {
-            x: {
-                display: false,
             },
-            y: {
-                grid: {
-                    tickLength: 5,
-                    tickWidth: 1,
-                    drawBorder: false,
-                    drawOnChartArea: true,
-                    tickColor: "#a59e20",
+        }))).toJS() as ChartOptions<'line'>;
+
+        const catastropheOptions = baseOptions.mergeDeep(Map(fromJS({
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 100,
+                    }
                 },
-                afterFit: onAfterFit,
-                ticks: {
-                    display: true,
-                    stepSize: 100,
-                    color: '#353535',
-                }
-            }
-        };
+            },
+        }))).toJS() as ChartOptions<'bar'>;
 
         return {
             selectedYear,
@@ -172,7 +171,7 @@ export default defineComponent({
             sliderContainer,
             TimelineMode,
             temperatureOptions,
-            catastropheOptions
+            catastropheOptions,
         };
     },
     data() {
@@ -235,14 +234,14 @@ export default defineComponent({
     margin-bottom: var(--sz-50);
 }
 
-#slidercontainer input {
+.slider-container input {
     -webkit-appearance: none;
     background: #ffffff;
     outline: none;
     opacity: 1;
 }
 
-#slidercontainer {
+.slider-container {
     margin-bottom: var(--sz-100);
 }
 
@@ -295,6 +294,11 @@ export default defineComponent({
 
 .timeline {
     padding: var(--sz-50) var(--timeline-horizontal-padding);
+}
+
+.timeline-container {
+    /* Undo the timeline component padding to push to the left side */
+    margin-left: calc(0px - var(--timeline-horizontal-padding));
 }
 
 @media screen and (min-width: 768px) {
