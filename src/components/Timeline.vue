@@ -50,7 +50,7 @@ import VueSlider from 'vue-slider-component'
 import { Map, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { TIMELINE_YEARS, BEGIN_MODELED_YEAR } from '@/models/constants';
+import { MIN_CONTINUOUS_YEAR, TIMELINE_YEARS } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
@@ -175,14 +175,17 @@ export default defineComponent({
         };
     },
     data() {
-        const ratio = TIMELINE_YEARS.filter(x => x <= BEGIN_MODELED_YEAR).length / TIMELINE_YEARS.length;
+        // TODO: hide some of the marks (+labels) via CSS
+        const marks = TIMELINE_YEARS.reduce((obj, year) => {
+            obj[year] = {
+                label: year.toString(),
+                pos: this.getRenderedYearRatio(year) * 100,
+            };
+            return obj;
+        }, {});
         return {
-            marks: TIMELINE_YEARS,
+            marks,
             years: TIMELINE_YEARS,
-            modeledYearsStyle: [
-                'left:' + (ratio * 100) + '%',
-                'width:' + ((1 - ratio) * 100) + '%'
-            ]
         };
     },
     computed: {
@@ -224,7 +227,18 @@ export default defineComponent({
             };
             return data;
         }
-    }
+    },
+    methods: { 
+        getRenderedYearRatio(year: number): number {
+            // For a given year, give the ratio out of the TIMELINE_YEARS where
+            // it should fit (e.g. for 1990-2100, 1990 = 0.0, 2100 = 1.0).
+
+            // TODO: take into account "interpolated" years, added as padding
+            // before and after modeled years.
+            const index = TIMELINE_YEARS.indexOf(year);
+            return index / (TIMELINE_YEARS.length - 1);
+        },
+    },
 });
 </script>
 
@@ -276,7 +290,7 @@ export default defineComponent({
 
 .vue-slider .vue-slider-mark .vue-slider-mark-label,
 .vue-slider .vue-slider-mark .vue-slider-mark-step {
-    display: none;
+    display: block;
 }
 
 .vue-slider .vue-slider-mark .vue-slider-mark-label {
@@ -299,29 +313,6 @@ export default defineComponent({
 .timeline-container {
     /* Undo the timeline component padding to push to the left side */
     margin-left: calc(0px - var(--timeline-horizontal-padding));
-}
-
-@media screen and (min-width: 768px) {
-
-    .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step {
-        display: block;
-    }
-}
-
-@media screen and (max-width: 768px) {
-
-    .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step {
-        display: block;
-    }
 }
 
 .graph-unit {
