@@ -46,11 +46,11 @@
 </template>
 
 <script lang="ts">
-import VueSlider from 'vue-slider-component'
+import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
 import { Map, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { MIN_CONTINUOUS_YEAR, TIMELINE_YEARS } from '@/models/constants';
+import { CONTINUOUS_YEARS, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
@@ -175,16 +175,8 @@ export default defineComponent({
         };
     },
     data() {
-        // TODO: hide some of the marks (+labels) via CSS
-        const marks = TIMELINE_YEARS.reduce((obj, year) => {
-            obj[year] = {
-                label: year.toString(),
-                pos: this.getRenderedYearRatio(year) * 100,
-            };
-            return obj;
-        }, {});
         return {
-            marks,
+            marks: this.generateMarks(),
             years: TIMELINE_YEARS,
         };
     },
@@ -237,6 +229,23 @@ export default defineComponent({
             // before and after modeled years.
             const index = TIMELINE_YEARS.indexOf(year);
             return index / (TIMELINE_YEARS.length - 1);
+        },
+        generateMark(year: number): MarkOption {
+            return {
+                label: year.toString(),
+                pos: this.getRenderedYearRatio(year) * 100,
+            };
+        },
+        generateMarks(): Marks {
+            const marks = {};
+            CONTINUOUS_YEARS.filter(y => y % 5 == 0).forEach(year => {
+                marks[year] = this.generateMark(year);
+            });
+            // TODO: hide some of the labels via CSS
+            MODELED_YEARS.forEach(year => {
+                marks[year] = this.generateMark(year);
+            });
+            return marks
         },
     },
 });
