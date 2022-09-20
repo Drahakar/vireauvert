@@ -16,13 +16,20 @@ export default defineComponent({
 
 <style scoped>
 div {
-    display: inline;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: var(--border-radius);
     font-size: var(--sz-400);
     color: var(--clr-blanc);
     background-color: var(--color-accent);
-    padding: 1px var(--sz-30) 2px var(--sz-30);
-    width: min-content;
+    width: 5ch;
     text-align: center;
+    padding: 2px 0;
+}
+span {
+    height: 100%;
+    display: block;
+    font-size: var(--sz-500);
 }
 </style>
