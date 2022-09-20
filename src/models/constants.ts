@@ -6,6 +6,7 @@ export const MAX_CONTINUOUS_YEAR = 2022;
 export const CONTINUOUS_YEARS = Range(MIN_CONTINUOUS_YEAR, MAX_CONTINUOUS_YEAR + 1).toArray();
 
 // NOTE: Past 2035, we only have data for 2050 and 2100.
+// NOTE: timeline CSS has assumptions that all modeled years end in 0.
 export const MODELED_YEARS = [2030, 2050, 2100];
 
 export const TIMELINE_YEARS = CONTINUOUS_YEARS.concat(MODELED_YEARS).sort();
