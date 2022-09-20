@@ -5,8 +5,20 @@
         </template>
         <template v-slot:content>
             <div id="content">
-                <a target="_blank" :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(url)}&amp;src=sdkpreparse`" :data-href="url">Facebook</a>
-                <a target="_blank" href="https://twitter.com/share" :data-url="url" data-dnt="true">Twitter</a>
+                <a target="_blank"
+                    :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(url)}&amp;src=sdkpreparse`"
+                    :data-href="url">
+                    <img src="/Button/Facebook.png">
+                    Facebook
+                </a>
+                <a target="_blank" href="https://twitter.com/share" :data-url="url" data-dnt="true">
+                    <img src="/Button/Twitter.png">
+                    Twitter
+                </a>
+                <a target="_blank" :href="`mailto:?subject=terreOS&amp;body=${encodeURI(url)}}`">
+                    <img src="/Button/Courriel.png">
+                    {{$t('email')}}
+                </a>
             </div>
         </template>
     </Modal>
@@ -40,17 +52,33 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 #header {
     display: flex;
     align-items: center;
     height: 100%;
+    font-size: var(--sz-600);
 }
 
 #content {
     display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    gap: var(--sz-700);
+    padding: var(--sz-600) 0;
 }
 
+#content a {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    text-align: center;
+    gap: var(--sz-50);
+}
+
+#content a img {    
+    width: calc(var(--sz-900) * 2);
+    height: calc(var(--sz-900) * 2);
+    object-fit: cover;
+    align-self: center;
+}
 </style>
