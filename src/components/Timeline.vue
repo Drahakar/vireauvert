@@ -294,7 +294,7 @@ export default defineComponent({
             return TIMELINE_YEARS.reduce((marks, year) => {
                 marks[yearToMarkValue(year)] = year.toString();
                 return marks;
-            }, {});
+            }, {} as Marks);
         },
     },
 });
