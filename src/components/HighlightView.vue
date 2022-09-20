@@ -69,7 +69,6 @@ export default defineComponent({
     background-size: calc(var(--sz-900) + var(--sz-50));
     border-radius: 50%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center;
     left: calc(var(--sz-30) * -1);
 }

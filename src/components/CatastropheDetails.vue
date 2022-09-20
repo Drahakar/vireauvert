@@ -73,7 +73,6 @@ time {
     height: var(--sz-700);
     background-size: var(--sz-700);
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center;
     margin-bottom: 4px;
 }
