@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
-import { Map, fromJS } from 'immutable';
+import { Map, Range, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
@@ -102,6 +102,35 @@ function yearToMarkValue(year: number): number {
     const modeledIndex = MODELED_YEARS.indexOf(year);
     const start = CONTINUOUS_YEARS.length + INTERPOLATED_PADDING_YEARS;
     return start + modeledIndex * (INTERPOLATED_PADDING_YEARS + 1);
+}
+
+type InterpolatedData = {
+    indices: number[];
+    data: number[];
+}
+
+function interpolateData(data: number[]): InterpolatedData {
+    // Takes in datapoints for 'TIMELINE_YEARS' and adds interpolated values
+    // where 'padding' years lie on the slider marks.
+    const interpolated: InterpolatedData = {
+        indices: Range(0, CONTINUOUS_YEARS.length).toArray(),
+        data: data.slice(0, CONTINUOUS_YEARS.length),
+    };
+    let index = CONTINUOUS_YEARS.length;
+    let previous = data[index-1];
+    for (const current of data.slice(index)) {
+        Range(0, INTERPOLATED_PADDING_YEARS).forEach(i => {
+            const ratio = (i + 1) / (INTERPOLATED_PADDING_YEARS + 1);
+            const lerp = (1 - ratio) * previous + ratio * current;
+            interpolated.indices.push(index);
+            interpolated.data.push(lerp);
+            ++index;
+        });
+        interpolated.indices.push(index);
+        interpolated.data.push(current);
+        previous = current;
+    }
+    return interpolated;
 }
 
 export default defineComponent({
@@ -220,11 +249,13 @@ export default defineComponent({
     },
     computed: {
         temperatureData() {
-            const data: ChartData<'line'> = {
-                labels: TIMELINE_YEARS,
+            const { indices, data } = interpolateData(
+                TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
+            return {
+                labels: indices,
                 datasets: [
                     {
-                        data: TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0),
+                        data,
                         fill: true,
                         borderWidth: 0,
                         pointRadius: 0,
@@ -241,21 +272,21 @@ export default defineComponent({
                         },
                     }
                 ]
-            };
-            return data;
+            } as ChartData<'line'>;
         },
         catastropheData() {
-            const data: ChartData<'bar'> = {
-                labels: TIMELINE_YEARS,
+            const { indices, data } = interpolateData(
+                TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)));
+            return {
+                labels: indices,
                 datasets: [
                     {
-                        data: TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)),
+                        data,
                         borderWidth: 0,
                         backgroundColor: '#f0ad00'
                     }
                 ]
-            };
-            return data;
+            } as ChartData<'bar'>;
         }
     },
     methods: { 
