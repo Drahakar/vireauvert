@@ -11,22 +11,24 @@
                     :chart-options="catastropheOptions" />
             </div>
             <div class="slider-container" ref="sliderContainer">
-                <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years"
-                    :marks="marks" :adsorb="true" :drag-on-click="true">
+                <vue-slider v-model="selectedValue" :tooltip="'always'"
+                    :marks="marks" :included="true" :min="0" :max="TOTAL_YEARS_PADDED - 1"
+                    :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']"
-                            :data-year="value">
-                            {{value}}
+                            :data-year="markValueToYear(value)">
+                            {{markValueToYear(value)}}
                         </div>
                     </template>
-                    <template v-slot:step="{ active }">
-                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                    <template v-slot:step="{ active, value }">
+                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"
+                            :data-year="markValueToYear(value)"></div>
                     </template>
                     <template v-slot:tooltip="{ value }">
                         <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                             data-tutorial-step="year-selector">
-                            <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
+                            <span class="vue-slider-dot-tooltip-text">{{ markValueToYear(value) }}</span>
                         </div>
                         <div class="tooltip-line"></div>
                     </template>
@@ -53,7 +55,7 @@ import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
 import { Map, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { CONTINUOUS_YEARS, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
+import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
@@ -77,6 +79,30 @@ enum TimelineMode {
 // For graphs, we assume a linear regression of the neighboring real years on
 // the 'padding' years that are added (like the graph line would do).
 const INTERPOLATED_PADDING_YEARS = 3;
+// How many years do we have in total, taking into account padding?
+const TOTAL_YEARS_PADDED = (
+    CONTINUOUS_YEARS.length +
+    (INTERPOLATED_PADDING_YEARS + 1) * MODELED_YEARS.length);
+
+function markValueToYear(value: number): number {
+    // Convert from a 'mark' value on the slider (index into years with
+    // padding included for interpolated ones) back to a year.
+    if (value < CONTINUOUS_YEARS.length) {
+        return CONTINUOUS_YEARS[value];
+    }
+    const start = CONTINUOUS_YEARS.length + INTERPOLATED_PADDING_YEARS;
+    value -= start;
+    const index = Math.floor(value / (INTERPOLATED_PADDING_YEARS + 1));
+    return MODELED_YEARS[index];
+}
+function yearToMarkValue(year: number): number {
+    if (year <= MAX_CONTINUOUS_YEAR) {
+        return year - MIN_CONTINUOUS_YEAR;
+    }
+    const modeledIndex = MODELED_YEARS.indexOf(year);
+    const start = CONTINUOUS_YEARS.length + INTERPOLATED_PADDING_YEARS;
+    return start + modeledIndex * (INTERPOLATED_PADDING_YEARS + 1);
+}
 
 export default defineComponent({
     components: { VueSlider, Line, TimelineArrow, Bar },
@@ -99,9 +125,9 @@ export default defineComponent({
         }
     },
     setup(props, { emit }) {
-        const selectedYear = computed({
-            get: () => props.year,
-            set: value => emit('yearSelected', value)
+        const selectedValue = computed({
+            get: () => yearToMarkValue(props.year),
+            set: value => emit('yearSelected', markValueToYear(value))
         });
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
@@ -116,7 +142,8 @@ export default defineComponent({
             onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
                 const canvasPosition = getRelativePosition(e, chart)
                 const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
-                emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
+                // TODO: fix this
+                // emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
             },
             plugins: {
                 legend: {
@@ -174,7 +201,7 @@ export default defineComponent({
         }))).toJS() as ChartOptions<'bar'>;
 
         return {
-            selectedYear,
+            selectedValue,
             catastropheStore,
             statisticStore,
             mode: ref(TimelineMode.Temperature),
@@ -186,8 +213,9 @@ export default defineComponent({
     },
     data() {
         return {
+            TIMELINE_YEARS,
+            TOTAL_YEARS_PADDED,
             marks: this.generateMarks(),
-            years: TIMELINE_YEARS,
         };
     },
     computed: {
@@ -231,43 +259,12 @@ export default defineComponent({
         }
     },
     methods: { 
-        getRenderedYearRatio(year: number): number {
-            // For a given year, give the ratio out of the TIMELINE_YEARS where
-            // it should fit (e.g. for 1990-2100, 1990 = 0.0, 2100 = 1.0),
-            // taking into account 'padding years' that get added/interpolated.
-
-            // How many years do we have in total, taking into account padding?
-            const totalYears = (CONTINUOUS_YEARS.length +
-                                (INTERPOLATED_PADDING_YEARS + 1)
-                                * MODELED_YEARS.length);
-            const originalIndex = TIMELINE_YEARS.indexOf(year);
-            const startModelingIndex = CONTINUOUS_YEARS.length;
-            // How many continuous years have we passed?
-            const numContinuousYears = Math.min(CONTINUOUS_YEARS.length, originalIndex + 1);
-            // How many modeling years have we passed?
-            const numModelingYears = Math.max(originalIndex - startModelingIndex + 1, 0);
-
-            // What is our current index in the with-padding list of years?
-            const index = numContinuousYears + numModelingYears * (INTERPOLATED_PADDING_YEARS + 1) - 1;
-            return index / (totalYears - 1);
-        },
-        generateMark(year: number): MarkOption {
-            return {
-                label: year.toString(),
-                pos: this.getRenderedYearRatio(year) * 100,
-            };
-        },
+        markValueToYear,
         generateMarks(): Marks {
-            const marks = {};
-            // Only create mark elements for _some_ of the continuous years.
-            CONTINUOUS_YEARS.filter(y => y % 5 == 0).forEach(year => {
-                marks[year] = this.generateMark(year);
-            });
-            // TODO: hide some of the labels via CSS
-            MODELED_YEARS.forEach(year => {
-                marks[year] = this.generateMark(year);
-            });
-            return marks
+            return TIMELINE_YEARS.reduce((marks, year) => {
+                marks[yearToMarkValue(year)] = year.toString();
+                return marks;
+            }, {});
         },
     },
 });
@@ -321,15 +318,23 @@ export default defineComponent({
 
 .vue-slider .vue-slider-mark .vue-slider-mark-label,
 .vue-slider .vue-slider-mark .vue-slider-mark-step {
+    display: none;
+}
+
+.vue-slider .vue-slider-mark .vue-slider-mark-label[data-year$='0'],
+.vue-slider .vue-slider-mark .vue-slider-mark-step[data-year$='0'] {
     display: block;
 }
 
-.vue-slider .vue-slider-mark .vue-slider-mark-label:is(
-    [data-year^='2030'],
-    [data-year^='2050'],
-) {
-    display: none;
+@media only screen and (max-width: 599px) {
+    .vue-slider .vue-slider-mark .vue-slider-mark-label:is(
+        [data-year^='2030'],
+        [data-year^='2050'],
+    ) {
+        display: none;
+    }
 }
+
 
 .vue-slider .vue-slider-mark .vue-slider-mark-label {
     margin-top: var(--sz-30);
@@ -351,6 +356,7 @@ export default defineComponent({
 .timeline-container {
     /* Undo the timeline component padding to push to the left side */
     margin-left: calc(0px - var(--timeline-horizontal-padding));
+    padding-right: var(--sz-50);
 }
 
 .graph-unit {
