@@ -128,7 +128,7 @@
 
 .leaflet-container a.leaflet-popup-close-button span {
   display: block;
-  font-family: "Matter";
+  font-family: var(--ff-primary);
   color: var( --clr-blanc);
   font-size: var(--sz-600);
   line-height: var(--sz-600);
