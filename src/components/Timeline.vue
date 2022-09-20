@@ -170,9 +170,8 @@ export default defineComponent({
         const baseOptions = Map(fromJS({
             onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
                 const canvasPosition = getRelativePosition(e, chart)
-                const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
-                // TODO: fix this
-                // emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
+                const value = chart.scales.x.getValueForPixel(canvasPosition.x) ?? 0;
+                emit('yearSelected', markValueToYear(value));
             },
             plugins: {
                 legend: {
