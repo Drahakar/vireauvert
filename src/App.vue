@@ -23,6 +23,7 @@ import About from "./components/About.vue";
 import { useHighlightStore } from "./stores/highlights";
 import { Highlight } from "./models/highlights";
 import { useI18n } from "vue-i18n";
+import Share from "./components/Share.vue";
 
 export default defineComponent({
     components: {
@@ -36,6 +37,7 @@ export default defineComponent({
         Thermometer,
         Timeline,
         Tutorial,
+        Share
     },
     methods: {
         selectDistrict(id: number) {
@@ -83,7 +85,9 @@ export default defineComponent({
             catastropheStore,
             highlightStore,
             loadingCompleted,
-            about: ref<InstanceType<typeof About> | null>(null)
+            about: ref<InstanceType<typeof About> | null>(null),
+            share: ref<InstanceType<typeof Share> | null>(null),
+            tutorial: ref<InstanceType<typeof Tutorial> | null>(null)
         };
     },
     computed: {
@@ -119,39 +123,41 @@ Sentry.init({
 
 <template>
     <div class="main">
-        <MapView class="map" :district="state.district"
-            :year="state.year" :catastrophes="catastrophes" :highlights="highlights"
-            @district-selected="selectDistrict"
-            :location="state.location" @location-changed="mapMoved"
-            :zoom="state.zoom" @zoom-changed="mapZoomed"
-            :zoom-limit-offset="-1"></MapView>
+        <MapView class="map" :district="state.district" :year="state.year" :catastrophes="catastrophes"
+            :highlights="highlights" @district-selected="selectDistrict" :location="state.location"
+            @location-changed="mapMoved" :zoom="state.zoom" @zoom-changed="mapZoomed" :zoom-limit-offset="-1"></MapView>
         <div class="map-overlay">
             <div class="container">
                 <div class="content-container">
                     <section class="primary-content content-section">
                         <div class="filter-inputs">
-                            <RegionSearch class="region-search"
-                                :district="state.district"
+                            <RegionSearch class="region-search" :district="state.district"
                                 @district-selected="selectDistrict"></RegionSearch>
-                            <CatastropheToggle class="catastrophe-toggle"
-                                v-model:filter="state.catastropheFilter"
-                                :allCatastrophes="allCatastrophes"
-                                :currentCatastrophesCount="catastrophes.size"></CatastropheToggle>
+                            <CatastropheToggle class="catastrophe-toggle" v-model:filter="state.catastropheFilter"
+                                :allCatastrophes="allCatastrophes" :currentCatastrophesCount="catastrophes.size">
+                            </CatastropheToggle>
                         </div>
-                        <Timeline class="timeline" :year="state.year"
-                            @year-selected="selectYear"
+                        <Timeline class="timeline" :year="state.year" @year-selected="selectYear"
                             :district="state.district"></Timeline>
                         <Header class="header" @about-requested="about?.open()"></Header>
                     </section>
                     <section class="secondary-content content-section">
-                        <Thermometer :statistics="selectedStatistics"
-                            :reference-statistics="referenceYearStatistics"></Thermometer>
+                        <div class="util-buttons">
+                            <button :title="$t('share')" @click="share?.open()"><img src="/Button/Share.png"
+                                    :alt="$t('share')"></button>
+                            <button :title="$t('help')" @click="tutorial?.resetTutorial()"><img src="/Button/Info.png"
+                                    :alt="$t('help')"></button>
+                        </div>
+                        <Thermometer :statistics="selectedStatistics" :reference-statistics="referenceYearStatistics">
+                        </Thermometer>
                         <CallToAction class="call-to-action"></CallToAction>
                     </section>
                 </div>
             </div>
+
         </div>
         <About ref="about"></About>
+        <Share ref="share"></Share>
     </div>
 
     <div v-if="!loadingCompleted" class="loading-overlay">
@@ -159,7 +165,7 @@ Sentry.init({
         <p class="loading-message" v-t="'loading'"></p>
     </div>
 
-    <Tutorial :ready="loadingCompleted"></Tutorial>
+    <Tutorial ref="tutorial" :ready="loadingCompleted"></Tutorial>
 </template>
 
 <style scoped>
@@ -179,7 +185,8 @@ Sentry.init({
 .content-container {
     height: 100%;
     display: flex;
-    min-height: 0;  /* undo min-height: auto from being a flex child */
+    min-height: 0;
+    /* undo min-height: auto from being a flex child */
     height: 100%;
     flex-direction: row;
     gap: var(--app-column-gap);
@@ -194,21 +201,22 @@ Sentry.init({
 
 .primary-content {
     flex: 1;
-    min-width: 0;  /* undo min-width: auto from being a flex child */
+    min-width: 0;
+    /* undo min-width: auto from being a flex child */
 }
 
 .secondary-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: var(--sz-900);
+    gap: var(--sz-100);
     align-items: center;
     padding-bottom: var(--sz-800);
     min-width: 100px;
 }
 
 .map-overlay {
-    position:absolute;
+    position: absolute;
     top: 0;
     left: 0;
     height: 100%;
@@ -227,7 +235,8 @@ Sentry.init({
 .filter-inputs {
     flex: 1;
     width: 100%;
-    min-height: 0;  /* don't expand to children content -- undo auto min-height */
+    min-height: 0;
+    /* don't expand to children content -- undo auto min-height */
     max-height: 100%;
     max-width: 600px;
     padding-right: var(--sz-50);
@@ -242,7 +251,8 @@ Sentry.init({
 }
 
 .catastrophe-toggle {
-    min-height: 0;  /* undo min-height: auto from being a flex child */
+    min-height: 0;
+    /* undo min-height: auto from being a flex child */
     height: 100%;
     width: 100%;
 }
@@ -287,10 +297,29 @@ Sentry.init({
 .loading-message {
     font-size: var(--sz-600);
 }
+
+.util-buttons {
+    display: flex;
+    gap: var(--sz-50);
+    width: 100%;
+    justify-content: center;
+}
+
+.util-buttons button {
+    pointer-events: auto;
+    width: var(--sz-900);
+    height: var(--sz-900);
+}
+
+.util-buttons button img {
+    width: 100%;
+    height: 100%;
+}
 </style>
 
-<style>  /* global */
-.region-search > div {
+<style>
+/* global */
+.region-search>div {
     background-color: var(--color-background);
 }
 </style>

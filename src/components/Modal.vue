@@ -96,7 +96,7 @@ export default defineComponent({
 }
 
 #modal-header {
-    padding: 2px;
+    padding: 2px var(--sz-30);
     background-color: var(--clr-blanc);
     height: var(--sz-900);
 }

@@ -1,48 +1,32 @@
 <template>
-    <v-tour name="tutorial" :steps="steps" :options="options"
-        :callbacks="callbacks" v-slot="tour">
+    <v-tour name="tutorial" :steps="steps" :options="options" :callbacks="callbacks" v-slot="tour">
         <transition name="fade">
-            <v-step
-                v-if="tour.steps[tour.currentStep]"
-                :step="tour.steps[tour.currentStep]"
-                :key="tour.currentStep"
-                :previous-step="tour.previousStep"
-                :next-step="tour.nextStep"
-                :stop="tour.stop"
-                :skip="tour.skip"
-                :is-first="tour.isFirst"
-                :is-last="tour.isLast"
-                :labels="tour.labels"
-                :enabled-buttons="tour.enabledButtons"
-                :debug="tour.debug">
+            <v-step v-if="tour.steps[tour.currentStep]" :step="tour.steps[tour.currentStep]" :key="tour.currentStep"
+                :previous-step="tour.previousStep" :next-step="tour.nextStep" :stop="tour.stop" :skip="tour.skip"
+                :is-first="tour.isFirst" :is-last="tour.isLast" :labels="tour.labels"
+                :enabled-buttons="tour.enabledButtons" :debug="tour.debug">
                 <template #header="header">
                     <header>
                         <span class="title" v-t="'tutorial_title'"></span>
-                        <button @click.prevent="tour.finish"
-                            class="v-step__button v-step__button-stop">
+                        <button @click.prevent="tour.finish" class="v-step__button v-step__button-stop">
                             {{ tour.labels.buttonStop }}
                         </button>
                     </header>
                 </template>
                 <template #content>
-                    <div class="v-step__content"
-                        v-html="tour.steps[tour.currentStep].content"></div>
+                    <div class="v-step__content" v-html="tour.steps[tour.currentStep].content"></div>
                 </template>
                 <template #actions>
                     <div class="v-step__buttons">
-                        <button @click.prevent="tour.previousStep"
-                            class="v-step__button v-step__button-previous"
-                            :data-disabled="tour.isFirst"
-                            :aria-label="$t('tutorial_prev')">
+                        <button @click.prevent="tour.previousStep" class="v-step__button v-step__button-previous"
+                            :data-disabled="tour.isFirst" :aria-label="$t('tutorial_prev')">
                         </button>
                         <span class="step-status">
                             {{ $t('tutorial_step_msg',
-                               [tour.currentStep + 1, tour.steps.length]) }}
+                            [tour.currentStep + 1, tour.steps.length]) }}
                         </span>
-                        <button @click.prevent="tour.nextStep"
-                            class="v-step__button v-step__button-next"
-                            :data-disabled="tour.isLast"
-                            :aria-label="$t('tutorial_next')">
+                        <button @click.prevent="tour.nextStep" class="v-step__button v-step__button-next"
+                            :data-disabled="tour.isLast" :aria-label="$t('tutorial_next')">
                         </button>
                     </div>
                 </template>
@@ -102,7 +86,7 @@ export default defineComponent({
                     },
                 },
             ],
-            callbacks: { 
+            callbacks: {
                 onStop: () => {
                     localStorage.setItem('tutorial_completed', 'true');
                 }
@@ -113,10 +97,19 @@ export default defineComponent({
         ready: function (isReady, wasReady) {
             if (!wasReady && isReady) {
                 if (!localStorage.getItem('tutorial_completed')) {
-                    this.$tours['tutorial'].start();
+                    this.beginTutorial();
                 }
             }
         },
+    },
+    methods: {
+        beginTutorial() {
+            this.$tours['tutorial'].start();
+        },
+        resetTutorial() {
+            localStorage.removeItem('tutorial_completed');
+            this.beginTutorial();
+        }
     }
 });
 </script>
@@ -209,5 +202,4 @@ header .title {
 .v-step__button:not([data-disabled="true"]):hover {
     opacity: 0.8;
 }
-
 </style>
