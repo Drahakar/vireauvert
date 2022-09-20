@@ -72,6 +72,7 @@ export default defineComponent({
 
     font-size: var(--sz-100);
     line-height: 1.5em;
+    letter-spacing: 0;
 }
 
 #body-content :deep(p) {

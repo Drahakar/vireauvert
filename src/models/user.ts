@@ -16,6 +16,6 @@ export const DEFAULT_USER_STATE: UserState = {
     district: 0,
     year: CURRENT_YEAR,
     catastropheFilter: FILTER_ALL_CATASTROPHES,
-    location: [55.15, -68.30],
+    location: [51.7678399, -68.3305525],
     zoom: MIN_ZOOM
 };

@@ -1,8 +1,10 @@
-from genericpath import isfile
 import frontmatter
 import os
 import json
+import re
 import utils
+
+LOCATION_PATTERN = re.compile('(-?\d+\.\d+)')
 
 highlights = []
 root_path = os.path.join(utils.source_directory, 'highlights')
@@ -12,7 +14,7 @@ for name in os.listdir(root_path):
         with open(full_path, 'r', encoding='utf-8') as input_file:
             file = frontmatter.load(input_file)
 
-            location = file.metadata['location'].split(',')
+            location = LOCATION_PATTERN.findall(file.metadata['location'])
             highlight = {
                 'id': os.path.splitext(name)[0],
                 'year': int(file.metadata['year']),
@@ -21,7 +23,7 @@ for name in os.listdir(root_path):
                     'lng': float(location[1])
                 },
                 'locale': file.metadata['locale'],
-                'type': file.metadata['type'],
+                'type': file.metadata['type'] if 'type' in file.metadata else 'UNKNOWN',
                 'body': file.content
             }
             if 'title' in file.metadata:
