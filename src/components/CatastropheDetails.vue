@@ -71,9 +71,8 @@ time {
 .icon {
     width: var(--sz-700);
     height: var(--sz-700);
-    background-size: var(--sz-700);
+    background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center;
     margin-bottom: 4px;
 }
