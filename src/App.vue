@@ -313,6 +313,10 @@ Sentry.init({
     height: var(--sz-900);
 }
 
+.util-buttons button:hover {
+    transform: scale(1.2);
+}
+
 .util-buttons button img {
     width: 100%;
     height: 100%;

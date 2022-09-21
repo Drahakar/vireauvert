@@ -328,6 +328,10 @@ function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
     border-radius: var(--border-radius);
 }
 
+.leaflet-popup-close-button:hover {
+    opacity: 0.8;
+}
+
 .leaflet-left .leaflet-control {
     margin-left: var(--size-map-padding);
     /* IFCHANGE: change App */

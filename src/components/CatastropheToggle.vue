@@ -168,6 +168,14 @@ export default defineComponent({
     visibility: hidden;
 }
 
+header {
+    cursor: pointer;
+}
+
+header:hover {
+    opacity: 0.8;
+}
+
 .container {
     border-radius: var(--border-radius);
     border: 1px solid var(--color-border);

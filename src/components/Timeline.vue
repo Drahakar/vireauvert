@@ -42,7 +42,7 @@
             <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
                 <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
                     @change="mode = value" :class="value">
-                <label :for="`radio-${value}`" :class="{active: value === mode}">
+                <label :for="`radio-${value}`" :class="{active: value === mode, inactive: value !== mode}">
                     <img :src="`/Button/${value}.svg`" :alt="value">
                 </label>
             </div>
@@ -332,6 +332,7 @@ export default defineComponent({
     /* Undo the timeline component padding to push to the left side */
     margin-left: calc(0px - var(--timeline-horizontal-padding));
     padding-right: var(--sz-50);
+    cursor: pointer;
 }
 
 .graph-unit {
@@ -376,6 +377,10 @@ export default defineComponent({
 
 #mode-container label.active img {
     filter: brightness(0) invert(1);
+}
+
+#mode-container label.inactive:hover {
+    transform: scale(1.2);
 }
 </style>
 
