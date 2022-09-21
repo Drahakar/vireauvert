@@ -2,7 +2,8 @@
     <div class="wrapper" :class="{expanded: expanded}">
         <section class="container">
             <header class="row" @click="expanded = !expanded">
-                <PillBadge class="total-count pill" :value="currentCatastrophesCount"
+                <PillBadge class="total-count pill"
+                    :value="showValue(currentCatastrophesCount)"
                     data-tutorial-step="catastrophes-count"></PillBadge>
                 <img class="catastrophe-icon" src="/icons/attention-highlight.png">
                 <div class="title"><span>Événements extrêmes</span></div>
@@ -15,7 +16,7 @@
                 <div class="row" :class="toggle.class">
                     <PillBadge class="pill"
                         :class="{invisible: toggle.count == 0}"
-                        :value="toggle.count"></PillBadge>
+                        :value="showValue(toggle.count)"></PillBadge>
                     <img class="catastrophe-icon" :src="toggle.iconPath">
                     <div class="catastrophe-name"><span>{{toggle.name}}</span></div>
                     <Checkbox :name="$t('toggle_checkbox_name_prefix') + toggle.name"
@@ -101,6 +102,10 @@ export default defineComponent({
             type: Number,
             required: true,
         },
+        futureYear: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         Checkbox,
@@ -134,6 +139,9 @@ export default defineComponent({
         },
     },
     methods: {
+        showValue(value: number): string {
+            return this.futureYear ? '?' : value.toString();
+        },
         onFilterAllChange(enable: Boolean) {
             // When the 'All' option is checked, it either clears all filters or
             // enables them all.
