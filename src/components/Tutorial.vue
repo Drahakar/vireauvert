@@ -1,7 +1,9 @@
 <template>
     <v-tour name="tutorial" :steps="steps" :options="options" :callbacks="callbacks" v-slot="tour">
         <transition name="fade">
-            <v-step v-if="tour.steps[tour.currentStep]" :step="tour.steps[tour.currentStep]" :key="tour.currentStep"
+            <v-step
+                id="v-step"
+                v-if="tour.steps[tour.currentStep]" :step="tour.steps[tour.currentStep]" :key="tour.currentStep"
                 :previous-step="tour.previousStep" :next-step="tour.nextStep" :stop="tour.stop" :skip="tour.skip"
                 :is-first="tour.isFirst" :is-last="tour.isLast" :labels="tour.labels"
                 :enabled-buttons="tour.enabledButtons" :debug="tour.debug">
@@ -63,9 +65,6 @@ export default defineComponent({
                 // Note: important to have a first step target that does not
                 // depend on loaded data for its placement (or e.g. no target).
                 {
-                    // TODO(emond): Switch to no target, but then need to fix
-                    // styling...
-                    target: '[data-tutorial-step="year-selector"]',
                     content: this.$t('tutorial_welcome_html'),
                     params: baseParams,
                 },
@@ -124,17 +123,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.v-tour :deep(.v-step) {
-    --header-background-color: var(--color-background-accent);
-    padding: 0;
-    background-color: var(--color-background);
-    color: var(--clr-gris-moyen);
-    border-radius: var(--border-radius);
-    max-width: var(--popup-width);
-    font-size: var(--sz-300);
-    box-shadow: 0px 4px 4px rgba(53, 53, 53, 0.25);
-}
-
 header {
     background-color: var(--header-background-color);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
@@ -211,4 +199,20 @@ header .title {
 .v-step__button:not([data-disabled="true"]):hover {
     opacity: 0.8;
 }
+</style>
+<style>  /* global */
+/* Note: the following must be global with aggressive CSS selectors (e.g. IDs)
+   due to v-step sticky directly adding a <body> element, outside of the parent.
+ */
+#v-step {
+    --header-background-color: var(--color-background-accent);
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--clr-gris-moyen);
+    border-radius: var(--border-radius);
+    max-width: var(--popup-width);
+    font-size: var(--sz-300);
+    box-shadow: 0px 4px 4px rgba(53, 53, 53, 0.25);
+}
+
 </style>
