@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
-import { Map, fromJS } from 'immutable';
+import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
@@ -196,27 +196,33 @@ export default defineComponent({
         temperatureData() {
             const { indices, data } = VISUAL_YEARS.interpolate(
                 TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
+            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            // Split up in two charts to get a break for future values
+            const pastData = data.slice(0, lastPastIndex + 1).concat(Repeat(null, data.length - lastPastIndex - 1).toArray());
+            const futureData = Repeat(null, lastPastIndex + 1).toArray().concat(data.slice(lastPastIndex + 1));
+            const datasetBase = {
+                fill: true,
+                spanGaps: false,
+                borderWidth: 0,
+                pointRadius: 0,
+                backgroundColor: (ctx: ScriptableContext<'line'>) => {
+                    const canvas = ctx.chart.ctx;
+                    const gradient = canvas.createLinearGradient(0, 0, 0, 90);
+
+                    //TODO: mettre le bon gradiant et les bonnes couleurs
+                    gradient.addColorStop(0, 'red');
+                    gradient.addColorStop(0.5, 'orange');
+                    gradient.addColorStop(0.8, 'lightblue');
+
+                    return gradient;
+                },
+            };
             return {
                 labels: indices,
                 datasets: [
-                    {
-                        data,
-                        fill: true,
-                        borderWidth: 0,
-                        pointRadius: 0,
-                        backgroundColor: (ctx: ScriptableContext<'line'>) => {
-                            const canvas = ctx.chart.ctx;
-                            const gradient = canvas.createLinearGradient(0, 0, 0, 90);
-
-                            //TODO: mettre le bon gradiant et les bonnes couleurs
-                            gradient.addColorStop(0, 'red');
-                            gradient.addColorStop(0.5, 'orange');
-                            gradient.addColorStop(0.8, 'lightblue');
-
-                            return gradient;
-                        },
-                    }
-                ]
+                    { ...datasetBase, data: pastData, },
+                    { ...datasetBase, data: futureData, },
+                ],
             } as ChartData<'line'>;
         },
         catastropheData() {
