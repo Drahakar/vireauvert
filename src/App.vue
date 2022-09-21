@@ -110,6 +110,10 @@ export default defineComponent({
             return this.catastropheStore.findCatastrophes(
                 this.state.year, this.state.district, FILTER_ALL_CATASTROPHES);
         },
+        globalCatastrophes(): List<Catastrophe> {
+            return this.catastropheStore.findCatastrophes(
+                this.state.year, 0, this.state.catastropheFilter);
+        },
     },
 });
 
@@ -123,7 +127,7 @@ Sentry.init({
 
 <template>
     <div class="main">
-        <MapView class="map" :district="state.district" :year="state.year" :catastrophes="catastrophes"
+        <MapView class="map" :district="state.district" :year="state.year" :catastrophes="globalCatastrophes"
             :highlights="highlights" @district-selected="selectDistrict" :location="state.location"
             @location-changed="mapMoved" :zoom="state.zoom" @zoom-changed="mapZoomed" :zoom-limit-offset="-1"></MapView>
         <div class="map-overlay">
