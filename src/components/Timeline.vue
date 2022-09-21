@@ -203,8 +203,8 @@ export default defineComponent({
             // Split up in two charts to get a break for future values
             const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
                 Repeat(null as ChartElem, data.length - lastPastIndex - 1).toArray());
-            const futureData = Repeat(null as ChartElem, lastPastIndex + 1).toArray().concat(
-                data.slice(lastPastIndex + 1));
+            const futureData = Repeat(null as ChartElem, lastPastIndex).toArray().concat(
+                data.slice(lastPastIndex));
             const datasetBase = {
                 fill: true,
                 spanGaps: false,
