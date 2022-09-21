@@ -228,11 +228,15 @@ export default defineComponent({
         catastropheData() {
             const { indices, data } = VISUAL_YEARS.interpolate(
                 TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)));
+            // Future years have unknown values, set null to replace
+            // interpolated values.
+            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            const pastData = data.slice(0, lastPastIndex + 1).concat(Repeat(null, data.length - lastPastIndex - 1).toArray());
             return {
                 labels: indices,
                 datasets: [
                     {
-                        data,
+                        data: pastData,
                         borderWidth: 0,
                         backgroundColor: '#f0ad00'
                     }
