@@ -171,7 +171,8 @@ export default {
     timeline_mode_Catastrophes: "Événements extrêmes par année",
 
     // About
-    made_with_love: "Le logiciel terreOS a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
+    about: "À propos",
+    made_with_love: "La carte climat a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
     data_source: "Les données utilisées dans ce logiciel proviennent du {0}, du {1} ainsi que du {2}.",
     ouranos: "consortium Ouranos",
     url_ouranos: "https://www.ouranos.ca/",

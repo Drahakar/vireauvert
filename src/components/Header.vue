@@ -3,9 +3,6 @@
         <button @click="about" class="bleuet-equitable">
             <img src="/Logo_EQT-Bleuet_Map.png" alt="Éqt*x(*)">
         </button>
-        <button @click="about" class="terreos">
-            <img src="/Logo_terreOS_Map.png" alt="terreOS">
-        </button>
     </header>
 </template>
 
@@ -31,14 +28,12 @@ header {
 
 button {
     pointer-events: auto;
+    display: block;
 }
 
 img {
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
-}
-.terreos{
-    flex-grow: 1;
 }
 </style>
