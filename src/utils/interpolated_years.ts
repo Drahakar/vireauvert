@@ -44,11 +44,12 @@ export class InterpolatedYears {
         if (index < this.continuous.length) {
             return this.continuous[index];
         }
-        const start = this.continuous.length + this.padding;
-        index -= start;
-        const modelIndex = Math.floor(index / (this.padding + 1));
-        return this.modeled[modelIndex];
-    }
+        const lastContinuousIndex = this.continuous.length - 1;
+        index -= lastContinuousIndex;
+        const numModeled = Math.round(index / (this.padding + 1));
+        const modeledIndex = clamp(numModeled - 1, 0, this.modeled.length - 1);
+        return this.modeled[modeledIndex];
+    };
 
     yearToIndex(year: number): number {
         if (year <= this.continuous[this.continuous.length - 1]) {
@@ -83,3 +84,7 @@ export class InterpolatedYears {
         return interpolated;
     }
 };
+
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
