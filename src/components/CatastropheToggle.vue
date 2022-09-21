@@ -196,7 +196,7 @@ export default defineComponent({
 .separator {
     width: 100%;
     min-height: 1px;
-    background-color: var(--clr-beige);
+    background-color: var(--color-background);
     border-radius: var(--border-radius);
 }
 

@@ -19,7 +19,7 @@
   --clr-brun-terreux: #664500;
 
   --clr-thermometer-mercury: #c9655e;
-  --clr-thermometer-background: var(--clr-beige);
+  --clr-thermometer-background: var(--color-background);
   --clr-thermometer-border: var(--clr-blanc);
 
   --clr-flood: #00A6CA;
@@ -114,8 +114,8 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--clr-blanc);
-  --color-background-accent: var(--clr-beige);
+  --color-background: var(--clr-beige);
+  --color-background-accent: var(--clr-blanc);
 
   --color-accent: var(--clr-orange);
 

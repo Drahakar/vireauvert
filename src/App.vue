@@ -278,7 +278,7 @@ Sentry.init({
     color: var(--color-heading);
     font-weight: var(--fw-regular);
     font-size: var(--sz-400);
-    background-color: var(--color-background-accent);
+    background-color: var(--color-background);
     border-radius: var(--border-radius);
 }
 

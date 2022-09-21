@@ -36,7 +36,7 @@ export default defineComponent({
 <style scoped>
 .header {
     font-size: var(--sz-400);
-    background-color: var(--clr-blanc);
+    background-color: var(--color-background-accent);
     height: var(--sz-900);
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
@@ -82,7 +82,7 @@ time {
     padding-bottom: var(--sz-30);
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
-    background-color: var(--clr-blanc);
+    background-color: var(--color-background-accent);
     border-radius: var(--border-radius);
     flex-grow: 1;
 }

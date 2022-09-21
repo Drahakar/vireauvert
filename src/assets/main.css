@@ -110,7 +110,7 @@
 }
 
 .catastrophe-popup .leaflet-popup-content {
-  background-color: var(--clr-beige);
+  background-color: var(--color-background);
   color: var(--clr-gris-fonce);
   border-radius: var(--border-radius);
 }
@@ -134,5 +134,5 @@
 }
 
 .catastrophe-popup .leaflet-popup-tip {
-  background-color: var(--clr-beige);
+  background-color: var(--color-background);
 }
