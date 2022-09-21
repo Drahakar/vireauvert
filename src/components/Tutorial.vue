@@ -60,6 +60,15 @@ export default defineComponent({
                 },
             },
             steps: [
+                // Note: important to have a first step target that does not
+                // depend on loaded data for its placement (or e.g. no target).
+                {
+                    // TODO(emond): Switch to no target, but then need to fix
+                    // styling...
+                    target: '[data-tutorial-step="year-selector"]',
+                    content: this.$t('tutorial_welcome_html'),
+                    params: baseParams,
+                },
                 {
                     target: '[data-tutorial-step="temperature"]',
                     content: this.$t('tutorial_temperature_html'),
