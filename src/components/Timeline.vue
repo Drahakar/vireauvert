@@ -207,12 +207,16 @@ export default defineComponent({
                 pointRadius: 0,
                 backgroundColor: (ctx: ScriptableContext<'line'>) => {
                     const canvas = ctx.chart.ctx;
-                    const gradient = canvas.createLinearGradient(0, 0, 0, 90);
+                    const chartArea = ctx.chart.chartArea;
+                    if (!chartArea) return;  // not set on init
+                    const yAxis = ctx.chart.scales.y;
+                    const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
+                    const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
 
-                    //TODO: mettre le bon gradiant et les bonnes couleurs
-                    gradient.addColorStop(0, 'red');
-                    gradient.addColorStop(0.5, 'orange');
-                    gradient.addColorStop(0.8, 'lightblue');
+                    gradient.addColorStop(0.9, '#FF3B3B');
+                    gradient.addColorStop(zeroRatio + 0.03, '#F0AD00');
+                    gradient.addColorStop(zeroRatio, '#F4F3E7');
+                    gradient.addColorStop(0, '#005AAD');
 
                     return gradient;
                 },
