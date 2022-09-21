@@ -47,6 +47,9 @@ export default {
     in_year: "en {year}",
     at_location: "à {location}",
     count_by_year: "{count} en {year}",
+    share: "Partager",
+    help: "Aide",
+    email: "Courriel",
 
     // Loading overlay
     loading: "Chargement des données...",
