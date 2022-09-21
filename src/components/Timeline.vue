@@ -80,6 +80,8 @@ const INTERPOLATED_PADDING_YEARS = 3;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
                                            INTERPOLATED_PADDING_YEARS);
 
+type GradientGenerator = (ctx: ScriptableContext) => CanvasGradient | undefined;
+
 export default defineComponent({
     components: { VueSlider, Line, TimelineArrow, Bar },
     emits: ['yearSelected'],
@@ -205,27 +207,24 @@ export default defineComponent({
                 spanGaps: false,
                 borderWidth: 0,
                 pointRadius: 0,
-                backgroundColor: (ctx: ScriptableContext<'line'>) => {
-                    const canvas = ctx.chart.ctx;
-                    const chartArea = ctx.chart.chartArea;
-                    if (!chartArea) return;  // not set on init
-                    const yAxis = ctx.chart.scales.y;
-                    const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
-                    const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-
-                    gradient.addColorStop(0.9, '#FF3B3B');
-                    gradient.addColorStop(zeroRatio + 0.03, '#F0AD00');
-                    gradient.addColorStop(zeroRatio, '#F4F3E7');
-                    gradient.addColorStop(0, '#005AAD');
-
-                    return gradient;
-                },
             };
             return {
                 labels: indices,
                 datasets: [
-                    { ...datasetBase, data: pastData, },
-                    { ...datasetBase, data: futureData, },
+                    {
+                        ...datasetBase,
+                        data: pastData,
+                        backgroundColor: this.makeGradientGenerator(
+                            'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
+                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)'),
+                    },
+                    {
+                        ...datasetBase,
+                        data: futureData,
+                        backgroundColor: this.makeGradientGenerator(
+                            'rgba(255, 59, 59, 0.3)', 'rgba(240, 173, 0, 0.3)',
+                            'rgba(244, 243, 231, 0.3)', 'rgba(0, 90, 173, 0.3)'),
+                    },
                 ],
             } as ChartData<'line'>;
         },
@@ -254,6 +253,28 @@ export default defineComponent({
                 marks[VISUAL_YEARS.yearToIndex(year)] = year.toString();
                 return marks;
             }, {} as Marks);
+        },
+        makeGradientGenerator(hotColor: string, warmColor: string,
+                              neutralColor: string, coldColor: string
+        ): GradientGenerator {
+            return (ctx: ScriptableContext<'line'>) => {
+                const canvas = ctx.chart.ctx;
+                const chartArea = ctx.chart.chartArea;
+                if (!chartArea) return;  // not set on init
+                const yAxis = ctx.chart.scales.y;
+                const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
+                const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+
+                gradient.addColorStop(0.7, hotColor);
+                // put warm color slightly above zero to get a fast transition
+                // to non-"invisible" colors, e.g. when neutral is the same as
+                // the background color.
+                gradient.addColorStop(zeroRatio + 0.03, warmColor);
+                gradient.addColorStop(zeroRatio, neutralColor);
+                gradient.addColorStop(0, coldColor);
+
+                return gradient;
+            };
         },
     },
 });
