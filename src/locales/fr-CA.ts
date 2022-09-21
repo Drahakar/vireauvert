@@ -177,7 +177,7 @@ export default {
 
     // About
     about: "À propos",
-    made_with_love: "La carte climat a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
+    made_with_love: "La Carte climat a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
     data_source: "Les données utilisées dans ce logiciel proviennent du {0}, du {1} ainsi que du {2}.",
     ouranos: "consortium Ouranos",
     url_ouranos: "https://www.ouranos.ca/",
@@ -193,7 +193,7 @@ export default {
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
     tutorial_step_msg: "Étape {0} de {1}",
-    tutorial_welcome_html: "<p>Bienvenu sur la <b>carte climat</b>!</p><p>Explorez les effets des changements climatiques sur le Québec.</p>",
+    tutorial_welcome_html: "<p>Bienvenu sur la <b>Carte climat</b>!</p><p>Explorez les effets des changements climatiques sur le Québec.</p>",
     tutorial_temperature_html: "<p>Voici la température pour l'<b>année</b> et la <b>région</b> sélectionnées.</p><p>Notez les changements par rapport à la température de 1990.</p>",
     tutorial_year_html: "<p>Vous pouvez changer l'<b>année en cours</b> pour explorer les données historiques et les projections futures.</p>",
     tutorial_catastrophes_html: "<p>Voici la quantité d'<b>événements extrêmes</b> pour l'année en cours.</p><p>Pour contrôler les filtres, appuyez à cet endroit.</p>",
