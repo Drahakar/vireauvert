@@ -85,6 +85,6 @@ export class InterpolatedYears {
     }
 };
 
-function clamp(value, min, max) {
+function clamp(value: number, min: number, max: number): number {
     return Math.min(max, Math.max(min, value));
 }
