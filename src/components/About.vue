@@ -1,9 +1,7 @@
 <template>
     <Modal ref="modal">
         <template v-slot:title>
-            <div id="header">
-                <img class="logo" src="/Logo_terreOS_About.png" alt="terreOS">
-            </div>
+            <div id="header" v-t="'about'"></div>
         </template>
         <template v-slot:content>
             <div id="content">
@@ -79,8 +77,9 @@ img {
 
 #header {
     display: flex;
-    justify-content: center;
+    align-items: center;
     height: 100%;
+    font-size: var(--sz-600);
 }
 
 #header .logo {
