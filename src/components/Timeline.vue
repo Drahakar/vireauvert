@@ -11,19 +11,24 @@
                     :chart-options="catastropheOptions" />
             </div>
             <div class="slider-container" ref="sliderContainer">
-                <vue-slider v-model="selectedYear" :tooltip="'always'" :data="years"
-                    :marks="marks" :adsorb="true" :drag-on-click="true">
+                <vue-slider v-model="selectedValue" :tooltip="'always'"
+                    :marks="marks" :included="true" :min="0" :max="VISUAL_YEARS.totalYearsPadded - 1"
+                    :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
-                        <div :class="['vue-slider-mark-label', 'custom-label']">{{value}}</div>
+                        <div :class="['vue-slider-mark-label', 'custom-label']"
+                            :data-year="VISUAL_YEARS.indexToYear(value)">
+                            {{VISUAL_YEARS.indexToYear(value)}}
+                        </div>
                     </template>
-                    <template v-slot:step="{ active }">
-                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"></div>
+                    <template v-slot:step="{ active, value }">
+                        <div :class="['vue-slider-mark-step', {'vue-slider-mark-step-active': active}]"
+                            :data-year="VISUAL_YEARS.indexToYear(value)"></div>
                     </template>
                     <template v-slot:tooltip="{ value }">
                         <div class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                             data-tutorial-step="year-selector">
-                            <span class="vue-slider-dot-tooltip-text">{{ value }}</span>
+                            <span class="vue-slider-dot-tooltip-text">{{ VISUAL_YEARS.indexToYear(value) }}</span>
                         </div>
                         <div class="tooltip-line"></div>
                     </template>
@@ -46,14 +51,15 @@
 </template>
 
 <script lang="ts">
-import VueSlider from 'vue-slider-component'
+import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
 import { Map, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { TIMELINE_YEARS, BEGIN_MODELED_YEAR } from '@/models/constants';
+import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
+import { InterpolatedYears } from '@/utils/interpolated_years';
 import { Line, Bar } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import TimelineArrow from './TimelineArrow.vue';
@@ -67,6 +73,12 @@ enum TimelineMode {
     Temperature = "Temperature",
     CatastropheCount = "Catastrophes"
 }
+
+// This many years are added before and between modeled years, to produce some
+// visual padding. See InterpolatedYears for more info.
+const INTERPOLATED_PADDING_YEARS = 3;
+const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
+                                           INTERPOLATED_PADDING_YEARS);
 
 export default defineComponent({
     components: { VueSlider, Line, TimelineArrow, Bar },
@@ -89,9 +101,9 @@ export default defineComponent({
         }
     },
     setup(props, { emit }) {
-        const selectedYear = computed({
-            get: () => props.year,
-            set: value => emit('yearSelected', value)
+        const selectedValue = computed({
+            get: () => VISUAL_YEARS.yearToIndex(props.year),
+            set: value => emit('yearSelected', VISUAL_YEARS.indexToYear(value))
         });
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
@@ -105,8 +117,8 @@ export default defineComponent({
         const baseOptions = Map(fromJS({
             onClick: (e: ChartEvent, tooltipItems: ActiveElement[], chart: ChartJS) => {
                 const canvasPosition = getRelativePosition(e, chart)
-                const yearId = chart.scales.x.getValueForPixel(canvasPosition.x);
-                emit('yearSelected', TIMELINE_YEARS[yearId ?? 0]);
+                const value = chart.scales.x.getValueForPixel(canvasPosition.x) ?? 0;
+                emit('yearSelected', VISUAL_YEARS.indexToYear(value));
             },
             plugins: {
                 legend: {
@@ -164,7 +176,7 @@ export default defineComponent({
         }))).toJS() as ChartOptions<'bar'>;
 
         return {
-            selectedYear,
+            selectedValue,
             catastropheStore,
             statisticStore,
             mode: ref(TimelineMode.Temperature),
@@ -175,23 +187,20 @@ export default defineComponent({
         };
     },
     data() {
-        const ratio = TIMELINE_YEARS.filter(x => x <= BEGIN_MODELED_YEAR).length / TIMELINE_YEARS.length;
         return {
-            marks: TIMELINE_YEARS,
-            years: TIMELINE_YEARS,
-            modeledYearsStyle: [
-                'left:' + (ratio * 100) + '%',
-                'width:' + ((1 - ratio) * 100) + '%'
-            ]
+            VISUAL_YEARS,
+            marks: this.generateMarks(),
         };
     },
     computed: {
         temperatureData() {
-            const data: ChartData<'line'> = {
-                labels: TIMELINE_YEARS,
+            const { indices, data } = VISUAL_YEARS.interpolate(
+                TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
+            return {
+                labels: indices,
                 datasets: [
                     {
-                        data: TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0),
+                        data,
                         fill: true,
                         borderWidth: 0,
                         pointRadius: 0,
@@ -208,23 +217,31 @@ export default defineComponent({
                         },
                     }
                 ]
-            };
-            return data;
+            } as ChartData<'line'>;
         },
         catastropheData() {
-            const data: ChartData<'bar'> = {
-                labels: TIMELINE_YEARS,
+            const { indices, data } = VISUAL_YEARS.interpolate(
+                TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)));
+            return {
+                labels: indices,
                 datasets: [
                     {
-                        data: TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)),
+                        data,
                         borderWidth: 0,
                         backgroundColor: '#f0ad00'
                     }
                 ]
-            };
-            return data;
+            } as ChartData<'bar'>;
         }
-    }
+    },
+    methods: { 
+        generateMarks(): Marks {
+            return TIMELINE_YEARS.reduce((marks, year) => {
+                marks[VISUAL_YEARS.yearToIndex(year)] = year.toString();
+                return marks;
+            }, {} as Marks);
+        },
+    },
 });
 </script>
 
@@ -279,6 +296,21 @@ export default defineComponent({
     display: none;
 }
 
+.vue-slider .vue-slider-mark .vue-slider-mark-label[data-year$='0'],
+.vue-slider .vue-slider-mark .vue-slider-mark-step[data-year$='0'] {
+    display: block;
+}
+
+@media only screen and (max-width: 599px) {
+    .vue-slider .vue-slider-mark .vue-slider-mark-label:is(
+        [data-year^='2030'],
+        [data-year^='2050'],
+    ) {
+        display: none;
+    }
+}
+
+
 .vue-slider .vue-slider-mark .vue-slider-mark-label {
     margin-top: var(--sz-30);
     font-size: var(--sz-300);
@@ -299,29 +331,7 @@ export default defineComponent({
 .timeline-container {
     /* Undo the timeline component padding to push to the left side */
     margin-left: calc(0px - var(--timeline-horizontal-padding));
-}
-
-@media screen and (min-width: 768px) {
-
-    .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-child(5n+1) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step {
-        display: block;
-    }
-}
-
-@media screen and (max-width: 768px) {
-
-    .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-child(10n+1) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-label,
-    .vue-slider .vue-slider-mark:nth-last-child(2) .vue-slider-mark-step,
-    .vue-slider .vue-slider-mark:last-child .vue-slider-mark-step {
-        display: block;
-    }
+    padding-right: var(--sz-50);
 }
 
 .graph-unit {
