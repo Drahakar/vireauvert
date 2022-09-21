@@ -19,4 +19,8 @@ svg {
     height: 100%;
     filter: drop-shadow(0px 2px 4px rgba(75, 75, 74, 0.25));
 }
+
+svg:hover {
+    transform: scale(1.2);
+}
 </style>

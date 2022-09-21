@@ -75,6 +75,10 @@ export default defineComponent({
     gap: var(--sz-50);
 }
 
+#content a:hover {
+    transform: scale(1.2);
+}
+
 #content a img {    
     width: calc(var(--sz-900) * 2);
     height: calc(var(--sz-900) * 2);

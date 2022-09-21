@@ -81,6 +81,10 @@ export default defineComponent({
     background-position: center;
 }
 
+#close-button:hover {
+    opacity: 0.8;
+}
+
 #close-button span {
     display: none
 }
