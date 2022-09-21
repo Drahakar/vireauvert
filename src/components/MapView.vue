@@ -17,7 +17,7 @@ import { createHighlightMarker, createMapMarker, DistrictLayer, setGlobalIconSiz
 import { useMapStore } from "@/stores/map";
 import { YearlyStatistics } from "@/models/yearly_data";
 import { getAppContext } from "@/main";
-import { MAX_ZOOM, MIN_ZOOM } from "@/models/user";
+import { DEFAULT_ZOOM, MAX_ZOOM, MIN_ZOOM } from "@/models/user";
 import { Highlight } from "@/models/highlights";
 
 export default defineComponent({
@@ -45,7 +45,7 @@ export default defineComponent({
         },
         zoom: {
             type: Number,
-            default: MIN_ZOOM
+            default: DEFAULT_ZOOM
         }
     },
     setup(props, { emit }) {
