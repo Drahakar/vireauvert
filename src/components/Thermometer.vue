@@ -33,7 +33,7 @@
 
         <div class="current-value pill tracked-current track-bottom">
             <img :src="emojiPath" data-tutorial-step="temperature">
-            <span>{{$n(currentValueDisplayed, 'temperature')}}</span>
+            <span>{{$n(currentValueDisplayed, 'temperature_delta')}}</span>
         </div>
     </div>
 </template>
@@ -79,7 +79,7 @@ export default defineComponent({
             return this.statistics.temp_delta ?? 0;
         },
         currentValueDisplayed(): number {
-            return this.statistics.avg_temp ?? 0;
+            return this.statistics.temp_delta ?? 0;
         },
         referenceValue(): number {
             return this.referenceStatistics.temp_delta ?? 0;
@@ -286,7 +286,7 @@ export default defineComponent({
 }
 
 .current-value {
-    min-width: calc(var(--sz-900) * 2);
+    width: var(--thermo-current-value-width);
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
     font-size: var(--sz-400);
@@ -300,6 +300,7 @@ export default defineComponent({
 }
 
 .reference-value {
+    width: 11ch;
     background-color: var(--clr-thermometer-mercury);
     font-size: var(--sz-200);
     padding: 2px 6px;
@@ -307,7 +308,7 @@ export default defineComponent({
 
 .risky-value {
     font-size: var(--sz-300);
-    min-width: 80px;
+    width: 11ch;
 }
 
 .risky-value > span {
