@@ -7,7 +7,7 @@ import { useCandidateStore } from "./stores/candidates";
 import { useCatastropheStore } from "./stores/catastrophes";
 import { useStatisticStore } from "./stores/statistics";
 import { FILTER_ALL_CATASTROPHES, Catastrophe } from "./models/catastrophes";
-import { REFERENCE_YEAR } from "./models/constants";
+import { CURRENT_YEAR, REFERENCE_YEAR } from "./models/constants";
 import { DEFAULT_USER_STATE } from "./models/user";
 import CallToAction from './components/CallToAction.vue';
 import CatastropheToggle from "./components/CatastropheToggle.vue";
@@ -38,6 +38,9 @@ export default defineComponent({
         Timeline,
         Tutorial,
         Share
+    },
+    data() {
+        return { CURRENT_YEAR, };
     },
     methods: {
         selectDistrict(id: number) {
@@ -138,7 +141,8 @@ Sentry.init({
                             <RegionSearch class="region-search" :district="state.district"
                                 @district-selected="selectDistrict"></RegionSearch>
                             <CatastropheToggle class="catastrophe-toggle" v-model:filter="state.catastropheFilter"
-                                :allCatastrophes="allCatastrophes" :currentCatastrophesCount="catastrophes.size">
+                                :allCatastrophes="allCatastrophes" :currentCatastrophesCount="catastrophes.size"
+                                :futureYear="state.year > CURRENT_YEAR">
                             </CatastropheToggle>
                         </div>
                         <Timeline class="timeline" :year="state.year" @year-selected="selectYear"
