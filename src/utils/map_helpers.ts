@@ -101,6 +101,15 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
         return div;
     });
     marker.bindPopup(popup);
+    marker.addEventListener('popupopen', ev => {
+        const elem = ev.popup.getElement();
+        if(elem) {
+            const popupContent = elem.querySelector('.leaflet-popup-content') as HTMLElement | null;
+            if(popupContent) {
+                popupContent.style.width = 'var(--popup-width)';
+            }
+        }
+    });
     marker.setZIndexOffset(zindex);
     return marker;
 }
