@@ -142,7 +142,7 @@
 }
 
 html {
-  height: 100%;
+  height: min(100%, 100vh);
 }
 
 body {
