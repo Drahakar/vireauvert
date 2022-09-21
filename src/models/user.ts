@@ -3,6 +3,7 @@ import { CURRENT_YEAR } from "./constants";
 
 export const MIN_ZOOM = 5;
 export const MAX_ZOOM = 15;
+export const DEFAULT_ZOOM = 7;
 
 export interface UserState {
     district: number;
@@ -16,6 +17,6 @@ export const DEFAULT_USER_STATE: UserState = {
     district: 0,
     year: CURRENT_YEAR,
     catastropheFilter: FILTER_ALL_CATASTROPHES,
-    location: [51.7678399, -68.3305525],
-    zoom: MIN_ZOOM
+    location: [46.6908995, -70.9936523],
+    zoom: DEFAULT_ZOOM
 };
