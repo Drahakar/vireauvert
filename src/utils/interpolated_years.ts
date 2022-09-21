@@ -27,13 +27,15 @@ export class InterpolatedYears {
     modeled: number[];
     padding: number;
 
+    // How many indices do we have in total, with padding years?
+    totalYearsPadded: number;
+
     constructor(continuousYears: number[], modeledYears: number[],
         paddingYears: number) {
         this.continuous = continuousYears;
         this.modeled = modeledYears;
         this.padding = paddingYears;
 
-        // How many indices do we have in total, with padding years?
         this.totalYearsPadded = (
             this.continuous.length + (this.padding + 1) * this.modeled.length);
     }
@@ -50,7 +52,7 @@ export class InterpolatedYears {
     }
 
     yearToIndex(year: number): number {
-        if (year <= this.continuous.at(-1)) {
+        if (year <= this.continuous[this.continuous.length - 1]) {
             return year - this.continuous[0];
         }
         const modeledIndex = this.modeled.indexOf(year);
