@@ -49,6 +49,7 @@
   --timeline-horizontal-padding: var(--sz-200);
   --modal-width: 75%;
   --popup-width: 216px;
+  --thermo-current-value-width: 9ch;
 
   /* Font weight variants */
   --fw-regular: 500;
@@ -91,6 +92,7 @@
     --sz-900: 38px;
 
     --popup-width: 332px;
+    --thermo-current-value-width: 8ch;
   }
 }
 
