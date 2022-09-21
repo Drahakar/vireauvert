@@ -4,7 +4,7 @@
             <div id="modal" @click="ev => ev.stopPropagation()">
                 <div id="modal-header">
                     <slot name="title"></slot>
-                    <a id="close-button" @click="closeModal">
+                    <a id="close-button" role="button" @click="closeModal">
                         <span aria-hidden="true">&#x00d7;</span>
                     </a>
                 </div>
@@ -76,23 +76,13 @@ export default defineComponent({
     height: var(--sz-700);
     border-radius: 50%;
     background-color: var(--clr-gris-pale);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-image: url('/Button/Close.svg');
+    background-size: cover;
+    background-position: center;
 }
 
 #close-button span {
-    display: block;
-    color: var(--clr-blanc);
-    font-size: var(--sz-600);
-    line-height: var(--sz-600);
-    width: var(--sz-600);
-    height: var(--sz-600);
-    text-align: center;
-}
-
-#close-button:hover span {
-    color: var(--clr-gris-moyen);
+    display: none
 }
 
 #modal-header {
