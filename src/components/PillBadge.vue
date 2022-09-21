@@ -28,8 +28,7 @@ div {
     padding: 2px 0;
 }
 span {
-    height: 100%;
     display: block;
-    font-size: var(--sz-500);
+    font-size: var(--sz-400);
 }
 </style>
