@@ -48,7 +48,7 @@ export default defineComponent({
 <style scoped>
 #header {
     font-size: var(--sz-400);
-    background-color: var(--clr-blanc);
+    background-color: var(--color-background-accent);
     border-radius: var(--border-radius);
     height: var(--sz-900);
     padding-right: var(--sz-50);

@@ -21,7 +21,7 @@ div {
     align-items: center;
     border-radius: var(--border-radius);
     font-size: var(--sz-400);
-    color: var(--clr-blanc);
+    color: var(--color-background-accent);
     background-color: var(--color-accent);
     width: 5ch;
     text-align: center;

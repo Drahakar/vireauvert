@@ -58,7 +58,7 @@ export default defineComponent({
 
 #modal {
     width: var(--modal-width);
-    background-color: var(--clr-beige);
+    background-color: var(--color-background);
     overflow: hidden;
     border-radius: var(--border-radius);
     box-shadow: 0 3px var(--sz-30) rgba(0, 0, 0, 0.4);
@@ -87,7 +87,7 @@ export default defineComponent({
 
 #modal-header {
     padding: 2px var(--sz-30);
-    background-color: var(--clr-blanc);
+    background-color: var(--color-background-accent);
     height: var(--sz-900);
 }
 

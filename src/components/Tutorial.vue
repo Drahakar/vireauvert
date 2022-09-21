@@ -116,9 +116,9 @@ export default defineComponent({
 
 <style scoped>
 .v-tour :deep(.v-step) {
-    --header-background-color: var(--color-background);
+    --header-background-color: var(--color-background-accent);
     padding: 0;
-    background-color: var(--color-background-accent);
+    background-color: var(--color-background);
     color: var(--clr-gris-moyen);
     border-radius: var(--border-radius);
     max-width: var(--popup-width);
