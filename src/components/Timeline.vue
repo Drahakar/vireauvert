@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
-import { Map, fromJS } from 'immutable';
+import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
@@ -79,6 +79,9 @@ enum TimelineMode {
 const INTERPOLATED_PADDING_YEARS = 3;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
                                            INTERPOLATED_PADDING_YEARS);
+
+type GradientGenerator = (ctx: ScriptableContext<'line'>) => CanvasGradient | undefined;
+type ChartElem = number | null;
 
 export default defineComponent({
     components: { VueSlider, Line, TimelineArrow, Bar },
@@ -196,37 +199,51 @@ export default defineComponent({
         temperatureData() {
             const { indices, data } = VISUAL_YEARS.interpolate(
                 TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
+            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            // Split up in two charts to get a break for future values
+            const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
+                Repeat(null as ChartElem, data.length - lastPastIndex - 1).toArray());
+            const futureData = Repeat(null as ChartElem, lastPastIndex).toArray().concat(
+                data.slice(lastPastIndex));
+            const datasetBase = {
+                fill: true,
+                spanGaps: false,
+                borderWidth: 0,
+                pointRadius: 0,
+            };
             return {
                 labels: indices,
                 datasets: [
                     {
-                        data,
-                        fill: true,
-                        borderWidth: 0,
-                        pointRadius: 0,
-                        backgroundColor: (ctx: ScriptableContext<'line'>) => {
-                            const canvas = ctx.chart.ctx;
-                            const gradient = canvas.createLinearGradient(0, 0, 0, 90);
-
-                            //TODO: mettre le bon gradiant et les bonnes couleurs
-                            gradient.addColorStop(0, 'red');
-                            gradient.addColorStop(0.5, 'orange');
-                            gradient.addColorStop(0.8, 'lightblue');
-
-                            return gradient;
-                        },
-                    }
-                ]
+                        ...datasetBase,
+                        data: pastData,
+                        backgroundColor: this.makeGradientGenerator(
+                            'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
+                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)'),
+                    },
+                    {
+                        ...datasetBase,
+                        data: futureData,
+                        backgroundColor: this.makeGradientGenerator(
+                            'rgba(255, 59, 59, 0.3)', 'rgba(240, 173, 0, 0.3)',
+                            'rgba(244, 243, 231, 0.3)', 'rgba(0, 90, 173, 0.3)'),
+                    },
+                ],
             } as ChartData<'line'>;
         },
         catastropheData() {
             const { indices, data } = VISUAL_YEARS.interpolate(
                 TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)));
+            // Future years have unknown values, set null to replace
+            // interpolated values.
+            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
+                Repeat(null, data.length - lastPastIndex - 1).toArray());
             return {
                 labels: indices,
                 datasets: [
                     {
-                        data,
+                        data: pastData,
                         borderWidth: 0,
                         backgroundColor: '#f0ad00'
                     }
@@ -240,6 +257,28 @@ export default defineComponent({
                 marks[VISUAL_YEARS.yearToIndex(year)] = year.toString();
                 return marks;
             }, {} as Marks);
+        },
+        makeGradientGenerator(hotColor: string, warmColor: string,
+                              neutralColor: string, coldColor: string
+        ): GradientGenerator {
+            return (ctx: ScriptableContext<'line'>) => {
+                const canvas = ctx.chart.ctx;
+                const chartArea = ctx.chart.chartArea;
+                if (!chartArea) return;  // not set on init
+                const yAxis = ctx.chart.scales.y;
+                const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
+                const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+
+                gradient.addColorStop(0.7, hotColor);
+                // put warm color slightly above zero to get a fast transition
+                // to non-"invisible" colors, e.g. when neutral is the same as
+                // the background color.
+                gradient.addColorStop(zeroRatio + 0.03, warmColor);
+                gradient.addColorStop(zeroRatio, neutralColor);
+                gradient.addColorStop(0, coldColor);
+
+                return gradient;
+            };
         },
     },
 });
