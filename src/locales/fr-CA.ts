@@ -2,7 +2,11 @@ import { Catastrophe, CatastropheGroup, CatastropheType, Severity } from "@/mode
 import { MessageContext } from "@intlify/core-base";
 
 function isCatastropheFeminine(type: CatastropheType) {
-    return type === CatastropheType.Flood || type === CatastropheType.Tornado || type === CatastropheType.FreezingRain || type === CatastropheType.HeatWave;
+    return type === CatastropheType.Flood ||
+        type === CatastropheType.Tornado ||
+        type === CatastropheType.FreezingRain ||
+        type === CatastropheType.HeatWave ||
+        type === CatastropheType.Ticks;
 }
 
 const catastrophes = {
@@ -13,7 +17,8 @@ const catastrophes = {
     FREEZING_RAIN: ["Pluie verglaçante", "Pluies verglaçantes"],
     WINTER_STORM: ["Tempête hivernale", "Tempêtes hivernales"],
     STORM_WINDS: ["Vent de tempête", "Vents de tempête"],
-    HEAT_WAVE: ["Vague de chaleur", "Vagues de chaleur"]
+    HEAT_WAVE: ["Vague de chaleur", "Vagues de chaleur"],
+    TICKS: ["Tique", "Tiques"]
 };
 
 function translateSeverity(severity: Severity, feminine: boolean, plural = false) {
@@ -57,7 +62,7 @@ export default {
     // Catastrophes
 
     catastrophes: "Événement extrême | Événements extrêmes",
-    catastrophe_UNKNOWN:  "Événement extrême | Événements extrêmes",
+    catastrophe_UNKNOWN: "Événement extrême | Événements extrêmes",
     catastrophe_FLOOD: ({ plural }: MessageContext) => plural(catastrophes.FLOOD),
     catastrophe_FOREST_FIRE: ({ plural }: MessageContext) => plural(catastrophes.FOREST_FIRE),
     catastrophe_VIOLENT_STORM: ({ plural }: MessageContext) => plural(catastrophes.VIOLENT_STORM),

@@ -8,6 +8,7 @@ export enum CatastropheType {
     FreezingRain = "FREEZING_RAIN",
     StormWinds = "STORM_WINDS",
     HeatWave = "HEAT_WAVE",
+    Ticks = "TICKS",
     Unknown = "UNKNOWN"
     // IFCHANGE: Add support to CatastropheToggle
 }
