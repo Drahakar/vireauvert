@@ -80,7 +80,8 @@ const INTERPOLATED_PADDING_YEARS = 3;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
                                            INTERPOLATED_PADDING_YEARS);
 
-type GradientGenerator = (ctx: ScriptableContext) => CanvasGradient | undefined;
+type GradientGenerator = (ctx: ScriptableContext<'line'>) => CanvasGradient | undefined;
+type ChartElem = number | null;
 
 export default defineComponent({
     components: { VueSlider, Line, TimelineArrow, Bar },
@@ -200,8 +201,10 @@ export default defineComponent({
                 TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
             const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
             // Split up in two charts to get a break for future values
-            const pastData = data.slice(0, lastPastIndex + 1).concat(Repeat(null, data.length - lastPastIndex - 1).toArray());
-            const futureData = Repeat(null, lastPastIndex + 1).toArray().concat(data.slice(lastPastIndex + 1));
+            const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
+                Repeat(null as ChartElem, data.length - lastPastIndex - 1).toArray());
+            const futureData = Repeat(null as ChartElem, lastPastIndex + 1).toArray().concat(
+                data.slice(lastPastIndex + 1));
             const datasetBase = {
                 fill: true,
                 spanGaps: false,
@@ -234,7 +237,8 @@ export default defineComponent({
             // Future years have unknown values, set null to replace
             // interpolated values.
             const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
-            const pastData = data.slice(0, lastPastIndex + 1).concat(Repeat(null, data.length - lastPastIndex - 1).toArray());
+            const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
+                Repeat(null, data.length - lastPastIndex - 1).toArray());
             return {
                 labels: indices,
                 datasets: [
