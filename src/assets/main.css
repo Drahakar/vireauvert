@@ -87,6 +87,9 @@
 .catastrophe-icon-winter_storm {
   background-image: url('/icons/winter_storm.png');
 }
+.catastrophe-icon-ticks {
+  background-image: url('/icons/ticks.png');
+}
 
 .catastrophe-popup {  
   color: var(--clr-gris-fonce);
