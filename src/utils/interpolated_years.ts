@@ -45,7 +45,6 @@ export class InterpolatedYears {
             return this.continuous[index];
         }
         const start = this.continuous.length + this.padding;
-        // TODO: this isn't right, see PR comments
         index -= start;
         const modelIndex = Math.floor(index / (this.padding + 1));
         return this.modeled[modelIndex];
