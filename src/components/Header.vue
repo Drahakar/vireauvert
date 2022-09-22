@@ -1,5 +1,6 @@
 <template>
     <header>
+        <a @click="about">Sources</a>
         <button @click="about" class="bleuet-equitable">
             <img src="/Logo_EQT-Bleuet_Map.png" alt="Éqt*x(*)">
         </button>
@@ -24,16 +25,38 @@ export default defineComponent({
 header {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 button {
     pointer-events: auto;
     display: block;
+    height: 100%;
+}
+
+button:hover {
+    transform: scale(1.2);
 }
 
 img {
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+}
+
+
+a {
+    font-size: var(--sz-300);
+    color: var(--clr-blanc);
+    text-shadow: 0px 0px 3px var(--clr-gris-moyen);
+    text-decoration-line: underline;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+a:hover {
+    color: var(--clr-gris-tres-pale);
 }
 </style>
