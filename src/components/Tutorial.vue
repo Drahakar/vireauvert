@@ -65,12 +65,28 @@ export default defineComponent({
                 // Note: important to have a first step target that does not
                 // depend on loaded data for its placement (or e.g. no target).
                 {
-                    content: this.$t('tutorial_welcome_html'),
+                    content: this.$t('tutorial_step_1'),
                     params: baseParams,
                 },
                 {
+                    target: '[data-tutorial-step="thermo-reference-value"]',
+                    content: this.$t('tutorial_step_2'),
+                    params: {
+                        placement: "left",
+                        ...baseParams,
+                    },
+                },
+                {
+                    target: '[data-tutorial-step="thermo-risky-value"]',
+                    content: this.$t('tutorial_step_3'),
+                    params: {
+                        placement: "left",
+                        ...baseParams,
+                    },
+                },
+                {
                     target: '[data-tutorial-step="temperature"]',
-                    content: this.$t('tutorial_temperature_html'),
+                    content: this.$t('tutorial_step_4'),
                     params: {
                         placement: "left",
                         ...baseParams,
@@ -78,7 +94,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="year-selector"]',
-                    content: this.$t('tutorial_year_html'),
+                    content: this.$t('tutorial_step_5'),
                     params: {
                         // Important, otherwise this pushes the height past 100%
                         placement: "top",
@@ -86,10 +102,42 @@ export default defineComponent({
                     },
                 },
                 {
-                    target: '[data-tutorial-step="catastrophes-count"]',
-                    content: this.$t('tutorial_catastrophes_html'),
+                    target: '[data-tutorial-step="region-search"]',
+                    content: this.$t('tutorial_step_6'),
                     params: {
                         placement: "bottom",
+                        ...baseParams,
+                    },
+                },
+                {
+                    target: '[data-tutorial-step="catastrophes-count"]',
+                    content: this.$t('tutorial_step_7'),
+                    params: {
+                        placement: "bottom",
+                        ...baseParams,
+                    },
+                },
+                {
+                    target: '[data-tutorial-step="highlight"]',
+                    content: this.$t('tutorial_step_8'),
+                    params: {
+                        placement: "top",
+                        ...baseParams,
+                    },
+                },
+                {
+                    target: '[data-tutorial-step="call-to-action"]',
+                    content: this.$t('tutorial_step_9'),
+                    params: {
+                        placement: "left",
+                        ...baseParams,
+                    },
+                },
+                {
+                    target: '[data-tutorial-step="help"]',
+                    content: this.$t('tutorial_step_10'),
+                    params: {
+                        placement: "left",
                         ...baseParams,
                     },
                 },

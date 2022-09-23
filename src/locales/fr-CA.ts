@@ -197,8 +197,14 @@ export default {
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
     tutorial_step_msg: "Étape {0} de {1}",
-    tutorial_welcome_html: "<p>Bienvenue sur la <b>Carte climat</b>!</p><p>Explorez les effets des changements climatiques sur le Québec.</p>",
-    tutorial_temperature_html: "<p>Voici la température pour l'<b>année</b> et la <b>région</b> sélectionnées.</p><p>Notez les changements par rapport à la température de 1990.</p>",
-    tutorial_year_html: "<p>Vous pouvez changer l'<b>année en cours</b> pour explorer les données historiques et les projections futures.</p>",
-    tutorial_catastrophes_html: "<p>Voici la quantité d'<b>événements extrêmes</b> pour l'année en cours.</p><p>Pour contrôler les filtres, appuyez à cet endroit.</p>",
+    tutorial_step_1: "<p>Bienvenue sur la <b>Carte climat</b>!</p><p>Explorez les effets des changements climatiques sur le Québec.</p>",
+    tutorial_step_2: "<p>1990, année de référence par rapport à laquelle nous mesurons les réductions de gaz à effet de serre (GES).</p>",
+    tutorial_step_3: "<p>L'objectif de l'accord de Paris est de limiter l'augmentation de la température moyenne à l'échelle de la planète à <b>1,5 °C</b>.</p><p>C'est le point où les événements climatiques extrêmes pourraient être plus fréquents, plus intenses et occasionner de grandes perturbations dans toutes les sphères de notre quotidien.</p>",
+    tutorial_step_4: "<p>Voici la température pour l'<b>année</b> et la <b>région</b> sélectionnées (ici 2022 pour la province de Québec).</p><p>Remarquez les changements de température par rapport à 1990 (ici +2,2 °C).</p>",
+    tutorial_step_5: "<p>Vous pouvez changer l'<b>année</b> pour explorer les données de températures moyennes observées par le passé et les projections futures ainsi que les événements climatiques extrêmes survenus.</p>",
+    tutorial_step_6: "<p>Sélectionnez la circonscription à afficher ou l'ensemble du Québec</p>",
+    tutorial_step_7: "<p>Nombre d'événements extrêmes survenus dans la circonscription et l'année sélectionnées.</p><p>Vous pouvez sélectionner quels types d'événements extrêmes afficher (ici un total de 3 événements extrêmes, dont 2 tornades et 1 vague de chaleur en 2022)</p>",
+    tutorial_step_8: "<p>Certaines années contiennent des <b>faits saillants</b>. Cliquez sur l'icône pour en savoir plus.</p>",
+    tutorial_step_9: "<p>Vous êtes préoccupé(e)s? Contactez vos candidat(e)s aux prochaines élections.</p>",    
+    tutorial_step_10: "<p>Pour revoir ce tutoriel, ou pour de plus amples informations, consultez <b>l'aide</b>!</p>"
 };

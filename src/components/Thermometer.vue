@@ -20,13 +20,13 @@
                 <p class="bulb-text">°C</p>
             </div>
 
-            <div class="reference-value pill tracked-reference track-bottom">
+            <div class="reference-value pill tracked-reference track-bottom" data-tutorial-step="thermo-reference-value">
                 <span>{{referenceYear}}</span>
                 <span>{{$n(referenceValueDisplayed, 'temperature')}}</span>
             </div>
         </div>
 
-        <div class="risky-value pill tracked-risky track-bottom">
+        <div class="risky-value pill tracked-risky track-bottom" data-tutorial-step="thermo-risky-value">
             <span>{{$n(riskyValue, 'temperature_delta_no_unit')}}</span>
             <div class="line"></div>
         </div>
