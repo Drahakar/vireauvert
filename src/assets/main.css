@@ -119,7 +119,7 @@
   width: var(--sz-700);
   height: var(--sz-700);
   border-radius: 50%;
-  background-color: var(--clr-gris-pale);
+  background-color: var(--clr-gris-tres-pale);
   background-image: url('/Button/Close.svg');
   background-size: cover;
   background-position: center;
