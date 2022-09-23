@@ -194,8 +194,6 @@ export default defineComponent({
                     ticks: {
                         stepSize: 100,
                     },
-                    max: 600,
-                    min: 0
                 },
             },
         }))).toJS() as ChartOptions<'bar'>;
