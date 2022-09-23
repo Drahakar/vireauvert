@@ -69,13 +69,13 @@ export default defineComponent({
 
 #close-button {
     position: absolute;
-    top: calc((var(--sz-900) - var(--sz-700)) / 2);
-    right: calc((var(--sz-900) - var(--sz-700)) / 2);
+    top: calc(var(--border-radius) / 4);
+    right: calc(var(--border-radius) / 4);
     cursor: pointer;
     width: var(--sz-700);
     height: var(--sz-700);
     border-radius: 50%;
-    background-color: var(--clr-gris-pale);
+    background-color: var(--clr-gris-tres-pale);
     background-image: url('/Button/Close.svg');
     background-size: cover;
     background-position: center;
@@ -90,7 +90,7 @@ export default defineComponent({
 }
 
 #modal-header {
-    padding: 2px var(--sz-30);
+    padding: 0 var(--sz-100);
     background-color: var(--color-background-accent);
     height: var(--sz-900);
 }

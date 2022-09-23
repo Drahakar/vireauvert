@@ -176,19 +176,23 @@ export default {
     timeline_mode_Catastrophes: "Événements extrêmes par année",
 
     // About
-    about: "À propos",
-    made_with_love: "La Carte climat a été conçu avec amour grâce à une collaboration entre Équiterre, Bleuet Design ainsi que trois programmeurs bénévoles.",
-    data_source: "Les données utilisées dans ce logiciel proviennent du {0}, du {1} ainsi que du {2}.",
+    about: "À propos de la Carte climat",
+    about_welcome: "Bienvenue sur la Carte climat!",
+    about_description: "Ce logiciel a été développé pour montrer l'impact des changements climatiques sur le Québec.",
+    about_tutorial: "Si vous avez besoin d'explications en contexte, appuyez sur ce bouton: {0}",
+    made_with_love: "La Carte climat a été conçue avec amour grâce à une collaboration entre {0}, {1} ainsi que {2}, {3} et {4}, trois programmeurs bénévoles.",
+    data_source: "Les données utilisées dans ce logiciel proviennent du {0}, du {1} et du {2}.",
     ouranos: "consortium Ouranos",
     url_ouranos: "https://www.ouranos.ca/",
-    qc_govt: "Gouvernement du Québec",
+    qc_govt: "gouvernement du Québec",
     url_qc_govt: "https://donneesquebec.ca/",
-    can_govt: "Gouvernement du Canada",
+    can_govt: "gouvernement du Canada",
     url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html",
     detailed_sources: "Sources",
 
     // Tutorial
     tutorial_title: "Tour guidé",
+    tutorial_restart: "Recommencer le tutoriel",
     tutorial_next: "Suivant",
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
