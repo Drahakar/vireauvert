@@ -1,6 +1,16 @@
 <template>
     <div class="timeline">
-        <div id="slidertitle" v-t="`timeline_mode_${mode}`">
+        <div id="slider-header">
+            <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
+            <div id="mode-container">
+                <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
+                    <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
+                        @change="mode = value" :class="value">
+                    <label :for="`radio-${value}`" :class="{active: value === mode, inactive: value !== mode}">
+                        <img :src="`/Button/${value}.svg`" :alt="value">
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="timeline-container">
             <div class="timeline-graph">
@@ -35,15 +45,6 @@
                         <TimelineArrow class="slider-arrow"></TimelineArrow>
                     </template>
                 </vue-slider>
-            </div>
-        </div>
-        <div id="mode-container">
-            <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
-                <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
-                    @change="mode = value" :class="value">
-                <label :for="`radio-${value}`" :class="{active: value === mode, inactive: value !== mode}">
-                    <img :src="`/Button/${value}.svg`" :alt="value">
-                </label>
             </div>
         </div>
     </div>
@@ -341,11 +342,16 @@ ChartJS.register(new VerticalLinePlugin());
 </script>
 
 <style scoped>
-#slidertitle {
-    font-size: var(--sz-400);
-    height: var(--sz-700);
+#slider-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    height: var(--sz-800);
+    padding-left: 4px;
+}
+
+#slider-title {
+    font-size: var(--sz-500);
 }
 
 .slider-container input {
@@ -422,13 +428,14 @@ ChartJS.register(new VerticalLinePlugin());
 }
 
 .timeline {
-    padding: 4px var(--timeline-horizontal-padding) var(--sz-50) var(--timeline-horizontal-padding);
+    padding-left: 4px;
+    padding-top: 4px;
 }
 
 .timeline-container {
     /* Undo the timeline component padding to push to the left side */
-    margin-left: calc(0px - var(--timeline-horizontal-padding));
-    padding-right: var(--sz-50);
+    margin-left: calc(0px - var(--timeline-horizontal-padding));    
+    padding: 0 var(--timeline-horizontal-padding) var(--sz-50) var(--timeline-horizontal-padding);
     cursor: pointer;
 }
 
@@ -439,20 +446,19 @@ ChartJS.register(new VerticalLinePlugin());
 
 
 #mode-container {
-    position: absolute;
-    right: 4px;
-    top: 4px;
     background-color: var(--clr-brun-terreux);
     border-radius: var(--border-radius);
+    margin: calc(var(--border-radius) / 4);
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 4px;
-    height: var(--sz-700);
+    height: 100%;
+    padding: 2px 4px;
 }
 
 #mode-container .item {
-    height: 100%;
+    width: calc(var(--sz-800) - 8px);
+    height: calc(var(--sz-800) - 8px);
 }
 
 #mode-container input {
@@ -463,12 +469,14 @@ ChartJS.register(new VerticalLinePlugin());
     display: block;
     cursor: pointer;
     border-radius: 50%;
+    width: 100%;
     height: 100%;
 }
 
 #mode-container label img {
     object-fit: contain;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #mode-container label.active {
