@@ -11,9 +11,8 @@
                     :chart-options="catastropheOptions" />
             </div>
             <div class="slider-container" ref="sliderContainer">
-                <vue-slider v-model="selectedValue" :tooltip="'always'"
-                    :marks="marks" :included="true" :min="0" :max="VISUAL_YEARS.totalYearsPadded - 1"
-                    :adsorb="true" :drag-on-click="true">
+                <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
+                    :max="VISUAL_YEARS.totalYearsPadded - 1" :adsorb="true" :drag-on-click="true" :use-keyboard="false">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']"
@@ -33,7 +32,7 @@
                         <div class="tooltip-line"></div>
                     </template>
                     <template v-slot:dot>
-                        <TimelineArrow class="slider-arrow"></TimelineArrow>
+                        <TimelineArrow @keydown="onSliderKeyPress" tabindex="0" class="slider-arrow"></TimelineArrow>
                     </template>
                 </vue-slider>
             </div>
@@ -51,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
+import VueSlider, { Marks } from 'vue-slider-component'
 import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
@@ -78,7 +77,7 @@ enum TimelineMode {
 // visual padding. See InterpolatedYears for more info.
 const INTERPOLATED_PADDING_YEARS = 3;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
-                                           INTERPOLATED_PADDING_YEARS);
+    INTERPOLATED_PADDING_YEARS);
 
 type GradientGenerator = (ctx: ScriptableContext<'line'>) => CanvasGradient | undefined;
 type ChartElem = number | null;
@@ -106,7 +105,12 @@ export default defineComponent({
     setup(props, { emit }) {
         const selectedValue = computed({
             get: () => VISUAL_YEARS.yearToIndex(props.year),
-            set: value => emit('yearSelected', VISUAL_YEARS.indexToYear(value))
+            set: value => {
+                const year = VISUAL_YEARS.indexToYear(value);
+                if (year !== props.year) {
+                    emit('yearSelected', year);
+                }
+            }
         });
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
@@ -251,7 +255,7 @@ export default defineComponent({
             } as ChartData<'bar'>;
         }
     },
-    methods: { 
+    methods: {
         generateMarks(): Marks {
             return TIMELINE_YEARS.reduce((marks, year) => {
                 marks[VISUAL_YEARS.yearToIndex(year)] = year.toString();
@@ -259,7 +263,7 @@ export default defineComponent({
             }, {} as Marks);
         },
         makeGradientGenerator(hotColor: string, warmColor: string,
-                              neutralColor: string, coldColor: string
+            neutralColor: string, coldColor: string
         ): GradientGenerator {
             return (ctx: ScriptableContext<'line'>) => {
                 const canvas = ctx.chart.ctx;
@@ -280,7 +284,38 @@ export default defineComponent({
                 return gradient;
             };
         },
-    },
+        onSliderKeyPress(ev: KeyboardEvent) {
+            if (ev.defaultPrevented) {
+                return; // Do nothing if the event was already processed
+            }
+
+            switch (ev.key) {
+                case "Left":
+                case "ArrowLeft":
+                    {
+                        const index = TIMELINE_YEARS.indexOf(this.year);
+                        if (index > 0) {
+                            this.$emit('yearSelected', TIMELINE_YEARS[index - 1]);
+                        }
+                    }
+                    break;
+                case "Right":
+                case "ArrowRight":
+                    {
+                        const index = TIMELINE_YEARS.indexOf(this.year);
+                        if (index < TIMELINE_YEARS.length - 1) {
+                            this.$emit('yearSelected', TIMELINE_YEARS[index + 1]);
+                        }
+                    }
+                    break;
+                default:
+                    return;
+            }
+
+            // Cancel the default action to avoid it being handled twice
+            ev.preventDefault();
+        }
+    }
 });
 </script>
 
@@ -341,8 +376,8 @@ export default defineComponent({
 }
 
 @media only screen and (max-width: 599px) {
-    .vue-slider .vue-slider-mark .vue-slider-mark-label:is(
-        [data-year^='2030'],
+
+    .vue-slider .vue-slider-mark .vue-slider-mark-label:is([data-year^='2030'],
         [data-year^='2050'],
     ) {
         display: none;
@@ -462,5 +497,8 @@ export default defineComponent({
 .slider-arrow {
     position: absolute;
     z-index: calc(var(--tooltip-line-z-index) + 1);
+}
+.slider-arrow:focus {
+    outline: none;
 }
 </style>
