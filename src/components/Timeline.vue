@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
+import VueSlider, { Mark, Marks } from 'vue-slider-component'
 import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
@@ -258,7 +258,7 @@ export default defineComponent({
                 marks[index] = {
                     value: index,
                     label: year.toString(),
-                };
+                } as Mark;
                 return marks;
             }, {} as Marks);
         },
