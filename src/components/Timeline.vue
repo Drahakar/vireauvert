@@ -5,9 +5,9 @@
         <div class="timeline-container">
             <div class="timeline-graph">
                 <!-- set width to 0 to let it auto-size it with given height. -->
-                <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="90" :width="0"
+                <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="100" :width="0"
                     :chart-options="temperatureOptions" />
-                <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="90" :width="0"
+                <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="100" :width="0"
                     :chart-options="catastropheOptions" />
             </div>
             <div class="slider-container" ref="sliderContainer">
@@ -65,6 +65,7 @@ import { getRelativePosition } from 'chart.js/helpers';
 import TimelineArrow from './TimelineArrow.vue';
 import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler, ChartData, Color, ChartOptions, CoreScaleOptions, Scale } from 'chart.js'
 import { numberFormats } from '@/locales/formats';
+import { END_NOTCH, START_NOTCH } from './Thermometer.vue';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 ChartJS.defaults.font.family = "Matter";
@@ -163,7 +164,9 @@ export default defineComponent({
                     ticks: {
                         stepSize: 2,
                         format: numberFormats.temperature_delta_int,
-                    }
+                    },
+                    max: END_NOTCH,
+                    min: START_NOTCH
                 },
             },
         }))).toJS() as ChartOptions<'line'>;
@@ -219,7 +222,7 @@ export default defineComponent({
                         data: pastData,
                         backgroundColor: this.makeGradientGenerator(
                             'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
-                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)'),
+                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)')
                     },
                     {
                         ...datasetBase,
@@ -291,7 +294,6 @@ export default defineComponent({
 <style scoped>
 #slidertitle {
     font-size: var(--sz-400);
-    margin-bottom: var(--sz-50);
 }
 
 .slider-container input {
@@ -448,7 +450,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 2px;
-    height: 80px;
+    height: 76px;
     top: unset !important;
 }
 
