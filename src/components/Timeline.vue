@@ -7,13 +7,12 @@
                 <!-- set width to 0 to let it auto-size it with given height. -->
                 <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="100" :width="0"
                     :chart-options="temperatureOptions" />
-                <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="100" :width="0"
-                    :chart-options="catastropheOptions" />
+                <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="100"
+                    :width="0" :chart-options="catastropheOptions" />
             </div>
             <div class="slider-container" ref="sliderContainer">
-                <vue-slider v-model="selectedValue" :tooltip="'always'"
-                    :marks="marks" :included="true" :min="0" :max="VISUAL_YEARS.totalYearsPadded - 1"
-                    :adsorb="true" :drag-on-click="true">
+                <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
+                    :max="VISUAL_YEARS.totalYearsPadded - 1" :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']"
@@ -63,7 +62,7 @@ import { InterpolatedYears } from '@/utils/interpolated_years';
 import { Line, Bar } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
 import TimelineArrow from './TimelineArrow.vue';
-import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler, ChartData, Color, ChartOptions, CoreScaleOptions, Scale } from 'chart.js'
+import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler, ChartData, ChartOptions, CoreScaleOptions, Scale, Plugin } from 'chart.js'
 import { numberFormats } from '@/locales/formats';
 import { END_NOTCH, START_NOTCH } from './Thermometer.vue';
 
@@ -79,7 +78,7 @@ enum TimelineMode {
 // visual padding. See InterpolatedYears for more info.
 const INTERPOLATED_PADDING_YEARS = 3;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
-                                           INTERPOLATED_PADDING_YEARS);
+    INTERPOLATED_PADDING_YEARS);
 
 type GradientGenerator = (ctx: ScriptableContext<'line'>) => CanvasGradient | undefined;
 type ChartElem = number | null;
@@ -109,13 +108,27 @@ export default defineComponent({
             get: () => VISUAL_YEARS.yearToIndex(props.year),
             set: value => emit('yearSelected', VISUAL_YEARS.indexToYear(value))
         });
+        const mode = ref(TimelineMode.Temperature);
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
 
         const sliderContainer = ref<HTMLDivElement | null>(null);
         const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
             if (sliderContainer.value) {
-                sliderContainer.value.style.marginLeft = `${axis.width}px`;
+                switch (mode.value) {
+                    case TimelineMode.Temperature:
+                        sliderContainer.value.style.marginLeft = `${axis.width}px`;
+                        sliderContainer.value.style.marginRight = '';
+                        break;
+                    case TimelineMode.CatastropheCount:
+                        const offset = axis.chart.width / VISUAL_YEARS.totalYearsPadded / 2;
+                        sliderContainer.value.style.marginLeft = `${axis.width + offset}px`;
+                        sliderContainer.value.style.marginRight = `${offset}px`;
+                        break;
+                    default:
+                        sliderContainer.value.style.marginLeft = '';
+                        sliderContainer.value.style.marginRight = '';
+                }
             }
         };
         const baseOptions = Map(fromJS({
@@ -134,6 +147,9 @@ export default defineComponent({
                 tooltip: {
                     enabled: false
                 },
+                verticalLine: {
+                    index: MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR
+                }
             },
             layout: {
             },
@@ -176,7 +192,9 @@ export default defineComponent({
                 y: {
                     ticks: {
                         stepSize: 100,
-                    }
+                    },
+                    max: 600,
+                    min: 0
                 },
             },
         }))).toJS() as ChartOptions<'bar'>;
@@ -185,7 +203,7 @@ export default defineComponent({
             selectedValue,
             catastropheStore,
             statisticStore,
-            mode: ref(TimelineMode.Temperature),
+            mode,
             sliderContainer,
             TimelineMode,
             temperatureOptions,
@@ -247,14 +265,17 @@ export default defineComponent({
                 datasets: [
                     {
                         data: pastData,
-                        borderWidth: 0,
-                        backgroundColor: '#f0ad00'
-                    }
+                        borderWidth: 1,
+                        backgroundColor: '#f0ad00',
+                        barThickness: 'flex',
+                        categoryPercentage: 1,
+                        barPercentage: 0.9
+                    },
                 ]
             } as ChartData<'bar'>;
         }
     },
-    methods: { 
+    methods: {
         generateMarks(): Marks {
             return TIMELINE_YEARS.reduce((marks, year) => {
                 const index = VISUAL_YEARS.yearToIndex(year);
@@ -266,7 +287,7 @@ export default defineComponent({
             }, {} as Marks);
         },
         makeGradientGenerator(hotColor: string, warmColor: string,
-                              neutralColor: string, coldColor: string
+            neutralColor: string, coldColor: string
         ): GradientGenerator {
             return (ctx: ScriptableContext<'line'>) => {
                 const canvas = ctx.chart.ctx;
@@ -289,11 +310,42 @@ export default defineComponent({
         },
     },
 });
+
+class VerticalLinePlugin implements Plugin {
+
+    id: string;
+
+    constructor() {
+        this.id = 'verticalLine';
+    }
+
+    afterDatasetsDraw(chart: ChartJS, args: {}, options: any) {
+        const meta = chart.getDatasetMeta(0);
+        const index: number = options.index;
+        const x = meta.data[index].x;
+        const scale = chart.scales.y;
+        const context = chart.ctx;
+
+        context.setLineDash([4, 2]);
+        context.beginPath();
+        context.lineWidth = 1;
+        context.strokeStyle = '#74746f';
+        context.moveTo(x, scale.top + 2);
+        context.lineTo(x, scale.bottom - 2);
+        context.stroke();
+    }
+};
+
+ChartJS.register(new VerticalLinePlugin());
+
 </script>
 
 <style scoped>
 #slidertitle {
     font-size: var(--sz-400);
+    height: var(--sz-700);
+    display: flex;
+    align-items: center;
 }
 
 .slider-container input {
@@ -313,10 +365,10 @@ export default defineComponent({
 
 .vue-slider .tooltip-line {
     height: 100%;
-    margin-top: 1px;
     width: 1px;
-    border-width: 1px;
-    border-style: dashed;
+    border-left-width: 1px;
+    border-left-style: dashed;
+    border-left-color: var(--clr-gris-fonce);
     display: block;
     margin: auto;
     z-index: var(--tooltip-line-z-index);
@@ -347,8 +399,8 @@ export default defineComponent({
 }
 
 @media only screen and (max-width: 599px) {
-    .vue-slider .vue-slider-mark .vue-slider-mark-label:is(
-        [data-year^='2030'],
+
+    .vue-slider .vue-slider-mark .vue-slider-mark-label:is([data-year^='2030'],
         [data-year^='2050'],
     ) {
         display: none;
@@ -370,7 +422,7 @@ export default defineComponent({
 }
 
 .timeline {
-    padding: var(--sz-50) var(--timeline-horizontal-padding);
+    padding: 4px var(--timeline-horizontal-padding) var(--sz-50) var(--timeline-horizontal-padding);
 }
 
 .timeline-container {
@@ -396,6 +448,11 @@ export default defineComponent({
     align-items: center;
     gap: 4px;
     padding: 4px;
+    height: var(--sz-700);
+}
+
+#mode-container .item {
+    height: 100%;
 }
 
 #mode-container input {
@@ -404,16 +461,14 @@ export default defineComponent({
 
 #mode-container label {
     display: block;
-    width: var(--sz-700);
-    height: var(--sz-700);
     cursor: pointer;
     border-radius: 50%;
+    height: 100%;
 }
 
 #mode-container label img {
     object-fit: contain;
-    width: 100%;
-    height: 100%;
+    max-height: 100%;
 }
 
 #mode-container label.active {
@@ -450,8 +505,8 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 2px;
-    height: 76px;
-    top: unset !important;
+    height: calc(76px + var(--sz-30));
+    top: var(--sz-30) !important;
 }
 
 .vue-slider-dot-tooltip-inner {
