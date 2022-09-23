@@ -1,7 +1,7 @@
 <template>
     <div id="header">
         <div class="icon" :class="[`catastrophe-icon-${highlight.type.toLowerCase()}`]"></div>
-        <div class="title">{{ highlight.title ? highlight.title : $t(`catastrophe_${highlight.type}`) }}</div>
+        <div class="title">{{ highlight.title ? highlight.title : $t(`catastrophe_${highlight.type}`, 2) }}</div>
     </div>
     <div id="body-content" v-html="body"></div>
 </template>

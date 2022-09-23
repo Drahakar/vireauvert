@@ -2,7 +2,6 @@
 year: 2022
 location: 46.03, -73.85
 type: VIOLENT_STORM
-title: Orages violents
 locale: fr-CA
 ---
 **550 000** clients sans électricité
