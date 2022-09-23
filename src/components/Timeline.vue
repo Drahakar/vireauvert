@@ -13,7 +13,7 @@
             <div class="slider-container" ref="sliderContainer">
                 <vue-slider v-model="selectedValue" :tooltip="'always'"
                     :marks="marks" :included="true" :min="0" :max="VISUAL_YEARS.totalYearsPadded - 1"
-                    :adsorb="true" :drag-on-click="true" :use-keyboard="true">
+                    :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']"
@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import VueSlider, { Marks, MarkOption } from 'vue-slider-component'
-import { Map, Range, fromJS } from 'immutable';
+import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
