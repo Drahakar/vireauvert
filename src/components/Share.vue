@@ -79,7 +79,7 @@ export default defineComponent({
     transform: scale(1.2);
 }
 
-#content a img {    
+#content a img {
     width: calc(var(--sz-900) * 2);
     height: calc(var(--sz-900) * 2);
     object-fit: cover;
