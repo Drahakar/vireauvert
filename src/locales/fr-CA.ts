@@ -172,8 +172,8 @@ export default {
     province_of_quebec: "Province de Québec",
 
     // Timeline
-    timeline_mode_Temperature: "Température par année",
-    timeline_mode_Catastrophes: "Événements extrêmes par année",
+    timeline_mode_Temperature: "Variation °C par année depuis 1990",
+    timeline_mode_Catastrophes: "# Événements extrêmes par année",
 
     // About
     about: "À propos de la Carte climat",
