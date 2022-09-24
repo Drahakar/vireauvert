@@ -57,7 +57,7 @@ export default defineComponent({
 }
 
 #modal {
-    width: var(--modal-width);
+    max-width: 75%;
     background-color: var(--color-background);
     overflow: hidden;
     border-radius: var(--border-radius);
@@ -65,6 +65,12 @@ export default defineComponent({
     max-height: 90%;
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+    #modal {
+        max-width: 50%;
+    }
 }
 
 #close-button {
@@ -85,7 +91,7 @@ export default defineComponent({
 }
 
 #modal-header {
-    padding: 4px calc(var(--border-radius) / 4) 4px var(--sz-100);
+    padding: 4px calc(var(--border-radius) / 4) 4px var(--sz-200);
     background-color: var(--color-background-accent);
     height: var(--sz-900);
     display: flex;
