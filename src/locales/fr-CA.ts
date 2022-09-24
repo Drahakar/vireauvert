@@ -174,6 +174,8 @@ export default {
     // Timeline
     timeline_mode_Temperature: "Température par année",
     timeline_mode_Catastrophes: "Événements extrêmes par année",
+    minimize: "Minimiser",
+    maximize: "Maximiser",
 
     // About
     about: "À propos de la Carte climat",

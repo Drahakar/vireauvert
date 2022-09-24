@@ -1,8 +1,12 @@
 <template>
     <div class="timeline">
         <div id="slider-header">
+            <div class="timeline-toggle">
+                <button class="toggle" @click="minimized=!minimized">
+                    <img :src="`/Button/${minimized? 'Minimize' : 'Maximize'}.png`" :alt="$t(minimized ? 'minimize' : 'maximize')"></button>
+            </div>
             <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
-            <div id="mode-container">
+            <div id="mode-container" v-show="!minimized">
                 <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
                     <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
                         @change="mode = value" :class="value">
@@ -13,14 +17,14 @@
             </div>
         </div>
         <div class="timeline-container">
-            <div class="timeline-graph">
+            <div class="timeline-graph" v-show="!minimized">
                 <!-- set width to 0 to let it auto-size it with given height. -->
                 <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="100" :width="0"
                     :chart-options="temperatureOptions" />
                 <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="100"
                     :width="0" :chart-options="catastropheOptions" />
             </div>
-            <div class="slider-container" ref="sliderContainer">
+            <div class="slider-container" ref="sliderContainer" :class="{minimized: minimized}">
                 <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
                     :max="VISUAL_YEARS.totalYearsPadded - 1" :adsorb="true" :drag-on-click="true">
                     <template v-slot:label="{value}">
@@ -220,6 +224,7 @@ export default defineComponent({
         return {
             VISUAL_YEARS,
             marks: this.generateMarks(),
+            minimized: false
         };
     },
     computed: {
@@ -357,6 +362,23 @@ ChartJS.register(new VerticalLinePlugin());
 
 #slider-title {
     font-size: var(--sz-500);
+    flex: 1;
+    margin-left: 7px;
+}
+
+.timeline-toggle .toggle{
+    width: calc(var(--sz-800) - 8px);
+    height: calc(var(--sz-800) - 8px);
+    pointer-events: auto;
+}
+
+.timeline-toggle .toggle:hover {
+    transform: scale(1.2);
+}
+
+.timeline-toggle .toggle img {
+    width: 100%;
+    height: 100%;
 }
 
 .slider-container input {
@@ -373,6 +395,7 @@ ChartJS.register(new VerticalLinePlugin());
 .vue-slider-mark-label.custom-label.event-count {
     top: -32px;
 }
+
 
 .vue-slider .tooltip-line {
     height: 100%;
@@ -497,6 +520,7 @@ ChartJS.register(new VerticalLinePlugin());
 }
 </style>
 
+
 <style>
 .vue-slider {
     --slider-dot-size: var(--sz-900);
@@ -520,6 +544,10 @@ ChartJS.register(new VerticalLinePlugin());
     gap: 2px;
     height: calc(76px + var(--sz-30));
     top: var(--sz-30) !important;
+}
+
+.slider-container.minimized .vue-slider-dot-tooltip {
+    height: calc(15px + var(--sz-30));
 }
 
 .vue-slider-dot-tooltip-inner {
