@@ -432,8 +432,8 @@ ChartJS.register(new VerticalLinePlugin());
 
 .timeline-container {
     /* Undo the timeline component padding to push to the left side */
-    margin-left: calc(0px - var(--timeline-horizontal-padding));    
-    padding: 0 var(--timeline-horizontal-padding) var(--sz-50) var(--timeline-horizontal-padding);
+    margin-left: calc(0px - var(--timeline-horizontal-padding));
+    padding: 0 calc(var(--timeline-horizontal-padding) + var(--sz-50)) var(--sz-50) var(--timeline-horizontal-padding);
     cursor: pointer;
 }
 
