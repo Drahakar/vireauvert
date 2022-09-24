@@ -47,7 +47,6 @@
   /* Sizes that change at certain breakpoints */
   --app-column-gap: 0;
   --timeline-horizontal-padding: var(--sz-200);
-  --modal-width: 75%;
   --popup-width: 216px;
   --thermo-current-value-width: 9ch;
 
@@ -73,7 +72,6 @@
 
     --app-column-gap: var(--sz-100);
     --timeline-horizontal-padding: var(--sz-600);
-    --modal-width: 50%;
     --popup-width: 256px;
   }
 }

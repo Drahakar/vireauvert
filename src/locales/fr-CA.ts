@@ -55,6 +55,7 @@ export default {
     share: "Partager",
     help: "Aide",
     email: "Courriel",
+    close: "Fermer",
 
     // Loading overlay
     loading: "Chargement des données...",
