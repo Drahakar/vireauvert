@@ -154,7 +154,7 @@ Sentry.init({
                             <button :title="$t('share')" @click="share?.open()"><img src="/Button/Share.png"
                                     :alt="$t('share')"></button>
                             <button :title="$t('help')" @click="about?.open()"><img src="/Button/Info.png"
-                                    :alt="$t('help')"></button>
+                                    :alt="$t('help')" data-tutorial-step="help"></button>
                         </div>
                         <Thermometer :statistics="selectedStatistics" :reference-statistics="referenceYearStatistics">
                         </Thermometer>

@@ -8,6 +8,7 @@ import CatastropheDetails from "@/components/CatastropheDetails.vue";
 import { AppContext, h, render, VNode } from "vue";
 import { Highlight } from "@/models/highlights";
 import HighlightView from "@/components/HighlightView.vue";
+import { mark } from "@intlify/shared";
 
 export interface DistrictLayer {
     feature: Feature<Geometry, DistrictProperties>;
@@ -52,7 +53,7 @@ function generateIcons(baseClassName: string, generateAsInnerDiv: boolean): Map<
         };
         if (generateAsInnerDiv) {
             options.className = '';
-            options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}"></div>`;
+            options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}" data-tutorial-step="highlight"></div>`;
         } else {
             options.className = `${baseClassName} catastrophe-icon-${value.toLowerCase()}`;
         }

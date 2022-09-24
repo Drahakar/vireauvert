@@ -1,6 +1,6 @@
 <template>
     <a href="https://www.vireauvert.org/envoipropositionspartispolitiques"
-        role="button" target="_blank" :aria-label="$t('call_to_action')">
+        role="button" target="_blank" :aria-label="$t('call_to_action')" data-tutorial-step="call-to-action">
         <img src="/call_to_action.png">
     </a>
 </template>
