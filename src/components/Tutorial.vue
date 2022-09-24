@@ -21,14 +21,14 @@
                 <template #actions>
                     <div class="v-step__buttons">
                         <button @click.prevent="tour.previousStep" class="v-step__button v-step__button-previous"
-                            :data-disabled="tour.isFirst" :aria-label="$t('tutorial_prev')">
+                            :data-disabled="tour.isFirst" :aria-label="$t('tutorial_prev')" :title="$t('tutorial_prev')">
                         </button>
                         <span class="step-status">
                             {{ $t('tutorial_step_msg',
                             [tour.currentStep + 1, tour.steps.length]) }}
                         </span>
                         <button @click.prevent="tour.nextStep" class="v-step__button v-step__button-next"
-                            :data-disabled="tour.isLast" :aria-label="$t('tutorial_next')">
+                            :data-disabled="tour.isLast" :aria-label="$t('tutorial_next')" :title="$t('tutorial_next')">
                         </button>
                     </div>
                 </template>
@@ -65,12 +65,12 @@ export default defineComponent({
                 // Note: important to have a first step target that does not
                 // depend on loaded data for its placement (or e.g. no target).
                 {
-                    content: this.$t('tutorial_step_1'),
+                    content: this.$t('tutorial_step_welcome'),
                     params: baseParams,
                 },
                 {
                     target: '[data-tutorial-step="thermo-reference-value"]',
-                    content: this.$t('tutorial_step_2'),
+                    content: this.$t('tutorial_step_ref_year'),
                     params: {
                         placement: "left",
                         ...baseParams,
@@ -78,7 +78,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="thermo-risky-value"]',
-                    content: this.$t('tutorial_step_3'),
+                    content: this.$t('tutorial_step_goal'),
                     params: {
                         placement: "left",
                         ...baseParams,
@@ -86,7 +86,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="temperature"]',
-                    content: this.$t('tutorial_step_4'),
+                    content: this.$t('tutorial_step_temperature'),
                     params: {
                         placement: "left",
                         ...baseParams,
@@ -94,7 +94,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="year-selector"]',
-                    content: this.$t('tutorial_step_5'),
+                    content: this.$t('tutorial_step_timeline'),
                     params: {
                         // Important, otherwise this pushes the height past 100%
                         placement: "top",
@@ -103,7 +103,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="region-search"]',
-                    content: this.$t('tutorial_step_6'),
+                    content: this.$t('tutorial_step_region_search'),
                     params: {
                         placement: "bottom",
                         ...baseParams,
@@ -111,7 +111,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="catastrophes-count"]',
-                    content: this.$t('tutorial_step_7'),
+                    content: this.$t('tutorial_step_catastrophes'),
                     params: {
                         placement: "bottom",
                         ...baseParams,
@@ -119,7 +119,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="highlight"]',
-                    content: this.$t('tutorial_step_8'),
+                    content: this.$t('tutorial_step_highlight'),
                     params: {
                         placement: "top",
                         ...baseParams,
@@ -127,7 +127,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="call-to-action"]',
-                    content: this.$t('tutorial_step_9'),
+                    content: this.$t('tutorial_step_call_to_action'),
                     params: {
                         placement: "left",
                         ...baseParams,
@@ -135,7 +135,7 @@ export default defineComponent({
                 },
                 {
                     target: '[data-tutorial-step="help"]',
-                    content: this.$t('tutorial_step_10'),
+                    content: this.$t('tutorial_step_end'),
                     params: {
                         placement: "left",
                         ...baseParams,
@@ -201,7 +201,7 @@ header .title {
 
 .v-step__content :deep(b) {
     font-weight: var(--fw-regular);
-    color: var(--color-accent);
+    color: var(--clr-gris-fonce);
 }
 
 .v-step__buttons {
