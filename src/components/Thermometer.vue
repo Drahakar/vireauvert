@@ -44,8 +44,8 @@ import { defineComponent, CSSProperties, PropType } from 'vue';
 import { REFERENCE_YEAR } from "@/models/constants";
 import { RegionStatistics } from '@/models/yearly_data';
 
-const START_NOTCH = -1;
-const END_NOTCH = 7;
+export const START_NOTCH = -1;
+export const END_NOTCH = 7;
 const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
 
