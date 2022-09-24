@@ -116,6 +116,13 @@ export default defineComponent({
         const sliderContainer = ref<HTMLDivElement | null>(null);
         const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
             if (sliderContainer.value) {
+                // Update slider margins to align them properly with the chart
+                // On the left, we minimally add the width of the Y axis so the slider
+                // begins with the chart itself.
+                // Additionnally, in catastrophe mode, we add half of bar's width on
+                // either side so that the edges of the timeline correspond to the centre
+                // of both the first and last bars. This is necessary to avoid a misalignment
+                // between the timeline and the chart in that mode
                 switch (mode.value) {
                     case TimelineMode.Temperature:
                         sliderContainer.value.style.marginLeft = `${axis.width}px`;
