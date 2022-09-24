@@ -22,8 +22,8 @@
                 <i18n-t keypath="made_with_love" tag="div" class="desc">
                     <a href="https://equiterre.org/" target="_blank">Équiterre</a>
                     <a href="https://www.bleuetdesign.com/" target="_blank">Bleuet Design</a>
-                    <a href="https://twitter.com/Drahakar" target="_blank">Andy Emond</a>
                     <a href="https://twitter.com/edemartel" target="_blank">Etienne de Martel</a>
+                    <a href="https://twitter.com/Drahakar" target="_blank">Andy Emond</a>
                     <a href="https://twitter.com/JesseEmond" target="_blank">Jesse Emond</a>
                 </i18n-t>
                 <i18n-t keypath="data_source" tag="div" class="desc">
