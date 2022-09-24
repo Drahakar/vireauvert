@@ -203,8 +203,8 @@ export default {
     tutorial_step_temperature: "<p>Voici la température pour l'<b>année</b> et la <b>région</b> sélectionnées (ici 2022 pour la province de Québec).</p><p>Remarquez les changements de température par rapport à 1990 (ici +2,2 °C).</p>",
     tutorial_step_timeline: "<p>Vous pouvez changer l'<b>année</b> pour explorer les données de températures moyennes observées par le passé et les projections futures ainsi que les événements climatiques extrêmes survenus.</p>",
     tutorial_step_region_search: "<p>Sélectionnez la circonscription à afficher ou l'ensemble du Québec</p>",
-    tutorial_step_catastrophes: "<p>Nombre d'événements extrêmes survenus dans la circonscription et l'année sélectionnées.</p><p>Vous pouvez sélectionner quels types d'événements extrêmes afficher (ici un total de <b>3 événements extrêmes</b>, dont 2 tornades et 1 vague de chaleur en 2022)</p>",
-    tutorial_step_highlight: "<p>Certaines années contiennent des <b>faits saillants</b>. Cliquez sur l'icône pour en savoir plus.</p>",
+    tutorial_step_catastrophes: "<p>Nombre d'événements extrêmes survenus dans la circonscription et l'année sélectionnées.</p><p>Vous pouvez sélectionner quels types d'événements extrêmes à afficher (ici un total de <b>3 événements extrêmes</b>, dont 2 tornades et 1 vague de chaleur en 2022)</p>",
+    tutorial_step_highlight: "<p>Certaines années contiennent des <b>faits saillants</b>. Cliquez sur l'icône brillante pour en savoir plus.</p>",
     tutorial_step_call_to_action: "<p>Vous êtes préoccupé(e)s? <b>Contactez vos candidat(e)s</b> aux prochaines élections.</p>",    
     tutorial_step_end: "<p>Pour revoir ce tutoriel, ou pour de plus amples informations, consultez l'<b>aide</b>!</p>"
 };
