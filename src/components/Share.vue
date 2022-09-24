@@ -64,7 +64,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     gap: var(--sz-700);
-    padding: var(--sz-600) 0;
+    padding: var(--sz-600) var(--sz-200);
 }
 
 #content a {
