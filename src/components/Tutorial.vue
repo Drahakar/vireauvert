@@ -225,7 +225,7 @@ header .title {
     color: var(--clr-gris-mi-fonce);
     background-color: var(--clr-gris-tiede);
     border-radius: var(--border-radius);
-    padding: var(--sz-30) var(--sz-100);
+    padding: var(--sz-10) var(--sz-100);
 }
 
 .v-step__buttons .v-step__button {
