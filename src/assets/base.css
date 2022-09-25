@@ -59,6 +59,26 @@
   --ff-primary: 'Matter';
 }
 
+@media only screen and (max-width: 599px) {
+  :root {
+    --sz-30: 6px;
+    --sz-50: 8px;
+    --sz-100: 10px;
+    --sz-200: 11px;
+    --sz-300: 12px;
+    --sz-400: 14px;
+    --sz-600: 18px;
+    --sz-700: 26px;
+    --sz-800: 28px;
+    --sz-900: 34px;
+
+    --app-column-gap: var(--sz-100);
+    --timeline-horizontal-padding: var(--sz-600);
+    --popup-width: 256px;
+    --border-radius: 16px;
+  }
+}
+
 @media only screen and (min-width: 600px) {
   :root {
     --sz-30: 6px;
@@ -75,6 +95,7 @@
     --app-column-gap: var(--sz-100);
     --timeline-horizontal-padding: var(--sz-600);
     --popup-width: 256px;
+    --border-radius: 16px;
   }
 }
 
@@ -93,6 +114,7 @@
 
     --popup-width: 332px;
     --thermo-current-value-width: 8ch;
+    --border-radius: 20px;
   }
 }
 
@@ -111,6 +133,7 @@
 
     --timeline-horizontal-padding: var(--sz-700);
     --popup-width: 456px;
+    --border-radius: 24px;
   }
 }
 
@@ -127,8 +150,7 @@
   --color-heading: var(--clr-gris-fonce);
 
   --default-font-size: var(--sz-400);
-
-  --border-radius: 16px;
+  /* --border-radius: 1.6em; */
 
   --size-map-zoom-control: var(--sz-900);
   --size-map-controls-gap: var(--sz-30);
