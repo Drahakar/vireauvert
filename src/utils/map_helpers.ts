@@ -1,7 +1,7 @@
 import L from "leaflet";
 
 import { CatastropheGroup, CatastropheType } from "@/models/catastrophes";
-import { temperatureGradient, getGradientColourIndex, colourToHex, multiplyColours } from "./colours";
+import { DEFAULT_THEME } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
 import CatastropheDetails from "@/components/CatastropheDetails.vue";
@@ -31,10 +31,8 @@ const selectedStyle: L.PathOptions = {
 
 export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta?: number) {
     let style = selected ? selectedStyle : unselectedStyle;
-    if (tempDelta) {
-        let colour = temperatureGradient[getGradientColourIndex(tempDelta)];
-        colour = multiplyColours(colour, [1, 0, 0], 0.9);
-        style.fillColor = colourToHex(colour);
+    if (tempDelta !== undefined) {
+        style.fillColor = DEFAULT_THEME.getColour(tempDelta).toHex();
     }
     layer.setStyle(style);
 
