@@ -22,7 +22,7 @@
             </div>
             <div class="slider-container" ref="sliderContainer">
                 <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
-                    :max="VISUAL_YEARS.totalYearsPadded - 1" :adsorb="true" :drag-on-click="true">
+                    :max="VISUAL_YEARS.totalYearsPadded - 1" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']"
