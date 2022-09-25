@@ -53,12 +53,14 @@ export class ColourTheme {
         let previousStop = this.stops[0];
         for (const stop of this.stops) {
             if (temp_delta < stop.temp_delta) {
-                // TODO: Implement as a gradient, lerping colors.
-                return previousStop.colour;
+                const gap = stop.temp_delta - previousStop.temp_delta;
+                const value = temp_delta - previousStop.temp_delta;
+                const alpha = gap > 0 ? value / gap : 0.0;
+                return previousStop.colour.lerp(stop.colour, alpha);
             }
             previousStop = stop;
         }
-        return previousStop.colour;  // Return the last stop.
+        return previousStop.colour;  // Return the last stop's colour.
     }
 }
 
