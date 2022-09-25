@@ -1,3 +1,5 @@
+import { clamp, lerp } from './math_helpers';
+
 export class Colour {
     r: number;
     g: number;
@@ -26,11 +28,10 @@ export class Colour {
     }
 
     lerp(b: Colour, ratio: number): Colour {
-        const f = (x: number, y: number, a: number) => x + a * (y - x);
         return new Colour(
-            f(this.r, b.r, ratio),
-            f(this.g, b.g, ratio),
-            f(this.b, b.b, ratio),
+            lerp(this.r, b.r, ratio),
+            lerp(this.g, b.g, ratio),
+            lerp(this.b, b.b, ratio),
         );
     }
 }
@@ -47,8 +48,6 @@ export class ColourTheme {
         this.stops = stops;
     }
 
-    // TODO: toCanvasGradient, with alpha handling
-
     getColour(temp_delta: number): Colour {
         let previousStop = this.stops[0];
         for (const stop of this.stops) {
@@ -62,9 +61,20 @@ export class ColourTheme {
         }
         return previousStop.colour;  // Return the last stop's colour.
     }
+
+    toCanvasGradient(gradient: CanvasGradient, min: number, max: number): CanvasGradient {
+        // min & max refer to min and max delta temps shown on the canvas, to
+        // find the right breakpoints for specific temp deltas.
+        const gap = max - min;
+        for (const stop of this.stops) {
+            const ratio = clamp((stop.temp_delta - min) / gap, 0.0, 1.0);
+            gradient.addColorStop(ratio, stop.colour.toHex());
+        }
+        return gradient;
+    }
 }
 
-export const DEFAULT_THEME = new ColourTheme([
+export const TEMPERATURE_THEME = new ColourTheme([
     { temp_delta: -1.0, colour: Colour.fromHex('#99C5DD') },
     { temp_delta: +0.0, colour: Colour.fromHex('#E5E3E2') },
     { temp_delta: +1.5, colour: Colour.fromHex('#F0AD00') },

@@ -59,6 +59,7 @@ import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEA
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
+import { TEMPERATURE_THEME } from '@/utils/colours';
 import { InterpolatedYears } from '@/utils/interpolated_years';
 import { Line, Bar } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
@@ -300,18 +301,8 @@ export default defineComponent({
                 const chartArea = ctx.chart.chartArea;
                 if (!chartArea) return;  // not set on init
                 const yAxis = ctx.chart.scales.y;
-                const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
                 const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-
-                gradient.addColorStop(0.7, hotColor);
-                // put warm color slightly above zero to get a fast transition
-                // to non-"invisible" colors, e.g. when neutral is the same as
-                // the background color.
-                gradient.addColorStop(zeroRatio + 0.03, warmColor);
-                gradient.addColorStop(zeroRatio, neutralColor);
-                gradient.addColorStop(0, coldColor);
-
-                return gradient;
+                return TEMPERATURE_THEME.toCanvasGradient(gradient, yAxis.min, yAxis.max);
             };
         },
     },

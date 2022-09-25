@@ -1,7 +1,7 @@
 import L from "leaflet";
 
 import { CatastropheGroup, CatastropheType } from "@/models/catastrophes";
-import { DEFAULT_THEME } from "./colours";
+import { TEMPERATURE_THEME } from "./colours";
 import { Feature, Geometry } from "geojson";
 import { DistrictProperties } from "@/models/map";
 import CatastropheDetails from "@/components/CatastropheDetails.vue";
@@ -32,7 +32,7 @@ const selectedStyle: L.PathOptions = {
 export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta?: number) {
     let style = selected ? selectedStyle : unselectedStyle;
     if (tempDelta !== undefined) {
-        style.fillColor = DEFAULT_THEME.getColour(tempDelta).toHex();
+        style.fillColor = TEMPERATURE_THEME.getColour(tempDelta).toHex();
     }
     layer.setStyle(style);
 
