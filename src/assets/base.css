@@ -121,15 +121,15 @@
     --sz-100: 18px;
     --sz-200: 19px;
     --sz-300: 20px;
-    --sz-400: 22px;
-    --sz-600: 26px;
-    --sz-700: 34px;
-    --sz-800: 36px;
-    --sz-900: 48px;
+    --sz-400: 21px;
+    --sz-600: 24px;
+    --sz-700: 32px;
+    --sz-800: 34px;
+    --sz-900: 46px;
 
     --timeline-horizontal-padding: var(--sz-700);
     --popup-width: 456px;
-    --border-radius: 28px;
+    --border-radius: 22px;
   }
 }
 
