@@ -55,7 +55,7 @@ import VueSlider, { Mark, Marks } from 'vue-slider-component'
 import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
+import { CONTINUOUS_YEARS, CURRENT_YEAR, MAX_HISTORICAL_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
@@ -77,7 +77,7 @@ enum TimelineMode {
 
 // This many years are added before and between modeled years, to produce some
 // visual padding. See InterpolatedYears for more info.
-const INTERPOLATED_PADDING_YEARS = 3;
+const INTERPOLATED_PADDING_YEARS = 2;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
     INTERPOLATED_PADDING_YEARS);
 
@@ -155,9 +155,6 @@ export default defineComponent({
                 tooltip: {
                     enabled: false
                 },
-                verticalLine: {
-                    index: MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR
-                }
             },
             layout: {
             },
@@ -183,6 +180,11 @@ export default defineComponent({
         }));
 
         const temperatureOptions = baseOptions.mergeDeep(Map(fromJS({
+            plugins: {
+                verticalLine: {
+                    index: VISUAL_YEARS.yearToIndex(MAX_HISTORICAL_YEAR),
+                },
+            },
             scales: {
                 y: {
                     ticks: {
@@ -196,6 +198,11 @@ export default defineComponent({
         }))).toJS() as ChartOptions<'line'>;
 
         const catastropheOptions = baseOptions.mergeDeep(Map(fromJS({
+            plugins: {
+                verticalLine: {
+                    index: VISUAL_YEARS.yearToIndex(CURRENT_YEAR),
+                },
+            },
             scales: {
                 y: {
                     ticks: {
@@ -226,12 +233,12 @@ export default defineComponent({
         temperatureData() {
             const { indices, data } = VISUAL_YEARS.interpolate(
                 TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
-            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            const lastHistoricalIndex = VISUAL_YEARS.yearToIndex(MAX_HISTORICAL_YEAR);
             // Split up in two charts to get a break for future values
-            const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
-                Repeat(null as ChartElem, data.length - lastPastIndex - 1).toArray());
-            const futureData = Repeat(null as ChartElem, lastPastIndex).toArray().concat(
-                data.slice(lastPastIndex));
+            const historicalData = (data.slice(0, lastHistoricalIndex + 1) as ChartElem[]).concat(
+                Repeat(null as ChartElem, data.length - lastHistoricalIndex - 1).toArray());
+            const predictedData = Repeat(null as ChartElem, lastHistoricalIndex).toArray().concat(
+                data.slice(lastHistoricalIndex));
             const datasetBase = {
                 fill: true,
                 spanGaps: false,
@@ -243,14 +250,14 @@ export default defineComponent({
                 datasets: [
                     {
                         ...datasetBase,
-                        data: pastData,
+                        data: historicalData,
                         backgroundColor: this.makeGradientGenerator(
                             'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
                             'rgb(244, 243, 231)', 'rgb(0, 90, 173)')
                     },
                     {
                         ...datasetBase,
-                        data: futureData,
+                        data: predictedData,
                         backgroundColor: this.makeGradientGenerator(
                             'rgba(255, 59, 59, 0.3)', 'rgba(240, 173, 0, 0.3)',
                             'rgba(244, 243, 231, 0.3)', 'rgba(0, 90, 173, 0.3)'),
@@ -263,7 +270,7 @@ export default defineComponent({
                 TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)));
             // Future years have unknown values, set null to replace
             // interpolated values.
-            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            const lastPastIndex = VISUAL_YEARS.yearToIndex(CURRENT_YEAR);
             const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
                 Repeat(null, data.length - lastPastIndex - 1).toArray());
             return {
