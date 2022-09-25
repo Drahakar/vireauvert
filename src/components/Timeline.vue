@@ -245,16 +245,12 @@ export default defineComponent({
                     {
                         ...datasetBase,
                         data: pastData,
-                        backgroundColor: this.makeGradientGenerator(
-                            'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
-                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)')
+                        backgroundColor: this.makeGradientGenerator(1.0),
                     },
                     {
                         ...datasetBase,
                         data: futureData,
-                        backgroundColor: this.makeGradientGenerator(
-                            'rgba(255, 59, 59, 0.3)', 'rgba(240, 173, 0, 0.3)',
-                            'rgba(244, 243, 231, 0.3)', 'rgba(0, 90, 173, 0.3)'),
+                        backgroundColor: this.makeGradientGenerator(0.3),
                     },
                 ],
             } as ChartData<'line'>;
@@ -293,16 +289,14 @@ export default defineComponent({
                 return marks;
             }, {} as Marks);
         },
-        makeGradientGenerator(hotColor: string, warmColor: string,
-            neutralColor: string, coldColor: string
-        ): GradientGenerator {
+        makeGradientGenerator(alpha: number): GradientGenerator {
             return (ctx: ScriptableContext<'line'>) => {
                 const canvas = ctx.chart.ctx;
                 const chartArea = ctx.chart.chartArea;
                 if (!chartArea) return;  // not set on init
                 const yAxis = ctx.chart.scales.y;
                 const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                return TEMPERATURE_THEME.toCanvasGradient(gradient, yAxis.min, yAxis.max);
+                return TEMPERATURE_THEME.toCanvasGradient(gradient, yAxis.min, yAxis.max, alpha);
             };
         },
     },
