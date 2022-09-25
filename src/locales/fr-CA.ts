@@ -193,7 +193,7 @@ export default {
 
     // Tutorial
     tutorial_title: "Tour guidé",
-    tutorial_restart: "Recommencer le tutoriel",
+    tutorial_restart: "Recommencer tour guidé",
     tutorial_next: "Suivant",
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
@@ -207,5 +207,5 @@ export default {
     tutorial_step_catastrophes: "<p>Nombre d'événements extrêmes survenus dans la circonscription et l'année sélectionnées.</p><p>Vous pouvez sélectionner quels types d'événements extrêmes à afficher (ici un total de <b>3 événements extrêmes</b>, dont 2 tornades et 1 vague de chaleur en 2022)</p>",
     tutorial_step_highlight: "<p>Certaines années contiennent des <b>faits saillants</b>. Cliquez sur l'icône brillante pour en savoir plus.</p>",
     tutorial_step_call_to_action: "<p>Vous êtes préoccupé(e)s? <b>Contactez vos candidat(e)s</b> aux prochaines élections.</p>",    
-    tutorial_step_end: "<p>Pour revoir ce tutoriel, ou pour de plus amples informations, consultez l'<b>aide</b>!</p>"
+    tutorial_step_end: "<p>Pour revoir ce tour guidé, ou pour de plus amples informations, consultez l'<b>aide</b>!</p>"
 };
