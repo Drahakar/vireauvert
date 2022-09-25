@@ -193,7 +193,7 @@ export default {
 
     // Tutorial
     tutorial_title: "Tour guidé",
-    tutorial_restart: "Recommencer tour guidé",
+    tutorial_restart: "Recommencer le tour guidé",
     tutorial_next: "Suivant",
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
