@@ -3,7 +3,8 @@
         <div id="slider-header">
             <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
             <div id="mode-container">
-                <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
+                <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)"
+                    :data-tutorial-step="value == TimelineMode.CatastropheCount ? 'timeline-catastrophes-count' : ''">
                     <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
                         @change="mode = value" :class="value">
                     <label :for="`radio-${value}`" :class="{active: value === mode, inactive: value !== mode}">
