@@ -1,8 +1,12 @@
 <template>
     <div class="timeline">
         <div id="slider-header">
-            <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
-            <div id="mode-container">
+            <div class="timeline-toggle">
+                <button class="toggle" @click="minimized=!minimized">
+                    <img :src="`/Button/${minimized? 'Maximize' : 'Minimize'}.png`" :alt="$t(minimized ? 'maximize' : 'minimize')"></button>
+            </div>
+            <div id="slider-title" v-t="minimized ? 'timeline_collapsed' : `timeline_mode_${mode}`"></div>
+            <div id="mode-container" v-show="!minimized">
                 <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)"
                     :data-tutorial-step="value == TimelineMode.CatastropheCount ? 'timeline-catastrophes-count' : ''">
                     <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
@@ -15,7 +19,7 @@
             
         </div>
         <div class="timeline-container">
-            <div class="timeline-graph">
+            <div class="timeline-graph" v-show="!minimized">
                 <!-- set width to 0 to let it auto-size it with given height. -->
                 <Line v-if="mode === TimelineMode.Temperature" :chart-data="temperatureData" :height="100" :width="0"
                     :chart-options="temperatureOptions" />
@@ -25,7 +29,7 @@
                     <div class="future-label-message" v-t="`timeline_future_${mode.toLowerCase()}`"></div>
                 </div>
             </div>
-            <div class="slider-container" ref="sliderContainer">
+            <div class="slider-container" ref="sliderContainer" :class="{minimized: minimized}">
                 <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
                     :max="VISUAL_YEARS.totalYearsPadded - 1" :drag-on-click="true">
                     <template v-slot:label="{value}">
@@ -233,6 +237,7 @@ export default defineComponent({
         return {
             VISUAL_YEARS,
             marks: this.generateMarks(),
+            minimized: false
         };
     },
     computed: {
@@ -367,7 +372,24 @@ ChartJS.register(new VerticalLinePlugin());
 
 #slider-title {
     font-size: var(--sz-500);
-    padding-left: var(--sz-200);
+    flex: 1;
+    margin-left: 7px;
+}
+
+.timeline-toggle .toggle {
+    width: calc(var(--sz-800) - 4px);
+    height: calc(var(--sz-800) - 4px);
+    pointer-events: auto;
+    margin-left: var(--sz-200);
+}
+
+.timeline-toggle .toggle:hover {
+    transform: scale(1.2);
+}
+
+.timeline-toggle .toggle img {
+    width: 100%;
+    height: 100%;
 }
 
 #future-label {
@@ -404,6 +426,7 @@ ChartJS.register(new VerticalLinePlugin());
 .vue-slider-mark-label.custom-label.event-count {
     top: -32px;
 }
+
 
 .vue-slider .tooltip-line {
     height: 80%;
@@ -531,6 +554,7 @@ ChartJS.register(new VerticalLinePlugin());
 }
 </style>
 
+
 <style>
 .vue-slider {
     --slider-dot-size: var(--sz-900);
@@ -554,6 +578,10 @@ ChartJS.register(new VerticalLinePlugin());
     gap: 2px;
     height: calc(76px + var(--sz-30));
     top: var(--sz-30) !important;
+}
+
+.slider-container.minimized .vue-slider-dot-tooltip {
+    height: calc(15px + var(--sz-30));
 }
 
 .vue-slider-dot-tooltip-inner {

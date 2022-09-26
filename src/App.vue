@@ -220,7 +220,7 @@ Sentry.init({
     gap: var(--sz-100);
     align-items: center;
     padding-bottom: var(--sz-800);
-    min-width: 100px;
+    min-width: var(--thermo-current-value-width);
 }
 
 .map-overlay {
