@@ -242,12 +242,11 @@ Sentry.init({
 
 .filter-inputs {
     flex: 1;
-    width: 100%;
     min-height: 0;
     /* don't expand to children content -- undo auto min-height */
     max-height: 100%;
-    max-width: 600px;
     padding-right: var(--sz-50);
+    align-self: flex-start;
 }
 
 .call-to-action {
