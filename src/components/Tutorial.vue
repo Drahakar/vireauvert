@@ -126,6 +126,14 @@ export default defineComponent({
                     },
                 },
                 {
+                    target: '[data-tutorial-step="timeline-catastrophes-count"]',
+                    content: this.$t('tutorial_step_timeline_catastrophes_count'),
+                    params: {
+                        placement: "top",
+                        ...baseParams,
+                    },
+                },
+                {
                     target: '[data-tutorial-step="call-to-action"]',
                     content: this.$t('tutorial_step_call_to_action'),
                     params: {
@@ -137,7 +145,10 @@ export default defineComponent({
                     target: '[data-tutorial-step="help"]',
                     content: this.$t('tutorial_step_end'),
                     params: {
-                        placement: "left",
+                        // Note: placing bottom instead of left, so that the
+                        // arrow tip matches the tutorial header color, due to
+                        // the top-right placement of this help button.
+                        placement: "bottom",
                         ...baseParams,
                     },
                 },
@@ -176,7 +187,7 @@ header {
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     color: var(--color-text);
     font-size: var(--sz-400);
-    padding: var(--sz-30);
+    padding: var(--sz-10);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -213,11 +224,11 @@ header .title {
 }
 
 .v-step__button-stop {
-    font-size: var(--sz-300);
-    color: var(--clr-blanc);
-    background-color: var(--clr-gris-pale);
+    font-size: var(--sz-100);
+    color: var(--clr-gris-mi-fonce);
+    background-color: var(--clr-gris-tiede);
     border-radius: var(--border-radius);
-    padding: var(--sz-50) var(--sz-100);
+    padding: var(--sz-10) var(--sz-100);
 }
 
 .v-step__buttons .v-step__button {
@@ -260,7 +271,16 @@ header .title {
     border-radius: var(--border-radius);
     max-width: var(--popup-width);
     font-size: var(--sz-300);
-    box-shadow: 0px 4px 4px rgba(53, 53, 53, 0.25);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.85), 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.fade-enter-active,
+.fade-leave-active {
+   transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

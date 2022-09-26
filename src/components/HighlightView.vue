@@ -49,7 +49,7 @@ export default defineComponent({
 #header {
     font-size: var(--sz-400);
     background-color: var(--color-background-accent);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius) var(--border-radius) 0 var(--border-radius);
     height: var(--sz-900);
     padding-right: var(--sz-50);
     display: flex;
@@ -57,7 +57,7 @@ export default defineComponent({
 }
 
 .title {
-    margin-left: calc(var(--sz-30) / -2);
+    margin-left: calc(var(--sz-30) / -5);
 }
 
 .icon {

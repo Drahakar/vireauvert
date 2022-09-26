@@ -11,10 +11,7 @@
 
         <div class="thermometer">
             <div class="stem">
-                <!-- Note: last ones gets drawn on top of previous ones. -->
-                <div class="mercury mercury-danger tracked-current track-height"></div>
-                <div class="mercury mercury-risky tracked-max-risky track-height"></div>
-                <div class="mercury mercury-reference tracked-max-reference track-height"></div>
+                <div class="mercury tracked-current track-clip-top" :style="mercuryStyle"></div>
             </div>
             <div class="bulb">
                 <p class="bulb-text">°C</p>
@@ -27,8 +24,8 @@
         </div>
 
         <div class="risky-value pill tracked-risky track-bottom" data-tutorial-step="thermo-risky-value">
-            <span>{{$n(riskyValue, 'temperature_delta_no_unit')}}</span>
             <div class="line"></div>
+            <span>{{$n(riskyValue, 'temperature_delta_no_unit')}}</span>
         </div>
 
         <div class="current-value pill tracked-current track-bottom">
@@ -41,6 +38,7 @@
 <script lang="ts">
 
 import { defineComponent, CSSProperties, PropType } from 'vue';
+import { TEMPERATURE_THEME } from "@/utils/colours";
 import { REFERENCE_YEAR } from "@/models/constants";
 import { RegionStatistics } from '@/models/yearly_data';
 
@@ -48,6 +46,21 @@ export const START_NOTCH = -1;
 export const END_NOTCH = 7;
 const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
+
+/* Visually, the lowest notch is this much % into the stem height */
+const NOTCH_OFFSET = 0.1;
+/* Visually, the highest notch is this much % higher than NOTCH_OFFSET */
+const NOTCH_HEIGHT = 0.85;
+
+// Some helper values based on these:
+const BOTTOM_GAP = NOTCH_OFFSET;
+const TOP_GAP = 1 - (NOTCH_OFFSET + NOTCH_HEIGHT);
+const TEMP_RANGE = (END_NOTCH - START_NOTCH) / NOTCH_HEIGHT;
+
+// Taking into account the notch offset/height, these are the lowest/highest
+// temperatures that can be shown on the thermometer.
+const LOWEST_TEMP = START_NOTCH - BOTTOM_GAP * TEMP_RANGE;
+const HIGHEST_TEMP = END_NOTCH + TOP_GAP * TEMP_RANGE;
 
 const RISKY_DELTA = 1.5;  // Show different visuals for ref temperature + this.
 
@@ -94,17 +107,29 @@ export default defineComponent({
                 '--current-value': this.valueToNotchIndex(this.currentValue),
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
                 '--risky-value': this.valueToNotchIndex(this.riskyValue),
+                '--notch-offset': `${NOTCH_OFFSET * 100}%`,
+                '--notch-height': `${NOTCH_HEIGHT * 100}%`,
             };
         },
         emojiPath(): string {
-            if (this.currentValue < this.referenceValue) {
+            if (this.currentValue <= this.referenceValue) {
                 return '/icons/Emoji1.png';
-            } else if (this.currentValue < this.riskyValue) {
+            } else if (this.currentValue <= this.riskyValue) {
                 return '/icons/Emoji2.png';
             } else {
                 return '/icons/Emoji3.png';
             }
-        }
+        },
+        mercuryStyle() {
+            const gradient = TEMPERATURE_THEME.toGradientStops(LOWEST_TEMP, HIGHEST_TEMP).map(stop => {
+                const colour = stop.colour.toHex();
+                const percent = stop.ratio * 100;
+                return `${colour} ${percent}%`;
+            }).join(', ');
+            return {
+                'background': `linear-gradient(0deg, ${gradient})`,
+            };
+        },
     },
     methods: {
         valueToNotchIndex(value: number): number {
@@ -132,17 +157,7 @@ export default defineComponent({
     --tracked-value: var(--risky-value);
 }
 
-.tracked-max-risky {
-    /* Will follow current up to 'risky', but not past that */
-    --tracked-value: min(var(--current-value), var(--risky-value));
-}
-
-.tracked-max-reference {
-    /* Will follow current up to 'reference', but not past that */
-    --tracked-value: min(var(--current-value), var(--reference-value));
-}
-
-.track-height, .track-bottom {
+.track-height, .track-bottom, .track-clip-top {
     /* value to assign to e.g. height or bottom to match the --tracked-value */
     --tracked-point: clamp(
         var(--notch-min),
@@ -160,8 +175,13 @@ export default defineComponent({
     transition: bottom var(--mercury-transition);
 }
 
+.track-clip-top {
+    clip-path: inset(calc(100% - var(--tracked-point)) 0 0 0);
+    transition: clip-path var(--mercury-transition);
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .track-height, .track-bottom {
+    .track-height, .track-bottom, .track-clip-top {
         transition: none;
     }
 }
@@ -169,11 +189,7 @@ export default defineComponent({
 .wrapper {
     --sz-stem-width: var(--sz-300);
     --sz-stem-border: 2px;
-    /* the lowest notch is this much % into the stem height */
-    --notch-offset: 10%;
-    /* the highest notch is this much % higher than notch-offset */
-    --notch-height: 85%;
-    --sz-bulb: var(--sz-900);
+    --sz-bulb: calc(var(--sz-900) * 1.15);
     /* limit values where we start clamping */
     --notch-min: var(--sz-bulb) / 2;
     --notch-max: 100%;
@@ -184,7 +200,7 @@ export default defineComponent({
 
 .thermometer {
     height: 100%;
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.3));
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
@@ -201,36 +217,25 @@ export default defineComponent({
 }
 
 .mercury {
+    height: 100%;
     width: var(--sz-stem-width);
     position: absolute;
     bottom: 0;
 }
 
-.mercury-reference {
-    background-color: var(--clr-thermometer-mercury);
-}
-
-.mercury-risky {
-    background-color: var(--clr-jaune);
-}
-
-.mercury-danger {
-    background-color: var(--clr-alerte);
-}
-
 .notch {
-    --sz-notch-width: var(--sz-600);
+    --sz-notch-width: var(--sz-700);
     --sz-notch-gap: var(--sz-30);
     min-width: var(--sz-notch-width);
     position: absolute;
     transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
-    left: calc(50% - var(--sz-notch-width) - var(--sz-stem-width) / 2 - var(--sz-stem-border));
     padding-right: var(--sz-notch-gap);
-    font-size: var(--sz-200);
+    font-size: var(--sz-400);
     color: var(--clr-blanc);
-    text-align: right;
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 1));
+    left: 20px;
 }
 
 .notches-container {
@@ -240,7 +245,7 @@ export default defineComponent({
 
 .bulb {
     position: absolute;
-    background-color: var(--clr-thermometer-mercury);
+    background-color: var(--clr-thermometer-low);
     width: var(--sz-bulb);
     height: var(--sz-bulb);
     left: calc(50% - var(--sz-bulb) / 2);
@@ -254,7 +259,7 @@ export default defineComponent({
     display: block;
     width: var(--sz-stem-width);
     height: 6px;
-    background-color: var(--clr-thermometer-mercury);
+    background-color: var(--clr-thermometer-low);
     top: -3px;
     left: calc(50% - var(--sz-stem-width) / 2);
 }
@@ -263,6 +268,7 @@ export default defineComponent({
     text-align: center;
     font-size: var(--sz-600);
     color: var(--clr-blanc);
+    top: calc(var(--sz-10)*0.8);
 }
 
 .pill {
@@ -287,11 +293,12 @@ export default defineComponent({
 
 .current-value {
     width: var(--thermo-current-value-width);
+    padding: 4px 8px;
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
-    font-size: var(--sz-400);
+    font-size: var(--sz-600);
     z-index: 1;  /* show above notches */
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
 }
 
 .current-value span {
@@ -301,13 +308,15 @@ export default defineComponent({
 
 .reference-value {
     width: 11ch;
-    background-color: var(--clr-thermometer-mercury);
+    color: var(--color-text);
+    background-color: var(--clr-thermometer-zero);
     font-size: var(--sz-200);
     padding: 2px 6px;
 }
 
 .risky-value {
-    font-size: var(--sz-300);
+    left: -15px;
+    font-size: var(--sz-600);
     width: 11ch;
 }
 
@@ -318,20 +327,22 @@ export default defineComponent({
         1px -1px 0 var(--clr-alerte),
        -1px  1px 0 var(--clr-alerte),
         1px  1px 0 var(--clr-alerte),
-        0px  0px 2px rgba(0, 0, 0, 0.5);
+        0px  0px 8px rgba(0, 0, 0, 1);
 }
 
 .risky-value .line {
-    width: 100%;
-    height: 2px;
+    width: 65%;
+    left: 10px;
+    height: 4px;
     background-color: var(--clr-alerte);
 }
 
 img {
     left: 0;
-    transform: translateX(-50%);
-    width: var(--sz-900);
-    height: var(--sz-900);
+    transform: translateX(-45%);
+    width: calc(var(--sz-900)*1.2);
+    height: calc(var(--sz-900)*1.2);
     position: absolute;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.35));
 }
 </style>

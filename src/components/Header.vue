@@ -1,9 +1,9 @@
 <template>
     <header>
-        <a @click="about">Sources</a>
         <button @click="about" class="bleuet-equitable">
             <img src="/Logo_EQT-Bleuet_Map.png" alt="Éqt*x(*)">
         </button>
+        <a @click="about">Sources</a>
     </header>
 </template>
 
@@ -54,6 +54,7 @@ a {
     text-decoration-line: underline;
     pointer-events: auto;
     cursor: pointer;
+    margin-right: 4px;
 }
 
 a:hover {

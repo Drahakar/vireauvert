@@ -94,7 +94,7 @@ button {
     display: flex;
     align-items: center;
     height: 100%;
-    font-size: var(--sz-600);
+    font-size: var(--sz-400);
 }
 
 .logo {
@@ -108,6 +108,7 @@ button {
     align-items: center;
     text-align: center;
     gap: var(--sz-600);
+    padding: 0 var(--sz-200)
 }
 
 .first-section {
@@ -118,7 +119,8 @@ button {
     font-size: var(--sz-300);
     font-weight: bold;
     gap: var(--sz-600);
-    max-width: 80%;
+    max-width: 90%;
+    padding: var(--sz-300) 0;
 }
 
 
@@ -127,6 +129,8 @@ button {
     flex-direction: column;
     align-items: center;
     gap: var(--sz-30);
+    padding-bottom: var(--sz-300);
+    
 }
 
 .desc {
@@ -148,11 +152,12 @@ button {
     font-size: var(--sz-400);
     color: var(--clr-gris-moyen);
     width: 100%;
+    padding-top: var(--sz-300);
 }
 
 #detailed-data ul {
     padding: 0;
-    font-size: var(--sz-300);
+    font-size: var(--sz-200);
     line-height: var(--sz-400);
     padding: var(--sz-600);
     padding-top: 0;
@@ -164,4 +169,5 @@ button {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 </style>

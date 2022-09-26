@@ -11,11 +11,13 @@
                     <img src="/Button/Facebook.png">
                     Facebook
                 </a>
-                <a target="_blank" href="https://twitter.com/share" :data-url="url" data-dnt="true">
+                <a target="_blank"
+                    :href="`https://twitter.com/share?text=${encodeURIComponent($t('share_twitter_text'))}`"
+                    :data-url="url" data-dnt="true">
                     <img src="/Button/Twitter.png">
                     Twitter
                 </a>
-                <a target="_blank" :href="`mailto:?subject=terreOS&amp;body=${encodeURI(url)}}`">
+                <a target="_blank" :href="`mailto:?subject=Carte+climat&amp;body=${encodeURIComponent($t('share_email_text', [url]))}`">
                     <img src="/Button/Courriel.png">
                     {{$t('email')}}
                 </a>
@@ -64,7 +66,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     gap: var(--sz-700);
-    padding: var(--sz-600) 0;
+    padding: var(--sz-600) var(--sz-200);
 }
 
 #content a {
@@ -79,7 +81,7 @@ export default defineComponent({
     transform: scale(1.2);
 }
 
-#content a img {    
+#content a img {
     width: calc(var(--sz-900) * 2);
     height: calc(var(--sz-900) * 2);
     object-fit: cover;

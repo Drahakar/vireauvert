@@ -55,6 +55,7 @@ export default {
     share: "Partager",
     help: "Aide",
     email: "Courriel",
+    close: "Fermer",
 
     // Loading overlay
     loading: "Chargement des données...",
@@ -172,8 +173,8 @@ export default {
     province_of_quebec: "Province de Québec",
 
     // Timeline
-    timeline_mode_Temperature: "Température par année",
-    timeline_mode_Catastrophes: "Événements extrêmes par année",
+    timeline_mode_Temperature: "Variation °C / an par rapport à 1990",
+    timeline_mode_Catastrophes: "# Événements extrêmes par année",
     minimize: "Minimiser",
     maximize: "Maximiser",
 
@@ -192,9 +193,13 @@ export default {
     url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html",
     detailed_sources: "Sources",
 
+    // Share
+    share_twitter_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les #changementsclimatiques. Le Québec doit se préparer. #elections2022 #polqc #vireauvert",
+    share_email_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les changements climatiques. Le Québec doit se préparer.\n{0}",
+
     // Tutorial
     tutorial_title: "Tour guidé",
-    tutorial_restart: "Recommencer le tutoriel",
+    tutorial_restart: "Recommencer le tour guidé",
     tutorial_next: "Suivant",
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
@@ -205,8 +210,9 @@ export default {
     tutorial_step_temperature: "<p>Voici la température pour l'<b>année</b> et la <b>région</b> sélectionnées (ici 2022 pour la province de Québec).</p><p>Remarquez les changements de température par rapport à 1990 (ici +2,2 °C).</p>",
     tutorial_step_timeline: "<p>Vous pouvez changer l'<b>année</b> pour explorer les données de températures moyennes observées par le passé et les projections futures ainsi que les événements climatiques extrêmes survenus.</p>",
     tutorial_step_region_search: "<p>Sélectionnez la circonscription à afficher ou l'ensemble du Québec</p>",
-    tutorial_step_catastrophes: "<p>Nombre d'événements extrêmes survenus dans la circonscription et l'année sélectionnées.</p><p>Vous pouvez sélectionner quels types d'événements extrêmes afficher (ici un total de <b>3 événements extrêmes</b>, dont 2 tornades et 1 vague de chaleur en 2022)</p>",
-    tutorial_step_highlight: "<p>Certaines années contiennent des <b>faits saillants</b>. Cliquez sur l'icône pour en savoir plus.</p>",
+    tutorial_step_catastrophes: "<p>Nombre d'événements extrêmes survenus dans la circonscription et l'année sélectionnées.</p><p>Vous pouvez sélectionner quels types d'événements extrêmes à afficher (ici un total de <b>3 événements extrêmes</b>, dont 2 tornades et 1 vague de chaleur en 2022)</p>",
+    tutorial_step_highlight: "<p>Certaines années contiennent des <b>faits saillants</b>. Cliquez sur l'icône brillante pour en savoir plus.</p>",
+    tutorial_step_timeline_catastrophes_count: "<p>Visualisez le nombre d'<b>événements climatiques extrêmes</b> survenus depuis 1990 pour la province ou la circonscription sélectionnée.</p>",
     tutorial_step_call_to_action: "<p>Vous êtes préoccupé(e)s? <b>Contactez vos candidat(e)s</b> aux prochaines élections.</p>",    
-    tutorial_step_end: "<p>Pour revoir ce tutoriel, ou pour de plus amples informations, consultez l'<b>aide</b>!</p>"
+    tutorial_step_end: "<p>Pour revoir ce tour guidé, ou pour de plus amples informations, consultez l'<b>aide</b>!</p>"
 };

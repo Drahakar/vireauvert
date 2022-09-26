@@ -7,7 +7,8 @@
             </div>
             <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
             <div id="mode-container" v-show="!minimized">
-                <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)">
+                <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)"
+                    :data-tutorial-step="value == TimelineMode.CatastropheCount ? 'timeline-catastrophes-count' : ''">
                     <input name="mode" type="radio" :id="`radio-${value}`" :value="value" :checked="mode === value"
                         @change="mode = value" :class="value">
                     <label :for="`radio-${value}`" :class="{active: value === mode, inactive: value !== mode}">
@@ -15,6 +16,7 @@
                     </label>
                 </div>
             </div>
+            
         </div>
         <div class="timeline-container">
             <div class="timeline-graph" v-show="!minimized">
@@ -26,7 +28,7 @@
             </div>
             <div class="slider-container" ref="sliderContainer" :class="{minimized: minimized}">
                 <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
-                    :max="VISUAL_YEARS.totalYearsPadded - 1" :adsorb="true" :drag-on-click="true">
+                    :max="VISUAL_YEARS.totalYearsPadded - 1" :drag-on-click="true">
                     <template v-slot:label="{value}">
                         <div class="markline"></div>
                         <div :class="['vue-slider-mark-label', 'custom-label']"
@@ -59,10 +61,11 @@ import VueSlider, { Mark, Marks } from 'vue-slider-component'
 import { Map, Repeat, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
-import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
+import { CONTINUOUS_YEARS, CURRENT_YEAR, MAX_HISTORICAL_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
+import { TEMPERATURE_THEME } from '@/utils/colours';
 import { InterpolatedYears } from '@/utils/interpolated_years';
 import { Line, Bar } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
@@ -81,7 +84,7 @@ enum TimelineMode {
 
 // This many years are added before and between modeled years, to produce some
 // visual padding. See InterpolatedYears for more info.
-const INTERPOLATED_PADDING_YEARS = 3;
+const INTERPOLATED_PADDING_YEARS = 2;
 const VISUAL_YEARS = new InterpolatedYears(CONTINUOUS_YEARS, MODELED_YEARS,
     INTERPOLATED_PADDING_YEARS);
 
@@ -159,9 +162,6 @@ export default defineComponent({
                 tooltip: {
                     enabled: false
                 },
-                verticalLine: {
-                    index: MAX_CONTINUOUS_YEAR - MIN_CONTINUOUS_YEAR
-                }
             },
             layout: {
             },
@@ -175,7 +175,7 @@ export default defineComponent({
                     color: '#353535',
                     grid: {
                         tickLength: 5,
-                        tickWidth: 1,
+                        tickWidth: 3,
                         drawBorder: false,
                         drawOnChartArea: true,
                         tickColor: "#a59e20",
@@ -187,6 +187,11 @@ export default defineComponent({
         }));
 
         const temperatureOptions = baseOptions.mergeDeep(Map(fromJS({
+            plugins: {
+                verticalLine: {
+                    index: VISUAL_YEARS.yearToIndex(MAX_HISTORICAL_YEAR),
+                },
+            },
             scales: {
                 y: {
                     ticks: {
@@ -200,6 +205,11 @@ export default defineComponent({
         }))).toJS() as ChartOptions<'line'>;
 
         const catastropheOptions = baseOptions.mergeDeep(Map(fromJS({
+            plugins: {
+                verticalLine: {
+                    index: VISUAL_YEARS.yearToIndex(CURRENT_YEAR),
+                },
+            },
             scales: {
                 y: {
                     ticks: {
@@ -231,34 +241,33 @@ export default defineComponent({
         temperatureData() {
             const { indices, data } = VISUAL_YEARS.interpolate(
                 TIMELINE_YEARS.map(year => this.statisticStore.findStatistics(year, this.district).temp_delta ?? 0));
-            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            const lastHistoricalIndex = VISUAL_YEARS.yearToIndex(MAX_HISTORICAL_YEAR);
             // Split up in two charts to get a break for future values
-            const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
-                Repeat(null as ChartElem, data.length - lastPastIndex - 1).toArray());
-            const futureData = Repeat(null as ChartElem, lastPastIndex).toArray().concat(
-                data.slice(lastPastIndex));
+            const historicalData = (data.slice(0, lastHistoricalIndex + 1) as ChartElem[]).concat(
+                Repeat(null as ChartElem, data.length - lastHistoricalIndex - 1).toArray());
+            const predictedData = Repeat(null as ChartElem, lastHistoricalIndex).toArray().concat(
+                data.slice(lastHistoricalIndex));
             const datasetBase = {
                 fill: true,
                 spanGaps: false,
-                borderWidth: 0,
+                borderWidth: 2,
                 pointRadius: 0,
+                tension: 0.4,
+                borderColor: 'rgba(255, 106, 14, 0.35)',
+                clip: 200,
             };
             return {
                 labels: indices,
                 datasets: [
                     {
                         ...datasetBase,
-                        data: pastData,
-                        backgroundColor: this.makeGradientGenerator(
-                            'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
-                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)')
+                        data: historicalData,
+                        backgroundColor: this.makeGradientGenerator(1.0),
                     },
                     {
                         ...datasetBase,
-                        data: futureData,
-                        backgroundColor: this.makeGradientGenerator(
-                            'rgba(255, 59, 59, 0.3)', 'rgba(240, 173, 0, 0.3)',
-                            'rgba(244, 243, 231, 0.3)', 'rgba(0, 90, 173, 0.3)'),
+                        data: predictedData,
+                        backgroundColor: this.makeGradientGenerator(0.3),
                     },
                 ],
             } as ChartData<'line'>;
@@ -268,7 +277,7 @@ export default defineComponent({
                 TIMELINE_YEARS.map(year => this.catastropheStore.countCatastrophes(year, this.district, this.catastropheFilter ?? FILTER_ALL_CATASTROPHES)));
             // Future years have unknown values, set null to replace
             // interpolated values.
-            const lastPastIndex = VISUAL_YEARS.yearToIndex(MAX_CONTINUOUS_YEAR);
+            const lastPastIndex = VISUAL_YEARS.yearToIndex(CURRENT_YEAR);
             const pastData = (data.slice(0, lastPastIndex + 1) as ChartElem[]).concat(
                 Repeat(null, data.length - lastPastIndex - 1).toArray());
             return {
@@ -276,11 +285,14 @@ export default defineComponent({
                 datasets: [
                     {
                         data: pastData,
-                        borderWidth: 1,
+                        borderWidth: 0.2,
                         backgroundColor: '#f0ad00',
                         barThickness: 'flex',
-                        categoryPercentage: 1,
-                        barPercentage: 0.9
+                        categoryPercentage: 0.9,
+                        barPercentage: 0.75,
+                        borderRadius: 4,
+                        inflateAmount: 0.5,
+                        clip: 200,           
                     },
                 ]
             } as ChartData<'bar'>;
@@ -297,25 +309,16 @@ export default defineComponent({
                 return marks;
             }, {} as Marks);
         },
-        makeGradientGenerator(hotColor: string, warmColor: string,
-            neutralColor: string, coldColor: string
-        ): GradientGenerator {
+        makeGradientGenerator(alpha: number): GradientGenerator {
             return (ctx: ScriptableContext<'line'>) => {
                 const canvas = ctx.chart.ctx;
                 const chartArea = ctx.chart.chartArea;
                 if (!chartArea) return;  // not set on init
                 const yAxis = ctx.chart.scales.y;
-                const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
                 const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-
-                gradient.addColorStop(0.7, hotColor);
-                // put warm color slightly above zero to get a fast transition
-                // to non-"invisible" colors, e.g. when neutral is the same as
-                // the background color.
-                gradient.addColorStop(zeroRatio + 0.03, warmColor);
-                gradient.addColorStop(zeroRatio, neutralColor);
-                gradient.addColorStop(0, coldColor);
-
+                for (const stop of TEMPERATURE_THEME.toGradientStops(yAxis.min, yAxis.max)) {
+                    gradient.addColorStop(stop.ratio, stop.colour.toHex(alpha));
+                }
                 return gradient;
             };
         },
@@ -357,7 +360,8 @@ ChartJS.register(new VerticalLinePlugin());
     align-items: center;
     justify-content: space-between;
     height: var(--sz-800);
-    padding-left: 4px;
+    margin-left: -4px;
+    margin-bottom: 8px;
 }
 
 #slider-title {
@@ -366,10 +370,11 @@ ChartJS.register(new VerticalLinePlugin());
     margin-left: 7px;
 }
 
-.timeline-toggle .toggle{
-    width: calc(var(--sz-800) - 8px);
-    height: calc(var(--sz-800) - 8px);
+.timeline-toggle .toggle {
+    width: calc(var(--sz-800) - 4px);
+    height: calc(var(--sz-800) - 4px);
     pointer-events: auto;
+    margin-left: var(--sz-200);
 }
 
 .timeline-toggle .toggle:hover {
@@ -398,11 +403,11 @@ ChartJS.register(new VerticalLinePlugin());
 
 
 .vue-slider .tooltip-line {
-    height: 100%;
+    height: 80%;
     width: 1px;
-    border-left-width: 1px;
-    border-left-style: dashed;
-    border-left-color: var(--clr-gris-fonce);
+    border-left-width: 3px;
+    border-left-style: dotted;
+    border-left-color: var(--clr-brun-terreux);
     display: block;
     margin: auto;
     z-index: var(--tooltip-line-z-index);
@@ -414,7 +419,7 @@ ChartJS.register(new VerticalLinePlugin());
 }
 
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top {
-    padding: 2px 10px;
+    padding: calc(var(--sz-10) / 2) var(--sz-30);
     border-radius: var(--border-radius);
 }
 
@@ -451,6 +456,7 @@ ChartJS.register(new VerticalLinePlugin());
     width: 200%;
     height: 200%;
     top: -2px;
+    left: -2px;
     border-radius: 50%;
     background-color: var(--clr-gris-mi-fonce);
 }
@@ -458,6 +464,8 @@ ChartJS.register(new VerticalLinePlugin());
 .timeline {
     padding-left: 4px;
     padding-top: 4px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2px;
 }
 
 .timeline-container {
@@ -481,12 +489,12 @@ ChartJS.register(new VerticalLinePlugin());
     align-items: center;
     gap: 4px;
     height: 100%;
-    padding: 2px 4px;
+    padding: 2px 2px;
 }
 
 #mode-container .item {
-    width: calc(var(--sz-800) - 8px);
-    height: calc(var(--sz-800) - 8px);
+    width: calc(var(--sz-800) - 4px);
+    height: calc(var(--sz-800) - 4px);
 }
 
 #mode-container input {
