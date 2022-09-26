@@ -54,7 +54,7 @@
   --app-column-gap: 0;
   --timeline-horizontal-padding: var(--sz-200);
   --popup-width: 216px;
-  --thermo-current-value-width: 9ch;
+  --thermo-current-value-width: calc(var(--sz-900) * 2.8);
 
   /* Font weight variants */
   --fw-regular: 500;
@@ -90,7 +90,7 @@
     --timeline-horizontal-padding: var(--sz-600);
     --popup-width: 256px;
     --border-radius: 16px;
-
+    --thermo-current-value-width: calc(var(--sz-900) * 3.0);
   }
 }
 
@@ -109,7 +109,6 @@
     --sz-900: 40px;
 
     --popup-width: 332px;
-    --thermo-current-value-width: 8ch;
     --border-radius: 20px;
   }
 }
@@ -131,6 +130,7 @@
     --timeline-horizontal-padding: var(--sz-700);
     --popup-width: 456px;
     --border-radius: 22px;
+    --thermo-current-value-width: calc(var(--sz-900) * 2.8);
   }
 }
 
@@ -147,7 +147,6 @@
   --color-heading: var(--clr-gris-fonce);
 
   --default-font-size: var(--sz-400);
-  /* --border-radius: 1.6em; */
 
   --size-map-zoom-control: var(--sz-900);
   --size-map-controls-gap: var(--sz-30);

@@ -189,10 +189,6 @@ export default defineComponent({
 .wrapper {
     --sz-stem-width: var(--sz-300);
     --sz-stem-border: 2px;
-    /* the lowest notch is this much % into the stem height */
-    --notch-offset: 10%;
-    /* the highest notch is this much % higher than notch-offset */
-    --notch-height: 85%;
     --sz-bulb: calc(var(--sz-900) * 1.15);
     /* limit values where we start clamping */
     --notch-min: var(--sz-bulb) / 2;
@@ -234,7 +230,6 @@ export default defineComponent({
     position: absolute;
     transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
-    /* left: calc(50% - var(--sz-notch-width) - var(--sz-stem-width) / 2 - var(--sz-stem-border)); */
     padding-right: var(--sz-notch-gap);
     font-size: var(--sz-400);
     color: var(--clr-blanc);
@@ -297,7 +292,7 @@ export default defineComponent({
 }
 
 .current-value {
-    width: calc(var(--sz-900) * 2.8);
+    width: var(--thermo-current-value-width);
     padding: 4px 8px;
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);

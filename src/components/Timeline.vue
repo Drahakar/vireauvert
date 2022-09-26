@@ -286,7 +286,6 @@ export default defineComponent({
                         categoryPercentage: 0.9,
                         barPercentage: 0.75,
                         borderRadius: 4,
-                        // borderSkipped: "false",
                         inflateAmount: 0.5,
                         clip: 200,           
                     },
