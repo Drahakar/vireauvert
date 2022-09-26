@@ -5,7 +5,7 @@
                 <button class="toggle" @click="minimized=!minimized">
                     <img :src="`/Button/${minimized? 'Maximize' : 'Minimize'}.png`" :alt="$t(minimized ? 'maximize' : 'minimize')"></button>
             </div>
-            <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
+            <div id="slider-title" v-t="minimized ? 'timeline_collapsed' : `timeline_mode_${mode}`"></div>
             <div id="mode-container" v-show="!minimized">
                 <div class="item" v-for="value of Object.values(TimelineMode)" :title="$t(`timeline_mode_${value}`)"
                     :data-tutorial-step="value == TimelineMode.CatastropheCount ? 'timeline-catastrophes-count' : ''">

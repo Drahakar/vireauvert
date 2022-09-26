@@ -174,7 +174,8 @@ export default {
 
     // Timeline
     timeline_mode_Temperature: "Variation °C/an par rapport à 1990",
-    timeline_mode_Catastrophes: "# Événements extrêmes par année",
+    timeline_mode_Catastrophes: "# Événements extrêmes / an",
+    timeline_collapsed: "Sélectionnez une année",
     minimize: "Minimiser",
     maximize: "Maximiser",
 
