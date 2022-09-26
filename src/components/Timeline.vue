@@ -311,9 +311,6 @@ export default defineComponent({
                     },
                 ]
             } as ChartData<'bar'>;
-        },
-        futureWidth() {
-            return `${(1 - (VISUAL_YEARS.continuous.length / VISUAL_YEARS.totalYearsPadded)) * 100}%`;
         }
     },
     methods: {
