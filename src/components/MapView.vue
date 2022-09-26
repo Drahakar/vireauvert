@@ -373,5 +373,6 @@ function updateMapBounds(map: L.Map, mapLayer: L.GeoJSON) {
     font-weight: var(--fw-regular);
     width: var(--size-map-zoom-control);
     height: var(--size-map-zoom-control);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
 }
 </style>
