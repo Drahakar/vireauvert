@@ -40,7 +40,7 @@ export default defineComponent({
     height: var(--sz-900);
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     display: flex;
     align-items: center;
 }
@@ -54,7 +54,7 @@ time {
 
 #catastrophe-list {
     padding-left: var(--sz-200);
-    padding-right: var(--sz-200);
+    padding-right: var(--sz-10);
     padding-bottom: var(--sz-30);
 }
 

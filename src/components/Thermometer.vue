@@ -24,8 +24,8 @@
         </div>
 
         <div class="risky-value pill tracked-risky track-bottom" data-tutorial-step="thermo-risky-value">
-            <span>{{$n(riskyValue, 'temperature_delta_no_unit')}}</span>
             <div class="line"></div>
+            <span>{{$n(riskyValue, 'temperature_delta_no_unit')}}</span>
         </div>
 
         <div class="current-value pill tracked-current track-bottom">
@@ -189,7 +189,7 @@ export default defineComponent({
 .wrapper {
     --sz-stem-width: var(--sz-300);
     --sz-stem-border: 2px;
-    --sz-bulb: var(--sz-900);
+    --sz-bulb: calc(var(--sz-900) * 1.15);
     /* limit values where we start clamping */
     --notch-min: var(--sz-bulb) / 2;
     --notch-max: 100%;
@@ -200,7 +200,7 @@ export default defineComponent({
 
 .thermometer {
     height: 100%;
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.3));
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
@@ -224,18 +224,18 @@ export default defineComponent({
 }
 
 .notch {
-    --sz-notch-width: var(--sz-600);
+    --sz-notch-width: var(--sz-700);
     --sz-notch-gap: var(--sz-30);
     min-width: var(--sz-notch-width);
     position: absolute;
     transform: translateY(50%);
     bottom: calc(var(--notch-idx) / (var(--num-notches) - 1) * var(--notch-height) + var(--notch-offset));
-    left: calc(50% - var(--sz-notch-width) - var(--sz-stem-width) / 2 - var(--sz-stem-border));
     padding-right: var(--sz-notch-gap);
-    font-size: var(--sz-200);
+    font-size: var(--sz-400);
     color: var(--clr-blanc);
-    text-align: right;
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 1));
+    left: 20px;
 }
 
 .notches-container {
@@ -268,6 +268,7 @@ export default defineComponent({
     text-align: center;
     font-size: var(--sz-600);
     color: var(--clr-blanc);
+    top: calc(var(--sz-10)*0.8);
 }
 
 .pill {
@@ -292,11 +293,12 @@ export default defineComponent({
 
 .current-value {
     width: var(--thermo-current-value-width);
+    padding: 4px 8px;
     border: 2px solid var(--clr-blanc);
     background-color: var(--color-accent);
-    font-size: var(--sz-400);
+    font-size: var(--sz-600);
     z-index: 1;  /* show above notches */
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
 }
 
 .current-value span {
@@ -313,7 +315,8 @@ export default defineComponent({
 }
 
 .risky-value {
-    font-size: var(--sz-300);
+    left: -15px;
+    font-size: var(--sz-600);
     width: 11ch;
 }
 
@@ -324,20 +327,22 @@ export default defineComponent({
         1px -1px 0 var(--clr-alerte),
        -1px  1px 0 var(--clr-alerte),
         1px  1px 0 var(--clr-alerte),
-        0px  0px 2px rgba(0, 0, 0, 0.5);
+        0px  0px 8px rgba(0, 0, 0, 1);
 }
 
 .risky-value .line {
-    width: 100%;
-    height: 2px;
+    width: 65%;
+    left: 10px;
+    height: 4px;
     background-color: var(--clr-alerte);
 }
 
 img {
     left: 0;
-    transform: translateX(-50%);
-    width: var(--sz-900);
-    height: var(--sz-900);
+    transform: translateX(-45%);
+    width: calc(var(--sz-900)*1.2);
+    height: calc(var(--sz-900)*1.2);
     position: absolute;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.35));
 }
 </style>

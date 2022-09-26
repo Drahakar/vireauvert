@@ -309,6 +309,7 @@ Sentry.init({
     gap: var(--sz-50);
     width: 100%;
     justify-content: center;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .util-buttons button {

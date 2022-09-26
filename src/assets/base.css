@@ -9,6 +9,7 @@
   --clr-gris-moyen: #74746f;
   --clr-gris-mi-fonce: #4b4b4a;
   --clr-gris-fonce: #353535;
+  --clr-gris-tiede: #E5E3E2;
 
   /* accent colors */
   --clr-beige: #f4f3e7;
@@ -35,8 +36,9 @@
 
 
   /* Size variants: from smallest to biggest */
-  --sz-30: 4px;
-  --sz-50: 6px;
+  --sz-10: 4px;
+  --sz-30: 6px;
+  --sz-50: 7px;
   --sz-100: 8px;
   --sz-200: 9px;
   --sz-300: 10px;
@@ -45,12 +47,14 @@
   --sz-700: 24px;
   --sz-800: 26px;
   --sz-900: 32px;
+  
+
 
   /* Sizes that change at certain breakpoints */
   --app-column-gap: 0;
   --timeline-horizontal-padding: var(--sz-200);
   --popup-width: 216px;
-  --thermo-current-value-width: 9ch;
+  --thermo-current-value-width: calc(var(--sz-900) * 2.8);
 
   /* Font weight variants */
   --fw-regular: 500;
@@ -59,8 +63,18 @@
   --ff-primary: 'Matter';
 }
 
+@media only screen and (max-width: 599px) {
+  :root {
+    --app-column-gap: var(--sz-100);
+    --timeline-horizontal-padding: var(--sz-600);
+    --popup-width: 256px;
+    --border-radius: 16px;
+  }
+}
+
 @media only screen and (min-width: 600px) {
   :root {
+    --sz-10: 4px;
     --sz-30: 6px;
     --sz-50: 8px;
     --sz-100: 10px;
@@ -75,11 +89,14 @@
     --app-column-gap: var(--sz-100);
     --timeline-horizontal-padding: var(--sz-600);
     --popup-width: 256px;
+    --border-radius: 16px;
+    --thermo-current-value-width: calc(var(--sz-900) * 3.0);
   }
 }
 
 @media only screen and (min-width: 900px) {
   :root {
+    --sz-10: 6px;
     --sz-30: 10px;
     --sz-50: 12px;
     --sz-100: 14px;
@@ -89,28 +106,31 @@
     --sz-600: 22px;
     --sz-700: 30px;
     --sz-800: 32px;
-    --sz-900: 38px;
+    --sz-900: 40px;
 
     --popup-width: 332px;
-    --thermo-current-value-width: 8ch;
+    --border-radius: 20px;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   :root {
-    --sz-30: 14px;
+    --sz-10: 6px;
+    --sz-30: 12px;
     --sz-50: 16px;
     --sz-100: 18px;
     --sz-200: 19px;
     --sz-300: 20px;
-    --sz-400: 22px;
-    --sz-600: 26px;
-    --sz-700: 34px;
-    --sz-800: 36px;
-    --sz-900: 48px;
+    --sz-400: 21px;
+    --sz-600: 24px;
+    --sz-700: 32px;
+    --sz-800: 34px;
+    --sz-900: 46px;
 
     --timeline-horizontal-padding: var(--sz-700);
     --popup-width: 456px;
+    --border-radius: 22px;
+    --thermo-current-value-width: calc(var(--sz-900) * 2.8);
   }
 }
 
@@ -127,8 +147,6 @@
   --color-heading: var(--clr-gris-fonce);
 
   --default-font-size: var(--sz-400);
-
-  --border-radius: 16px;
 
   --size-map-zoom-control: var(--sz-900);
   --size-map-controls-gap: var(--sz-30);

@@ -12,6 +12,7 @@
                     </label>
                 </div>
             </div>
+            
         </div>
         <div class="timeline-container">
             <div class="timeline-graph">
@@ -170,7 +171,7 @@ export default defineComponent({
                     color: '#353535',
                     grid: {
                         tickLength: 5,
-                        tickWidth: 1,
+                        tickWidth: 3,
                         drawBorder: false,
                         drawOnChartArea: true,
                         tickColor: "#a59e20",
@@ -244,8 +245,11 @@ export default defineComponent({
             const datasetBase = {
                 fill: true,
                 spanGaps: false,
-                borderWidth: 0,
+                borderWidth: 2,
                 pointRadius: 0,
+                tension: 0.4,
+                borderColor: 'rgba(255, 106, 14, 0.35)',
+                clip: 200,
             };
             return {
                 labels: indices,
@@ -276,11 +280,14 @@ export default defineComponent({
                 datasets: [
                     {
                         data: pastData,
-                        borderWidth: 1,
+                        borderWidth: 0.2,
                         backgroundColor: '#f0ad00',
                         barThickness: 'flex',
-                        categoryPercentage: 1,
-                        barPercentage: 0.9
+                        categoryPercentage: 0.9,
+                        barPercentage: 0.75,
+                        borderRadius: 4,
+                        inflateAmount: 0.5,
+                        clip: 200,           
                     },
                 ]
             } as ChartData<'bar'>;
@@ -348,11 +355,13 @@ ChartJS.register(new VerticalLinePlugin());
     align-items: center;
     justify-content: space-between;
     height: var(--sz-800);
-    padding-left: 4px;
+    margin-left: -4px;
+    margin-bottom: 8px;
 }
 
 #slider-title {
     font-size: var(--sz-500);
+    padding-left: var(--sz-200);
 }
 
 .slider-container input {
@@ -371,11 +380,11 @@ ChartJS.register(new VerticalLinePlugin());
 }
 
 .vue-slider .tooltip-line {
-    height: 100%;
+    height: 80%;
     width: 1px;
-    border-left-width: 1px;
-    border-left-style: dashed;
-    border-left-color: var(--clr-gris-fonce);
+    border-left-width: 3px;
+    border-left-style: dotted;
+    border-left-color: var(--clr-brun-terreux);
     display: block;
     margin: auto;
     z-index: var(--tooltip-line-z-index);
@@ -387,7 +396,7 @@ ChartJS.register(new VerticalLinePlugin());
 }
 
 .vue-slider .vue-slider-dot-tooltip-inner.vue-slider-dot-tooltip-inner-top {
-    padding: 2px 10px;
+    padding: calc(var(--sz-10) / 2) var(--sz-30);
     border-radius: var(--border-radius);
 }
 
@@ -424,6 +433,7 @@ ChartJS.register(new VerticalLinePlugin());
     width: 200%;
     height: 200%;
     top: -2px;
+    left: -2px;
     border-radius: 50%;
     background-color: var(--clr-gris-mi-fonce);
 }
@@ -431,6 +441,8 @@ ChartJS.register(new VerticalLinePlugin());
 .timeline {
     padding-left: 4px;
     padding-top: 4px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2px;
 }
 
 .timeline-container {
@@ -454,12 +466,12 @@ ChartJS.register(new VerticalLinePlugin());
     align-items: center;
     gap: 4px;
     height: 100%;
-    padding: 2px 4px;
+    padding: 2px 2px;
 }
 
 #mode-container .item {
-    width: calc(var(--sz-800) - 8px);
-    height: calc(var(--sz-800) - 8px);
+    width: calc(var(--sz-800) - 4px);
+    height: calc(var(--sz-800) - 4px);
 }
 
 #mode-container input {
