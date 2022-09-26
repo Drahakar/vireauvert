@@ -375,6 +375,7 @@ ChartJS.register(new VerticalLinePlugin());
     justify-content: center;
     align-items: flex-end;
     pointer-events: none;
+    padding-left: var(--sz-30);
 }
 
 .future-label-message {
