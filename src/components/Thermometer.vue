@@ -47,6 +47,11 @@ export const END_NOTCH = 7;
 const NOTCH_STEPS = 1;  // Only display a notch every NOTCH_STEPS notches
 const NUM_NOTCHES = END_NOTCH - START_NOTCH + 1;
 
+/* Visually, the lowest notch is this much % into the stem height */
+const NOTCH_OFFSET = 0.1;
+/* Visually, the highest notch is this much % higher than NOTCH_OFFSET */
+const NOTCH_HEIGHT = 0.85;
+
 const RISKY_DELTA = 1.5;  // Show different visuals for ref temperature + this.
 
 
@@ -92,6 +97,8 @@ export default defineComponent({
                 '--current-value': this.valueToNotchIndex(this.currentValue),
                 '--reference-value': this.valueToNotchIndex(this.referenceValue),
                 '--risky-value': this.valueToNotchIndex(this.riskyValue),
+                '--notch-offset': `${NOTCH_OFFSET * 100}%`,
+                '--notch-height': `${NOTCH_HEIGHT * 100}%`,
             };
         },
         emojiPath(): string {
@@ -175,10 +182,6 @@ export default defineComponent({
 .wrapper {
     --sz-stem-width: var(--sz-300);
     --sz-stem-border: 2px;
-    /* the lowest notch is this much % into the stem height */
-    --notch-offset: 10%;
-    /* the highest notch is this much % higher than notch-offset */
-    --notch-height: 85%;
     --sz-bulb: var(--sz-900);
     /* limit values where we start clamping */
     --notch-min: var(--sz-bulb) / 2;
