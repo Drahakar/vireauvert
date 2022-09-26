@@ -81,6 +81,7 @@ export class ColourTheme {
 }
 
 export const TEMPERATURE_THEME = new ColourTheme([
+    // IFCHANGE: Change base.css as well.
     { temp_delta: -1.0, colour: Colour.fromHex('#99C5DD') },
     { temp_delta: +0.0, colour: Colour.fromHex('#E5E3E2') },
     { temp_delta: +1.5, colour: Colour.fromHex('#F0AD00') },

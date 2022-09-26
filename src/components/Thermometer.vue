@@ -105,7 +105,7 @@ export default defineComponent({
         },
         mercuryStyle() {
             // TODO: take into account 'notch padding' that we use.
-            // TODO: color bulb with minimum temperature
+            // TODO: color 1990 with matching neutral color?
             const max = Math.max(START_NOTCH, END_NOTCH);
             const gradient = TEMPERATURE_THEME.toGradientStops(START_NOTCH, max).map(stop => {
                 const colour = stop.colour.toHex();
@@ -235,7 +235,7 @@ export default defineComponent({
 
 .bulb {
     position: absolute;
-    background-color: var(--clr-thermometer-mercury);
+    background-color: var(--clr-thermometer-low);
     width: var(--sz-bulb);
     height: var(--sz-bulb);
     left: calc(50% - var(--sz-bulb) / 2);
@@ -249,7 +249,7 @@ export default defineComponent({
     display: block;
     width: var(--sz-stem-width);
     height: 6px;
-    background-color: var(--clr-thermometer-mercury);
+    background-color: var(--clr-thermometer-low);
     top: -3px;
     left: calc(50% - var(--sz-stem-width) / 2);
 }
