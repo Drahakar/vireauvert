@@ -111,10 +111,13 @@ export default defineComponent({
             }
         },
         mercuryStyle() {
-            // TODO: take into account 'notch padding' that we use.
             // TODO: color 1990 with matching neutral color?
-            const max = Math.max(START_NOTCH, END_NOTCH);
-            const gradient = TEMPERATURE_THEME.toGradientStops(START_NOTCH, max).map(stop => {
+            const size = END_NOTCH - START_NOTCH;
+            const downGap = NOTCH_OFFSET * size;
+            const upGap = (1 - NOTCH_OFFSET - NOTCH_HEIGHT) * size;
+            const min = START_NOTCH - downGap;
+            const max = END_NOTCH + upGap;
+            const gradient = TEMPERATURE_THEME.toGradientStops(min, max).map(stop => {
                 const colour = stop.colour.toHex();
                 const percent = stop.ratio * 100;
                 return `${colour} ${percent}%`;
