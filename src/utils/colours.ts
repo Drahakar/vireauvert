@@ -42,7 +42,7 @@ interface Stop {
 }
 
 interface GradientStop {
-    ratio; number;
+    ratio: number;
     colour: Colour;
 }
 
