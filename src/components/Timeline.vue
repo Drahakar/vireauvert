@@ -3,7 +3,8 @@
         <div id="slider-header">
             <div class="timeline-toggle">
                 <button class="toggle" @click="minimized=!minimized">
-                    <img :src="`/Button/${minimized? 'Maximize' : 'Minimize'}.png`" :alt="$t(minimized ? 'maximize' : 'minimize')"></button>
+                    <img :src="`/Button/${minimized? 'Maximize' : 'Minimize'}.png`"
+                        :alt="$t(minimized ? 'maximize' : 'minimize')"></button>
             </div>
             <div id="slider-title" v-t="minimized ? 'timeline_collapsed' : `timeline_mode_${mode}`"></div>
             <div id="mode-container" v-show="!minimized">
@@ -16,7 +17,7 @@
                     </label>
                 </div>
             </div>
-            
+
         </div>
         <div class="timeline-container">
             <div class="timeline-graph" v-show="!minimized">
@@ -25,7 +26,7 @@
                     :chart-options="temperatureOptions" />
                 <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="100"
                     :width="0" :chart-options="catastropheOptions" />
-                <div id="future-label" :style="{ width: futureWidth }">
+                <div id="future-label" ref="futureLabel">
                     <div class="future-label-message" v-t="`timeline_future_${mode.toLowerCase()}`"></div>
                 </div>
             </div>
@@ -123,6 +124,8 @@ export default defineComponent({
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
 
+        const futureLabel = ref<HTMLDivElement | null>(null);
+
         const sliderContainer = ref<HTMLDivElement | null>(null);
         const onAfterFit = (axis: Scale<CoreScaleOptions>) => {
             if (sliderContainer.value) {
@@ -192,7 +195,11 @@ export default defineComponent({
         const temperatureOptions = baseOptions.mergeDeep(Map(fromJS({
             plugins: {
                 verticalLine: {
+                    index: VISUAL_YEARS.yearToIndex(MAX_HISTORICAL_YEAR)
+                },
+                labelPositioning: {
                     index: VISUAL_YEARS.yearToIndex(MAX_HISTORICAL_YEAR),
+                    element: futureLabel
                 },
             },
             scales: {
@@ -210,7 +217,11 @@ export default defineComponent({
         const catastropheOptions = baseOptions.mergeDeep(Map(fromJS({
             plugins: {
                 verticalLine: {
+                    index: VISUAL_YEARS.yearToIndex(CURRENT_YEAR)
+                },
+                labelPositioning: {
                     index: VISUAL_YEARS.yearToIndex(CURRENT_YEAR),
+                    element: futureLabel
                 },
             },
             scales: {
@@ -231,6 +242,7 @@ export default defineComponent({
             TimelineMode,
             temperatureOptions,
             catastropheOptions,
+            futureLabel
         };
     },
     data() {
@@ -295,7 +307,7 @@ export default defineComponent({
                         barPercentage: 0.75,
                         borderRadius: 4,
                         inflateAmount: 0.5,
-                        clip: 200,           
+                        clip: 200,
                     },
                 ]
             } as ChartData<'bar'>;
@@ -332,7 +344,6 @@ export default defineComponent({
 });
 
 class VerticalLinePlugin implements Plugin {
-
     id: string;
 
     constructor() {
@@ -356,7 +367,26 @@ class VerticalLinePlugin implements Plugin {
     }
 };
 
+class LabelPositioningPlugin implements Plugin {
+    id: string;
+
+    constructor() {
+        this.id = 'labelPositioning';
+    }
+
+    afterDatasetsDraw(chart: ChartJS, args: {}, options: any) {
+        const element = options.element.value as HTMLDivElement | null;
+        if(element) {
+            const meta = chart.getDatasetMeta(0);
+            const index: number = options.index;
+            const x = meta.data[index].x;
+            element.style.left = `${x}px`;
+        }
+    }
+}
+
 ChartJS.register(new VerticalLinePlugin());
+ChartJS.register(new LabelPositioningPlugin());
 
 </script>
 
@@ -394,22 +424,23 @@ ChartJS.register(new VerticalLinePlugin());
 
 #future-label {
     position: absolute;
-    bottom: 0;
     right: 0;
+    bottom: var(--sz-30);
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     pointer-events: none;
-    padding-left: var(--sz-30);
+    z-index: 400;
 }
 
 .future-label-message {
     font-size: var(--sz-300);
-    padding: var(--sz-30) var(--sz-50);
+    padding: var(--sz-30) var(--sz-100);
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: var(--border-radius);
     margin-bottom: 4px;
+    text-align: center;
 }
 
 .slider-container input {
