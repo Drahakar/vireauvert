@@ -126,6 +126,14 @@ export default defineComponent({
                     },
                 },
                 {
+                    target: '[data-tutorial-step="timeline-catastrophes-count"]',
+                    content: this.$t('tutorial_step_timeline_catastrophes_count'),
+                    params: {
+                        placement: "top",
+                        ...baseParams,
+                    },
+                },
+                {
                     target: '[data-tutorial-step="call-to-action"]',
                     content: this.$t('tutorial_step_call_to_action'),
                     params: {
