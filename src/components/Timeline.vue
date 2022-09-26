@@ -60,6 +60,7 @@ import { CONTINUOUS_YEARS, MAX_CONTINUOUS_YEAR, MIN_CONTINUOUS_YEAR, MODELED_YEA
 import { useCatastropheStore } from '@/stores/catastrophes';
 import { useStatisticStore } from '@/stores/statistics';
 import { FILTER_ALL_CATASTROPHES, CatastropheFilter } from '@/models/catastrophes';
+import { TEMPERATURE_THEME } from '@/utils/colours';
 import { InterpolatedYears } from '@/utils/interpolated_years';
 import { Line, Bar } from 'vue-chartjs'
 import { getRelativePosition } from 'chart.js/helpers';
@@ -245,16 +246,12 @@ export default defineComponent({
                     {
                         ...datasetBase,
                         data: pastData,
-                        backgroundColor: this.makeGradientGenerator(
-                            'rgb(255, 59, 59)', 'rgb(240, 173, 0)',
-                            'rgb(244, 243, 231)', 'rgb(0, 90, 173)')
+                        backgroundColor: this.makeGradientGenerator(1.0),
                     },
                     {
                         ...datasetBase,
                         data: futureData,
-                        backgroundColor: this.makeGradientGenerator(
-                            'rgba(255, 59, 59, 0.3)', 'rgba(240, 173, 0, 0.3)',
-                            'rgba(244, 243, 231, 0.3)', 'rgba(0, 90, 173, 0.3)'),
+                        backgroundColor: this.makeGradientGenerator(0.3),
                     },
                 ],
             } as ChartData<'line'>;
@@ -293,25 +290,16 @@ export default defineComponent({
                 return marks;
             }, {} as Marks);
         },
-        makeGradientGenerator(hotColor: string, warmColor: string,
-            neutralColor: string, coldColor: string
-        ): GradientGenerator {
+        makeGradientGenerator(alpha: number): GradientGenerator {
             return (ctx: ScriptableContext<'line'>) => {
                 const canvas = ctx.chart.ctx;
                 const chartArea = ctx.chart.chartArea;
                 if (!chartArea) return;  // not set on init
                 const yAxis = ctx.chart.scales.y;
-                const zeroRatio = -yAxis.min / (yAxis.max - yAxis.min);
                 const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-
-                gradient.addColorStop(0.7, hotColor);
-                // put warm color slightly above zero to get a fast transition
-                // to non-"invisible" colors, e.g. when neutral is the same as
-                // the background color.
-                gradient.addColorStop(zeroRatio + 0.03, warmColor);
-                gradient.addColorStop(zeroRatio, neutralColor);
-                gradient.addColorStop(0, coldColor);
-
+                for (const stop of TEMPERATURE_THEME.toGradientStops(yAxis.min, yAxis.max)) {
+                    gradient.addColorStop(stop.ratio, stop.colour.toHex(alpha));
+                }
                 return gradient;
             };
         },

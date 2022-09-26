@@ -1,4 +1,5 @@
 import { Range } from 'immutable';
+import { clamp, lerp } from './math_helpers';
 
 // Helper to manage interpolated 'padding years' around modeled years, to
 // produce some visual padding.
@@ -72,9 +73,8 @@ export class InterpolatedYears {
         for (const current of data.slice(index)) {
             Range(0, this.padding).forEach(i => {
                 const ratio = (i + 1) / (this.padding + 1);
-                const lerp = (1 - ratio) * previous + ratio * current;
+                interpolated.data.push(lerp(previous, current, ratio));
                 interpolated.indices.push(index);
-                interpolated.data.push(lerp);
                 ++index;
             });
             interpolated.indices.push(index);
@@ -84,7 +84,3 @@ export class InterpolatedYears {
         return interpolated;
     }
 };
-
-function clamp(value: number, min: number, max: number): number {
-    return Math.min(max, Math.max(min, value));
-}
