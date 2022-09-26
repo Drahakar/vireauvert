@@ -52,6 +52,16 @@ const NOTCH_OFFSET = 0.1;
 /* Visually, the highest notch is this much % higher than NOTCH_OFFSET */
 const NOTCH_HEIGHT = 0.85;
 
+// Some helper values based on these:
+const BOTTOM_GAP = NOTCH_OFFSET;
+const TOP_GAP = 1 - (NOTCH_OFFSET + NOTCH_HEIGHT);
+const TEMP_RANGE = (END_NOTCH - START_NOTCH) / NOTCH_HEIGHT;
+
+// Taking into account the notch offset/height, these are the lowest/highest
+// temperatures that can be shown on the thermometer.
+const LOWEST_TEMP = START_NOTCH - BOTTOM_GAP * TEMP_RANGE;
+const HIGHEST_TEMP = END_NOTCH + TOP_GAP * TEMP_RANGE;
+
 const RISKY_DELTA = 1.5;  // Show different visuals for ref temperature + this.
 
 
@@ -111,12 +121,7 @@ export default defineComponent({
             }
         },
         mercuryStyle() {
-            const size = END_NOTCH - START_NOTCH;
-            const downGap = NOTCH_OFFSET * size;
-            const upGap = (1 - NOTCH_OFFSET - NOTCH_HEIGHT) * size;
-            const min = START_NOTCH - downGap;
-            const max = END_NOTCH + upGap;
-            const gradient = TEMPERATURE_THEME.toGradientStops(min, max).map(stop => {
+            const gradient = TEMPERATURE_THEME.toGradientStops(LOWEST_TEMP, HIGHEST_TEMP).map(stop => {
                 const colour = stop.colour.toHex();
                 const percent = stop.ratio * 100;
                 return `${colour} ${percent}%`;
