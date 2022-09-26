@@ -175,6 +175,8 @@ export default {
     // Timeline
     timeline_mode_Temperature: "Variation °C / an par rapport à 1990",
     timeline_mode_Catastrophes: "# Événements extrêmes par année",
+    timeline_future_temperature: "Prévisions",
+    timeline_future_catastrophes: "Imaginez la suite",
 
     // About
     about: "À propos de la Carte climat",
