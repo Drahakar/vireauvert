@@ -145,7 +145,10 @@ export default defineComponent({
                     target: '[data-tutorial-step="help"]',
                     content: this.$t('tutorial_step_end'),
                     params: {
-                        placement: "left",
+                        // Note: placing bottom instead of left, so that the
+                        // arrow tip matches the tutorial header color, due to
+                        // the top-right placement of this help button.
+                        placement: "bottom",
                         ...baseParams,
                     },
                 },
