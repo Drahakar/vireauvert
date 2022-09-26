@@ -173,7 +173,7 @@ export default {
     province_of_quebec: "Province de Québec",
 
     // Timeline
-    timeline_mode_Temperature: "Variation °C / an par rapport à 1990",
+    timeline_mode_Temperature: "Variation °C/an par rapport à 1990",
     timeline_mode_Catastrophes: "# Événements extrêmes par année",
     minimize: "Minimiser",
     maximize: "Maximiser",
