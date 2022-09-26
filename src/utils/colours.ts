@@ -72,7 +72,6 @@ export class ColourTheme {
         // min & max refer to min and max delta temps where the gradient is
         // shown, to find the right breakpoints for specific temp deltas.
         const gap = max - min;
-        // TODO: don't include stops that are outside ranges
         return this.stops.map(stop => ({
             ratio: clamp((stop.temp_delta - min) / gap, 0.0, 1.0),
             colour: stop.colour,

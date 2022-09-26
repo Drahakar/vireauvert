@@ -18,11 +18,11 @@
   --clr-jaune: #f0ad00;
   --clr-brun-terreux: #664500;
 
-  --clr-thermometer-mercury: #c9655e;
   --clr-thermometer-background: var(--color-background);
   --clr-thermometer-border: var(--clr-blanc);
   /* IFCHANGE: Change Thermometer.vue as well. */
   --clr-thermometer-low: #99C5DD;
+  --clr-thermometer-zero: #E5E3E2;
 
   --clr-flood: #00A6CA;
   --clr-forest-fire: #EC772E;

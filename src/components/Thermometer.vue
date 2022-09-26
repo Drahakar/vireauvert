@@ -111,7 +111,6 @@ export default defineComponent({
             }
         },
         mercuryStyle() {
-            // TODO: color 1990 with matching neutral color?
             const size = END_NOTCH - START_NOTCH;
             const downGap = NOTCH_OFFSET * size;
             const upGap = (1 - NOTCH_OFFSET - NOTCH_HEIGHT) * size;
@@ -302,7 +301,8 @@ export default defineComponent({
 
 .reference-value {
     width: 11ch;
-    background-color: var(--clr-thermometer-mercury);
+    color: var(--color-text);
+    background-color: var(--clr-thermometer-zero);
     font-size: var(--sz-200);
     padding: 2px 6px;
 }
