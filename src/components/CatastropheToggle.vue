@@ -188,7 +188,7 @@ header:hover {
     border-radius: var(--border-radius);
     border: 1px solid var(--color-border);
     background-color: var(--color-background);
-    padding: 0 var(--sz-100);
+    padding: 0 var(--sz-30);
     column-gap: var(--sz-30);
     display: flex;
     flex-direction: column;
@@ -198,6 +198,7 @@ header:hover {
     pointer-events: auto;
     overflow-y: auto;
     max-height: 100%;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .total-count {
@@ -207,6 +208,7 @@ header:hover {
 .title, .catastrophe-name {
     flex: 1;
     white-space: nowrap;
+    color: var(--clr-gris-mi-fonce);
 }
 
 .separator {
@@ -218,8 +220,8 @@ header:hover {
 
 button img {
     vertical-align: middle;
-    width: var(--sz-700);
-    height: var(--sz-700);
+    width: var(--sz-600);
+    height: var(--sz-600);
 }
 
 .pill {
