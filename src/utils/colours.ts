@@ -41,11 +41,17 @@ interface Stop {
     colour: Colour;
 }
 
+interface GradientStop {
+    ratio; number;
+    colour: Colour;
+}
+
 export class ColourTheme {
     stops: Stop[];
 
     constructor(stops: Stop[]) {
         this.stops = stops;
+
     }
 
     getColour(temp_delta: number): Colour {
@@ -62,15 +68,15 @@ export class ColourTheme {
         return previousStop.colour;  // Return the last stop's colour.
     }
 
-    toCanvasGradient(gradient: CanvasGradient, min: number, max: number, alpha: number): CanvasGradient {
-        // min & max refer to min and max delta temps shown on the canvas, to
-        // find the right breakpoints for specific temp deltas.
+    toGradientStops(min: number, max: number): GradientStop[] {
+        // min & max refer to min and max delta temps where the gradient is
+        // shown, to find the right breakpoints for specific temp deltas.
         const gap = max - min;
-        for (const stop of this.stops) {
-            const ratio = clamp((stop.temp_delta - min) / gap, 0.0, 1.0);
-            gradient.addColorStop(ratio, stop.colour.toHex(alpha));
-        }
-        return gradient;
+        // TODO: don't include stops that are outside ranges
+        return this.stops.map(stop => ({
+            ratio: clamp((stop.temp_delta - min) / gap, 0.0, 1.0),
+            colour: stop.colour,
+        }));
     }
 }
 

@@ -296,7 +296,10 @@ export default defineComponent({
                 if (!chartArea) return;  // not set on init
                 const yAxis = ctx.chart.scales.y;
                 const gradient = canvas.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                return TEMPERATURE_THEME.toCanvasGradient(gradient, yAxis.min, yAxis.max, alpha);
+                for (const stop of TEMPERATURE_THEME.toGradientStops(yAxis.min, yAxis.max)) {
+                    gradient.addColorStop(stop.ratio, stop.colour.toHex(alpha));
+                }
+                return gradient;
             };
         },
     },

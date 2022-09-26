@@ -11,10 +11,8 @@
 
         <div class="thermometer">
             <div class="stem">
-                <!-- Note: last ones gets drawn on top of previous ones. -->
-                <div class="mercury mercury-danger tracked-current track-height"></div>
-                <div class="mercury mercury-risky tracked-max-risky track-height"></div>
-                <div class="mercury mercury-reference tracked-max-reference track-height"></div>
+                <div class="mercury tracked-current track-height"
+                     :style="mercuryStyle"></div>
             </div>
             <div class="bulb">
                 <p class="bulb-text">°C</p>
@@ -41,6 +39,7 @@
 <script lang="ts">
 
 import { defineComponent, CSSProperties, PropType } from 'vue';
+import { TEMPERATURE_THEME } from "@/utils/colours";
 import { REFERENCE_YEAR } from "@/models/constants";
 import { RegionStatistics } from '@/models/yearly_data';
 
@@ -104,7 +103,21 @@ export default defineComponent({
             } else {
                 return '/icons/Emoji3.png';
             }
-        }
+        },
+        mercuryStyle() {
+            // TODO: take into account 'notch padding' that we use.
+            // TODO: color bulb with minimum temperature
+            // TODO: stop gradient from flickering on changes
+            const max = Math.max(START_NOTCH, this.currentValue);
+            const gradient = TEMPERATURE_THEME.toGradientStops(START_NOTCH, max).map(stop => {
+                const colour = stop.colour.toHex();
+                const percent = stop.ratio * 100;
+                return `${colour} ${percent}%`;
+            }).join(', ');
+            return {
+                'background': `linear-gradient(0deg, ${gradient})`,
+            };
+        },
     },
     methods: {
         valueToNotchIndex(value: number): number {
@@ -130,16 +143,6 @@ export default defineComponent({
 .tracked-risky {
     /* Use this class to track the 'risky' value on the thermometer */
     --tracked-value: var(--risky-value);
-}
-
-.tracked-max-risky {
-    /* Will follow current up to 'risky', but not past that */
-    --tracked-value: min(var(--current-value), var(--risky-value));
-}
-
-.tracked-max-reference {
-    /* Will follow current up to 'reference', but not past that */
-    --tracked-value: min(var(--current-value), var(--reference-value));
 }
 
 .track-height, .track-bottom {
@@ -204,18 +207,6 @@ export default defineComponent({
     width: var(--sz-stem-width);
     position: absolute;
     bottom: 0;
-}
-
-.mercury-reference {
-    background-color: var(--clr-thermometer-mercury);
-}
-
-.mercury-risky {
-    background-color: var(--clr-jaune);
-}
-
-.mercury-danger {
-    background-color: var(--clr-alerte);
 }
 
 .notch {
