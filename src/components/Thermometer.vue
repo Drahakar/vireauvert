@@ -11,8 +11,7 @@
 
         <div class="thermometer">
             <div class="stem">
-                <div class="mercury tracked-current track-height"
-                     :style="mercuryStyle"></div>
+                <div class="mercury tracked-current track-clip-top" :style="mercuryStyle"></div>
             </div>
             <div class="bulb">
                 <p class="bulb-text">°C</p>
@@ -107,8 +106,7 @@ export default defineComponent({
         mercuryStyle() {
             // TODO: take into account 'notch padding' that we use.
             // TODO: color bulb with minimum temperature
-            // TODO: stop gradient from flickering on changes
-            const max = Math.max(START_NOTCH, this.currentValue);
+            const max = Math.max(START_NOTCH, END_NOTCH);
             const gradient = TEMPERATURE_THEME.toGradientStops(START_NOTCH, max).map(stop => {
                 const colour = stop.colour.toHex();
                 const percent = stop.ratio * 100;
@@ -145,7 +143,7 @@ export default defineComponent({
     --tracked-value: var(--risky-value);
 }
 
-.track-height, .track-bottom {
+.track-height, .track-bottom, .track-clip-top {
     /* value to assign to e.g. height or bottom to match the --tracked-value */
     --tracked-point: clamp(
         var(--notch-min),
@@ -163,8 +161,13 @@ export default defineComponent({
     transition: bottom var(--mercury-transition);
 }
 
+.track-clip-top {
+    clip-path: inset(calc(100% - var(--tracked-point)) 0 0 0);
+    transition: clip-path var(--mercury-transition);
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .track-height, .track-bottom {
+    .track-height, .track-bottom, .track-clip-top {
         transition: none;
     }
 }
@@ -204,6 +207,7 @@ export default defineComponent({
 }
 
 .mercury {
+    height: 100%;
     width: var(--sz-stem-width);
     position: absolute;
     bottom: 0;
