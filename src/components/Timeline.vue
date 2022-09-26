@@ -3,7 +3,7 @@
         <div id="slider-header">
             <div class="timeline-toggle">
                 <button class="toggle" @click="minimized=!minimized">
-                    <img :src="`/Button/${minimized? 'Minimize' : 'Maximize'}.png`" :alt="$t(minimized ? 'minimize' : 'maximize')"></button>
+                    <img :src="`/Button/${minimized? 'Maximize' : 'Minimize'}.png`" :alt="$t(minimized ? 'maximize' : 'minimize')"></button>
             </div>
             <div id="slider-title" v-t="`timeline_mode_${mode}`"></div>
             <div id="mode-container" v-show="!minimized">
