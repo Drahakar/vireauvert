@@ -67,7 +67,6 @@
   :root {
     --app-column-gap: var(--sz-100);
     --timeline-horizontal-padding: var(--sz-600);
-    --popup-width: 256px;
     --border-radius: 16px;
   }
 }
