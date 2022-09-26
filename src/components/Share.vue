@@ -11,7 +11,9 @@
                     <img src="/Button/Facebook.png">
                     Facebook
                 </a>
-                <a target="_blank" href="https://twitter.com/share" :data-url="url" data-dnt="true">
+                <a target="_blank"
+                    :href="`https://twitter.com/share?text=${encodeURIComponent($t('share_twitter_text'))}`"
+                    :data-url="url" data-dnt="true">
                     <img src="/Button/Twitter.png">
                     Twitter
                 </a>

@@ -191,6 +191,9 @@ export default {
     url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html",
     detailed_sources: "Sources",
 
+    // Share
+    share_twitter_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les #changementsclimatiques. Le Québec doit se préparer. #elections2022 #polqc #vireauvert",
+
     // Tutorial
     tutorial_title: "Tour guidé",
     tutorial_restart: "Recommencer le tour guidé",
