@@ -442,6 +442,8 @@ ChartJS.register(new VerticalLinePlugin());
 .timeline {
     padding-left: 4px;
     padding-top: 4px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2px;
 }
 
 .timeline-container {
