@@ -17,7 +17,7 @@
                     <img src="/Button/Twitter.png">
                     Twitter
                 </a>
-                <a target="_blank" :href="`mailto:?subject=terreOS&amp;body=${encodeURI(url)}}`">
+                <a target="_blank" :href="`mailto:?subject=Carte+climat&amp;body=${encodeURIComponent($t('share_email_text', [url]))}`">
                     <img src="/Button/Courriel.png">
                     {{$t('email')}}
                 </a>

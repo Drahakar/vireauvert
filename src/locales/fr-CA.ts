@@ -193,6 +193,7 @@ export default {
 
     // Share
     share_twitter_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les #changementsclimatiques. Le Québec doit se préparer. #elections2022 #polqc #vireauvert",
+    share_email_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les changements climatiques. Le Québec doit se préparer.\n{0}",
 
     // Tutorial
     tutorial_title: "Tour guidé",
