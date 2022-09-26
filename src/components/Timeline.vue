@@ -410,7 +410,7 @@ ChartJS.register(new LabelPositioningPlugin());
     width: calc(var(--sz-800) - 4px);
     height: calc(var(--sz-800) - 4px);
     pointer-events: auto;
-    margin-left: var(--sz-200);
+    margin-left: calc(var(--border-radius) / 4);
 }
 
 .timeline-toggle .toggle:hover {
