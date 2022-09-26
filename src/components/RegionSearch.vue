@@ -44,6 +44,7 @@ export default defineComponent({
 </script>
 
 <style>  /* global */
+
 .v-select .vs__selected-options {
     flex-wrap: nowrap;
     overflow: hidden;
@@ -51,5 +52,8 @@ export default defineComponent({
 }
 .v-select .vs__dropdown-toggle {
     height: 100%;
+    padding-right: calc(var(--sz-30) / 1.2);
+    padding-left: var(--sz-10);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
 }
 </style>
