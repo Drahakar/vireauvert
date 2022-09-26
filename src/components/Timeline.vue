@@ -25,6 +25,9 @@
                     :chart-options="temperatureOptions" />
                 <Bar v-if="mode === TimelineMode.CatastropheCount" :chart-data="catastropheData" :height="100"
                     :width="0" :chart-options="catastropheOptions" />
+                <div id="future-label" :style="{ width: futureWidth }">
+                    <div class="future-label-message" v-t="`timeline_future_${mode.toLowerCase()}`"></div>
+                </div>
             </div>
             <div class="slider-container" ref="sliderContainer" :class="{minimized: minimized}">
                 <vue-slider v-model="selectedValue" :tooltip="'always'" :marks="marks" :included="true" :min="0"
@@ -296,6 +299,9 @@ export default defineComponent({
                     },
                 ]
             } as ChartData<'bar'>;
+        },
+        futureWidth() {
+            return `${(1 - (VISUAL_YEARS.continuous.length / VISUAL_YEARS.totalYearsPadded)) * 100}%`;
         }
     },
     methods: {
@@ -384,6 +390,26 @@ ChartJS.register(new VerticalLinePlugin());
 .timeline-toggle .toggle img {
     width: 100%;
     height: 100%;
+}
+
+#future-label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none;
+    padding-left: var(--sz-30);
+}
+
+.future-label-message {
+    font-size: var(--sz-300);
+    padding: var(--sz-30) var(--sz-50);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius);
+    margin-bottom: 4px;
 }
 
 .slider-container input {
