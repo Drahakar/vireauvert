@@ -209,6 +209,7 @@ header:hover {
     flex: 1;
     white-space: nowrap;
     color: var(--clr-gris-mi-fonce);
+    padding-right: var(--sz-50);
 }
 
 .separator {
