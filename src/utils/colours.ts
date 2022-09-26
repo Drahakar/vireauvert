@@ -18,7 +18,7 @@ export class Colour {
         return new Colour(r, g, b);
     }
 
-    toHex(alpha: number = 1.0): string {
+    toHex(alpha = 1.0): string {
         function hexify(x: number) {
             const val = Math.min(Math.floor(x * 255), 255);
             return val.toString(16).padStart(2, '0');
