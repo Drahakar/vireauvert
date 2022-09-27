@@ -118,7 +118,9 @@ export default defineComponent({
                     },
                 },
                 {
-                    target: '[data-tutorial-step="highlight"]',
+                    // Note: no target, otherwise causes corner cases when the
+                    // highlight is out-of-view or there's none for the current
+                    // year.
                     content: this.$t('tutorial_step_highlight'),
                     params: {
                         placement: "top",

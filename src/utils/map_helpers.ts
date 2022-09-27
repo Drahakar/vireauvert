@@ -51,7 +51,7 @@ function generateIcons(baseClassName: string, generateAsInnerDiv: boolean): Map<
         };
         if (generateAsInnerDiv) {
             options.className = '';
-            options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}" data-tutorial-step="highlight"></div>`;
+            options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}"></div>`;
         } else {
             options.className = `${baseClassName} catastrophe-icon-${value.toLowerCase()}`;
         }
