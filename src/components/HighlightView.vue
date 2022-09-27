@@ -84,13 +84,12 @@ export default defineComponent({
 }
 
 #body-content {
-    padding-bottom: var(--sz-30);
-    padding-left: var(--sz-50);
-    padding-right: var(--sz-50);
-
-    font-size: var(--sz-300);
+    padding-bottom: var(--sz-50);
+    padding-left: var(--sz-100);
+    padding-right: var(--sz-100);
+    font-size: var(--sz-400);
+    letter-spacing: -0.05em;
     line-height: 1.5em;
-
     color: var(--clr-gris-moyen);
 
     overflow-y: auto;
