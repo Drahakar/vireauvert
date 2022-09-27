@@ -189,7 +189,7 @@ header {
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     color: var(--color-text);
     font-size: var(--sz-400);
-    padding: var(--sz-10);
+    padding: var(--sz-30);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -197,7 +197,7 @@ header {
 }
 
 header .title {
-    margin-left: var(--sz-100);
+    margin-left: var(--sz-30);
 }
 
 .v-step[data-popper-placement="bottom"] :deep(.v-step__arrow) {
@@ -226,11 +226,12 @@ header .title {
 }
 
 .v-step__button-stop {
-    font-size: var(--sz-100);
+    font-size: var(--sz-200);
     color: var(--clr-gris-mi-fonce);
     background-color: var(--clr-gris-tiede);
     border-radius: var(--border-radius);
     padding: var(--sz-10) var(--sz-100);
+    z-index: 1;
 }
 
 .v-step__buttons .v-step__button {

@@ -459,6 +459,7 @@ ChartJS.register(new HighlightMarkPlugin());
     height: calc(var(--sz-800) - 4px);
     pointer-events: auto;
     margin-left: calc(var(--border-radius) / 4);
+    margin-top: calc(var(--border-radius) / 16);
 }
 
 .timeline-toggle .toggle:hover {
@@ -602,6 +603,12 @@ ChartJS.register(new HighlightMarkPlugin());
     height: calc(var(--sz-800) - 4px);
 }
 
+@keyframes toggle-mode {
+    0%      {transform: scale(100%);}
+    50%     {transform: scale(120%);}
+    100%    {transform: scale(100%);}
+}
+
 #mode-container input {
     display: none;
 }
@@ -622,6 +629,8 @@ ChartJS.register(new HighlightMarkPlugin());
 
 #mode-container label.active {
     background-color: var(--clr-orange);
+    animation-name: toggle-mode;
+    animation-duration: 0.5s;
 }
 
 #mode-container label.active img {

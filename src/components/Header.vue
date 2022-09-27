@@ -54,7 +54,7 @@ a {
     text-decoration-line: underline;
     pointer-events: auto;
     cursor: pointer;
-    margin-right: 4px;
+    margin-right: var(--sz-100);
 }
 
 a:hover {

@@ -196,6 +196,7 @@ export default defineComponent({
     --mercury-transition: 0.15s ease;
     height: 100%;
     margin-bottom: calc(var(--sz-bulb) / 2);  /* space for the bulb */
+    margin-top: 20px;
 }
 
 .thermometer {
@@ -307,11 +308,11 @@ export default defineComponent({
 }
 
 .reference-value {
-    width: 11ch;
+    width: 10.5ch;
     color: var(--color-text);
     background-color: var(--clr-thermometer-zero);
-    font-size: var(--sz-200);
-    padding: 2px 6px;
+    font-size: var(--sz-300);
+    padding: calc(var(--sz-30) / 2) calc(var(--sz-100) / 2);
 }
 
 .risky-value {

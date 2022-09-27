@@ -47,7 +47,7 @@ export default defineComponent({
     font-size: var(--sz-400);
     background-color: var(--color-background-accent);
     height: var(--sz-900);
-    padding-left: var(--sz-50);
+    padding-left: var(--sz-100);
     padding-right: var(--sz-50);
     display: flex;
     align-items: center;
@@ -68,14 +68,15 @@ time {
     display: grid;
     column-gap: var(--sz-30);
     row-gap: var(--sz-50);
-    grid-template-columns: var(--sz-700) min-content auto;
+    grid-template-columns: var(--sz-800) min-content auto;
     font-size: var(--sz-200);
     color: var(--clr-gris-moyen);
     align-items: center;
 }
 
 .icon {
-    height: var(--sz-700);
+    width: var(--sz-800);
+    height: var(--sz-800);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
