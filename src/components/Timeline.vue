@@ -451,7 +451,8 @@ ChartJS.register(new HighlightMarkPlugin());
 #slider-title {
     font-size: var(--sz-500);
     flex: 1;
-    margin-left: 7px;
+    margin-left: 6px;
+    letter-spacing: -0.025em;
 }
 
 .timeline-toggle .toggle {
@@ -487,7 +488,7 @@ ChartJS.register(new HighlightMarkPlugin());
     font-size: var(--sz-300);
     padding: var(--sz-30) var(--sz-100);
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: var(--border-radius);
+    border-radius: calc(var(--border-radius) / 2);
     margin-bottom: 4px;
     text-align: center;
 }
