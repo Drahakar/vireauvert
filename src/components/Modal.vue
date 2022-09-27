@@ -77,7 +77,8 @@ export default defineComponent({
     cursor: pointer;
     border-radius: 50%;
     background-color: var(--clr-gris-tres-pale);
-    height: 100%;
+    width: calc(var(--sz-900) - (var(--border-radius) / 2));
+    height:  calc(var(--sz-900) - (var(--border-radius) / 2));
 }
 
 #close-button img {
@@ -91,7 +92,7 @@ export default defineComponent({
 }
 
 #modal-header {
-    padding: 4px calc(var(--border-radius) / 4) 4px var(--sz-200);
+    padding: calc(var(--border-radius) / 4) calc(var(--border-radius) / 4) calc(var(--border-radius) / 4) var(--sz-200);
     background-color: var(--color-background-accent);
     height: var(--sz-900);
     display: flex;
