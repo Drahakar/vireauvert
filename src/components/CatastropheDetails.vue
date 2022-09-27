@@ -47,7 +47,7 @@ export default defineComponent({
     font-size: var(--sz-400);
     background-color: var(--color-background-accent);
     height: var(--sz-900);
-    padding-left: var(--sz-100);
+    padding-left: var(--sz-200);
     padding-right: var(--sz-50);
     display: flex;
     align-items: center;
@@ -69,7 +69,7 @@ time {
     column-gap: var(--sz-30);
     row-gap: var(--sz-50);
     grid-template-columns: var(--sz-800) min-content auto;
-    font-size: var(--sz-200);
+    font-size: var(--sz-400);
     color: var(--clr-gris-moyen);
     align-items: center;
 }
@@ -89,6 +89,6 @@ time {
     padding-left: var(--sz-50);
     padding-right: var(--sz-50);
     background-color: var(--color-background-accent);
-    border-radius: var(--border-radius);
+    border-radius: calc(var(--border-radius) / 2);
 }
 </style>
