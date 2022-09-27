@@ -3,7 +3,9 @@
         <div class="icon" :class="[`catastrophe-icon-${highlight.type.toLowerCase()}`]"></div>
         <div class="title">{{ highlight.title ? highlight.title : $t(`catastrophe_${highlight.type}`, 2) }}</div>
     </div>
-    <div id="body-content" v-html="body"></div>
+    <div id="body-container">
+        <div id="body-content" v-html="body"></div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -71,6 +73,14 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-position: center;
     left: calc(var(--sz-30) * -1);
+    z-index: 1;
+}
+
+#body-container {
+    padding-top: var(--sz-30);
+    height: calc(100% - var(--sz-900));
+    overflow: hidden;
+    border-radius: var(--border-radius);
 }
 
 #body-content {
@@ -82,11 +92,15 @@ export default defineComponent({
     line-height: 1.5em;
 
     color: var(--clr-gris-moyen);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
 }
 
 #body-content :deep(p) {
     margin: 0;
-    margin-top: var(--sz-30);
+    margin-bottom: var(--sz-30);
 }
 
 #body-content :deep(a) {

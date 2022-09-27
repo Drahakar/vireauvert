@@ -86,7 +86,7 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
         closeButton.href = '#';
         closeButton.setAttribute('role', 'button');
         closeButton.ariaLabel = 'Close button';
-        closeButton.innerHTML = '<span aria-hidden="true">&#x00d7;</span>';
+        closeButton.innerHTML = '<img src="/Button/Close.svg">';
         closeButton.addEventListener('click', ev => {
             marker.closePopup();
             ev.preventDefault();
@@ -101,6 +101,9 @@ function createMarkerInternal(location: L.LatLngExpression, type: CatastropheTyp
     });
     marker.bindPopup(popup);
     marker.addEventListener('popupopen', ev => {
+        ev.popup.options.maxHeight = window.innerHeight / 3;
+        ev.popup.update();
+
         const elem = ev.popup.getElement();
         if(elem) {
             const popupContent = elem.querySelector('.leaflet-popup-content') as HTMLElement | null;

@@ -107,6 +107,7 @@
 
 .popup-content-container {
   border-radius: var(--border-radius);
+  height: 100%;
 }
 
 .catastrophe-popup .leaflet-popup-content {
@@ -116,23 +117,28 @@
 }
 
 .leaflet-container a.leaflet-popup-close-button {
-  width: var(--sz-700);
-  height: var(--sz-700);
+  width: calc(var(--sz-900) - (var(--border-radius) / 2));
+  height:  calc(var(--sz-900) - (var(--border-radius) / 2));
   border-radius: 50%;
   background-color: var(--clr-gris-tres-pale);
-  background-image: url('/Button/Close.svg');
-  background-size: cover;
-  background-position: center;
-  margin-right: calc((var(--sz-900) - var(--sz-700)) / 2);
-  margin-top: calc((var(--sz-900) - var(--sz-700)) / 2);
+  position: absolute;
+  right: calc(var(--border-radius) / 4);
+  top: calc(var(--border-radius) / 4);
   z-index: 1000;
   cursor: pointer;
 }
 
-.leaflet-container a.leaflet-popup-close-button span {
-  display: none;
+.leaflet-container a.leaflet-popup-close-button img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .catastrophe-popup .leaflet-popup-tip {
   background-color: var(--color-background);
+}
+
+.leaflet-popup-scrolled {
+  overflow: inherit;
+  border: 0;
 }
