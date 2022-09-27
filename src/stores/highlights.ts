@@ -12,6 +12,9 @@ export const useHighlightStore = defineStore('highlightStore', {
     getters: {
         findHighlights: state => (year: number, locale: string) => {
             return state.highlights.filter(x => x.year === year && locale === locale);
+        },
+        getYearsWithHighlights: state => (locale: string) => {
+            return state.highlights.filter(x => x.locale === locale).map(x => x.year).toSet();
         }
     },
     actions: {

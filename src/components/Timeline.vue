@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import VueSlider, { Mark, Marks } from 'vue-slider-component'
-import { Map, Repeat, fromJS } from 'immutable';
+import { Map, Repeat, Set, fromJS } from 'immutable';
 import { computed, PropType, defineComponent, ref } from 'vue';
 import 'vue-slider-component/theme/default.css'
 import { CONTINUOUS_YEARS, CURRENT_YEAR, MAX_HISTORICAL_YEAR, MODELED_YEARS, TIMELINE_YEARS } from '@/models/constants';
@@ -77,6 +77,8 @@ import TimelineArrow from './TimelineArrow.vue';
 import { Chart as ChartJS, ChartEvent, ActiveElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, ScriptableContext, Filler, ChartData, ChartOptions, CoreScaleOptions, Scale, Plugin } from 'chart.js'
 import { numberFormats } from '@/locales/formats';
 import { END_NOTCH, START_NOTCH } from './Thermometer.vue';
+import { useHighlightStore } from '@/stores/highlights';
+import { useI18n } from 'vue-i18n';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 ChartJS.defaults.font.family = "Matter";
@@ -123,6 +125,8 @@ export default defineComponent({
         const mode = ref(TimelineMode.Temperature);
         const catastropheStore = useCatastropheStore();
         const statisticStore = useStatisticStore();
+        const highlightStore = useHighlightStore();
+        const i18n = useI18n();
 
         const futureLabel = ref<HTMLDivElement | null>(null);
 
@@ -168,6 +172,9 @@ export default defineComponent({
                 tooltip: {
                     enabled: false
                 },
+                highlightMark: {
+                    getYears: () => highlightStore.getYearsWithHighlights(i18n.locale.value)
+                }
             },
             layout: {
             },
@@ -237,6 +244,7 @@ export default defineComponent({
             selectedValue,
             catastropheStore,
             statisticStore,
+            highlightStore,
             mode,
             sliderContainer,
             TimelineMode,
@@ -373,7 +381,7 @@ class LabelPositioningPlugin implements Plugin {
 
     afterDatasetsDraw(chart: ChartJS, args: {}, options: any) {
         const element = options.element.value as HTMLDivElement | null;
-        if(element) {
+        if (element) {
             const meta = chart.getDatasetMeta(0);
             const index: number = options.index;
             const x = meta.data[index].x;
@@ -382,8 +390,51 @@ class LabelPositioningPlugin implements Plugin {
     }
 }
 
+class HighlightMarkPlugin implements Plugin {
+    id: string;
+
+    constructor() {
+        this.id = 'highlightMark';
+    }
+
+    afterDatasetsDraw(chart: ChartJS, args: {}, options: any) {
+        const years: Set<number> = options.getYears();
+        const context = chart.ctx;
+        const meta = chart.getDatasetMeta(0);
+        const scale = chart.scales.y;
+        for (const year of years) {
+            const index = VISUAL_YEARS.yearToIndex(year);
+            const x = meta.data[index].x;
+
+            context.save();
+
+            context.shadowColor = "#74746f";
+            context.shadowBlur = 8;
+            context.shadowOffsetY = 2;
+
+            context.fillStyle = "#fbfbf8";
+            context.beginPath();
+            context.arc(x, scale.top, 6, 0, 2 * Math.PI);
+            context.fill();
+
+            context.restore();
+
+            context.save();
+
+            context.fillStyle = "#ff3b3b";
+            context.beginPath();
+            context.arc(x, scale.top, 4, 0, 2 * Math.PI);
+            context.fill();
+            
+            context.restore();
+        }
+    }
+
+}
+
 ChartJS.register(new VerticalLinePlugin());
 ChartJS.register(new LabelPositioningPlugin());
+ChartJS.register(new HighlightMarkPlugin());
 
 </script>
 
