@@ -177,7 +177,7 @@ export default {
     timeline_mode_Catastrophes: "# Événements extrêmes / an",
     timeline_collapsed: "Sélectionnez une année",
     timeline_future_temperature: "Prévisions",
-    timeline_future_catastrophes: "Imaginez la suite",
+    timeline_future_catastrophes: "Imaginez la suite →",
     minimize: "Minimiser",
     maximize: "Maximiser",
 
