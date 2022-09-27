@@ -102,6 +102,9 @@ export default defineComponent({
     margin-bottom: var(--sz-30);
 }
 
+#body-content :deep(p):last-child {
+    margin-bottom: 0;
+}
 #body-content :deep(a) {
     font-size: var(--sz-100);
     color: var(--clr-orange);
