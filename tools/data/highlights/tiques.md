@@ -1,14 +1,10 @@
 ---
-year: 2021
+year: 2014
 location: 45.33, -72.18
 type: TICKS
-title: Maladie de Lyme
+title: Premiers cas de la maladie de Lyme
 locale: fr-CA
 ---
-En 2021 seulement:
-**451** cas en Estrie seulement
-**650** dans l'ensemble du Québec
-
 De 2014 à 2022:
  **1354** cas en Estrie
  **2265** cas au Québec
