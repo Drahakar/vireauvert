@@ -43,26 +43,26 @@ export function setMapLayerColour(layer: L.GeoJSON, selected: boolean, tempDelta
     }
 }
 
-function generateIcons(baseClassName: string, generateAsInnerDiv: boolean): Map<CatastropheType, L.DivIcon> {
+function generateIcons(configure: (type: CatastropheType, options: L.DivIconOptions) => void): Map<CatastropheType, L.DivIcon> {
     const icons = new Map<CatastropheType, L.DivIcon>();
     for (const value of Object.values(CatastropheType)) {
         const options: L.DivIconOptions = {
             iconSize: null as any
         };
-        if (generateAsInnerDiv) {
-            options.className = '';
-            options.html = `<div class="${baseClassName} catastrophe-icon-${value.toLowerCase()}"></div>`;
-        } else {
-            options.className = `${baseClassName} catastrophe-icon-${value.toLowerCase()}`;
-        }
+        configure(value, options);
         const icon = L.divIcon(options);
         icons.set(value, icon);
     }
     return icons;
 }
 
-const catastropheIcons = generateIcons('map-icon', false);
-const highlightIcons = generateIcons('big-map-icon', true);
+const catastropheIcons = generateIcons((type, options) => {    
+    options.className = `map-icon catastrophe-icon-${type.toLowerCase()}`;
+});
+const highlightIcons = generateIcons((type, options) => {    
+    options.className = '';
+    options.html = `<div class="big-map-icon"><img src="/icons/faitsaillant_${type.toLowerCase()}.png"></div>`;
+});
 
 function createMarkerInternal(location: L.LatLngExpression, type: CatastropheType, iconMap: Map<CatastropheType, L.DivIcon>, zindex: number, appContext: AppContext, modelFactory: () => VNode) {
     const marker = L.marker(location, {
