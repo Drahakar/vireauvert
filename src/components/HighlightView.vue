@@ -1,7 +1,9 @@
 <template>
     <div id="header">
-        <div class="icon" :class="[`catastrophe-icon-${highlight.type.toLowerCase()}`]"></div>
-        <div class="title">{{ highlight.title ? highlight.title : $t(`catastrophe_${highlight.type}`, 2) }}</div>
+        <img class="icon" :src="`/icons/faitsaillant_${highlight.type.toLowerCase()}.png`">
+        <i18n-t keypath="highlight_title" tag="div" class="title">            
+            <span>{{ highlight.title ? highlight.title : $t(`catastrophe_${highlight.type}`, 2) }}</span>
+        </i18n-t>
     </div>
     <div id="body-container">
         <div id="body-content" v-html="body"></div>

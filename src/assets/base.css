@@ -53,7 +53,7 @@
   /* Sizes that change at certain breakpoints */
   --app-column-gap: 0;
   --timeline-horizontal-padding: var(--sz-200);
-  --popup-width: 216px;
+  --popup-width: 256px;
   --thermo-current-value-width: calc(var(--sz-900) * 2.8);
 
   /* Font weight variants */

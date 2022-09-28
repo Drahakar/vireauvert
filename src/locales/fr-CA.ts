@@ -122,6 +122,8 @@ export default {
 
     no_future_catastrophes: "Les évênements extrêmes ne sont disponibles que pour les années passées",
 
+    highlight_title: "Fait saillant: {0}",
+
     // Catastrophe toggling
     toggle_checkbox_name_prefix: "Affichage pour ",
     all_catastrophes: "Tous",
@@ -174,7 +176,7 @@ export default {
 
     // Timeline
     timeline_mode_Temperature: "Variation °C/an comparé à 1990",
-    timeline_mode_Catastrophes: "Nb d’événements extrêmes / an",
+    timeline_mode_Catastrophes: "Nb d'événements extrêmes / an",
     timeline_collapsed: "Sélectionnez une année",
     timeline_future_temperature: "Prévisions",
     timeline_future_catastrophes: "Imaginez la suite →",
