@@ -48,7 +48,7 @@ export default defineComponent({
     background-color: var(--color-background-accent);
     height: var(--sz-900);
     padding-left: var(--sz-200);
-    padding-right: var(--sz-50);
+    padding-right: var(--sz-900);
     display: flex;
     align-items: center;
 }
