@@ -53,13 +53,15 @@ export default defineComponent({
     background-color: var(--color-background-accent);
     border-radius: var(--border-radius) var(--border-radius) 0 var(--border-radius);
     height: var(--sz-900);
-    padding-right: var(--sz-50);
+    padding-right: var(--sz-900);
     display: flex;
     align-items: center;
 }
 
 .title {
     margin-left: calc(var(--sz-30) / -5);
+    line-height: 1em;
+    padding-right: var(--sz-10);
 }
 
 .icon {
@@ -68,6 +70,7 @@ export default defineComponent({
     object-fit: contain;
     width: calc(var(--sz-900) + var(--sz-50));
     height: calc(var(--sz-900) + var(--sz-50));
+    flex-shrink: 0;
     background-size: cover;
     border-radius: 50%;
     background-repeat: no-repeat;
