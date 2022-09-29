@@ -6,9 +6,9 @@ title: Ouragan Fiona
 locale: fr-CA
 ---
 **100 mm** de pluie
-Vents allant jusqu’à **126 km/h**
+Vents allant jusqu’à **131 km/h**
 Vagues de **6 à 8 mètres**
-**3470** clients sans électricité
+**3470 des 8000** clients sans électricité
 Évaluation des dégâts en cours
 
 
