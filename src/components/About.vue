@@ -15,6 +15,9 @@
                 </div>
                 <div v-t="'about_welcome'"></div>
                 <div v-t="'about_description'"></div>
+                <i18n-t keypath="about_methodology" tag="div">
+                    <a v-t="'click_here'" href="https://cms.equiterre.org/uploads/Fichiers/Me%CC%81thodologie-carte-interactive.pdf" target="_blank"></a>
+                </i18n-t>
                 <i18n-t keypath="about_tutorial" tag="div" class="help">
                     <button @click="resetTutorial" v-t="'tutorial_restart'">
                     </button>

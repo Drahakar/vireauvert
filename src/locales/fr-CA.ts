@@ -56,6 +56,7 @@ export default {
     help: "Aide",
     email: "Courriel",
     close: "Fermer",
+    click_here: "cliquez ici",
 
     // Loading overlay
     loading: "Chargement des données...",
@@ -174,7 +175,7 @@ export default {
 
     // Timeline
     timeline_mode_Temperature: "Variation °C/an comparé à 1990",
-    timeline_mode_Catastrophes: "Nb d’événements extrêmes / an",
+    timeline_mode_Catastrophes: "Nb d'événements extrêmes / an",
     timeline_collapsed: "Sélectionnez une année",
     timeline_future_temperature: "Prévisions",
     timeline_future_catastrophes: "Imaginez la suite →",
@@ -195,6 +196,7 @@ export default {
     can_govt: "gouvernement du Canada",
     url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html",
     detailed_sources: "Sources",
+    about_methodology: "Pour en apprendre plus sur la méthodologie employée, {0}.",
 
     // Share
     share_twitter_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les #changementsclimatiques. Le Québec doit se préparer. #elections2022 #polqc #vireauvert",
