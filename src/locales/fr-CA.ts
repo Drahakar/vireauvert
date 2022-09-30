@@ -56,6 +56,7 @@ export default {
     help: "Aide",
     email: "Courriel",
     close: "Fermer",
+    click_here: "cliquez ici",
 
     // Loading overlay
     loading: "Chargement des données...",
@@ -174,7 +175,7 @@ export default {
 
     // Timeline
     timeline_mode_Temperature: "Variation °C/an comparé à 1990",
-    timeline_mode_Catastrophes: "Nb d’événements extrêmes / an",
+    timeline_mode_Catastrophes: "Nb d'événements extrêmes / an",
     timeline_collapsed: "Sélectionnez une année",
     timeline_future_temperature: "Prévisions",
     timeline_future_catastrophes: "Imaginez la suite →",
@@ -184,7 +185,7 @@ export default {
     // About
     about: "À propos de la Carte climat",
     about_welcome: "Bienvenue sur la Carte climat!",
-    about_description: "Ce logiciel a été développé pour montrer l'impact des changements climatiques sur le Québec.",
+    about_description: "La Carte climat recense les événements climatiques extrêmes et l'évolution de la température dans chacune des circonscriptions du Québec depuis 1990.",
     about_tutorial: "Si vous avez besoin d'explications en contexte, appuyez sur ce bouton: {0}",
     made_with_love: "La Carte climat a été conçue avec amour grâce à une collaboration entre {0}, {1} ainsi que {2}, {3} et {4}, trois programmeurs bénévoles.",
     data_source: "Les données utilisées dans ce logiciel proviennent du {0}, du {1} et du {2}.",
@@ -195,6 +196,7 @@ export default {
     can_govt: "gouvernement du Canada",
     url_can_govt: "https://www.canada.ca/fr/environnement-changement-climatique/services/changements-climatiques/centre-canadien-services-climatiques.html",
     detailed_sources: "Sources",
+    about_methodology: "Pour en apprendre plus sur la méthodologie employée, {0}.",
 
     // Share
     share_twitter_text: "Visualisez les événements climatiques extrêmes survenus au Québec en lien avec les #changementsclimatiques. Le Québec doit se préparer. #elections2022 #polqc #vireauvert",
@@ -207,7 +209,7 @@ export default {
     tutorial_prev: "Précédent",
     tutorial_stop: "Quitter le tour",
     tutorial_step_msg: "Étape {0} de {1}",
-    tutorial_step_welcome: "<p>Bienvenue sur la <b>Carte climat</b>!</p><p>Explorez les effets des changements climatiques sur le Québec.</p>",
+    tutorial_step_welcome: "<p>Bienvenue sur la <b>Carte climat</b>!</p><p>La Carte climat recense les événements climatiques extrêmes et l'évolution de la température dans chacune des circonscriptions du Québec depuis 1990.</p>",
     tutorial_step_ref_year: "<p>1990, année de référence par rapport à laquelle nous mesurons les réductions de gaz à effet de serre (GES).</p>",
     tutorial_step_goal: "<p>L'objectif le plus ambitieux de l'accord de Paris est de limiter l'augmentation de la température moyenne à l'échelle de la planète à <b>1,5 °C</b>.</p><p>Freiner la hausse de température à 1,5 °C permettrait de limiter la fréquence et l'intensité des événements climatiques extrêmes qui perturbent toutes les sphères de notre quotidien.</p>",
     tutorial_step_temperature: "<p>Voici la température pour l'<b>année</b> et la <b>région</b> sélectionnées (ici 2022 pour la province de Québec).</p><p>Remarquez les changements de température par rapport à 1990 (ici +2,2 °C en 2022).</p>",
